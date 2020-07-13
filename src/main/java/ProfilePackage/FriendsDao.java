@@ -14,4 +14,5 @@ public interface FriendsDao {
 
     List<User> getReceivedRequests(User user) throws SQLException;
 
+    List<User> getFriends(User user) throws SQLException;
 }

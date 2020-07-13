@@ -5,8 +5,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class CreateTablesForTests {
-    public static final String FriendsTableTest = "Friends2";
-    public static final String UsersTableTest = "Users2";
+    public static final String FriendsTableTest = "test.Friends2";
+    public static final String UsersTableTest = "test.Users2";
+    public static String UsersTable = "test.Users";
+    public static String FriendsTable = "test.Friends";
     public static final String MailsTableTest = "Mails2";
     public static final String HistoryTableTest = "History2";
     public static final String QuizTableTest = "Quiz2";
@@ -14,7 +16,7 @@ public class CreateTablesForTests {
 
     private Connection con;
 
-    public CreateTablesForTests() throws SQLException, ClassNotFoundException{
+    public CreateTablesForTests() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
     }
 
@@ -31,7 +33,6 @@ public class CreateTablesForTests {
                 "Birth_Date Date,\n" +
                 "Birth_Place varchar(255),\n" +
                 "Status varchar(255)" + ");");
-        // userTable = "test.Users";
         return true;
     }
 

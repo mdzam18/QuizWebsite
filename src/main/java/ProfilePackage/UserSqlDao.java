@@ -15,8 +15,9 @@ public class UserSqlDao implements UserDao {
 
     public UserSqlDao() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         con = ProfileDataSrc.getConnection();
-        userTable = "test.Users";
-        friendsTable = "test.Friends";
+        ProfileDataSrc p = new ProfileDataSrc();
+        userTable = CreateTablesForTests.UsersTable;
+        friendsTable = CreateTablesForTests.UsersTable;
         md = MessageDigest.getInstance("SHA");
     }
 
@@ -85,7 +86,7 @@ public class UserSqlDao implements UserDao {
         return user;
     }
 
-  /*  @Override
+    @Override
     public boolean deleteUser(User user) throws SQLException {
         PreparedStatement stm = null;
         stm = con.prepareStatement(
@@ -94,7 +95,6 @@ public class UserSqlDao implements UserDao {
         stm.executeUpdate();
         return true;
     }
-   */
 
 
     @Override
@@ -132,111 +132,6 @@ public class UserSqlDao implements UserDao {
         return result;
     }
 
-    @Override
-    public List<User> getFriends(User user) throws SQLException {
-        PreparedStatement stm = null;
-        List<User> result = new ArrayList<>();
-        stm = con.prepareStatement(
-                "SELECT * FROM " + friendsTable + "WHERE (SenderId = ? or ReceiverId = ?) and Confirmed = ?;");
-        stm.setInt(1, user.getUserId());
-        stm.setInt(2, user.getUserId());
-        stm.setBoolean(3, true);
-        ResultSet res = stm.executeQuery();
-        while (res.next()) {
-            User user2 = new User(res.getString(2), res.getInt(1), res.getString(3));
-            user2.setName(res.getString(6));
-            user2.setSurname(res.getString(7));
-            user2.setBirthDate(res.getDate(8));
-            user2.setBirthPlace(res.getString(9));
-            user2.setStatus(res.getString(10));
-            result.add(user2);
-        }
-        return result;
-    }
-
-   /* @Override
-    public boolean sendFriendRequest(User from, User to) throws SQLException {
-        if (from.getUserId() == to.getUserId()) return false;
-        PreparedStatement statement = con.prepareStatement("select * from " + friendsTable + " where SenderId = ? and ReceiverId = ?;");
-        statement.setInt(1, from.getUserId());
-        statement.setInt(2, to.getUserId());
-        ResultSet res = statement.executeQuery();
-        if (res.next()) return false;
-        statement = con.prepareStatement("select * from " + friendsTable + " where SenderId = ? and ReceiverId = ?;");
-        statement.setInt(1, to.getUserId());
-        statement.setInt(2, from.getUserId());
-        if (res.next()) return false;
-        statement = con.prepareStatement("insert into " + friendsTable + " values (?, ?, ?)");
-        statement.setInt(1, from.getUserId());
-        statement.setInt(2, to.getUserId());
-        statement.setBoolean(3, false);
-        statement.executeUpdate();
-        return true;
-    } */
-
-    /*@Override
-    public boolean confirmFriendRequest(MailSqlDao mDao) throws SQLException {
-        Mail mail = new Mail();
-        mDao.sendMail();
-        PreparedStatement statement = con.prepareStatement("update " + friendsTable + " set Confirmed = ? where SenderId = ? and ReceiverId = ?;");
-        statement.setBoolean(1, true);
-        statement.setInt(2, from.getUserId());
-        statement.setInt(3, to.getUserId());
-        statement.executeUpdate();
-        return true;
-    } */
-
-    @Override
-    public boolean deleteFriend(User from, User to) throws SQLException {
-        PreparedStatement stm = null;
-        stm = con.prepareStatement(
-                "delete from " + friendsTable + " where (SenderId = ? and ReceiverId = ?) or (SenderId = ? and ReceiverId = ?);");
-        stm.setInt(1, from.getUserId());
-        stm.setInt(2, to.getUserId());
-        stm.setInt(3, to.getUserId());
-        stm.setInt(4, from.getUserId());
-        stm.executeUpdate();
-        return true;
-    }
-
-    @Override
-    public boolean createUserTable() throws SQLException, ClassNotFoundException {
-        Statement s = con.createStatement();
-        userTable = "test.Users2";
-        s.executeUpdate("CREATE TABLE " + userTable + " (\n" + "UserId int primary key, \n" +
-                "UserName varchar(255),\n" +
-                "Password varchar(255),\n" +
-                "IsAdministrator boolean,\n" +
-                "Salt varchar (255),\n" +
-                "Name varchar(255),\n" +
-                "Surname varchar(255),\n" +
-                "Birth_Date Date,\n" +
-                "Birth_Place varchar(255),\n" +
-                "Status varchar(255)" + ");");
-        // userTable = "test.Users";
-        return true;
-    }
-
-    @Override
-    public boolean createFriendsTable() throws SQLException, ClassNotFoundException {
-        Statement s = con.createStatement();
-        friendsTable = "test.Friends2";
-        s.executeUpdate("CREATE TABLE " + friendsTable + " (\n" + "SenderId int ,\n" +
-                "ReceiverId int ,\n" +
-                "Confirmed boolean,\n" +
-                "foreign key (SenderId) references Users(UserId),\n" +
-                "foreign key (ReceiverId) references Users(UserId));");
-        //friendsTable = "test.Friends";
-        return true;
-    }
-
-    @Override
-    public boolean dropTable(String tableName) throws SQLException {
-        Statement stm = null;
-        stm = con.createStatement();
-        stm.executeUpdate("drop table " + tableName);
-        return true;
-    }
 
     @Override
     public boolean addProfile(int userId, String name, String surname, Date birthDate, String birthPlace, String status) throws SQLException {
@@ -251,47 +146,6 @@ public class UserSqlDao implements UserDao {
         return true;
     }
 
-    @Override
-    public List<User> getSentRequests(User user) throws SQLException {
-        PreparedStatement stm = null;
-        List<User> result = new ArrayList<>();
-        stm = con.prepareStatement(
-                "SELECT * FROM " + friendsTable + "WHERE (SenderId = ?) and Confirmed = ?;");
-        stm.setInt(1, user.getUserId());
-        stm.setBoolean(3, false);
-        ResultSet res = stm.executeQuery();
-        while (res.next()) {
-            User user2 = new User(res.getString(2), res.getInt(1), res.getString(3));
-            user2.setName(res.getString(6));
-            user2.setSurname(res.getString(7));
-            user2.setBirthDate(res.getDate(8));
-            user2.setBirthPlace(res.getString(9));
-            user2.setStatus(res.getString(10));
-            result.add(user2);
-        }
-        return result;
-    }
-
-    @Override
-    public List<User> getReceivedRequests(User user) throws SQLException {
-        PreparedStatement stm = null;
-        List<User> result = new ArrayList<>();
-        stm = con.prepareStatement(
-                "SELECT * FROM " + friendsTable + "WHERE (ReceiverId = ?) and Confirmed = ?;");
-        stm.setInt(1, user.getUserId());
-        stm.setBoolean(3, false);
-        ResultSet res = stm.executeQuery();
-        while (res.next()) {
-            User user2 = new User(res.getString(2), res.getInt(1), res.getString(3));
-            user2.setName(res.getString(6));
-            user2.setSurname(res.getString(7));
-            user2.setBirthDate(res.getDate(8));
-            user2.setBirthPlace(res.getString(9));
-            user2.setStatus(res.getString(10));
-            result.add(user2);
-        }
-        return result;
-    }
 
     /*
      Given a byte[] array, produces a hex String,

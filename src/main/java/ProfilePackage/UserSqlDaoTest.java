@@ -21,23 +21,25 @@ public class UserSqlDaoTest {
 
     private UserDao uDao;
     private Connection con;
+    private CreateTablesForTests tables;
 
     @BeforeAll
     public void getConnection() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
+        tables = new CreateTablesForTests();
     }
 
     @BeforeEach
     public void setUp() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
         uDao = new UserSqlDao();
-        assertEquals(uDao.createUserTable(), true);
-        assertEquals(uDao.createFriendsTable(), true);
+        assertEquals(tables.createUserTable(), true);
     }
 
     @AfterEach
     public void tearDown() throws SQLException {
-        assertEquals(uDao.dropTable("test.Users2"), true);
-        assertEquals(uDao.dropTable("test.Friends2"), true);
+        assertEquals(tables.dropTable("test.Users2"), true);
+        CreateTablesForTests.UsersTable = "test.Users";
     }
 
 
@@ -91,14 +93,14 @@ public class UserSqlDaoTest {
         }
     }
 
-  /*  @Test
+    @Test
     public void testDelete() throws SQLException {
         Date date = new Date(2000, 12, 12);
-        assertEquals(uDao.addUser("ChandlerTheBest", "friends").equals(new User("ChandlerTheBest", 1)), true);
+        assertEquals(uDao.addUser("ChandlerTheBest", "friends").equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
         User user = uDao.getUser(1);
         assertEquals(uDao.deleteUser(user), true);
         assertEquals(uDao.getAllUsers().size(), 0);
-    } */
+    }
 
     @Test
     public void testIsCorrectPassword() throws SQLException {
@@ -107,15 +109,4 @@ public class UserSqlDaoTest {
         assertEquals(uDao.isCorrectPassword("ChandlerTheBest", "friends"), true);
         assertEquals(uDao.isCorrectPassword("ChandlerTheBest", "frieds"), false);
     }
-
-   /* @Test
-    public void testSendRequest() throws SQLException {
-        User user1 = uDao.addUser("Captain America", "Peggy");
-        User user2 = uDao.addUser("IronMan", "Tony Stark");
-        uDao.sendFriendRequest(user1, user2);
-        assertEquals(uDao.getSentRequests(user1).size(), 1);
-        assertEquals(uDao.getSentRequests(user2).size(), 0);
-        assertEquals(uDao.getReceivedRequests(user2).size(), 1);
-        assertEquals(uDao.getReceivedRequests(user1).get(0).equals(user2), true);
-    } */
 }

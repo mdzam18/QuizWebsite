@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface FriendsDao {
-    boolean sendFriendRequest(User from, User to);
+    boolean sendFriendRequest(User from, User to) throws SQLException;
 
     boolean confirmFriendRequest(User from , User to) throws SQLException;
 

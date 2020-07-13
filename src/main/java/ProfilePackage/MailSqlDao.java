@@ -2,8 +2,7 @@ package ProfilePackage;
 
 import ProfilePackage.Mail;
 
-import javax.mail.search.DateTerm;
-import javax.persistence.SqlResultSetMapping;
+
 import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDateTime;

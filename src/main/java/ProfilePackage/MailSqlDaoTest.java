@@ -2,6 +2,7 @@ package ProfilePackage;
 
 import org.junit.jupiter.api.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -23,7 +24,7 @@ class MailSqlDaoTest {
     }
 
     @BeforeEach
-    public void setUp() throws ClassNotFoundException, SQLException {
+    public void setUp() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         mailDao = new MailSqlDao();
         userDao = new UserSqlDao();
         assertEquals(mailDao.createMailsTable(), true);

@@ -1,3 +1,5 @@
+package Quiz;
+
 import java.util.*;
 
 public class MultipleChoiceAnswerQuestion extends Question {
@@ -6,15 +8,15 @@ public class MultipleChoiceAnswerQuestion extends Question {
 	private Set<String> answers;
 	private Set<String> choices;
 
-	private static final TYPE = QuestionType.MULTIPLE_CHOICE_AND_ANSWER_QUESTION;
+	private static final int TYPE = QuestionType.MULTIPLE_CHOICE_AND_ANSWER_QUESTION;
 
-	public MultipleChoiceQuestion(String question, Set<String> answers, Set<String> choices) {
+	public MultipleChoiceAnswerQuestion(String question, Set<String> answers, Set<String> choices) {
 		super(question, answers);
 		this.choices = choices;
 	}
 
 	public boolean checkAnswer(String answer) {
-		return (set.contains(answer));
+		return (answers.contains(answer));
 	}
 
 	public Set<String> getChoices() {

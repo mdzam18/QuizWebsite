@@ -1,3 +1,4 @@
+package Quiz;
 
 public final class QuestionType {
 

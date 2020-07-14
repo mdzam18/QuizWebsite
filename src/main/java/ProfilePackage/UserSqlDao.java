@@ -10,14 +10,12 @@ import java.util.Random;
 public class UserSqlDao implements UserDao {
     private Connection con;
     private String userTable;
-    private String friendsTable;
     private static MessageDigest md;
 
     public UserSqlDao() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         con = ProfileDataSrc.getConnection();
         ProfileDataSrc p = new ProfileDataSrc();
         userTable = CreateTablesForTests.UsersTable;
-        friendsTable = CreateTablesForTests.UsersTable;
         md = MessageDigest.getInstance("SHA");
     }
 

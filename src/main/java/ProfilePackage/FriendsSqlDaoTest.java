@@ -34,7 +34,7 @@ public class FriendsSqlDaoTest {
     public void setUp() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         CreateTablesForTests.FriendsTable = CreateTablesForTests.FriendsTableTest;
         CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
-        fDao = new FriendsSqlDao();
+      //  fDao = new FriendsSqlDao();
         uDao = new UserSqlDao();
         assertEquals(tables.createUserTable(), true);
         assertEquals(tables.createFriendsTable(), true);
@@ -59,5 +59,4 @@ public class FriendsSqlDaoTest {
         assertEquals(fDao.getReceivedRequests(user1).get(0).equals(user2), true);
     }
     */
-
 }

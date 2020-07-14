@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class AdministrationSqlDaoTest {
+public class AdministratorSqlDaoTest {
 	private AdministratorDao adminDao;
 	private UserDao userDao;
 	private HistoryDao historyDao;

@@ -15,4 +15,6 @@ public interface StatisticsDao {
 	
 	public User getBestPlayer(int quizId) throws SQLException;
 	
+	public Double getAverageScore(int quizId) throws SQLException;
+	
 }

@@ -4,41 +4,50 @@ import org.junit.jupiter.api.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.sql.Date;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class MailSqlDaoTest {
+public class MailSqlDaoTest {
     private MailSqlDao mailDao;
     private UserSqlDao userDao;
     private Connection con;
+    private CreateTablesForTests tables;
 
     @BeforeAll
     public void getConnection() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
-        //MyDatabase db = new MyDatabase();
-        //con = db.connect();
+        tables = new CreateTablesForTests();
     }
 
     @BeforeEach
     public void setUp() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        CreateTablesForTests.MailsTable = CreateTablesForTests.MailsTableTest;
+        CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
+        assertEquals(tables.createMailsTable(), true);
+        assertEquals(tables.createUserTable(), true);
         mailDao = new MailSqlDao();
         userDao = new UserSqlDao();
-        assertEquals(mailDao.createMailsTable(), true);
-        assertEquals(mailDao.createFriendsTable(), true);
-        assertEquals(mailDao.createUserTable(), true);
     }
 
     @AfterEach
     public void tearDown() throws SQLException {
-        assertEquals(mailDao.dropTable("Users2"), true);
-        assertEquals(mailDao.dropTable("Friends2"), true);
+        assertEquals(tables.dropTable(CreateTablesForTests.UsersTableTest), true);
+        assertEquals(tables.dropTable(CreateTablesForTests.MailsTableTest), true);
+        CreateTablesForTests.UsersTable = "test.Users";
+        CreateTablesForTests.MailsTable = "test.Mails";
     }
 
-    @Test
+   /* @Test
     void test1() throws SQLException{
         userDao.addUser("nanuka", "123");
         userDao.addUser("ana", "123");
@@ -46,15 +55,18 @@ class MailSqlDaoTest {
         mailDao.confirmFriendRequest(1,2);
         assertTrue(mailDao.areFriends(1,2));
     }
+    */
 
-    @Test
+    /*@Test
     void test2() throws SQLException{
         userDao.addUser("nanuka", "123");
         userDao.addUser("ana", "123");
         assertTrue(!mailDao.areFriends(1,2));
     }
 
-    @Test
+     */
+
+   /* @Test
     void test3() throws SQLException{
         userDao.addUser("nanuka", "123");
         userDao.addUser("ana", "123");
@@ -63,8 +75,10 @@ class MailSqlDaoTest {
         assertTrue(mailDao.requested(1,2));
     }
 
+    */
+
     @Test
-    void test4() throws SQLException{
+    public void test4() throws SQLException{
         userDao.addUser("nanuka", "123");
         userDao.addUser("ana", "123");
         Mail mail = new Mail(1,1,2,Mail.noteType,"hello",new Date(2020,1,1),1);

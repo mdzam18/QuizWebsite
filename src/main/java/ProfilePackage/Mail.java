@@ -1,9 +1,6 @@
 package ProfilePackage;
 
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Mail {
     public static String requestType = "Request";
@@ -27,6 +24,7 @@ public class Mail {
         this.date = date;
         this.seen = seen == 1 ? true : false;
     }
+
     public Mail() {
 
     }

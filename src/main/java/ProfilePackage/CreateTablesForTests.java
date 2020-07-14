@@ -9,7 +9,8 @@ public class CreateTablesForTests {
     public static final String UsersTableTest = "test.Users2";
     public static String UsersTable = "test.Users";
     public static String FriendsTable = "test.Friends";
-    public static final String MailsTableTest = "Mails2";
+    public static String MailsTableTest = "test.Mails2";
+    public static String MailsTable = "test.Mails";
     public static final String HistoryTableTest = "History2";
     public static final String QuizTableTest = "Quiz2";
     public static final String QuestionTableTest = "Question2";
@@ -66,9 +67,9 @@ public class CreateTablesForTests {
                 "Type varchar(255) ,\n" +
                 "Message varchar(255) ,\n" +
                 "Date Date ,\n" +
-                "Seen int ,\n" +
-                "foreign key (SenderId) references Users(UserId),\n" +
-                "foreign key (ReceiverId) references Users(UserId));";
+                "Seen int);";
+                //"foreign key (SenderId) references Users(UserId),\n" +
+                //"foreign key (ReceiverId) references Users(UserId));";
         s.executeUpdate(query);
         return true;
     }

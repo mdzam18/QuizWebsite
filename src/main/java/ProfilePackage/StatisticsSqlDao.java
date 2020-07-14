@@ -20,7 +20,7 @@ public class StatisticsSqlDao implements StatisticsDao {
 		quizTable = CreateTablesForTests.QuizTableTest;
 		historyTable = CreateTablesForTests.HistoryTableTest;
 	}
-	
+
 //	public List<Quiz> getAllQuizzes(int userId) throws SQLException {
 //		List <Quiz> quizzes = new ArrayList<>();
 //		PreparedStatement stm =
@@ -66,7 +66,7 @@ public class StatisticsSqlDao implements StatisticsDao {
 		stm.setInt(1, userId);
 		stm.setInt(2, quizId);
 		ResultSet rs = stm.executeQuery();
-		if(rs.next()) max = rs.getInt(3);
+		if(rs.next()) max = rs.getInt("max(Score)");
 		return max;
 		
 	}
@@ -107,5 +107,14 @@ public class StatisticsSqlDao implements StatisticsDao {
 		return user;
 	}
 	
+	public Double getAverageScore(int quizId) throws SQLException {
+		Double result = null;
+		PreparedStatement stm =
+				con.prepareStatement("SELECT avg(Score) FROM " + historyTable + " WHERE QuizId = ?;");
+		stm.setInt(1, quizId);
+		ResultSet rs = stm.executeQuery();
+		if(rs.next()) result = rs.getDouble("avg(Score)");
+		return result;
+	}
 	
 }

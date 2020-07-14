@@ -1,9 +1,7 @@
 package ProfilePackage;
 
-import com.sun.xml.internal.ws.api.pipe.TubelineAssembler;
 import org.junit.jupiter.api.Test;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -2,6 +2,9 @@ package ProfilePackage;
 
 //import Quiz.*;
 
+import Quiz.Quiz;
+
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +14,14 @@ public class AdministratorSqlDao implements AdministratorDao {
 	private String userTable;
 	private String quizTable;
 	private String historyTable;
+	private UserDao userDao;
 	
-	public AdministratorSqlDao() throws SQLException, ClassNotFoundException {
+	public AdministratorSqlDao() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
 		con = ProfileDataSrc.getConnection();
 		userTable = CreateTablesForTests.UsersTableTest;
 		quizTable = CreateTablesForTests.QuizTableTest;
 		historyTable = CreateTablesForTests.HistoryTableTest;
+		userDao = new UserSqlDao();
 	}
 	
 	@Override
@@ -40,36 +45,8 @@ public class AdministratorSqlDao implements AdministratorDao {
 	
 	@Override
 	public User addAdmin(String username, String password) throws SQLException {
-		PreparedStatement stm = con.prepareStatement(
-				"SELECT * FROM " + userTable + " WHERE UserName = ?;");
-		stm.setString(1, username);
+		User user = userDao.addUser(username, password);
 		
-		ResultSet res = stm.executeQuery();
-		if (res.next()) return null;
-		
-		stm = con.prepareStatement(
-				"SELECT max(UserId) FROM " + userTable + ";");
-		res = stm.executeQuery();
-		int id = 0;
-		res.next();
-		if (res != null) {
-			id = res.getInt(1);
-		}
-		id++;
-		
-		stm = con.prepareStatement("INSERT INTO " + userTable + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		stm.setInt(1, id);
-		stm.setString(2, username);
-		stm.setString(3, password);
-		stm.setBoolean(4, true);
-		stm.setString(5, ""); //Salt?
-		stm.setString(6, null);
-		stm.setString(7, null);
-		stm.setDate(8, null);
-		stm.setString(9, null);
-		stm.setString(10, null);
-		stm.executeUpdate();
-		User user = new User(username, id, password);
 		return user;
 	}
 	
@@ -109,15 +86,15 @@ public class AdministratorSqlDao implements AdministratorDao {
 //		return false;
 //	}
 //
-//	@Override
-//	public boolean deleteHistory(Quiz quiz) throws SQLException {
-//		PreparedStatement stm =
-//				con.prepareStatement("DELETE FROM " + historyTable + " WHERE QuizId = ?;");
-//		stm.setInt(1, Integer.valueOf(quiz.getId()));
-//		int n = stm.executeUpdate();
-//		if(n > 0) return true;
-//		return false;
-//	}
+	@Override
+	public boolean deleteHistory(Quiz quiz) throws SQLException {
+		PreparedStatement stm =
+				con.prepareStatement("DELETE FROM " + historyTable + " WHERE QuizId = ?;");
+		stm.setInt(1, Integer.valueOf(quiz.getQuizId()));
+		int n = stm.executeUpdate();
+		if(n > 0) return true;
+		return false;
+	}
 	
 	@Override
 	public boolean promoteUser(User user) throws SQLException {

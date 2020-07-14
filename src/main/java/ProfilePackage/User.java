@@ -11,11 +11,21 @@ public class User {
     private Date birthDate;
     private String birthPlace;
     private String status;
+    private boolean isAdministrator;
 
     public User(String userName, int userId, String password) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
+        isAdministrator = false;
+    }
+
+    public boolean isAdministrator() {
+        return isAdministrator;
+    }
+
+    public void setAdministrator(boolean administrator) {
+        isAdministrator = administrator;
     }
 
     public String getPassword() {

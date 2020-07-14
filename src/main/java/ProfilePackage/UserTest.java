@@ -16,9 +16,12 @@ public class UserTest {
         assertEquals(user.getUserName(), "ZukoTheFireLord");
         assertEquals(user.getUserId(), 1);
         assertEquals(user.getPassword(), "CatchTheAvatar");
+        assertEquals(user.isAdministrator(), false);
 
         user.setName("Zuko");
         user.setBirthPlace("FireNation");
+        user.setAdministrator(true);
+        assertEquals(user.isAdministrator(), true);
         Date date = new Date(12, 12, 12);
         user.setBirthDate(date);
         user.setStatus("working");

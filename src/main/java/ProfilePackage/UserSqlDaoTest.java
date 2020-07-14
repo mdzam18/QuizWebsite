@@ -53,6 +53,7 @@ public class UserSqlDaoTest {
         assertEquals(user.getPassword(), uDao.findHashCode("friends" + uDao.getSalt(1)));
         assertEquals(user.getName(), "Chandler");
         assertEquals(user.getSurname(), "Bing");
+        assertEquals(user.isAdministrator(), false);
         assertEquals(user.getBirthDate(), date);
         assertEquals(user.getBirthPlace(), "USA");
         assertEquals(user.getStatus(), "working");

@@ -70,6 +70,7 @@ public class FriendsSqlDao implements FriendsDao {
         ResultSet res = stm.executeQuery();
         while (res.next()) {
             User user2 = new User(res.getString(2), res.getInt(1), res.getString(3));
+            user2.setAdministrator(res.getBoolean(4));
             user2.setName(res.getString(6));
             user2.setSurname(res.getString(7));
             user2.setBirthDate(res.getDate(8));
@@ -91,6 +92,7 @@ public class FriendsSqlDao implements FriendsDao {
         ResultSet res = stm.executeQuery();
         while (res.next()) {
             User user2 = new User(res.getString(2), res.getInt(1), res.getString(3));
+            user2.setAdministrator(res.getBoolean(4));
             user2.setName(res.getString(6));
             user2.setSurname(res.getString(7));
             user2.setBirthDate(res.getDate(8));
@@ -113,6 +115,7 @@ public class FriendsSqlDao implements FriendsDao {
         ResultSet res = stm.executeQuery();
         while (res.next()) {
             User user2 = new User(res.getString(2), res.getInt(1), res.getString(3));
+            user2.setAdministrator(res.getBoolean(4));
             user2.setName(res.getString(6));
             user2.setSurname(res.getString(7));
             user2.setBirthDate(res.getDate(8));

@@ -78,6 +78,7 @@ public class UserSqlDao implements UserDao {
         ResultSet res = stm.executeQuery();
         if (!res.next()) return null;
         User user = new User(res.getString(2), res.getInt(1), res.getString(3));
+        user.setAdministrator(res.getBoolean(4));
         user.setName(res.getString(6));
         user.setSurname(res.getString(7));
         user.setBirthDate(res.getDate(8));
@@ -127,6 +128,12 @@ public class UserSqlDao implements UserDao {
         ResultSet res = stm.executeQuery();
         while (res.next()) {
             User user = new User(res.getString(2), res.getInt(1), res.getString(3));
+            user.setAdministrator(res.getBoolean(4));
+            user.setName(res.getString(6));
+            user.setSurname(res.getString(7));
+            user.setBirthDate(res.getDate(8));
+            user.setBirthPlace(res.getString(9));
+            user.setStatus(res.getString(10));
             result.add(user);
         }
         return result;

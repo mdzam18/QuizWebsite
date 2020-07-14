@@ -26,7 +26,7 @@ public class AdministratorSqlDaoTest {
 		con = ProfileDataSrc.getConnection();
 		adminDao = new AdministratorSqlDao();
 		userDao = new UserSqlDao();
-		historyDao = new HistorySqlDao();
+		historyDao = new HistorySqlDao(false);
 		tables = new CreateTablesForTests();
 	}
 	

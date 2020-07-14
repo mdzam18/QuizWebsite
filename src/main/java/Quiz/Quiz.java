@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-/*
-=======
 package Quiz;
 
->>>>>>> f4fd8e79be1dd4bd2706adbd83ee1ce56cb1aa70
-import java.util.*;
+import java.util.List;
 
 public class Quiz {
 
@@ -95,11 +91,4 @@ public class Quiz {
 
 	public String getCategory() { return category; }
 
-<<<<<<< HEAD
 }
-=======
-	public Set<String> getTags() { return tags; }
-
-}
-*/
->>>>>>> 253d74c489c4581d719f02927871ef5af6c78811

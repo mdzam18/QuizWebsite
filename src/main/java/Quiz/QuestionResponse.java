@@ -14,6 +14,7 @@ public class QuestionResponse extends Question {
 	}
 
 	public boolean checkAnswer(String answer) {
-		return (answers.contains(answer));
-	}
+        return (answers.contains(answer));
+    }
+
 }

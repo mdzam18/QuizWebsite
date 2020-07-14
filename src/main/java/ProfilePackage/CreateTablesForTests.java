@@ -88,5 +88,21 @@ public class CreateTablesForTests {
                 ");");
         return true;
     }
-
+    
+    public boolean createQuizTable() throws SQLException{
+        Statement stm = con.createStatement();
+        stm.executeUpdate("CREATE TABLE " + QuizTableTest + " (\n" +
+                "QuizId int primary key,\n" +
+                "IsRandom boolean,\n" +
+                "IsOnePage boolean,\n" +
+                "IsImmediate boolean,\n" +
+                "InPracticeMode boolean,\n" +
+                "NumberOfQuestions int,\n" +
+                "Description varchar(255),\n" +
+                "Category varchar(255),\n" +
+                "CreatorId int,\n" +
+                "FOREIGN KEY (CreatorId) REFERENCES Users2 (UserId)\n" +
+                ");");
+        return true;
+    }
 }

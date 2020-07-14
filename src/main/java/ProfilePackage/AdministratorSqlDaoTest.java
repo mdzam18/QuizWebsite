@@ -1,5 +1,6 @@
 package ProfilePackage;
 
+import Quiz.Quiz;
 import org.junit.jupiter.api.*;
 
 import java.security.NoSuchAlgorithmException;
@@ -20,6 +21,7 @@ public class AdministratorSqlDaoTest {
 	private UserDao userDao;
 	private HistoryDao historyDao;
 	private Connection con;
+	private CreateTablesForTests tables;
 	
 	@BeforeAll
 	public void init() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
@@ -27,20 +29,21 @@ public class AdministratorSqlDaoTest {
 		userDao = new UserSqlDao();
 		historyDao = new HistorySqlDao();
 		con = adminDao.getConnection();
+		tables = new CreateTablesForTests();
 	}
 	
 	@BeforeEach
-	public void setUp() throws SQLException {
-		assertEquals(true, adminDao.createUsersTable());
-		assertEquals(true, adminDao.createQuizTable());
-		assertEquals(true, adminDao.createHistoryTable());
+	public void setUp() throws SQLException, ClassNotFoundException {
+		assertEquals(true, tables.createUserTable());
+		assertEquals(true, tables.createQuizTable());
+		assertEquals(true, tables.createHistoryTable());
 	}
 	
 	@AfterEach
 	public void tearDown() throws SQLException {
-		assertEquals(true, adminDao.dropTable("History2"));
-		assertEquals(true, adminDao.dropTable("Quiz2"));
-		assertEquals(true, adminDao.dropTable("Users2"));
+		assertEquals(true, tables.dropTable("History2"));
+		assertEquals(true, tables.dropTable("Quiz2"));
+		assertEquals(true, tables.dropTable("Users2"));
 	}
 	
 	@Test
@@ -91,10 +94,10 @@ public class AdministratorSqlDaoTest {
 	@Test
 	public void testDeleteHistory() throws SQLException {
 		Quiz quiz = new Quiz();
-		quiz.seId(1);
+		quiz.setId(String.valueOf(1));
 		historyDao.addToHistory(1,1,20,new Date(2020,2,1),new Time(1,1,1));
 		assertEquals(true, adminDao.deleteHistory(quiz));
-		assertEquals(null, historyDao.getHistories(1));
+		assertEquals(null, historyDao.getHistoriesByQuizId(1));
 	}
 	
 	@Test

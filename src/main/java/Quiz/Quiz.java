@@ -1,3 +1,5 @@
+package Quiz;
+
 import java.util.*;
 
 public class Quiz {
@@ -22,7 +24,7 @@ public class Quiz {
 		this.id = id;
 		this.isRandom = isRandom;
 		this.isOnePage = isOnePage;
-		this.isImmedate = isImmedate;
+		this.isImmediate = isImmedate;
 		this.questionCount = questionCount;
 		this.creator = creator;
 		this.description = description;
@@ -44,7 +46,7 @@ public class Quiz {
 	}
 
 	public boolean isImmedate(){
-		return isImmedate;
+		return isImmediate;
 	}
 
 	public int getQuestionCount(){
@@ -59,7 +61,7 @@ public class Quiz {
 		return description;
 	}
 
-	public Set<Question> getQuestionSet(){
+	public List<Question> getQuestionSet(){
 		return questions;
 	}
 

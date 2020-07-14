@@ -1,3 +1,5 @@
+package Quiz;
+
 import java.util.*;
 
 public class Question {
@@ -7,14 +9,14 @@ public class Question {
 
 	public Question(String question, Set<String> answers) {
 		this.question = question;
-		this.answer = answer;
+		this.answers = answers;
 	}
 
 	public String getQuestion() {
 		return question;
 	}
 
-	public HashSet<String> getAnswerSet() {
+	public Set<String> getAnswerSet() {
 		return answers;
 	}
 }

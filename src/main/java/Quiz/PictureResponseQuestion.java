@@ -1,3 +1,6 @@
+package Quiz;
+
+import java.util.Set;
 
 public class PictureResponseQuestion extends Question {
 
@@ -5,7 +8,7 @@ public class PictureResponseQuestion extends Question {
 	private String imgURL;
 	private Set<String> answers;
 
-	private static final TYPE = QuestionType.PICTURE_RESPONSE_QUESTION;
+	private static final int TYPE = QuestionType.PICTURE_RESPONSE_QUESTION;
 
 	public PictureResponseQuestion(String question, Set<String> answers, String imgURL) {
 		super(question, answers);
@@ -13,7 +16,7 @@ public class PictureResponseQuestion extends Question {
 	}
 
 	public boolean checkAnswer(String answer) {
-		return (set.contains(answer));
+		return (answers.contains(answer));
 	}
 
 	public String getImage(){

@@ -1,14 +1,6 @@
-<<<<<<< HEAD
-
-/*
-package Quiz;
-
-import java.util.*;
-=======
 package Quiz;
 
 import java.util.List;
->>>>>>> 2a06156c4c583d1d41a42ba5695d7932222e59f0
 
 public class Quiz {
 
@@ -37,13 +29,15 @@ public class Quiz {
 		this.isRandom = isRandom;
 	}
 
-	public void isOnePage(boolean isOnePage){
+	public void setIsOnePage(boolean isOnePage){
 		this.isOnePage = isOnePage;
 	}
 
 	public void setIsImmediate(boolean isImmediate){
 		this.isImmediate = isImmediate;
 	}
+
+	public void setInPracticeMode(boolean inPracticeMode) { this.inPracticeMode = inPracticeMode; }
 
 	public void setQuestionCount(int numberOfQuestions){
 		this.numberOfQuestions = numberOfQuestions;

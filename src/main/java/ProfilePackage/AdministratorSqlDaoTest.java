@@ -1,12 +1,13 @@
 package ProfilePackage;
 
-//import Quiz.*;
+import Quiz.*;
 
 import org.junit.jupiter.api.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -92,11 +93,11 @@ public class AdministratorSqlDaoTest {
 	
 	@Test
 	public void testDeleteHistory() throws SQLException {
-//		Quiz quiz = new Quiz(); //signature needs to be modified
-//		quiz.setId(1);
-//		historyDao.addToHistory(1,1,20,new Date(2020,2,1),new Time(1,1,1));
-//		assertEquals(true, adminDao.deleteHistory(quiz));
-//		assertEquals(null, historyDao.getHistoriesByQuizId(1));
+		Quiz quiz = new Quiz(1,1); //signature needs to be modified
+		quiz.setQuizId(1);
+		historyDao.addToHistory(1,1,20,new Date(),new Date());
+		assertEquals(true, adminDao.deleteHistory(quiz));
+		assertEquals(null, historyDao.getHistoriesByQuizId(1));
 	}
 	
 	@Test

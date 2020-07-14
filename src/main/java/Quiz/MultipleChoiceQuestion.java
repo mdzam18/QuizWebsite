@@ -1,9 +1,12 @@
+<<<<<<< HEAD
 /*
 <<<<<<< HEAD
 =======
+=======
+
+>>>>>>> 2a06156c4c583d1d41a42ba5695d7932222e59f0
 package Quiz;
 
->>>>>>> f4fd8e79be1dd4bd2706adbd83ee1ce56cb1aa70
 import java.util.*;
 
 public class MultipleChoiceQuestion extends Question {
@@ -27,4 +30,7 @@ public class MultipleChoiceQuestion extends Question {
 		return choices;
 	}
 }
+<<<<<<< HEAD
 */
+=======
+>>>>>>> 2a06156c4c583d1d41a42ba5695d7932222e59f0

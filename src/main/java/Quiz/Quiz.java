@@ -1,46 +1,40 @@
+<<<<<<< HEAD
 
 /*
 package Quiz;
 
 import java.util.*;
+=======
+package Quiz;
+
+import java.util.List;
+>>>>>>> 2a06156c4c583d1d41a42ba5695d7932222e59f0
 
 public class Quiz {
 
-	private int id;
+	private int quizId;
 	private boolean isRandom;
 	private boolean isOnePage;
 	private boolean isImmediate;
-	private int questionCount;
-	private String creator;
+	private boolean inPracticeMode;
+	private int numberOfQuestions;
 	private String description;
 	private List<Question> questions;
 	private String category;
-	private Set<String> tags;
+	private int creatorId;
 
-	public Quiz(int id, boolean isRandom, 
-				boolean isOnePage, boolean isImmediate,
-				int questionCount, String creator, 
-				String description, List<Question> questions,
-				String category, Set<String> tags) 
+	public Quiz(int quizId, int creatorId)
 	{
-		this.id = id;
-		this.isRandom = isRandom;
-		this.isOnePage = isOnePage;
-		this.isImmediate = isImmediate;
-		this.questionCount = questionCount;
-		this.creator = creator;
-		this.description = description;
-		this.questions = questions;
-		this.category = category;
-		this.tags = tags;
+		this.quizId = quizId;
+		this.creatorId = creatorId;
 	}
 
-	public void setId(int id){
-		this.id = id;
+	public void setQuizId(int quizId){
+		this.quizId = quizId;
 	}
 
 	public void setIsRandom(boolean isRandom){
-		this.isRandom = isRandom();
+		this.isRandom = isRandom;
 	}
 
 	public void isOnePage(boolean isOnePage){
@@ -51,12 +45,12 @@ public class Quiz {
 		this.isImmediate = isImmediate;
 	}
 
-	public void setQuestionCount(int questionCount){
-		this.questionCount = questionCount;
+	public void setQuestionCount(int numberOfQuestions){
+		this.numberOfQuestions = numberOfQuestions;
 	}
 
-	public void setCreator(String creator){
-		this.creator = creator;
+	public void setCreator(int creatorId){
+		this.creatorId = creatorId;
 	}
 
 	public void setDescription(String description){
@@ -71,12 +65,8 @@ public class Quiz {
 		this.category = category;
 	}
 
-	public void setTags(Set<String> tags) {
-		this.tags = tags;
-	}
-
-	public int getId(){
-		return id;
+	public int getQuizId(){
+		return quizId;
 	}
 
 	public boolean isRandom(){
@@ -92,11 +82,11 @@ public class Quiz {
 	}
 
 	public int getQuestionCount(){
-		return questionCount;
+		return numberOfQuestions;
 	}
 
-	public String getCreator(){
-		return creator;
+	public int getCreator(){
+		return creatorId;
 	}
 
 	public String getDescription(){
@@ -109,7 +99,4 @@ public class Quiz {
 
 	public String getCategory() { return category; }
 
-	public Set<String> getTags() { return tags; }
-
 }
-*/

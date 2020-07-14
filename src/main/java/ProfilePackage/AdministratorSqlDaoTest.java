@@ -1,3 +1,4 @@
+/*
 package ProfilePackage;
 
 import org.junit.jupiter.api.*;
@@ -104,4 +105,4 @@ public class AdministratorSqlDaoTest {
 		assertEquals(true, adminDao.promoteUser(user));
 		assertEquals(true, userDao.getUser(userId).isAdministrator());
 	}
-}
+}*/

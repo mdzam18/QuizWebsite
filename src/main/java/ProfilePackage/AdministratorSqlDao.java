@@ -1,3 +1,4 @@
+/*
 package ProfilePackage;
 
 import java.sql.*;
@@ -10,7 +11,9 @@ public class AdministratorSqlDao implements AdministratorDao {
 	private static final String quizTable = "Quiz2";
 	private static final String historyTable = "History2";
 	
-	/* THESE 3 CONSTANTS ARE FOR TESTING PURPOSES */
+	*/
+/* THESE 3 CONSTANTS ARE FOR TESTING PURPOSES *//*
+
 	private static final String CREATE_USERS2_TABLE = "CREATE TABLE " + userTable + " (\n" +
 			"UserId int primary key,\n" +
 			"UserName varchar(255),\n" +
@@ -188,3 +191,4 @@ public class AdministratorSqlDao implements AdministratorDao {
 		return true;
 	}
 }
+*/

@@ -1,3 +1,4 @@
+/*
 import java.util.*;
 
 public class MultipleChoiceQuestion extends Question {
@@ -20,4 +21,4 @@ public class MultipleChoiceQuestion extends Question {
 	public Set<String> getChoices() {
 		return choices;
 	}
-}
+}*/

@@ -22,21 +22,25 @@ public class MailSqlDaoTest {
     private UserSqlDao userDao;
     private Connection con;
     private CreateTablesForTests tables;
+    private FriendsSqlDao friendDao;
 
     @BeforeAll
-    public void getConnection() throws SQLException, ClassNotFoundException {
-        con = ProfileDataSrc.getConnection();
+    public void getConnection() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+        //con = ProfileDataSrc.getConnection();
+        con = NanukaDatabase.getConnection();
         tables = new CreateTablesForTests();
+        friendDao = new FriendsSqlDao();
+        mailDao = new MailSqlDao();
+        userDao = new UserSqlDao();
     }
 
     @BeforeEach
     public void setUp() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+
         CreateTablesForTests.MailsTable = CreateTablesForTests.MailsTableTest;
         CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
         assertEquals(tables.createMailsTable(), true);
         assertEquals(tables.createUserTable(), true);
-        mailDao = new MailSqlDao();
-        userDao = new UserSqlDao();
     }
 
     @AfterEach
@@ -45,6 +49,14 @@ public class MailSqlDaoTest {
         assertEquals(tables.dropTable(CreateTablesForTests.MailsTableTest), true);
         CreateTablesForTests.UsersTable = "test.Users";
         CreateTablesForTests.MailsTable = "test.Mails";
+    }
+    @Test
+    void myTest() throws SQLException{
+        userDao.addUser("nanuka", "123");
+        userDao.addUser("ana", "123");
+        friendDao.sendFriendRequest(1,2);
+        friendDao.confirmFriendRequest(1,2);
+        assertTrue(friendDao.areFriends(1,2));
     }
 
    /* @Test

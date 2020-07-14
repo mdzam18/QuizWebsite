@@ -1,3 +1,4 @@
+/*
 import java.util.*;
 
 public class Question {
@@ -17,4 +18,4 @@ public class Question {
 	public HashSet<String> getAnswerSet() {
 		return answers;
 	}
-}
+}*/

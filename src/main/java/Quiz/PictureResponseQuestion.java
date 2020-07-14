@@ -1,3 +1,4 @@
+/*
 
 public class PictureResponseQuestion extends Question {
 
@@ -21,4 +22,4 @@ public class PictureResponseQuestion extends Question {
 	}
 
 	
-}
+}*/

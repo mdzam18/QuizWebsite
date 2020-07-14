@@ -1,4 +1,4 @@
-/*package ProfilePackage;
+package ProfilePackage;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,6 +10,7 @@ public class FriendsSqlDao implements FriendsDao {
 
     public FriendsSqlDao() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
+        //con = NanukaDatabase.getConnection();
         friendsTable = CreateTablesForTests.FriendsTable;
     }
 
@@ -178,4 +179,3 @@ public class FriendsSqlDao implements FriendsDao {
     }
 
 }
-*/

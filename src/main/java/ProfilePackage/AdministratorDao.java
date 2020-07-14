@@ -1,3 +1,4 @@
+/*
 package ProfilePackage;
 
 import java.sql.Connection;
@@ -32,3 +33,4 @@ public interface AdministratorDao {
 }
 
 
+*/

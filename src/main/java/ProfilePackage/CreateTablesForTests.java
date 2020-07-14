@@ -9,7 +9,7 @@ public class CreateTablesForTests {
     public static final String UsersTableTest = "test.Users2";
     public static String UsersTable = "test.Users";
     public static String FriendsTable = "test.Friends";
-    public static String MailsTableTest = "test.Mails2";
+    public static String MailsTableTest = "Mails2";
     public static String MailsTable = "test.Mails";
     public static final String HistoryTableTest = "History2";
     public static final String QuizTableTest = "Quiz2";
@@ -19,6 +19,7 @@ public class CreateTablesForTests {
 
     public CreateTablesForTests() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
+        //con = NanukaDatabase.getConnection();
         //con = ProfileDataSrc.getConnection("oop_base", "root", "01234567");
     }
 
@@ -61,6 +62,7 @@ public class CreateTablesForTests {
 
     public boolean createMailsTable() throws SQLException, ClassNotFoundException {
         Statement s = con.createStatement();
+        //con.createStatement().executeQuery("drop table Mails2;");
         String query = "CREATE TABLE " + MailsTableTest +
                 " (\n" + "MailId int primary key ,\n" +
                 "SenderId int ,\n" +
@@ -68,10 +70,10 @@ public class CreateTablesForTests {
                 "Type varchar(255) ,\n" +
                 "Message varchar(255) ,\n" +
                 "Date Date ,\n" +
-                "Seen int);";
-                //"foreign key (SenderId) references Users(UserId),\n" +
-                //"foreign key (ReceiverId) references Users(UserId));";
-        s.executeUpdate(query);
+                "Seen int, \n" +
+                "foreign key (SenderId) references Users(UserId),\n" +
+                "foreign key (ReceiverId) references Users(UserId));";
+        s.executeQuery(query);
         return true;
     }
 

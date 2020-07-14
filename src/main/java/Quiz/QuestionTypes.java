@@ -1,3 +1,4 @@
+/*
 
 public final class QuestionType {
 
@@ -7,4 +8,4 @@ public final class QuestionType {
 	public static final int MULTI_ANSWER_QUESTION = 4;
 	public static final int MULTIPLE_CHOICE_AND_ANSWER_QUESTION = 5;
 
-}
+}*/

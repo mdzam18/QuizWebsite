@@ -1,3 +1,4 @@
+/*
 import java.util.*;
 
 public class QuestionResponse extends Question {
@@ -14,4 +15,4 @@ public class QuestionResponse extends Question {
 	public boolean checkAnswer(String answer) {
 		return (set.contains(answer));
 	}
-}
+}*/

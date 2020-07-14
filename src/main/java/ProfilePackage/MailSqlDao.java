@@ -8,7 +8,8 @@ public class MailSqlDao implements MailDao {
     private Connection con;
 
     public MailSqlDao() throws SQLException, ClassNotFoundException {
-        con = ProfileDataSrc.getConnection();
+        //con = ProfileDataSrc.getConnection();
+        con = NanukaDatabase.getConnection();
     }
 
     private Mail getMail(ResultSet rs) throws SQLException {

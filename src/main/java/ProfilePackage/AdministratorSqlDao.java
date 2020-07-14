@@ -1,12 +1,15 @@
 /*
 package ProfilePackage;
 
+import Quiz.Quiz;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdministratorSqlDao implements AdministratorDao {
 	private Connection con;
+<<<<<<< HEAD
 	private static final String userTable = "Users2";
 	private static final String quizTable = "Quiz2";
 	private static final String historyTable = "History2";
@@ -47,9 +50,17 @@ public class AdministratorSqlDao implements AdministratorDao {
 			"CreatorId int,\n" +
 			"FOREIGN KEY (CreatorId) REFERENCES Users2 (UserId)\n" +
 			");";
+=======
+	private String userTable;
+	private String quizTable;
+	private String historyTable;
+>>>>>>> f4fd8e79be1dd4bd2706adbd83ee1ce56cb1aa70
 	
 	public AdministratorSqlDao() throws SQLException, ClassNotFoundException {
 		con = ProfileDataSrc.getConnection();
+		userTable = "Users2"/*CreateTablesForTests.UsersTable*/;
+		quizTable = CreateTablesForTests.QuizTableTest;
+		historyTable = CreateTablesForTests.HistoryTableTest;
 	}
 	
 	public Connection getConnection() {
@@ -140,7 +151,7 @@ public class AdministratorSqlDao implements AdministratorDao {
 	public boolean deleteQuiz(Quiz quiz) throws SQLException {
 		PreparedStatement stm =
 				con.prepareStatement("DELETE FROM " + quizTable + " WHERE QuizId = ?;");
-		stm.setInt(1, quiz.getId());
+		stm.setInt(1, Integer.valueOf(quiz.getId()));
 		int n = stm.executeUpdate();
 		if(n == 1) return true;
 		return false;
@@ -150,7 +161,7 @@ public class AdministratorSqlDao implements AdministratorDao {
 	public boolean deleteHistory(Quiz quiz) throws SQLException {
 		PreparedStatement stm =
 				con.prepareStatement("DELETE FROM " + historyTable + " WHERE QuizId = ?;");
-		stm.setInt(1, quiz.getId());
+		stm.setInt(1, Integer.valueOf(quiz.getId()));
 		int n = stm.executeUpdate();
 		if(n > 0) return true;
 		return false;
@@ -166,6 +177,7 @@ public class AdministratorSqlDao implements AdministratorDao {
 		if(n == 1) return true;
 		return false;
 	}
+<<<<<<< HEAD
 	
 	public boolean createUsersTable() throws SQLException {
 		Statement stm = con.createStatement();
@@ -192,3 +204,6 @@ public class AdministratorSqlDao implements AdministratorDao {
 	}
 }
 */
+=======
+}
+>>>>>>> f4fd8e79be1dd4bd2706adbd83ee1ce56cb1aa70

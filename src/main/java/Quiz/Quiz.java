@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 /*
+=======
+package Quiz;
+
+>>>>>>> f4fd8e79be1dd4bd2706adbd83ee1ce56cb1aa70
 import java.util.*;
 
 public class Quiz {
 
-	private String id;
+	private int id;
 	private boolean isRandom;
 	private boolean isOnePage;
 	private boolean isImmediate;
@@ -14,8 +19,8 @@ public class Quiz {
 	private String category;
 	private Set<String> tags;
 
-	public Quiz(String id, boolean isRandom, 
-				boolean isOnePage, boolean isImmedate,
+	public Quiz(int id, boolean isRandom, 
+				boolean isOnePage, boolean isImmediate,
 				int questionCount, String creator, 
 				String description, List<Question> questions,
 				String category, Set<String> tags) 
@@ -23,7 +28,7 @@ public class Quiz {
 		this.id = id;
 		this.isRandom = isRandom;
 		this.isOnePage = isOnePage;
-		this.isImmedate = isImmedate;
+		this.isImmediate = isImmediate;
 		this.questionCount = questionCount;
 		this.creator = creator;
 		this.description = description;
@@ -32,7 +37,47 @@ public class Quiz {
 		this.tags = tags;
 	}
 
-	public String getId(){
+	public void setId(int id){
+		this.id = id;
+	}
+
+	public void setIsRandom(boolean isRandom){
+		this.isRandom = isRandom();
+	}
+
+	public void isOnePage(boolean isOnePage){
+		this.isOnePage = isOnePage;
+	}
+
+	public void setIsImmediate(boolean isImmediate){
+		this.isImmediate = isImmediate;
+	}
+
+	public void setQuestionCount(int questionCount){
+		this.questionCount = questionCount;
+	}
+
+	public void setCreator(String creator){
+		this.creator = creator;
+	}
+
+	public void setDescription(String description){
+		this.description = description;
+	}
+
+	public void setQuestionSet(List<Question> questions){
+		this.questions = questions;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public void setTags(Set<String> tags) {
+		this.tags = tags;
+	}
+
+	public int getId(){
 		return id;
 	}
 
@@ -44,8 +89,8 @@ public class Quiz {
 		return isOnePage;
 	}
 
-	public boolean isImmedate(){
-		return isImmedate;
+	public boolean isImmediate(){
+		return isImmediate;
 	}
 
 	public int getQuestionCount(){
@@ -56,14 +101,17 @@ public class Quiz {
 		return creator;
 	}
 
-	public String description(){
+	public String getDescription(){
 		return description;
 	}
 
-	public Set<Question> getQuestionSet(){
+	public List<Question> getQuestionSet(){
 		return questions;
 	}
 
+	public String getCategory() { return category; }
+
+	public Set<String> getTags() { return tags; }
 
 }
 */

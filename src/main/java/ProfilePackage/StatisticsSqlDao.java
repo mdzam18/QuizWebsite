@@ -1,4 +1,3 @@
-/*
 package ProfilePackage;
 
 import java.sql.Connection;
@@ -22,28 +21,28 @@ public class StatisticsSqlDao implements StatisticsDao {
 		historyTable = CreateTablesForTests.HistoryTableTest;
 	}
 	
-	public List<Quiz> getAllQuizzes(int userId) throws SQLException {
-		List <Quiz> quizzes = new ArrayList<>();
-		PreparedStatement stm =
-				con.prepareStatement("SELECT * FROM " + historyTable + " WHERE UserId = ?;");
-		stm.setInt(1, userId);
-		ResultSet rs = stm.executeQuery();
-		while(rs.next()){
-			int quizId = rs.getInt(1);
-			stm = con.prepareStatement("SELECT * FROM " + quizTable + " WHERE QuizId = ?;");
-			stm.setInt(1, quizId);
-//			String id, boolean isRandom,
-//			boolean isOnePage, boolean isImmedate,
-//			int questionCount, String creator,
-//			String description, List<Question> questions,
-//			String category, Set<String> tags)
-//			Quiz quiz =
-//					new Quiz(rs.getString(1), rs.getBoolean(2), rs.getBoolean(3), rs.getBoolean(4));
-//			////????
-		}
-		return quizzes;
-		
-	}
+//	public List<Quiz> getAllQuizzes(int userId) throws SQLException {
+//		List <Quiz> quizzes = new ArrayList<>();
+//		PreparedStatement stm =
+//				con.prepareStatement("SELECT * FROM " + historyTable + " WHERE UserId = ?;");
+//		stm.setInt(1, userId);
+//		ResultSet rs = stm.executeQuery();
+//		while(rs.next()){
+//			int quizId = rs.getInt(1);
+//			stm = con.prepareStatement("SELECT * FROM " + quizTable + " WHERE QuizId = ?;");
+//			stm.setInt(1, quizId);
+////			String id, boolean isRandom,
+////			boolean isOnePage, boolean isImmedate,
+////			int questionCount, String creator,
+////			String description, List<Question> questions,
+////			String category, Set<String> tags)
+////			Quiz quiz =
+////					new Quiz(rs.getString(1), rs.getBoolean(2), rs.getBoolean(3), rs.getBoolean(4));
+////			////????
+//		}
+//		return quizzes;
+//
+//	}
 	
 	public List <Integer> getPastPerformances(int userId, int quizId) throws SQLException {
 		List <Integer> result = new ArrayList<>();
@@ -71,7 +70,7 @@ public class StatisticsSqlDao implements StatisticsDao {
 		return max;
 		
 	}
-
+	
 	public User getBestPlayer(int quizId) throws SQLException {
 		User user = null;
 		long minTime = Long.MAX_VALUE;
@@ -109,4 +108,4 @@ public class StatisticsSqlDao implements StatisticsDao {
 	}
 	
 	
-}*/
+}

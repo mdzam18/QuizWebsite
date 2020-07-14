@@ -1,7 +1,6 @@
-/*
 package ProfilePackage;
 
-import Quiz.Quiz;
+//import Quiz.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,64 +8,13 @@ import java.util.List;
 
 public class AdministratorSqlDao implements AdministratorDao {
 	private Connection con;
-<<<<<<< HEAD
-	private static final String userTable = "Users2";
-	private static final String quizTable = "Quiz2";
-	private static final String historyTable = "History2";
-	
-	*//*
-
-*/
-/* THESE 3 CONSTANTS ARE FOR TESTING PURPOSES *//*
-
-
-	private static final String CREATE_USERS2_TABLE = "CREATE TABLE " + userTable + " (\n" +
-			"UserId int primary key,\n" +
-			"UserName varchar(255),\n" +
-			"Password varchar(255),\n" +
-			"IsAdministrator boolean,\n" +
-			"Salt varchar(255),\n" +
-			"Name varchar(255),\n" +
-			"Surname varchar(255),\n" +
-			"Birth_Date Date,\n" +
-			"Birth_Place varchar(255),\n" +
-			"Status varchar(255)\n" +
-			");";
-	private static final String CREATE_HISTORY2_TABLE = "CREATE TABLE " + historyTable + " (\n" +
-			"UserId int,\n" +
-			"QuizId int,\n" +
-			"Score int,\n" +
-			"Date Date,\n" +
-			"Time Time,\n" +
-			"FOREIGN KEY (UserId) REFERENCES Users2 (UserId),\n" +
-			"FOREIGN KEY (QuizId) REFERENCES Quiz2 (QuizId)\n" +
-			");";
-	private static final String CREATE_QUIZ2_TABLE = "CREATE TABLE " + quizTable + " (\n" +
-			"QuizId int primary key,\n" +
-			"IsRandom boolean,\n" +
-			"IsOnePage boolean,\n" +
-			"IsImmediate boolean,\n" +
-			"InPracticeMode boolean,\n" +
-			"NumberOfQuestions int,\n" +
-			"Description varchar(255),\n" +
-			"Category varchar(255),\n" +
-			"CreatorId int,\n" +
-			"FOREIGN KEY (CreatorId) REFERENCES Users2 (UserId)\n" +
-			");";
-=======
 	private String userTable;
 	private String quizTable;
 	private String historyTable;
->>>>>>> f4fd8e79be1dd4bd2706adbd83ee1ce56cb1aa70
 	
 	public AdministratorSqlDao() throws SQLException, ClassNotFoundException {
 		con = ProfileDataSrc.getConnection();
-<<<<<<< Updated upstream
-		userTable = "Users2"*/
-/*CreateTablesForTests.UsersTable;
-=======
 		userTable = CreateTablesForTests.UsersTableTest;
->>>>>>> Stashed changes
 		quizTable = CreateTablesForTests.QuizTableTest;
 		historyTable = CreateTablesForTests.HistoryTableTest;
 	}
@@ -151,25 +99,25 @@ public class AdministratorSqlDao implements AdministratorDao {
 		return false;
 	}
 	
-	@Override
-	public boolean deleteQuiz(Quiz quiz) throws SQLException {
-		PreparedStatement stm =
-				con.prepareStatement("DELETE FROM " + quizTable + " WHERE QuizId = ?;");
-		stm.setInt(1, Integer.valueOf(quiz.getId()));
-		int n = stm.executeUpdate();
-		if(n == 1) return true;
-		return false;
-	}
-	
-	@Override
-	public boolean deleteHistory(Quiz quiz) throws SQLException {
-		PreparedStatement stm =
-				con.prepareStatement("DELETE FROM " + historyTable + " WHERE QuizId = ?;");
-		stm.setInt(1, Integer.valueOf(quiz.getId()));
-		int n = stm.executeUpdate();
-		if(n > 0) return true;
-		return false;
-	}
+//	@Override
+//	public boolean deleteQuiz(Quiz quiz) throws SQLException {
+//		PreparedStatement stm =
+//				con.prepareStatement("DELETE FROM " + quizTable + " WHERE QuizId = ?;");
+//		stm.setInt(1, Integer.valueOf(quiz.getId()));
+//		int n = stm.executeUpdate();
+//		if(n == 1) return true;
+//		return false;
+//	}
+//
+//	@Override
+//	public boolean deleteHistory(Quiz quiz) throws SQLException {
+//		PreparedStatement stm =
+//				con.prepareStatement("DELETE FROM " + historyTable + " WHERE QuizId = ?;");
+//		stm.setInt(1, Integer.valueOf(quiz.getId()));
+//		int n = stm.executeUpdate();
+//		if(n > 0) return true;
+//		return false;
+//	}
 	
 	@Override
 	public boolean promoteUser(User user) throws SQLException {
@@ -181,35 +129,4 @@ public class AdministratorSqlDao implements AdministratorDao {
 		if(n == 1) return true;
 		return false;
 	}
-<<<<<<< HEAD
-	
-	public boolean createUsersTable() throws SQLException {
-		Statement stm = con.createStatement();
-		stm.executeUpdate(CREATE_USERS2_TABLE);
-		return true;
-	}
-	
-	public boolean createHistoryTable() throws SQLException {
-		Statement stm = con.createStatement();
-		stm.executeUpdate(CREATE_HISTORY2_TABLE);
-		return true;
-	}
-	
-	public boolean createQuizTable() throws SQLException {
-		Statement stm = con.createStatement();
-		stm.executeUpdate(CREATE_QUIZ2_TABLE);
-		return true;
-	}
-	
-	public boolean dropTable(String tableName) throws SQLException {
-		Statement stm = con.createStatement();
-		stm.executeUpdate("DROP TABLE " + tableName);
-		return true;
-	}
 }
-*//*
-
-=======
-}
->>>>>>> f4fd8e79be1dd4bd2706adbd83ee1ce56cb1aa70
-*/

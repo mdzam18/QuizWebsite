@@ -1,7 +1,7 @@
-/*
 package ProfilePackage;
 
-import Quiz.Quiz;
+//import Quiz.*;
+
 import org.junit.jupiter.api.*;
 
 import java.security.NoSuchAlgorithmException;
@@ -16,7 +16,7 @@ public class AdministratorSqlDaoTest {
 	private AdministratorDao adminDao;
 	private UserDao userDao;
 	private HistoryDao historyDao;
-//	private Quiz.QuizDAO quizDao;
+	//	private Quiz.QuizDAO quizDao;
 	private Connection con;
 	private CreateTablesForTests tables;
 	
@@ -106,4 +106,4 @@ public class AdministratorSqlDaoTest {
 		assertEquals(true, adminDao.promoteUser(user));
 		assertEquals(true, userDao.getUser(userId).isAdministrator());
 	}
-}*/
+}

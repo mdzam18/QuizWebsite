@@ -1,7 +1,5 @@
-/*
 package ProfilePackage;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import Quiz.*;
@@ -9,7 +7,7 @@ import Quiz.*;
 
 public interface StatisticsDao {
 	
-	public List<Quiz> getAllQuizzes(int userId) throws SQLException;
+//	public List<Quiz> getAllQuizzes(int userId) throws SQLException;
 	
 	public List<Integer> getPastPerformances(int userId, int quizId) throws SQLException;
 	
@@ -17,10 +15,4 @@ public interface StatisticsDao {
 	
 	public User getBestPlayer(int quizId) throws SQLException;
 	
-<<<<<<< Updated upstream
-	public User getBestPerformance(int quizId);
-	
-}*/
-=======
 }
->>>>>>> Stashed changes

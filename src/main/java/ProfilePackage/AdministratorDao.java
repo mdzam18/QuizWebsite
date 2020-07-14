@@ -1,7 +1,6 @@
-/*
 package ProfilePackage;
 
-import Quiz.Quiz;
+//import Quiz.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,13 +16,11 @@ public interface AdministratorDao {
 	
 	boolean deleteUser(User user) throws SQLException;
 	
-	boolean deleteQuiz(Quiz quiz) throws SQLException;
+//	boolean deleteQuiz(Quiz quiz) throws SQLException;
 	
-	boolean deleteHistory(Quiz quiz) throws SQLException;
+//	boolean deleteHistory(Quiz quiz) throws SQLException;
 	
 	boolean promoteUser(User user) throws SQLException;
 	
 }
-
-*/
 

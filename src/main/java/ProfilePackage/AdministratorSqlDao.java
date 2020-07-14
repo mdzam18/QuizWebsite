@@ -45,7 +45,7 @@ public class AdministratorSqlDao implements AdministratorDao {
 			"FOREIGN KEY (CreatorId) REFERENCES Users2 (UserId)\n" +
 			");";
 	
-	public AdministrationSqlDao() throws SQLException, ClassNotFoundException {
+	public AdministratorSqlDao() throws SQLException, ClassNotFoundException {
 		con = ProfileDataSrc.getConnection();
 	}
 	

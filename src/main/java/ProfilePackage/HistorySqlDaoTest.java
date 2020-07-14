@@ -2,6 +2,7 @@ package ProfilePackage;
 
 import org.junit.jupiter.api.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
@@ -13,12 +14,6 @@ class HistorySqlDaoTest {
 
     private final long oneDay = 1000*60*60*24;// Number milliseconds in a day
     private CreateTablesForTests tables;
-    private String tableName = CreateTablesForTests.HistoryTableTest;
-
-    private Random random = new Random();
-    private int getScore() {
-        return 1 + Math.abs(random.nextInt(300));
-    }
 
     /* Testing History Class */
     @Test
@@ -125,12 +120,16 @@ class HistorySqlDaoTest {
     @BeforeEach
     void setUpDataBase() throws SQLException, ClassNotFoundException {
         tables = new CreateTablesForTests();
+        assertTrue(tables.createUserTable());
+        assertTrue(tables.createQuizTable());
         assertTrue(tables.createHistoryTable());
     }
 
     @AfterEach
     void dropDataBase() throws SQLException {
-        assertTrue(tables.dropTable("oop_base." + tableName));
+        assertTrue(tables.dropTable(CreateTablesForTests.HistoryTableTest));
+        assertTrue(tables.dropTable(CreateTablesForTests.QuizTableTest));
+        assertTrue(tables.dropTable(CreateTablesForTests.UsersTableTest));
     }
 
     @Test
@@ -143,37 +142,53 @@ class HistorySqlDaoTest {
 
         for(int i = 0; i<3; i++) {
             int score = getScore();
-            long starter = Math.abs(random.nextLong());
-            long end = starter + Math.abs(random.nextInt(2000));
-            histories.add(new History(userIds[0], quizIds[0], score, new Date(starter), new Date(end)));
+            long start = System.currentTimeMillis() - 10*oneDay;
+            long end = start + 6*oneDay;
+            histories.add(new History(userIds[0], quizIds[0], score, new Date(start), new Date(end)));
         }
         for(int i = 0; i<5; i++) {
             int score = getScore();
-            long starter = Math.abs(random.nextLong());
-            long end = starter + Math.abs(random.nextInt(2000));
-            histories.add(new History(userIds[1], quizIds[1], score, new Date(starter), new Date(end)));
+            long start = System.currentTimeMillis() - 20*oneDay;
+            long end = start + 19*oneDay;
+            histories.add(new History(userIds[1], quizIds[1], score, new Date(start), new Date(end)));
         }
         for(int i = 0; i<4; i++) {
             int score = getScore();
-            long starter = Math.abs(random.nextLong());
-            long end = starter + Math.abs(random.nextInt(2000));
-            histories.add(new History(userIds[2], quizIds[2], score, new Date(starter), new Date(end)));
+            long start = System.currentTimeMillis() - 365*oneDay;
+            long end = start + oneDay/24;
+            histories.add(new History(userIds[2], quizIds[2], score, new Date(start), new Date(end)));
         }
 
         for(int i = 0; i<3; i++) {
             History h = histories.get(i);
-            historyDao.addToHistory(h.getUserId(), h.getQuizId(), h.getScore(), h.getStartDate(), h.getEndDate());
+            assertTrue(historyDao.addToHistory(h.getUserId(), h.getQuizId(), h.getScore(), h.getStartDate(), h.getEndDate()));
         }
         for(int i = 3; i<histories.size(); i++) {
-            historyDao.addToHistory(histories.get(i));
+            assertTrue(historyDao.addToHistory(histories.get(i)));
+        }
+
+        for(int i = 0; i<userIds.length; i++) {
+            assertTrue(historyDao.getUserIds().contains(userIds[i]));
         }
 
         for(int i = 0; i<userIds.length; i++) {
             List<History> historiesResult = historyDao.getHistories(userIds[i]);
-            for(int j = 0; j<historiesResult.size(); j++) {
-                assertEquals(historiesResult.get(j).getQuizId(), quizIds[i]);
+            for(History his: historiesResult) {
+                assertEquals(his.getQuizId(), quizIds[i]);
             }
         }
+
+        for(int i = 0; i<quizIds.length; i++) {
+            List<History> historiesResult = historyDao.getHistoriesByQuizId(quizIds[i]);
+            for(History his: historiesResult) {
+                assertEquals(his.getUserId(), userIds[i]);
+            }
+        }
+    }
+
+    /* Some necessary methods */
+    private int getScore() {
+        return 1 + (int)(System.currentTimeMillis()%300);
     }
 
 }

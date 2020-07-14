@@ -11,16 +11,16 @@ public class CreateTablesForTests {
     public static String FriendsTable = "test.Friends";
     public static String MailsTableTest = "Mails2";
     public static String MailsTable = "test.Mails";
-    public static final String HistoryTableTest = "History2";
-    public static final String QuizTableTest = "Quiz2";
+    public static final String HistoryTableTest = "test.History";
+    public static final String QuizTableTest = "test.Quiz";
     public static final String QuestionTableTest = "Question2";
 
     private Connection con;
 
     public CreateTablesForTests() throws SQLException, ClassNotFoundException {
-        con = ProfileDataSrc.getConnection();
+        //con = ProfileDataSrc.getConnection();
         //con = NanukaDatabase.getConnection();
-        //con = ProfileDataSrc.getConnection("oop_base", "root", "01234567");
+        con = ProfileDataSrc.getConnection("", "root", "01234567");
     }
 
     public boolean createUserTable() throws SQLException, ClassNotFoundException {
@@ -83,10 +83,10 @@ public class CreateTablesForTests {
                 "   UserId int ,\n" +
                 "   QuizId int ,\n" +
                 "   Score int,\n" +
-                "   Date Date,\n" +
-                "   Time Time,\n" +
-                "   foreign key (UserId) references Users(UserId),\n" +
-                "   foreign key (QuizId) references Quiz(QuizId)\n" +
+                "   StartDate Date,\n" +
+                "   EndDate Date/*,*/\n" +
+                //"   foreign key (UserId) references Users2(UserId),\n" +
+                //"   foreign key (QuizId) references Quiz(QuizId)\n" +
                 ");");
         return true;
     }
@@ -102,8 +102,8 @@ public class CreateTablesForTests {
                 "NumberOfQuestions int,\n" +
                 "Description varchar(255),\n" +
                 "Category varchar(255),\n" +
-                "CreatorId int,\n" +
-                "FOREIGN KEY (CreatorId) REFERENCES Users2 (UserId)\n" +
+                "CreatorId int/*,*/\n" +
+                //"FOREIGN KEY (CreatorId) REFERENCES Users2 (UserId)\n" +
                 ");");
         return true;
     }

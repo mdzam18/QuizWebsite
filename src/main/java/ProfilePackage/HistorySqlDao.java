@@ -17,8 +17,7 @@ public class HistorySqlDao implements HistoryDao {
     private static final int START_DATE_COL = 4;
     private static final int END_DATE_COL = 5;
 
-    public final static String TABLE_NAME  = "oop_base.History";
-    private String tableName = TABLE_NAME;
+    private String tableName;
 
     public HistorySqlDao() {
         this(true);
@@ -27,11 +26,12 @@ public class HistorySqlDao implements HistoryDao {
     /* Constructor For Testing */
     public HistorySqlDao(boolean useTables) {
         data = new HashMap<>();
+        tableName = CreateTablesForTests.HistoryTableTest;
 
         this.useTables = useTables;
         if(useTables) {
             try {
-                connection = ProfileDataSrc.getConnection();
+                connection = ProfileDataSrc.getConnection("", "root", "01234567");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -42,7 +42,7 @@ public class HistorySqlDao implements HistoryDao {
     private void setUpTableData() {
         try {
             Statement state = connection.createStatement();
-            ResultSet result = state.executeQuery("SELECT * FROM " + TABLE_NAME);
+            ResultSet result = state.executeQuery("SELECT * FROM " + tableName);
 
             while (result.next()){
                 int userId = result.getInt(USER_ID_COL);
@@ -76,7 +76,7 @@ public class HistorySqlDao implements HistoryDao {
     public boolean addToHistory(int userId, int quizId, int score, Date startDate, Date endDate) {
         if(useTables) {
             try {
-                String sqlString = "INSERT INTO " + TABLE_NAME + " VALUES(?, ?, ?, ?, ?);";
+                String sqlString = "INSERT INTO " + tableName + " VALUES(?, ?, ?, ?, ?);";
 
                 PreparedStatement prepState = connection.prepareStatement(sqlString);
                 prepState.setInt(1, userId);
@@ -97,7 +97,7 @@ public class HistorySqlDao implements HistoryDao {
 
     @Override
     public List<History> getHistories(int userId) {
-        return data.get(userId);
+        return new ArrayList<>(data.get(userId));
     }
 
     @Override
@@ -131,7 +131,7 @@ public class HistorySqlDao implements HistoryDao {
     public void removeFromHistories(int quizId) {
         if(useTables) {
             try {
-                String sqlString = "DELETE FROM " + TABLE_NAME + " WHERE QuizId = ?;";
+                String sqlString = "DELETE FROM " + tableName + " WHERE QuizId = ?;";
                 PreparedStatement prepState = connection.prepareStatement(sqlString);
                 prepState.setInt(1, quizId);
                 prepState.execute();
@@ -162,6 +162,10 @@ public class HistorySqlDao implements HistoryDao {
         data.remove(userId);
     }
 
+    @Override
+    public String toString() {
+        return data.toString();
+    }
 
     /* Sorting by Descent */
     public static List<History> sortByEndDate(List<History> histories) {

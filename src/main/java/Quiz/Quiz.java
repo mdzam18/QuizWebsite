@@ -1,8 +1,5 @@
 package Quiz;
-<<<<<<< HEAD
-=======
 
->>>>>>> 58c11f94a70e57bbd2621ac50df6483211d08a7d
 import java.util.*;
 
 public class Quiz {
@@ -19,7 +16,7 @@ public class Quiz {
 	private Set<String> tags;
 
 	public Quiz(int id, boolean isRandom, 
-				boolean isOnePage, boolean isImmedate,
+				boolean isOnePage, boolean isImmediate,
 				int questionCount, String creator, 
 				String description, List<Question> questions,
 				String category, Set<String> tags) 
@@ -27,7 +24,7 @@ public class Quiz {
 		this.id = id;
 		this.isRandom = isRandom;
 		this.isOnePage = isOnePage;
-		this.isImmediate = isImmedate;
+		this.isImmediate = isImmediate;
 		this.questionCount = questionCount;
 		this.creator = creator;
 		this.description = description;
@@ -88,11 +85,7 @@ public class Quiz {
 		return isOnePage;
 	}
 
-<<<<<<< HEAD
 	public boolean isImmediate(){
-=======
-	public boolean isImmedate(){
->>>>>>> 58c11f94a70e57bbd2621ac50df6483211d08a7d
 		return isImmediate;
 	}
 
@@ -104,7 +97,7 @@ public class Quiz {
 		return creator;
 	}
 
-	public String description(){
+	public String getDescription(){
 		return description;
 	}
 

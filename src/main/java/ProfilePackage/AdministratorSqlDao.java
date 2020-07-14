@@ -14,8 +14,11 @@ public class AdministratorSqlDao implements AdministratorDao {
 	private static final String quizTable = "Quiz2";
 	private static final String historyTable = "History2";
 	
-	*/
+	*//*
+
+*/
 /* THESE 3 CONSTANTS ARE FOR TESTING PURPOSES *//*
+
 
 	private static final String CREATE_USERS2_TABLE = "CREATE TABLE " + userTable + " (\n" +
 			"UserId int primary key,\n" +
@@ -58,7 +61,8 @@ public class AdministratorSqlDao implements AdministratorDao {
 	
 	public AdministratorSqlDao() throws SQLException, ClassNotFoundException {
 		con = ProfileDataSrc.getConnection();
-		userTable = "Users2"/*CreateTablesForTests.UsersTable*/;
+		userTable = "Users2"*/
+/*CreateTablesForTests.UsersTable;
 		quizTable = CreateTablesForTests.QuizTableTest;
 		historyTable = CreateTablesForTests.HistoryTableTest;
 	}
@@ -203,7 +207,9 @@ public class AdministratorSqlDao implements AdministratorDao {
 		return true;
 	}
 }
-*/
+*//*
+
 =======
 }
 >>>>>>> f4fd8e79be1dd4bd2706adbd83ee1ce56cb1aa70
+*/

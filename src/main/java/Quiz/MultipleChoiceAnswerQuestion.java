@@ -1,9 +1,8 @@
-<<<<<<< HEAD
+
 /*
 =======
 package Quiz;
 
->>>>>>> f4fd8e79be1dd4bd2706adbd83ee1ce56cb1aa70
 import java.util.*;
 
 public class MultipleChoiceAnswerQuestion extends Question {

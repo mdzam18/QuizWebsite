@@ -26,8 +26,8 @@ public class MailSqlDaoTest {
 
     @BeforeAll
     public void getConnection() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
-        //con = ProfileDataSrc.getConnection();
-        con = NanukaDatabase.getConnection();
+        con = ProfileDataSrc.getConnection();
+        //con = NanukaDatabase.getConnection();
         tables = new CreateTablesForTests();
         friendDao = new FriendsSqlDao();
         mailDao = new MailSqlDao();

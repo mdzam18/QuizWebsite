@@ -13,7 +13,7 @@ public class FriendsSqlDao implements FriendsDao {
         //con = NanukaDatabase.getConnection();
         friendsTable = CreateTablesForTests.FriendsTable;
     }
-
+/*
     @Override
     public boolean sendFriendRequest(User from, User to) throws SQLException {
         if (from.getUserId() == to.getUserId()) return false;
@@ -43,16 +43,17 @@ public class FriendsSqlDao implements FriendsDao {
         statement.executeUpdate();
         return true;
     }
+    */
 
     @Override
-    public boolean deleteFriend(User from, User to) throws SQLException {
+    public boolean deleteFriend(int from, int to) throws SQLException {
         PreparedStatement stm = null;
         stm = con.prepareStatement(
                 "delete from " + friendsTable + " where (SenderId = ? and ReceiverId = ?) or (SenderId = ? and ReceiverId = ?);");
-        stm.setInt(1, from.getUserId());
-        stm.setInt(2, to.getUserId());
-        stm.setInt(3, to.getUserId());
-        stm.setInt(4, from.getUserId());
+        stm.setInt(1, from);
+        stm.setInt(2, to);
+        stm.setInt(3, to);
+        stm.setInt(4, from);
         stm.executeUpdate();
         return true;
     }
@@ -124,6 +125,7 @@ public class FriendsSqlDao implements FriendsDao {
         return result;
     }
 
+    @Override
     public boolean sendFriendRequest(int from, int to) throws SQLException {
         if (from == to) return false;
         if (areFriends(from, to) || requested(from, to) || requested(to, from)) return false;

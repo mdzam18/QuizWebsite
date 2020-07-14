@@ -5,11 +5,12 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface FriendsDao {
-    boolean sendFriendRequest(User from, User to) throws SQLException;
 
-    boolean confirmFriendRequest(User from, User to) throws SQLException;
+    boolean sendFriendRequest(int from, int to) throws SQLException;
 
-    boolean deleteFriend(User from, User to) throws SQLException;
+    //boolean confirmFriendRequest(User from, User to) throws SQLException;
+
+    boolean deleteFriend(int from, int to) throws SQLException;
 
     List<User> getSentRequests(User user) throws SQLException;
 

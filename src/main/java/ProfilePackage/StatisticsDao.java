@@ -1,3 +1,4 @@
+/*
 package ProfilePackage;
 
 import java.sql.Connection;
@@ -20,4 +21,4 @@ public interface StatisticsDao {
 	
 	public User getBestPerformance(int quizId);
 	
-}
+}*/

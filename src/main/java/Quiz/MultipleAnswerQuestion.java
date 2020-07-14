@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 /*
-=======
-package Quiz;
-
->>>>>>> f4fd8e79be1dd4bd2706adbd83ee1ce56cb1aa70
 import java.util.*;
 
 public class MultipleAnswerQuestion extends Question {
@@ -20,11 +15,10 @@ public class MultipleAnswerQuestion extends Question {
 	}
 
 	public boolean checkAnswer(String answer) {
-<<<<<<< HEAD
 		return (answers.contains(answer));
 =======
 		return (choices.contains(answer));
->>>>>>> 58c11f94a70e57bbd2621ac50df6483211d08a7d
+
 	}
 
 	public Set<String> getChoices() {

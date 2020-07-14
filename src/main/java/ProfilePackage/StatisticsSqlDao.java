@@ -1,3 +1,4 @@
+/*
 package ProfilePackage;
 
 import java.sql.Connection;
@@ -88,4 +89,4 @@ public class StatisticsSqlDao implements StatisticsDao {
 	}
 
 	
-}
+}*/

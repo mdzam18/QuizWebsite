@@ -1,5 +1,5 @@
-<<<<<<< HEAD
 /*
+<<<<<<< HEAD
 =======
 package Quiz;
 
@@ -26,4 +26,5 @@ public class MultipleChoiceQuestion extends Question {
 	public Set<String> getChoices() {
 		return choices;
 	}
-}*/
+}
+*/

@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface AdministratorDao {
 	
-	Connection getConnection() throws SQLException;
-	
 	List<User> getAllAdmins() throws SQLException;
 	
 	User addAdmin(String username, String password) throws SQLException;

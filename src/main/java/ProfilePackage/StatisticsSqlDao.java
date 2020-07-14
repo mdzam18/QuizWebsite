@@ -11,16 +11,15 @@ import Quiz.*;
 
 public class StatisticsSqlDao implements StatisticsDao {
 	private Connection con;
-	private static final String userTable = "Users2";
-	private static final String quizTable = "Quiz2";
-	private static final String historyTable = "History2";
+	private String userTable;
+	private String quizTable;
+	private String historyTable;
 	
 	public StatisticsSqlDao() throws SQLException, ClassNotFoundException {
 		con = ProfileDataSrc.getConnection();
-	}
-	
-	public Connection getConnection() {
-		return con;
+		userTable = CreateTablesForTests.UsersTableTest;
+		quizTable = CreateTablesForTests.QuizTableTest;
+		historyTable = CreateTablesForTests.HistoryTableTest;
 	}
 	
 	public List<Quiz> getAllQuizzes(int userId) throws SQLException {
@@ -42,7 +41,7 @@ public class StatisticsSqlDao implements StatisticsDao {
 //					new Quiz(rs.getString(1), rs.getBoolean(2), rs.getBoolean(3), rs.getBoolean(4));
 //			////????
 		}
-		return null;
+		return quizzes;
 		
 	}
 	
@@ -74,19 +73,40 @@ public class StatisticsSqlDao implements StatisticsDao {
 	}
 
 	public User getBestPlayer(int quizId) throws SQLException {
+		User user = null;
+		long minTime = Long.MAX_VALUE;
+		int maxScore = 0;
+		int userId = 0;
 		PreparedStatement stm =
-				con.prepareStatement("SELECT max(Score) FROM " + historyTable + " WHERE QuizId = ?;");
+				con.prepareStatement("SELECT * FROM " + historyTable + " WHERE QuizId = ?;");
 		stm.setInt(2, quizId);
 		ResultSet rs = stm.executeQuery();
-
 		while(rs.next()){
-
+			int score = rs.getInt(3);
+			if(score > maxScore){
+				maxScore = score;
+				long elapsedTime = rs.getDate(5).getTime() - rs.getDate(4).getTime();
+				if(elapsedTime < minTime){
+					userId = rs.getInt(1);
+					minTime = elapsedTime;
+				}
+			}
 		}
+		stm = con.prepareStatement(
+				"SELECT * FROM " + userTable + " WHERE UserId = ?;");
+		stm.setInt(1, userId);
+		ResultSet res = stm.executeQuery();
+		if(res.next()){
+			user = new User(res.getString(2), res.getInt(1), res.getString(3));
+			user.setAdministrator(res.getBoolean(4));
+			user.setName(res.getString(6));
+			user.setSurname(res.getString(7));
+			user.setBirthDate(res.getDate(8));
+			user.setBirthPlace(res.getString(9));
+			user.setStatus(res.getString(10));
+		}
+		return user;
 	}
-
-	public User getBestPerformance(int quizId){
-
-	}
-
+	
 	
 }*/

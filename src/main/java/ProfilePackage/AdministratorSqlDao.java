@@ -61,14 +61,14 @@ public class AdministratorSqlDao implements AdministratorDao {
 	
 	public AdministratorSqlDao() throws SQLException, ClassNotFoundException {
 		con = ProfileDataSrc.getConnection();
+<<<<<<< Updated upstream
 		userTable = "Users2"*/
 /*CreateTablesForTests.UsersTable;
+=======
+		userTable = CreateTablesForTests.UsersTableTest;
+>>>>>>> Stashed changes
 		quizTable = CreateTablesForTests.QuizTableTest;
 		historyTable = CreateTablesForTests.HistoryTableTest;
-	}
-	
-	public Connection getConnection() {
-		return con;
 	}
 	
 	@Override

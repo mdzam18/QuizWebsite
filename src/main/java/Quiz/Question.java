@@ -1,4 +1,8 @@
 package Quiz;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 58c11f94a70e57bbd2621ac50df6483211d08a7d
 import java.util.*;
 
 public class Question {

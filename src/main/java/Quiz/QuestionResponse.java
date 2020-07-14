@@ -15,5 +15,9 @@ public class QuestionResponse extends Question {
 
 	public boolean checkAnswer(String answer) {
 		return (answers.contains(answer));
+<<<<<<< HEAD
  	}
+=======
+	}
+>>>>>>> 58c11f94a70e57bbd2621ac50df6483211d08a7d
 }

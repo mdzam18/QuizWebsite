@@ -19,6 +19,7 @@ public class CreateTablesForTests {
 
     public CreateTablesForTests() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
+        //con = ProfileDataSrc.getConnection("oop_base", "root", "01234567");
     }
 
     public boolean createUserTable() throws SQLException, ClassNotFoundException {
@@ -71,6 +72,20 @@ public class CreateTablesForTests {
                 //"foreign key (SenderId) references Users(UserId),\n" +
                 //"foreign key (ReceiverId) references Users(UserId));";
         s.executeUpdate(query);
+        return true;
+    }
+
+    public boolean createHistoryTable() throws SQLException {
+        Statement state = con.createStatement();
+        state.executeUpdate("CREATE TABLE " + HistoryTableTest + " (\n" +
+                "   UserId int ,\n" +
+                "   QuizId int ,\n" +
+                "   Score int,\n" +
+                "   Date Date,\n" +
+                "   Time Time,\n" +
+                "   foreign key (UserId) references Users(UserId),\n" +
+                "   foreign key (QuizId) references Quiz(QuizId)\n" +
+                ");");
         return true;
     }
 

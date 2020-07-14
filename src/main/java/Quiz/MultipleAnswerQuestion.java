@@ -16,7 +16,11 @@ public class MultipleAnswerQuestion extends Question {
 	}
 
 	public boolean checkAnswer(String answer) {
+<<<<<<< HEAD
 		return (answers.contains(answer));
+=======
+		return (choices.contains(answer));
+>>>>>>> 58c11f94a70e57bbd2621ac50df6483211d08a7d
 	}
 
 	public Set<String> getChoices() {

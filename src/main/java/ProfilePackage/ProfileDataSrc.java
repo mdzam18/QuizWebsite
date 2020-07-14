@@ -11,10 +11,18 @@ public class ProfileDataSrc {
         if (con != null) {
             return con;
         }
-        Class.forName("com.mysql" +
-                ".jdbc.Driver");
+        Class.forName("com.mysql.jdbc.Driver");
         con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/", "", "");
         return con;
+    }
+
+    public static Connection getConnection(String database, String user, String password) throws SQLException, ClassNotFoundException {
+        //Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = (Connection) DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/" + database + "?serverTimezone=UTC&characterEncoding=UTF8",
+                user,
+                password);
+        return connection;
     }
 
 }

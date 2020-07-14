@@ -1,4 +1,8 @@
 package Quiz;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 58c11f94a70e57bbd2621ac50df6483211d08a7d
 import java.util.*;
 
 public class Quiz {
@@ -84,7 +88,11 @@ public class Quiz {
 		return isOnePage;
 	}
 
+<<<<<<< HEAD
 	public boolean isImmediate(){
+=======
+	public boolean isImmedate(){
+>>>>>>> 58c11f94a70e57bbd2621ac50df6483211d08a7d
 		return isImmediate;
 	}
 

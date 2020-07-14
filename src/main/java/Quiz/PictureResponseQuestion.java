@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+/*
+=======
 package Quiz;
 <<<<<<< HEAD
 import java.util.*;
@@ -5,6 +8,7 @@ import java.util.*;
 
 import java.util.Set;
 >>>>>>> 58c11f94a70e57bbd2621ac50df6483211d08a7d
+>>>>>>> f4fd8e79be1dd4bd2706adbd83ee1ce56cb1aa70
 
 public class PictureResponseQuestion extends Question {
 
@@ -32,4 +36,4 @@ public class PictureResponseQuestion extends Question {
 	}
 
 	
-}
+}*/

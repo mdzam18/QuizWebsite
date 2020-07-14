@@ -2,12 +2,23 @@ package ProfilePackage;
 
 import org.junit.jupiter.api.*;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class HistorySqlDaoTest {
+
+    private final long oneDay = 1000*60*60*24;// Number milliseconds in a day
+    private CreateTablesForTests tables;
+    private String tableName = CreateTablesForTests.HistoryTableTest;
+
+    private Random random = new Random();
+    private int getScore() {
+        return 1 + Math.abs(random.nextInt(300));
+    }
 
     /* Testing History Class */
     @Test
@@ -85,7 +96,6 @@ class HistorySqlDaoTest {
     void testHistorySqlDaoSorting() {
         historyDao = new HistorySqlDao(false);
 
-        long oneDay = 1000*60*60*24;// Number milliseconds in a day
         int userId = 1241;
         int quizId = 746;
         int score = 1001, score2 = 120, score3 = 312;
@@ -112,9 +122,58 @@ class HistorySqlDaoTest {
         assertEquals(byScoreActual, byScore);
     }
 
+    @BeforeEach
+    void setUpDataBase() throws SQLException, ClassNotFoundException {
+        tables = new CreateTablesForTests();
+        assertTrue(tables.createHistoryTable());
+    }
+
+    @AfterEach
+    void dropDataBase() throws SQLException {
+        assertTrue(tables.dropTable("oop_base." + tableName));
+    }
+
     @Test
     void testHistorySqlDaoMySql() {
-        // TODO
+        historyDao = new HistorySqlDao();
+
+        List<History> histories = new ArrayList<>();
+        int[] userIds = {12, 75, 41};
+        int[] quizIds = {412, 800, 1020};
+
+        for(int i = 0; i<3; i++) {
+            int score = getScore();
+            long starter = Math.abs(random.nextLong());
+            long end = starter + Math.abs(random.nextInt(2000));
+            histories.add(new History(userIds[0], quizIds[0], score, new Date(starter), new Date(end)));
+        }
+        for(int i = 0; i<5; i++) {
+            int score = getScore();
+            long starter = Math.abs(random.nextLong());
+            long end = starter + Math.abs(random.nextInt(2000));
+            histories.add(new History(userIds[1], quizIds[1], score, new Date(starter), new Date(end)));
+        }
+        for(int i = 0; i<4; i++) {
+            int score = getScore();
+            long starter = Math.abs(random.nextLong());
+            long end = starter + Math.abs(random.nextInt(2000));
+            histories.add(new History(userIds[2], quizIds[2], score, new Date(starter), new Date(end)));
+        }
+
+        for(int i = 0; i<3; i++) {
+            History h = histories.get(i);
+            historyDao.addToHistory(h.getUserId(), h.getQuizId(), h.getScore(), h.getStartDate(), h.getEndDate());
+        }
+        for(int i = 3; i<histories.size(); i++) {
+            historyDao.addToHistory(histories.get(i));
+        }
+
+        for(int i = 0; i<userIds.length; i++) {
+            List<History> historiesResult = historyDao.getHistories(userIds[i]);
+            for(int j = 0; j<historiesResult.size(); j++) {
+                assertEquals(historiesResult.get(j).getQuizId(), quizIds[i]);
+            }
+        }
     }
 
 }

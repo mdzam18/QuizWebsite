@@ -9,14 +9,16 @@ import java.util.Date;
 public class HistorySqlDao implements HistoryDao {
 
     private Map<Integer, List<History>> data;
-    private Connection connection;
+    private static Connection connection;
     private boolean useTables;
     private static final int USER_ID_COL = 1;
     private static final int QUIZ_ID_COL = 2;
     private static final int SCORE_COL = 3;
     private static final int START_DATE_COL = 4;
     private static final int END_DATE_COL = 5;
-    public final static String TABLE_NAME  = "History";  // TODO - add schema name
+
+    public final static String TABLE_NAME  = "oop_base.History";
+    private String tableName = TABLE_NAME;
 
     public HistorySqlDao() {
         this(true);
@@ -182,6 +184,56 @@ public class HistorySqlDao implements HistoryDao {
             }
         });
         return list;
+    }
+
+    /* Working with Database */
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public boolean createDataTable() {
+        try {
+            Statement state = connection.createStatement();
+            state.executeUpdate("CREATE TABLE " + tableName + " (\n" +
+                    "   UserId int ,\n" +
+                    "   QuizId int ,\n" +
+                    "   Score int,\n" +
+                    "   Date Date,\n" +
+                    "   Time Time,\n" +
+                    "   foreign key (UserId) references Users(UserId),\n" +
+                    "   foreign key (QuizId) references Quiz(QuizId)\n" +
+                    ");");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean clearTable() {
+        try {
+            Statement state = connection.createStatement();
+            state.executeUpdate("DELETE FROM " + tableName + ";");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return true;
+    }
+
+    public boolean deleteTable() {
+        try {
+            Statement state = connection.createStatement();
+            state.executeUpdate("DROP TABLE " + tableName + ";");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
 }

@@ -8,9 +8,7 @@ import java.util.Date;
 
 public class HistorySqlDao implements HistoryDao {
 
-    private Map<Integer, List<History>> data;
     private static Connection connection;
-    private boolean useTables;
     private static final int USER_ID_COL = 1;
     private static final int QUIZ_ID_COL = 2;
     private static final int SCORE_COL = 3;
@@ -19,51 +17,15 @@ public class HistorySqlDao implements HistoryDao {
 
     private String tableName;
 
-    public HistorySqlDao() {
-        this(true);
-    }
-
     /* Constructor For Testing */
-    public HistorySqlDao(boolean useTables) {
-        data = new HashMap<>();
+    public HistorySqlDao() {
         tableName = CreateTablesForTests.HistoryTableTest;
 
-        this.useTables = useTables;
-        if(useTables) {
-            try {
-                connection = ProfileDataSrc.getConnection("test", "root", "01234567");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            setUpTableData();   // Get data from table
-        }
-    }
-
-    private void setUpTableData() {
         try {
-            Statement state = connection.createStatement();
-            ResultSet result = state.executeQuery("SELECT * FROM " + tableName);
-
-            while (result.next()){
-                int userId = result.getInt(USER_ID_COL);
-                int quizId = result.getInt(QUIZ_ID_COL);
-                int score = result.getInt(SCORE_COL);
-                Date startDate = result.getDate(START_DATE_COL);
-                Date endDate = result.getDate(END_DATE_COL);
-
-                addToData(userId, quizId, score, startDate, endDate);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            connection = ProfileDataSrc.getConnection("test", "root", "01234567");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
-
-    private void addToData(int userId, int quizId, int score, Date startDate, Date endDate) {
-        if(!data.containsKey(userId)) {
-            data.put(userId, new ArrayList<History>());
-        }
-        List<History> histories = data.get(userId);
-        histories.add(new History(userId, quizId, score, startDate, endDate));
     }
 
     @Override
@@ -74,41 +36,65 @@ public class HistorySqlDao implements HistoryDao {
 
     @Override
     public boolean addToHistory(int userId, int quizId, int score, Date startDate, Date endDate) {
-        if(useTables) {
-            try {
-                String sqlString = "INSERT INTO " + tableName + " VALUES(?, ?, ?, ?, ?);";
+        try {
+            String sqlString = "INSERT INTO " + tableName + " VALUES(?, ?, ?, ?, ?);";
 
-                PreparedStatement prepState = connection.prepareStatement(sqlString);
-                prepState.setInt(1, userId);
-                prepState.setInt(2, quizId);
-                prepState.setInt(3, score);
-                prepState.setDate(4, new java.sql.Date(startDate.getTime()));
-                prepState.setDate(5, new java.sql.Date(endDate.getTime()));
-                prepState.execute();
-            } catch (Exception throwables) {
-                throwables.printStackTrace();
-                return false;
-            }
+            PreparedStatement prepState = connection.prepareStatement(sqlString);
+            prepState.setInt(USER_ID_COL, userId);
+            prepState.setInt(QUIZ_ID_COL, quizId);
+            prepState.setInt(SCORE_COL, score);
+            prepState.setDate(START_DATE_COL, new java.sql.Date(startDate.getTime()));
+            prepState.setDate(END_DATE_COL, new java.sql.Date(endDate.getTime()));
+            prepState.execute();
+        } catch (Exception throwables) {
+            throwables.printStackTrace();
+            return false;
         }
-
-        addToData(userId, quizId, score, startDate, endDate);
         return true;
     }
 
     @Override
     public List<History> getHistories(int userId) {
-        return data.get(userId);
+        List<History> histories = new ArrayList<>();
+        try {
+            String sqlString = "SELECT * FROM " + tableName + " WHERE UserId = ?;";
+            PreparedStatement prepState = connection.prepareStatement(sqlString);
+            prepState.setInt(1, userId);
+            ResultSet rset = prepState.executeQuery();
+            while(rset.next()) {
+                History history = new History(
+                        rset.getInt(USER_ID_COL),
+                        rset.getInt(QUIZ_ID_COL),
+                        rset.getInt(SCORE_COL),
+                        new Date(rset.getDate(START_DATE_COL).getTime()),
+                        new Date(rset.getDate(END_DATE_COL).getTime()));
+                histories.add(history);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return histories;
     }
 
     @Override
     public List<History> getHistoriesByQuizId(int quizId) {
-        ArrayList<History> histories = new ArrayList<>();
-        for(List<History> list : data.values()) {
-            for(History history : list) {
-                if(history.getQuizId() == quizId) {
-                    histories.add(history);
-                }
+        List<History> histories = new ArrayList<>();
+        try {
+            String sqlString = "SELECT * FROM " + tableName + " WHERE QuizId = ?;";
+            PreparedStatement prepState = connection.prepareStatement(sqlString);
+            prepState.setInt(1, quizId);
+            ResultSet rset = prepState.executeQuery();
+            while(rset.next()) {
+                History history = new History(
+                        rset.getInt(USER_ID_COL),
+                        rset.getInt(QUIZ_ID_COL),
+                        rset.getInt(SCORE_COL),
+                        new Date(rset.getDate(START_DATE_COL).getTime()),
+                        new Date(rset.getDate(END_DATE_COL).getTime()));
+                histories.add(history);
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
         return histories;
     }
@@ -116,58 +102,67 @@ public class HistorySqlDao implements HistoryDao {
     @Override
     public Set<Integer> getQuizIds(int userId) {
         Set<Integer> quizIds = new HashSet<>();
-        for(History history : data.get(userId)) {
-            quizIds.add(history.getQuizId());
+        try {
+            String sqlString = "SELECT QuizId From " + tableName + " WHERE UserId = ?;";
+            PreparedStatement prepState = connection.prepareStatement(sqlString);
+            prepState.setInt(1, userId);
+            ResultSet rset = prepState.executeQuery();
+            while(rset.next()) {
+                quizIds.add(rset.getInt(1));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
         return quizIds;
     }
 
     @Override
     public Set<Integer> getUserIds() {
-        return new HashSet<>(data.keySet());
+        Set<Integer> usersIds = new HashSet<>();
+        try {
+            String sqlString = "SELECT UserId FROM " + tableName + " GROUP BY UserId;";
+            Statement state = connection.createStatement();
+            ResultSet rset = state.executeQuery(sqlString);
+            while(rset.next()) {
+                usersIds.add(rset.getInt(1));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return usersIds;
     }
 
     @Override
     public boolean removeFromHistories(int quizId) {
-        if(useTables) {
-            try {
-                String sqlString = "DELETE FROM " + tableName + " WHERE QuizId = ?;";
-                PreparedStatement prepState = connection.prepareStatement(sqlString);
-                prepState.setInt(1, quizId);
-                prepState.execute();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-                return false;
-            }
+        try {
+            String sqlString = "DELETE FROM " + tableName + " WHERE QuizId = ?;";
+            PreparedStatement prepState = connection.prepareStatement(sqlString);
+            prepState.setInt(1, quizId);
+            prepState.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
         }
-
-        for(Integer userId : data.keySet()) {
-            List<History> histories = data.get(userId);
-            List<History> toRemove = new ArrayList<>();
-            for(History history : histories) {
-                if(history.getQuizId() == quizId) {
-                    toRemove.add(history);
-                }
-            }
-            histories.removeAll(toRemove);
-        }
-
         return true;
     }
 
     @Override
     public boolean containsUser(int userId) {
-        return data.containsKey(userId);
+        return getUserIds().contains(userId);
     }
 
     @Override
-    public void removeUser(int userId) {
-        data.remove(userId);
-    }
-
-    @Override
-    public String toString() {
-        return data.toString();
+    public boolean removeUser(int userId) {
+        try {
+            String sqlString = "DELETE FROM " + tableName + " WHERE UserId = ?;";
+            PreparedStatement prepState = connection.prepareStatement(sqlString);
+            prepState.setInt(1, userId);
+            prepState.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     /* Sorting by Descent */
@@ -193,54 +188,12 @@ public class HistorySqlDao implements HistoryDao {
         return list;
     }
 
-    /* Working with Database */
-
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }
 
     public String getTableName() {
         return tableName;
-    }
-
-    public boolean createDataTable() {
-        try {
-            Statement state = connection.createStatement();
-            state.executeUpdate("CREATE TABLE " + tableName + " (\n" +
-                    "   UserId int ,\n" +
-                    "   QuizId int ,\n" +
-                    "   Score int,\n" +
-                    "   Date Date,\n" +
-                    "   Time Time,\n" +
-                    "   foreign key (UserId) references Users(UserId),\n" +
-                    "   foreign key (QuizId) references Quiz(QuizId)\n" +
-                    ");");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    public boolean clearTable() {
-        try {
-            Statement state = connection.createStatement();
-            state.executeUpdate("DELETE FROM " + tableName + ";");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return true;
-    }
-
-    public boolean deleteTable() {
-        try {
-            Statement state = connection.createStatement();
-            state.executeUpdate("DROP TABLE " + tableName + ";");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            return false;
-        }
-        return true;
     }
 
 }

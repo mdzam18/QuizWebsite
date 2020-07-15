@@ -28,7 +28,7 @@ public class StatisticsSqlDaoTest {
 		con = ProfileDataSrc.getConnection();
 		statisticsDao = new StatisticsSqlDao();
 		userDao = new UserSqlDao();
-		historyDao = new HistorySqlDao(false);
+		historyDao = new HistorySqlDao();
 		tables = new CreateTablesForTests();
 	}
 	

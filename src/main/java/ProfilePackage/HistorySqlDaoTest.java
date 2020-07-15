@@ -12,8 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class HistorySqlDaoTest {
 
+    private final long oneHour = 1000*60*60;
     private final long oneDay = 1000*60*60*24;// Number milliseconds in a day
     private CreateTablesForTests tables;
+
+    /**
+     * For Testing HistorySqlDao, update your database name in this class
+     * **/
 
     /* Testing History Class */
     @Test
@@ -56,23 +61,21 @@ class HistorySqlDaoTest {
 
     @Test
     void testHistorySqlDao() {
-        historyDao = new HistorySqlDao(false);
+        historyDao = new HistorySqlDao();
 
         int userId = 12312;
         int quizId = 7221;
         int score = 71;
-        Date startDate = new Date(System.currentTimeMillis() - 1000*60*60);
+        Date startDate = new Date(System.currentTimeMillis() - oneHour);
         Date endDate = new Date(System.currentTimeMillis());
         History testHistory = new History(userId, quizId, score, startDate, endDate);
 
         historyDao.addToHistory(testHistory);
 
         assertTrue(historyDao.containsUser(userId));
-        assertTrue(historyDao.getUserIds().contains(userId));
         assertTrue(historyDao.getQuizIds(userId).contains(quizId));
 
-        List<History> historyList = null;
-        historyList = historyDao.getHistories(userId);
+        List<History> historyList = historyDao.getHistories(userId);
         assertEquals(historyList.size(), 1);
 
         History thisHistory = historyList.get(0);
@@ -88,7 +91,7 @@ class HistorySqlDaoTest {
 
     @Test
     void testHistorySqlDaoSorting() {
-        historyDao = new HistorySqlDao(false);
+        historyDao = new HistorySqlDao();
 
         int userId = 1241;
         int quizId = 746;
@@ -130,6 +133,10 @@ class HistorySqlDaoTest {
         assertTrue(tables.dropTable(CreateTablesForTests.QuizTableTest));
         assertTrue(tables.dropTable(CreateTablesForTests.UsersTableTest));
     }
+
+    /**
+     * For Testing HistorySqlDao, update your database name in this class
+     * **/
 
     @Test
     void testHistorySqlDaoMySql() {
@@ -221,8 +228,44 @@ class HistorySqlDaoTest {
         }
 
         for(int i = 0; i<histories.size(); i++) {
-            historyDao.addToHistory(histories.get(i));
+            assertTrue(historyDao.addToHistory(histories.get(i)));
         }
+
+        for(int i = 0; i<userIds.length; i++) {
+            assertTrue(historyDao.containsUser(userIds[i]));
+        }
+
+        Set<Integer> userIdsSetResult = historyDao.getUserIds();
+        for(int i = 0; i<userIds.length; i++) {
+            assertTrue(userIdsSetResult.contains(userIds[i]));
+            Set<Integer> quizIdsSetResult = historyDao.getQuizIds(userIds[i]);
+            for(int j = 0; j<quizIds.length; j++) {
+                assertTrue(quizIdsSetResult.contains(quizIds[j]));
+            }
+        }
+
+        List<History> allHistories = new ArrayList<>();
+        for(int i = 0; i<userIds.length; i++) {
+            allHistories.addAll(historyDao.getHistories(userIds[i]));
+        }
+
+        allHistories = HistorySqlDao.sortByEndDate(allHistories);
+        Collections.reverse(allHistories);
+        assertEquals(histories, allHistories);
+
+        allHistories = HistorySqlDao.sortByScore(allHistories);
+
+        for(int i = 0; i<allHistories.size() - 1; i++) {
+            assertTrue(allHistories.get(i).getScore() >= allHistories.get(i + 1).getScore());
+        }
+
+        for(int i = 0; i<quizIds.length; i++) {
+            List<History> curHistoris = historyDao.getHistoriesByQuizId(quizIds[i]);
+            for(History his : curHistoris) {
+                assertEquals(his.getQuizId(), quizIds[i]);
+            }
+        }
+
     }
 
     /* Some necessary methods */

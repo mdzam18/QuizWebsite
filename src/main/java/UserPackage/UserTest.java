@@ -1,4 +1,4 @@
-package ProfilePackage;
+package UserPackage;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,7 @@
-package ProfilePackage;
+package UserPackage;
+
+import ProfilePackage.CreateTablesForTests;
+import ProfilePackage.ProfileDataSrc;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

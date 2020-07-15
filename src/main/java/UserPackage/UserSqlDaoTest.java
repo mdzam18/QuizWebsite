@@ -1,5 +1,7 @@
-package ProfilePackage;
+package UserPackage;
 
+import ProfilePackage.CreateTablesForTests;
+import ProfilePackage.ProfileDataSrc;
 import org.junit.jupiter.api.*;
 
 import java.security.NoSuchAlgorithmException;

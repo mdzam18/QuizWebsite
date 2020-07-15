@@ -1,4 +1,4 @@
-package ProfilePackage;
+package UserPackage;
 
 import java.sql.Date;
 import java.sql.SQLException;

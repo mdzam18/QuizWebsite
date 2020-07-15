@@ -34,7 +34,7 @@ public class UserSqlDao implements UserDao {
     }
 
     @Override
-    public User addUser(String userName, String password) throws SQLException {
+    public User addUser(String userName, String password, boolean isAdministrator) throws SQLException {
         String salt = createSalt();
         password = password + salt;
         password = findHashCode(password);
@@ -56,7 +56,7 @@ public class UserSqlDao implements UserDao {
         statement.setInt(1, id);
         statement.setString(2, userName);
         statement.setString(3, password);
-        statement.setBoolean(4, false);
+        statement.setBoolean(4, isAdministrator);
         statement.setString(5, salt);
         statement.setString(6, null);
         statement.setString(7, null);

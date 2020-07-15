@@ -52,8 +52,8 @@ public class MailSqlDaoTest {
     }
     @Test
     void myTest() throws SQLException{
-        userDao.addUser("nanuka", "123");
-        userDao.addUser("ana", "123");
+        userDao.addUser("nanuka", "123", false);
+        userDao.addUser("ana", "123", false);
         friendDao.sendFriendRequest(1,2);
         friendDao.confirmFriendRequest(1,2);
         assertTrue(friendDao.areFriends(1,2));
@@ -91,8 +91,8 @@ public class MailSqlDaoTest {
 
     @Test
     public void test4() throws SQLException{
-        userDao.addUser("nanuka", "123");
-        userDao.addUser("ana", "123");
+        userDao.addUser("nanuka", "123", false);
+        userDao.addUser("ana", "123", false);
         Mail mail = new Mail(1,1,2,Mail.noteType,"hello",new Date(2020,1,1),1);
         mailDao.sendMail(mail);
         ArrayList<Mail> list = mailDao.getMails(1);

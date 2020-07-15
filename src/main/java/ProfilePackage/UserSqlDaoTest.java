@@ -38,15 +38,15 @@ public class UserSqlDaoTest {
 
     @AfterEach
     public void tearDown() throws SQLException {
-        assertEquals(tables.dropTable("test.Users2"), true);
-        CreateTablesForTests.UsersTable = "test.Users";
+        assertEquals(tables.dropTable(CreateTablesForTests.UsersTableTest), true);
+        CreateTablesForTests.UsersTable = "Users";//chemtvis test unda davmato win.
     }
 
 
     @Test
     public void testAddAndGet1() throws SQLException {
         Date date = new Date(2000, 12, 12);
-        assertEquals(uDao.addUser("ChandlerTheBest", "friends").equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
+        assertEquals(uDao.addUser("ChandlerTheBest", "friends", false).equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
         assertEquals(uDao.addProfile(1, "Chandler", "Bing", date, "USA", "working"), true);
         User user = uDao.getUser(1);
         assertEquals(user.getUserName(), "ChandlerTheBest");
@@ -65,8 +65,8 @@ public class UserSqlDaoTest {
     @Test
     public void testAddSameUserName() throws SQLException {
         Date date = new Date(2000, 12, 12);
-        assertEquals(uDao.addUser("ChandlerTheBest", "friends").equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
-        assertEquals(uDao.addUser("ChandlerTheBest", ""), null);
+        assertEquals(uDao.addUser("ChandlerTheBest", "friends", false).equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
+        assertEquals(uDao.addUser("ChandlerTheBest", "", false), null);
     }
 
     @Test
@@ -75,9 +75,9 @@ public class UserSqlDaoTest {
         Date date = new Date(2000, 12, 12);
         for (int i = 0; i < 10; i++) {
             if (i == 0) {
-                assertEquals(uDao.addUser("ChandlerTheBest", "friends").equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
+                assertEquals(uDao.addUser("ChandlerTheBest", "friends", false).equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
             }
-            assertEquals(uDao.addUser("ChandlerTheBest", "friends"), null);
+            assertEquals(uDao.addUser("ChandlerTheBest", "friends", false), null);
             assertEquals(uDao.getAllUsers().size(), 1);
         }
     }
@@ -89,7 +89,7 @@ public class UserSqlDaoTest {
         for (int i = 0; i < 10; i++) {
             String str = "";
             str = str + String.valueOf(i);
-            assertEquals(uDao.addUser(str, "friends").equals(new User(str, i + 1, uDao.findHashCode("friends" + uDao.getSalt(i + 1)))), true);
+            assertEquals(uDao.addUser(str, "friends", false).equals(new User(str, i + 1, uDao.findHashCode("friends" + uDao.getSalt(i + 1)))), true);
             assertEquals(uDao.getAllUsers().size(), i + 1);
         }
     }
@@ -97,7 +97,7 @@ public class UserSqlDaoTest {
     @Test
     public void testDelete() throws SQLException {
         Date date = new Date(2000, 12, 12);
-        assertEquals(uDao.addUser("ChandlerTheBest", "friends").equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
+        assertEquals(uDao.addUser("ChandlerTheBest", "friends", false).equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
         User user = uDao.getUser(1);
         assertEquals(uDao.deleteUser(user), true);
         assertEquals(uDao.getAllUsers().size(), 0);
@@ -106,7 +106,7 @@ public class UserSqlDaoTest {
     @Test
     public void testIsCorrectPassword() throws SQLException {
         Date date = new Date(2000, 12, 12);
-        assertEquals(uDao.addUser("ChandlerTheBest", "friends").equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
+        assertEquals(uDao.addUser("ChandlerTheBest", "friends", false).equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
         assertEquals(uDao.isCorrectPassword("ChandlerTheBest", "friends"), true);
         assertEquals(uDao.isCorrectPassword("ChandlerTheBest", "frieds"), false);
     }

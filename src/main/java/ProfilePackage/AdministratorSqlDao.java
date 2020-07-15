@@ -48,7 +48,7 @@ public class AdministratorSqlDao implements AdministratorDao {
 	
 	@Override
 	public User addAdmin(String username, String password) throws SQLException {
-		User user = userDao.addUser(username, password);
+		User user = userDao.addUser(username, password, true);
 		PreparedStatement stm =
 				con.prepareStatement("UPDATE " + userTable + " SET IsAdministrator = ? WHERE UserId = ?;");
 		stm.setBoolean(1, true);

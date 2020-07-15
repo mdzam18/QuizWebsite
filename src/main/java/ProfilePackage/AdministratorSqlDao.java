@@ -35,7 +35,6 @@ public class AdministratorSqlDao implements AdministratorDao {
 		while (rs.next()){
 			User admin = new User(rs.getString(2),rs.getInt(1),rs.getString(3));
 			admin.setAdministrator(rs.getBoolean(4));
-//			admin.setPassword(rs.getString(5))
 			admin.setName(rs.getString(6));
 			admin.setSurname(rs.getString(7));
 			admin.setBirthDate(rs.getDate(8));
@@ -68,21 +67,21 @@ public class AdministratorSqlDao implements AdministratorDao {
 		return false;
 	}
 	
-	//	@Override
-//	public boolean deleteQuiz(Quiz quiz) throws SQLException {
-//		PreparedStatement stm =
-//				con.prepareStatement("DELETE FROM " + quizTable + " WHERE QuizId = ?;");
-//		stm.setInt(1, Integer.valueOf(quiz.getId()));
-//		int n = stm.executeUpdate();
-//		if(n == 1) return true;
-//		return false;
-//	}
-//
+	@Override
+	public boolean deleteQuiz(Quiz quiz) throws SQLException {
+		PreparedStatement stm =
+				con.prepareStatement("DELETE FROM " + quizTable + " WHERE QuizId = ?;");
+		stm.setInt(1, quiz.getQuizId());
+		int n = stm.executeUpdate();
+		if(n == 1) return true;
+		return false;
+	}
+
 	@Override
 	public boolean deleteHistory(Quiz quiz) throws SQLException {
 		PreparedStatement stm =
 				con.prepareStatement("DELETE FROM " + historyTable + " WHERE QuizId = ?;");
-		stm.setInt(1, Integer.valueOf(quiz.getQuizId()));
+		stm.setInt(1, quiz.getQuizId());
 		int n = stm.executeUpdate();
 		if(n > 0) return true;
 		return false;

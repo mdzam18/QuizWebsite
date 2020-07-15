@@ -5,6 +5,13 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class MailSqlDao implements MailDao {
+    private static final String MailId = "MailId";
+    private static final String SenderId = "SenderId";
+    private static final String ReceiverId = "ReceiverId";
+    private static final String Type = "Type";
+    private static final String Message = "Message";
+    private static final String Date = "Date";
+    private static final String Seen = "Seen";
     private Connection con;
 
     public MailSqlDao() throws SQLException, ClassNotFoundException {
@@ -13,13 +20,13 @@ public class MailSqlDao implements MailDao {
     }
 
     private Mail getMail(ResultSet rs) throws SQLException {
-        return new Mail(rs.getInt("MailId"),
-                rs.getInt("SenderId"),
-                rs.getInt("ReceiverId"),
-                rs.getString("Type"),
-                rs.getString("Message"),
-                rs.getDate("Date"),
-                rs.getInt("Seen")
+        return new Mail(rs.getInt(MailId),
+                rs.getInt(SenderId),
+                rs.getInt(ReceiverId),
+                rs.getString(Type),
+                rs.getString(Message),
+                rs.getDate(Date),
+                rs.getInt(Seen)
         );
     }
 

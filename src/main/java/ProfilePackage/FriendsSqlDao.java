@@ -13,41 +13,11 @@ public class FriendsSqlDao implements FriendsDao {
         //con = NanukaDatabase.getConnection();
         friendsTable = CreateTablesForTests.FriendsTable;
     }
-/*
-    @Override
-    public boolean sendFriendRequest(User from, User to) throws SQLException {
-        if (from.getUserId() == to.getUserId()) return false;
-        PreparedStatement statement = con.prepareStatement("select * from " + friendsTable + " where SenderId = ? and ReceiverId = ?;");
-        statement.setInt(1, from.getUserId());
-        statement.setInt(2, to.getUserId());
-        ResultSet res = statement.executeQuery();
-        if (res.next()) return false;
-        statement = con.prepareStatement("select * from " + friendsTable + " where SenderId = ? and ReceiverId = ?;");
-        statement.setInt(1, to.getUserId());
-        statement.setInt(2, from.getUserId());
-        if (res.next()) return false;
-        statement = con.prepareStatement("insert into " + friendsTable + " values (?, ?, ?)");
-        statement.setInt(1, from.getUserId());
-        statement.setInt(2, to.getUserId());
-        statement.setBoolean(3, false);
-        statement.executeUpdate();
-        return true;
-    }
-
-    @Override
-    public boolean confirmFriendRequest(User from, User to) throws SQLException {
-        PreparedStatement statement = con.prepareStatement("update " + friendsTable + " set Confirmed = ? where SenderId = ? and ReceiverId = ?;");
-        statement.setBoolean(1, true);
-        statement.setInt(2, from.getUserId());
-        statement.setInt(3, to.getUserId());
-        statement.executeUpdate();
-        return true;
-    }
-    */
 
     @Override
     public boolean deleteFriend(int from, int to) throws SQLException {
         PreparedStatement stm = null;
+        if (!areFriends(from, to)) return false;
         stm = con.prepareStatement(
                 "delete from " + friendsTable + " where (SenderId = ? and ReceiverId = ?) or (SenderId = ? and ReceiverId = ?);");
         stm.setInt(1, from);
@@ -63,18 +33,22 @@ public class FriendsSqlDao implements FriendsDao {
         PreparedStatement stm = null;
         List<User> result = new ArrayList<>();
         stm = con.prepareStatement(
-                "SELECT * FROM " + friendsTable + "WHERE (SenderId = ?) and Confirmed = ?;");
+                "SELECT * FROM " + friendsTable + " WHERE (SenderId = ?) and Confirmed = ?;");
         stm.setInt(1, user.getUserId());
-        stm.setBoolean(3, false);
+        stm.setBoolean(2, false);
         ResultSet res = stm.executeQuery();
         while (res.next()) {
-            User user2 = new User(res.getString(2), res.getInt(1), res.getString(3));
-            user2.setAdministrator(res.getBoolean(4));
-            user2.setName(res.getString(6));
-            user2.setSurname(res.getString(7));
-            user2.setBirthDate(res.getDate(8));
-            user2.setBirthPlace(res.getString(9));
-            user2.setStatus(res.getString(10));
+            stm = con.prepareStatement("select * from " + CreateTablesForTests.UsersTable + " where UserId = ?;");
+            stm.setInt(1, res.getInt(2));
+            ResultSet rs2 = stm.executeQuery();
+            rs2.next();
+            User user2 = new User(rs2.getString(2), rs2.getInt(1), rs2.getString(3));
+            user2.setAdministrator(rs2.getBoolean(4));
+            user2.setName(rs2.getString(6));
+            user2.setSurname(rs2.getString(7));
+            user2.setBirthDate(rs2.getDate(8));
+            user2.setBirthPlace(rs2.getString(9));
+            user2.setStatus(rs2.getString(10));
             result.add(user2);
         }
         return result;
@@ -85,18 +59,22 @@ public class FriendsSqlDao implements FriendsDao {
         PreparedStatement stm = null;
         List<User> result = new ArrayList<>();
         stm = con.prepareStatement(
-                "SELECT * FROM " + friendsTable + "WHERE (ReceiverId = ?) and Confirmed = ?;");
+                "SELECT * FROM " + friendsTable + " WHERE (ReceiverId = ?) and Confirmed = ?;");
         stm.setInt(1, user.getUserId());
-        stm.setBoolean(3, false);
+        stm.setBoolean(2, false);
         ResultSet res = stm.executeQuery();
         while (res.next()) {
-            User user2 = new User(res.getString(2), res.getInt(1), res.getString(3));
-            user2.setAdministrator(res.getBoolean(4));
-            user2.setName(res.getString(6));
-            user2.setSurname(res.getString(7));
-            user2.setBirthDate(res.getDate(8));
-            user2.setBirthPlace(res.getString(9));
-            user2.setStatus(res.getString(10));
+            stm = con.prepareStatement("select * from " + CreateTablesForTests.UsersTable + " where UserId = ?;");
+            stm.setInt(1, res.getInt(1));
+            ResultSet rs2 = stm.executeQuery();
+            rs2.next();
+            User user2 = new User(rs2.getString(2), rs2.getInt(1), rs2.getString(3));
+            user2.setAdministrator(rs2.getBoolean(4));
+            user2.setName(rs2.getString(6));
+            user2.setSurname(rs2.getString(7));
+            user2.setBirthDate(rs2.getDate(8));
+            user2.setBirthPlace(rs2.getString(9));
+            user2.setStatus(rs2.getString(10));
             result.add(user2);
         }
         return result;
@@ -107,19 +85,25 @@ public class FriendsSqlDao implements FriendsDao {
         PreparedStatement stm = null;
         List<User> result = new ArrayList<>();
         stm = con.prepareStatement(
-                "SELECT * FROM " + friendsTable + "WHERE (SenderId = ? or ReceiverId = ?) and Confirmed = ?;");
+                "SELECT * FROM " + friendsTable + " WHERE (SenderId = ? or ReceiverId = ?) and Confirmed = ?;");
         stm.setInt(1, user.getUserId());
         stm.setInt(2, user.getUserId());
         stm.setBoolean(3, true);
         ResultSet res = stm.executeQuery();
         while (res.next()) {
-            User user2 = new User(res.getString(2), res.getInt(1), res.getString(3));
-            user2.setAdministrator(res.getBoolean(4));
-            user2.setName(res.getString(6));
-            user2.setSurname(res.getString(7));
-            user2.setBirthDate(res.getDate(8));
-            user2.setBirthPlace(res.getString(9));
-            user2.setStatus(res.getString(10));
+            stm = con.prepareStatement("select * from " + CreateTablesForTests.UsersTable + " where UserId = ?;");
+            int id = res.getInt(1);
+            if (res.getInt(2) != user.getUserId()) id = res.getInt(2);
+            stm.setInt(1, id);
+            ResultSet rs2 = stm.executeQuery();
+            rs2.next();
+            User user2 = new User(rs2.getString(2), rs2.getInt(1), rs2.getString(3));
+            user2.setAdministrator(rs2.getBoolean(4));
+            user2.setName(rs2.getString(6));
+            user2.setSurname(rs2.getString(7));
+            user2.setBirthDate(rs2.getDate(8));
+            user2.setBirthPlace(rs2.getString(9));
+            user2.setStatus(rs2.getString(10));
             result.add(user2);
         }
         return result;
@@ -128,19 +112,19 @@ public class FriendsSqlDao implements FriendsDao {
     @Override
     public boolean sendFriendRequest(int from, int to) throws SQLException {
         if (from == to) return false;
-        if (areFriends(from, to) || requested(from, to) || requested(to, from)) return false;
+        if (areFriends(from, to) || isRequested(from, to) || isRequested(to, from)) return false;
         Date date = new Date(2020, 1, 1);
         PreparedStatement statement = con.prepareStatement("insert into " + friendsTable + " values (?, ?, ?, ?)");
         statement.setInt(1, from);
         statement.setInt(2, to);
         statement.setBoolean(3, false);
         statement.setDate(4, date);
-        statement.executeQuery();
+        statement.executeUpdate();
         return true;
     }
 
     @Override
-    public boolean requested(int SenderId, int ReceiverId) throws SQLException {
+    public boolean isRequested(int SenderId, int ReceiverId) throws SQLException {
         PreparedStatement statement = con.prepareStatement("select * from " + friendsTable + " where SenderId = ? and ReceiverId = ? and Confirmed = 0;");
         statement.setInt(1, SenderId);
         statement.setInt(2, ReceiverId);
@@ -151,9 +135,11 @@ public class FriendsSqlDao implements FriendsDao {
 
     @Override
     public boolean areFriends(int user1, int user2) throws SQLException {
-        PreparedStatement statement = con.prepareStatement("select * from " + friendsTable + " where SenderId = ? and ReceiverId = ? and Confirmed = 1;");
+        PreparedStatement statement = con.prepareStatement("select * from " + friendsTable + " where ((SenderId = ? and ReceiverId = ?) or (SenderId = ? and ReceiverId = ?)) and Confirmed = 1;");
         statement.setInt(1, user1);
         statement.setInt(2, user2);
+        statement.setInt(3, user2);
+        statement.setInt(4, user1);
         ResultSet rs = statement.executeQuery();
         if (rs.next()) return true;
         return false;
@@ -161,6 +147,10 @@ public class FriendsSqlDao implements FriendsDao {
 
     @Override
     public boolean confirmFriendRequest(int senderId, int receiverId) throws SQLException {
+        if (areFriends(senderId, receiverId)) {
+            return false;
+        }
+        if (!isRequested(senderId, receiverId)) return false;
         PreparedStatement statement = con.prepareStatement("update " + friendsTable + " set Confirmed = ? where SenderId = ? and ReceiverId = ?;");
         statement.setBoolean(1, true);
         statement.setInt(2, senderId);
@@ -169,7 +159,7 @@ public class FriendsSqlDao implements FriendsDao {
         return true;
     }
 
-    @Override
+  /*  @Override
     public void addFriendship(int user1, int user2, Timestamp time) throws SQLException {
         Connection cn = null;
         PreparedStatement ps = cn.prepareStatement("Insert into `Friends` (`SenderId`, `ReceiverId`, `Confirmed`, `Date`) VALUE (?,?,?,?)");
@@ -179,5 +169,7 @@ public class FriendsSqlDao implements FriendsDao {
         ps.setTimestamp(4, time);
         ps.executeQuery();
     }
+
+   */
 
 }

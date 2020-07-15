@@ -10,19 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class AdministratorSqlDao implements AdministratorDao {
+public class AdministratorSqlDao extends UserSqlDao implements AdministratorDao{
 	private Connection con;
 	private String userTable;
 	private String quizTable;
 	private String historyTable;
-	private UserDao userDao;
 	
 	public AdministratorSqlDao() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
 		con = ProfileDataSrc.getConnection();
 		userTable = CreateTablesForTests.UsersTableTest;
 		quizTable = CreateTablesForTests.QuizTableTest;
 		historyTable = CreateTablesForTests.HistoryTableTest;
-		userDao = new UserSqlDao();
 	}
 	
 	@Override
@@ -47,24 +45,17 @@ public class AdministratorSqlDao implements AdministratorDao {
 	
 	@Override
 	public User addAdmin(String username, String password) throws SQLException {
-		User user = userDao.addUser(username, password, true);
-		return user;
+		return super.addUser(username, password, true);
 	}
 	
 	@Override
 	public User getAdmin(int userId) throws SQLException {
-		User user = userDao.getUser(userId);
-		return user;
+		return super.getUser(userId);
 	}
 	
 	@Override
 	public boolean deleteUser(User user) throws SQLException {
-		PreparedStatement stm =
-				con.prepareStatement("DELETE FROM " + userTable + " WHERE UserId = ?;");
-		stm.setInt(1, user.getUserId());
-		int n = stm.executeUpdate();
-		if(n == 1) return true;
-		return false;
+		return super.deleteUser(user);
 	}
 	
 	@Override

@@ -18,150 +18,114 @@ public class HistorySqlDao implements HistoryDao {
     private String tableName;
 
     /* Constructor For Testing */
-    public HistorySqlDao() {
+    public HistorySqlDao() throws SQLException, ClassNotFoundException {
         tableName = CreateTablesForTests.HistoryTableTest;
-
-        try {
-            connection = ProfileDataSrc.getConnection("test", "root", "01234567");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        connection = ProfileDataSrc.getConnection("test", "root", "01234567");
     }
 
     @Override
-    public boolean addToHistory(History history) {
+    public boolean addToHistory(History history) throws SQLException {
         return addToHistory(history.getUserId(), history.getQuizId(), history.getScore(),
                 history.getStartDate(), history.getEndDate());
     }
 
     @Override
-    public boolean addToHistory(int userId, int quizId, int score, Date startDate, Date endDate) {
-        try {
-            String sqlString = "INSERT INTO " + tableName + " VALUES(?, ?, ?, ?, ?);";
+    public boolean addToHistory(int userId, int quizId, int score, Date startDate, Date endDate) throws SQLException {
+        String sqlString = "INSERT INTO " + tableName + " VALUES(?, ?, ?, ?, ?);";
 
-            PreparedStatement prepState = connection.prepareStatement(sqlString);
-            prepState.setInt(USER_ID_COL, userId);
-            prepState.setInt(QUIZ_ID_COL, quizId);
-            prepState.setInt(SCORE_COL, score);
-            prepState.setDate(START_DATE_COL, new java.sql.Date(startDate.getTime()));
-            prepState.setDate(END_DATE_COL, new java.sql.Date(endDate.getTime()));
-            prepState.execute();
-        } catch (Exception throwables) {
-            throwables.printStackTrace();
-            return false;
-        }
+        PreparedStatement prepState = connection.prepareStatement(sqlString);
+        prepState.setInt(USER_ID_COL, userId);
+        prepState.setInt(QUIZ_ID_COL, quizId);
+        prepState.setInt(SCORE_COL, score);
+        prepState.setTimestamp(START_DATE_COL, new Timestamp(startDate.getTime()));
+        prepState.setTimestamp(END_DATE_COL, new Timestamp(endDate.getTime()));
+        prepState.execute();
         return true;
     }
 
     @Override
-    public List<History> getHistories(int userId) {
+    public List<History> getHistories(int userId) throws SQLException {
         List<History> histories = new ArrayList<>();
-        try {
-            String sqlString = "SELECT * FROM " + tableName + " WHERE UserId = ?;";
-            PreparedStatement prepState = connection.prepareStatement(sqlString);
-            prepState.setInt(1, userId);
-            ResultSet rset = prepState.executeQuery();
-            while(rset.next()) {
-                History history = new History(
-                        rset.getInt(USER_ID_COL),
-                        rset.getInt(QUIZ_ID_COL),
-                        rset.getInt(SCORE_COL),
-                        new Date(rset.getDate(START_DATE_COL).getTime()),
-                        new Date(rset.getDate(END_DATE_COL).getTime()));
-                histories.add(history);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        String sqlString = "SELECT * FROM " + tableName + " WHERE UserId = ?;";
+        PreparedStatement prepState = connection.prepareStatement(sqlString);
+        prepState.setInt(1, userId);
+        ResultSet rset = prepState.executeQuery();
+        while(rset.next()) {
+            History history = new History(
+                    rset.getInt(USER_ID_COL),
+                    rset.getInt(QUIZ_ID_COL),
+                    rset.getInt(SCORE_COL),
+                    new Date(rset.getTimestamp(START_DATE_COL).getTime()),
+                    new Date(rset.getTimestamp(END_DATE_COL).getTime()));
+            histories.add(history);
         }
         return histories;
     }
 
     @Override
-    public List<History> getHistoriesByQuizId(int quizId) {
+    public List<History> getHistoriesByQuizId(int quizId) throws SQLException {
         List<History> histories = new ArrayList<>();
-        try {
-            String sqlString = "SELECT * FROM " + tableName + " WHERE QuizId = ?;";
-            PreparedStatement prepState = connection.prepareStatement(sqlString);
-            prepState.setInt(1, quizId);
-            ResultSet rset = prepState.executeQuery();
-            while(rset.next()) {
-                History history = new History(
-                        rset.getInt(USER_ID_COL),
-                        rset.getInt(QUIZ_ID_COL),
-                        rset.getInt(SCORE_COL),
-                        new Date(rset.getDate(START_DATE_COL).getTime()),
-                        new Date(rset.getDate(END_DATE_COL).getTime()));
-                histories.add(history);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        String sqlString = "SELECT * FROM " + tableName + " WHERE QuizId = ?;";
+        PreparedStatement prepState = connection.prepareStatement(sqlString);
+        prepState.setInt(1, quizId);
+        ResultSet rset = prepState.executeQuery();
+        while(rset.next()) {
+            History history = new History(
+                    rset.getInt(USER_ID_COL),
+                    rset.getInt(QUIZ_ID_COL),
+                    rset.getInt(SCORE_COL),
+                    new Date(rset.getTimestamp(START_DATE_COL).getTime()),
+                    new Date(rset.getTimestamp(END_DATE_COL).getTime()));
+            histories.add(history);
         }
         return histories;
     }
 
     @Override
-    public Set<Integer> getQuizIds(int userId) {
+    public Set<Integer> getQuizIds(int userId) throws SQLException {
         Set<Integer> quizIds = new HashSet<>();
-        try {
-            String sqlString = "SELECT QuizId From " + tableName + " WHERE UserId = ?;";
-            PreparedStatement prepState = connection.prepareStatement(sqlString);
-            prepState.setInt(1, userId);
-            ResultSet rset = prepState.executeQuery();
-            while(rset.next()) {
-                quizIds.add(rset.getInt(1));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        String sqlString = "SELECT QuizId From " + tableName + " WHERE UserId = ?;";
+        PreparedStatement prepState = connection.prepareStatement(sqlString);
+        prepState.setInt(1, userId);
+        ResultSet rset = prepState.executeQuery();
+        while(rset.next()) {
+            quizIds.add(rset.getInt(1));
         }
         return quizIds;
     }
 
     @Override
-    public Set<Integer> getUserIds() {
+    public Set<Integer> getUserIds() throws SQLException {
         Set<Integer> usersIds = new HashSet<>();
-        try {
-            String sqlString = "SELECT UserId FROM " + tableName + " GROUP BY UserId;";
-            Statement state = connection.createStatement();
-            ResultSet rset = state.executeQuery(sqlString);
-            while(rset.next()) {
-                usersIds.add(rset.getInt(1));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        String sqlString = "SELECT UserId FROM " + tableName + " GROUP BY UserId;";
+        Statement state = connection.createStatement();
+        ResultSet rset = state.executeQuery(sqlString);
+        while(rset.next()) {
+            usersIds.add(rset.getInt(1));
         }
         return usersIds;
     }
 
     @Override
-    public boolean removeFromHistories(int quizId) {
-        try {
-            String sqlString = "DELETE FROM " + tableName + " WHERE QuizId = ?;";
-            PreparedStatement prepState = connection.prepareStatement(sqlString);
-            prepState.setInt(1, quizId);
-            prepState.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            return false;
-        }
+    public boolean removeFromHistories(int quizId) throws SQLException {
+        String sqlString = "DELETE FROM " + tableName + " WHERE QuizId = ?;";
+        PreparedStatement prepState = connection.prepareStatement(sqlString);
+        prepState.setInt(1, quizId);
+        prepState.execute();
         return true;
     }
 
     @Override
-    public boolean containsUser(int userId) {
+    public boolean containsUser(int userId) throws SQLException {
         return getUserIds().contains(userId);
     }
 
     @Override
-    public boolean removeUser(int userId) {
-        try {
-            String sqlString = "DELETE FROM " + tableName + " WHERE UserId = ?;";
-            PreparedStatement prepState = connection.prepareStatement(sqlString);
-            prepState.setInt(1, userId);
-            prepState.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            return false;
-        }
+    public boolean removeUser(int userId) throws SQLException {
+        String sqlString = "DELETE FROM " + tableName + " WHERE UserId = ?;";
+        PreparedStatement prepState = connection.prepareStatement(sqlString);
+        prepState.setInt(1, userId);
+        prepState.execute();
         return true;
     }
 
@@ -188,10 +152,12 @@ public class HistorySqlDao implements HistoryDao {
         return list;
     }
 
+    @Override
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }
 
+    @Override
     public String getTableName() {
         return tableName;
     }

@@ -15,8 +15,13 @@ public class History {
         this.userId = userId;
         this.quizId = quizId;
         this.score = score;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = moduloDate(startDate);
+        this.endDate = moduloDate(endDate);
+    }
+
+    private Date moduloDate(Date date) {
+        long longValue = date.getTime();
+        return new Date(longValue - longValue%1000);
     }
 
     public int getUserId() {
@@ -52,11 +57,11 @@ public class History {
     }
 
     public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+        this.startDate = moduloDate(startDate);
     }
 
     public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+        this.endDate = moduloDate(endDate);
     }
 
     @Override

@@ -3,6 +3,8 @@ package ProfilePackage;
 //import Quiz.*;
 
 import Quiz.Quiz;
+import UserPackage.User;
+import UserPackage.UserSqlDao;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;

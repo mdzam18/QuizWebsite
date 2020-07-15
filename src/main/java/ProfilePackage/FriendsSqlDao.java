@@ -1,5 +1,7 @@
 package ProfilePackage;
 
+import UserPackage.User;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,7 @@
 package ProfilePackage;
 
+import UserPackage.User;
+
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;

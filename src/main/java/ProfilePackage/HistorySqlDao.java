@@ -31,7 +31,7 @@ public class HistorySqlDao implements HistoryDao {
         this.useTables = useTables;
         if(useTables) {
             try {
-                connection = ProfileDataSrc.getConnection("", "root", "01234567");
+                connection = ProfileDataSrc.getConnection("test", "root", "01234567");
             } catch (Exception e) {
                 e.printStackTrace();
             }

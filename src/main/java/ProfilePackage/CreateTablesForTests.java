@@ -20,7 +20,7 @@ public class CreateTablesForTests {
     public CreateTablesForTests() throws SQLException, ClassNotFoundException {
         //con = ProfileDataSrc.getConnection();
         //con = NanukaDatabase.getConnection();
-        con = ProfileDataSrc.getConnection("", "root", "01234567");
+        con = ProfileDataSrc.getConnection("test", "root", "01234567");
     }
     
     public boolean createUserTable() throws SQLException, ClassNotFoundException {
@@ -83,10 +83,10 @@ public class CreateTablesForTests {
                 "   UserId int ,\n" +
                 "   QuizId int ,\n" +
                 "   Score int,\n" +
-                "   Date Date,\n" +
-                "   Time Time,\n" +
-                "   foreign key (UserId) references Users2(UserId),\n" +
-                "   foreign key (QuizId) references Quiz2(QuizId)\n" +
+                "   StartDate Date,\n" +
+                "   EndDate Date/*,*/\n" +
+                //"   foreign key (UserId) references Users2(UserId),\n" +
+                //"   foreign key (QuizId) references Quiz2(QuizId)\n" +
                 ");");
         return true;
     }
@@ -102,8 +102,8 @@ public class CreateTablesForTests {
                 "NumberOfQuestions int,\n" +
                 "Description varchar(255),\n" +
                 "Category varchar(255),\n" +
-                "CreatorId int,\n" +
-                "FOREIGN KEY (CreatorId) REFERENCES Users2 (UserId)\n" +
+                "CreatorId int/*,*/\n" +
+                //"FOREIGN KEY (CreatorId) REFERENCES Users2 (UserId)\n" +
                 ");");
         return true;
     }

@@ -34,29 +34,80 @@ public class FriendsSqlDaoTest {
     public void setUp() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         CreateTablesForTests.FriendsTable = CreateTablesForTests.FriendsTableTest;
         CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
-      //  fDao = new FriendsSqlDao();
         uDao = new UserSqlDao();
+        fDao = new FriendsSqlDao();
         assertEquals(tables.createUserTable(), true);
         assertEquals(tables.createFriendsTable(), true);
     }
 
     @AfterEach
     public void tearDown() throws SQLException {
-        assertEquals(tables.dropTable("test.Friends2"), true);
-        assertEquals(tables.dropTable("test.Users2"), true);
-        CreateTablesForTests.UsersTable = "test.Users";
-        CreateTablesForTests.FriendsTable = "test.Friends";
+        assertEquals(tables.dropTable(CreateTablesForTests.FriendsTableTest), true);
+        assertEquals(tables.dropTable(CreateTablesForTests.UsersTableTest), true);
+        CreateTablesForTests.UsersTable = "Users"; //chemtvis test unda mivawero.
+        CreateTablesForTests.FriendsTable = "Friends"; //aqac igive.
     }
 
-   /* @Test
+    @Test
     public void testSendRequest() throws SQLException {
-        User user1 = uDao.addUser("Captain America", "Peggy");
-        User user2 = uDao.addUser("IronMan", "Tony Stark");
-        fDao.sendFriendRequest(user1, user2);
+        User user1 = uDao.addUser("Captain America", "Peggy", false);
+        User user2 = uDao.addUser("IronMan", "Tony Stark", false);
+        assertEquals(fDao.sendFriendRequest(user1.getUserId(), user2.getUserId()), true);
         assertEquals(fDao.getSentRequests(user1).size(), 1);
         assertEquals(fDao.getSentRequests(user2).size(), 0);
         assertEquals(fDao.getReceivedRequests(user2).size(), 1);
-        assertEquals(fDao.getReceivedRequests(user1).get(0).equals(user2), true);
+        assertEquals(fDao.getReceivedRequests(user2).get(0).equals(user1), true);
+
+        assertEquals(fDao.sendFriendRequest(user1.getUserId(), user2.getUserId()), false); //is already sent.
+        assertEquals(fDao.sendFriendRequest(user2.getUserId(), user1.getUserId()), false); //is already requested.
+        assertEquals(fDao.sendFriendRequest(user1.getUserId(), user1.getUserId()), false); //can't send request to user1.
     }
-    */
+
+    @Test
+    public void testGetFriends() throws SQLException {
+        User user1 = uDao.addUser("Captain America", "Peggy", false);
+        User user2 = uDao.addUser("IronMan", "Tony Stark", false);
+        assertEquals(fDao.sendFriendRequest(user1.getUserId(), user2.getUserId()), true);
+        assertEquals(fDao.getFriends(user1).size(), 0);
+        assertEquals(fDao.getFriends(user2).size(), 0);
+        assertEquals(fDao.confirmFriendRequest(user2.getUserId(), user1.getUserId()), false); //user2 can't confirm request.
+        assertEquals(fDao.confirmFriendRequest(user1.getUserId(), user2.getUserId()), true);
+        assertEquals(fDao.confirmFriendRequest(user2.getUserId(), user1.getUserId()), false); //they are already friends.
+
+        assertEquals(fDao.getFriends(user1).size(), 1);
+        assertEquals(fDao.getFriends(user2).size(), 1);
+        assertEquals(fDao.getFriends(user1).get(0).equals(user2), true);
+        assertEquals(fDao.getFriends(user2).get(0).equals(user1), true);
+
+        assertEquals(fDao.sendFriendRequest(user1.getUserId(), user2.getUserId()), false); //they are already friends.
+    }
+
+    @Test
+    public void testAreFriendsAndIsRequested() throws SQLException {
+        User user1 = uDao.addUser("Captain America", "Peggy", false);
+        User user2 = uDao.addUser("IronMan", "Tony Stark", false);
+        assertEquals(fDao.sendFriendRequest(user1.getUserId(), user2.getUserId()), true);
+        assertEquals(fDao.isRequested(user1.getUserId(), user2.getUserId()), true);
+        assertEquals(fDao.isRequested(user2.getUserId(), user1.getUserId()), false);
+
+        assertEquals(fDao.areFriends(user1.getUserId(), user2.getUserId()), false);
+        assertEquals(fDao.areFriends(user2.getUserId(), user1.getUserId()), false);
+
+        assertEquals(fDao.confirmFriendRequest(user1.getUserId(), user2.getUserId()), true);
+        assertEquals(fDao.areFriends(user1.getUserId(), user2.getUserId()), true);
+        assertEquals(fDao.areFriends(user2.getUserId(), user1.getUserId()), true);
+    }
+
+    @Test
+    public void testDeleteFriend() throws SQLException {
+        User user1 = uDao.addUser("Captain America", "Peggy", false);
+        User user2 = uDao.addUser("IronMan", "Tony Stark", false);
+        fDao.sendFriendRequest(user1.getUserId(), user2.getUserId());
+        assertEquals(fDao.confirmFriendRequest(user1.getUserId(), user2.getUserId()), true);
+        assertEquals(fDao.deleteFriend(user1.getUserId(), user2.getUserId()), true);
+        assertEquals(fDao.getFriends(user1).size(), 0);
+        assertEquals(fDao.getFriends(user2).size(), 0);
+        assertEquals(fDao.deleteFriend(user1.getUserId(), user2.getUserId()), false);
+    }
+
 }

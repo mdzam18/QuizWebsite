@@ -17,7 +17,7 @@ public class AdministratorSqlDaoTest {
 	private AdministratorDao adminDao;
 	private UserDao userDao;
 	private HistoryDao historyDao;
-	//	private Quiz.QuizDAO quizDao;
+	private QuizDao quizDao;
 	private Connection con;
 	private CreateTablesForTests tables;
 	
@@ -86,9 +86,9 @@ public class AdministratorSqlDaoTest {
 	
 	@Test
 	public void testDeleteQuiz() throws SQLException {
-//		Quiz quiz = quizDao.addQuiz(); //not yet implemented
-//		assertEquals(true, adminDao.deleteQuiz(quiz));
-//		assertEquals(null, quizDao.getQuiz(quiz_id));
+		Quiz quiz = quizDao.addQuiz(1);
+		assertEquals(true, adminDao.deleteQuiz(new Quiz(1,1)));
+		assertEquals(null, quizDao.getQuiz(1));
 	}
 	
 	@Test

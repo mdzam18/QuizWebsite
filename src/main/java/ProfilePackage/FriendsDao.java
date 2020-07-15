@@ -8,8 +8,6 @@ public interface FriendsDao {
 
     boolean sendFriendRequest(int from, int to) throws SQLException;
 
-    //boolean confirmFriendRequest(User from, User to) throws SQLException;
-
     boolean deleteFriend(int from, int to) throws SQLException;
 
     List<User> getSentRequests(User user) throws SQLException;
@@ -18,11 +16,11 @@ public interface FriendsDao {
 
     List<User> getFriends(User user) throws SQLException;
 
-    public boolean requested(int SenderId, int ReceiverId) throws SQLException;
+    boolean isRequested(int SenderId, int ReceiverId) throws SQLException;
 
-    public boolean areFriends(int user1, int user2) throws SQLException;
+    boolean areFriends(int user1, int user2) throws SQLException;
 
-    public boolean confirmFriendRequest(int senderId, int receiverId) throws SQLException;
+    boolean confirmFriendRequest(int senderId, int receiverId) throws SQLException;
 
-    public void addFriendship(int user1, int user2, Timestamp time) throws SQLException;
+    // void addFriendship(int user1, int user2, Timestamp time) throws SQLException; //?
 }

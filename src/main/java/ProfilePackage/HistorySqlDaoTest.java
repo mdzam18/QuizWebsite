@@ -78,7 +78,6 @@ class HistorySqlDaoTest {
         History thisHistory = historyList.get(0);
         assertEquals(testHistory, thisHistory);
 
-        System.out.println(historyList);
         historyDao.removeFromHistories(quizId);
         historyList = historyDao.getHistories(userId);
         assertTrue(historyList.isEmpty());
@@ -183,6 +182,46 @@ class HistorySqlDaoTest {
             for(History his: historiesResult) {
                 assertEquals(his.getUserId(), userIds[i]);
             }
+        }
+
+        for(int i = 0; i<quizIds.length; i++) {
+            assertTrue(historyDao.removeFromHistories(quizIds[i]));
+        }
+
+        for(int i = 0; i<userIds.length; i++) {
+            assertEquals(historyDao.getHistories(userIds[i]).size(), 0);
+        }
+    }
+
+    @Test
+    void testHistorySqlDaoMySql2() {
+        historyDao = new HistorySqlDao();
+
+        List<History> histories = new ArrayList<>();
+        final int USER_NUM = 30, QUIZ_NUM = 5;
+        int[] userIds = new int[USER_NUM];
+        int[] quizIds = new int[QUIZ_NUM];
+        for(int i = 0; i<USER_NUM; i++)
+            userIds[i] = (1 + i);
+        for(int i = 0; i<QUIZ_NUM; i++)
+            quizIds[i] = (1001 + i);
+        long startingDate = System.currentTimeMillis() - 1000*oneDay;
+
+        for(int u = 0; u<USER_NUM; u++) {
+            for(int q = 0; q<QUIZ_NUM; q++) {
+                for(int a = 0; a<3; a++) {
+                    Date start = new Date(startingDate);
+                    Date end = new Date(startingDate + oneDay);
+                    History his = new History(userIds[u], quizIds[q], getScore(), start, end);
+                    histories.add(his);
+
+                    startingDate += 2*oneDay;
+                }
+            }
+        }
+
+        for(int i = 0; i<histories.size(); i++) {
+            historyDao.addToHistory(histories.get(i));
         }
     }
 

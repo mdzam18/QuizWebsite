@@ -18,9 +18,9 @@ public class CreateTablesForTests {
     private Connection con;
 
     public CreateTablesForTests() throws SQLException, ClassNotFoundException {
-        con = ProfileDataSrc.getConnection();
+        //con = ProfileDataSrc.getConnection();
         //con = NanukaDatabase.getConnection();
-        //con = ProfileDataSrc.getConnection("", "root", "01234567");
+        con = ProfileDataSrc.getConnection("", "root", "01234567");
     }
 
     public boolean createUserTable() throws SQLException, ClassNotFoundException {

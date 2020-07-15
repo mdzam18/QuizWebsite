@@ -97,7 +97,7 @@ public class HistorySqlDao implements HistoryDao {
 
     @Override
     public List<History> getHistories(int userId) {
-        return new ArrayList<>(data.get(userId));
+        return data.get(userId);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class HistorySqlDao implements HistoryDao {
     }
 
     @Override
-    public void removeFromHistories(int quizId) {
+    public boolean removeFromHistories(int quizId) {
         if(useTables) {
             try {
                 String sqlString = "DELETE FROM " + tableName + " WHERE QuizId = ?;";
@@ -137,6 +137,7 @@ public class HistorySqlDao implements HistoryDao {
                 prepState.execute();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
+                return false;
             }
         }
 
@@ -150,6 +151,8 @@ public class HistorySqlDao implements HistoryDao {
             }
             histories.removeAll(toRemove);
         }
+
+        return true;
     }
 
     @Override

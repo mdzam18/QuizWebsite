@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Quiz.*;
+import UserPackage.User;
 
 public class StatisticsSqlDao implements StatisticsDao {
 	private Connection con;

@@ -3,6 +3,7 @@ package ProfilePackage;
 import java.sql.SQLException;
 import java.util.List;
 import Quiz.*;
+import UserPackage.User;
 
 
 public interface StatisticsDao {

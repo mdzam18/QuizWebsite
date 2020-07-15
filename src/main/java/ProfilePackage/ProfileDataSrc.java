@@ -19,7 +19,7 @@ public class ProfileDataSrc {
     public static Connection getConnection(String database, String user, String password) throws SQLException, ClassNotFoundException {
         //Class.forName("com.mysql.jdbc.Driver");
         Connection connection = (Connection) DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + database + "?serverTimezone=UTC&characterEncoding=UTF8",
+                "jdbc:mysql://localhost:3306/" + database + "?serverTimezone=GMT%2B4&characterEncoding=UTF8",
                 user,
                 password);
         return connection;

@@ -2,7 +2,6 @@ package Quiz;
 
 import ProfilePackage.CreateTablesForTests;
 import ProfilePackage.ProfileDataSrc;
-import ProfilePackage.User;
 
 import java.sql.*;
 import java.util.HashMap;

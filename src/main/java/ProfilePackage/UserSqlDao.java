@@ -65,6 +65,12 @@ public class UserSqlDao implements UserDao {
         statement.setString(10, null);
         statement.executeUpdate();
         User user = new User(userName, id, password);
+        user.setAdministrator(res.getBoolean(4));
+        user.setName(res.getString(6));
+        user.setSurname(res.getString(7));
+        user.setBirthDate(res.getDate(8));
+        user.setBirthPlace(res.getString(9));
+        user.setStatus(res.getString(10));
         return user;
     }
 

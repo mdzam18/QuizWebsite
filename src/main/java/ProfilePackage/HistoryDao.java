@@ -20,6 +20,6 @@ public interface HistoryDao {
 
     public boolean containsUser(int userId);
 
-    public void removeUser(int userId);
+    public boolean removeUser(int userId);
 
 }

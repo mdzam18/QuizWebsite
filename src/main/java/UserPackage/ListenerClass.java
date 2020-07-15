@@ -1,7 +1,5 @@
 package UserPackage;
 
-import ProfilePackage.UserSqlDao;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -12,7 +10,7 @@ import java.sql.SQLException;
 @WebListener
 public class ListenerClass implements ServletContextListener {
     private UserSqlDao uDao;
-    private String uDaoAttribute;
+    public static final String uDaoAttribute = "UserSql";
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -25,7 +23,6 @@ public class ListenerClass implements ServletContextListener {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        uDaoAttribute = "UserSql";
         ServletContext servletContext = servletContextEvent.getServletContext();
         servletContext.setAttribute(uDaoAttribute, uDao);
     }

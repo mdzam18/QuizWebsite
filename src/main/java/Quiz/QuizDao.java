@@ -1,5 +1,6 @@
 package Quiz;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface QuizDao {
@@ -9,5 +10,7 @@ public interface QuizDao {
 	public Quiz getQuiz(int quizId) throws SQLException;
 	
 	public boolean deleteQuiz(Quiz quiz) throws SQLException;
+
+	public Connection getConnection() throws SQLException;
 
 }

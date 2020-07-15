@@ -39,10 +39,6 @@ public class Quiz {
 
 	public void setInPracticeMode(boolean inPracticeMode) { this.inPracticeMode = inPracticeMode; }
 
-	public void setQuestionCount(int numberOfQuestions){
-		this.numberOfQuestions = numberOfQuestions;
-	}
-
 	public void setCreator(int creatorId){
 		this.creatorId = creatorId;
 	}
@@ -53,6 +49,7 @@ public class Quiz {
 
 	public void setQuestionSet(List<Question> questions){
 		this.questions = questions;
+		this.numberOfQuestions = questions.size();
 	}
 
 	public void setCategory(String category) {
@@ -74,6 +71,8 @@ public class Quiz {
 	public boolean isImmediate(){
 		return isImmediate;
 	}
+
+	public boolean isInPracticeMode() { return inPracticeMode; }
 
 	public int getQuestionCount(){
 		return numberOfQuestions;

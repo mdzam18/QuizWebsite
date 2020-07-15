@@ -81,6 +81,11 @@ public class QuizSqlDao implements QuizDao{
         return false;
     }
 
+    @Override
+    public Connection getConnection(){
+        return con;
+    }
+
 //    private void getData() throws SQLException {
 //        Statement stmt = connection.createStatement();
 //        ResultSet resultSet = stmt.executeQuery("SELECT * FROM " + TABLE_NAME);

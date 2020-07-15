@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDao {
-    User addUser(String userName, String password) throws SQLException;
+    User addUser(String userName, String password, boolean isAdministrator) throws SQLException;
 
     User getUser(int userId) throws SQLException;
 

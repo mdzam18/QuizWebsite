@@ -26,7 +26,7 @@ public class AdministratorSqlDaoTest {
 		con = ProfileDataSrc.getConnection();
 		adminDao = new AdministratorSqlDao();
 		userDao = new UserSqlDao();
-		historyDao = new HistorySqlDao();
+		historyDao = new HistorySqlDao(false);
 		tables = new CreateTablesForTests();
 	}
 	
@@ -102,7 +102,7 @@ public class AdministratorSqlDaoTest {
 	
 	@Test
 	public void testPromoteUser() throws SQLException {
-		User user = userDao.addUser("userN1", "userN1pass");
+		User user = userDao.addUser("userN1", "userN1pass", true);
 		int userId = user.getUserId();
 		assertEquals(true, adminDao.promoteUser(user));
 		assertEquals(true, userDao.getUser(userId).isAdministrator());

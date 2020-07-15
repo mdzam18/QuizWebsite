@@ -1,6 +1,7 @@
 package ProfilePackage;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class User {
     private int userId;
@@ -90,5 +91,10 @@ public class User {
         if (user == null || getClass() != user.getClass()) return false;
         return userName.equals(((User) user).getUserName()) &&
                 userId == ((User) user).getUserId() && password.equals(((User) user).getPassword());
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(userName, userId, password);
     }
 }

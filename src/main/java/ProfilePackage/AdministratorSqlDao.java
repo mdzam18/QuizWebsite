@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class AdministratorSqlDao implements AdministratorDao {
 	private Connection con;
@@ -33,6 +34,7 @@ public class AdministratorSqlDao implements AdministratorDao {
 		ResultSet rs = stm.executeQuery();
 		while (rs.next()){
 			User admin = new User(rs.getString(2),rs.getInt(1),rs.getString(3));
+			admin.setAdministrator(rs.getBoolean(4));
 			admin.setName(rs.getString(6));
 			admin.setSurname(rs.getString(7));
 			admin.setBirthDate(rs.getDate(8));
@@ -45,24 +47,13 @@ public class AdministratorSqlDao implements AdministratorDao {
 	
 	@Override
 	public User addAdmin(String username, String password) throws SQLException {
-		User user = userDao.addUser(username, password);
-		
+		User user = userDao.addUser(username, password, true);
 		return user;
 	}
 	
 	@Override
 	public User getAdmin(int userId) throws SQLException {
-		PreparedStatement stm = con.prepareStatement(
-				"SELECT * FROM " + userTable + " WHERE UserId = ?;");
-		stm.setInt(1, userId);
-		ResultSet res = stm.executeQuery();
-		if (!res.next()) return null;
-		User user = new User(res.getString(2), res.getInt(1), res.getString(3));
-		user.setName(res.getString(6));
-		user.setSurname(res.getString(7));
-		user.setBirthDate(res.getDate(8));
-		user.setBirthPlace(res.getString(9));
-		user.setStatus(res.getString(10));
+		User user = userDao.getUser(userId);
 		return user;
 	}
 	
@@ -76,21 +67,21 @@ public class AdministratorSqlDao implements AdministratorDao {
 		return false;
 	}
 	
-//	@Override
-//	public boolean deleteQuiz(Quiz quiz) throws SQLException {
-//		PreparedStatement stm =
-//				con.prepareStatement("DELETE FROM " + quizTable + " WHERE QuizId = ?;");
-//		stm.setInt(1, Integer.valueOf(quiz.getId()));
-//		int n = stm.executeUpdate();
-//		if(n == 1) return true;
-//		return false;
-//	}
-//
+	@Override
+	public boolean deleteQuiz(Quiz quiz) throws SQLException {
+		PreparedStatement stm =
+				con.prepareStatement("DELETE FROM " + quizTable + " WHERE QuizId = ?;");
+		stm.setInt(1, quiz.getQuizId());
+		int n = stm.executeUpdate();
+		if(n == 1) return true;
+		return false;
+	}
+
 	@Override
 	public boolean deleteHistory(Quiz quiz) throws SQLException {
 		PreparedStatement stm =
 				con.prepareStatement("DELETE FROM " + historyTable + " WHERE QuizId = ?;");
-		stm.setInt(1, Integer.valueOf(quiz.getQuizId()));
+		stm.setInt(1, quiz.getQuizId());
 		int n = stm.executeUpdate();
 		if(n > 0) return true;
 		return false;

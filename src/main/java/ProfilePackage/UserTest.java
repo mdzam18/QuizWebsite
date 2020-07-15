@@ -32,6 +32,10 @@ public class UserTest {
         assertEquals(user.getUserName(), "ZukoZuko");
         user.setSurname("FireLord");
         assertEquals(user.getSurname(), "FireLord");
+
+        assertEquals(user.hashCode(), user.hashCode());
+        User user2 = new User("GeneralAiroh", 2, "jasmineTea");
+        assertNotEquals(user.hashCode(), user2.hashCode());
     }
 
     @Test

@@ -16,7 +16,7 @@ public interface HistoryDao {
 
     public Set<Integer> getUserIds();
 
-    public void removeFromHistories(int quizId);
+    public boolean removeFromHistories(int quizId);
 
     public boolean containsUser(int userId);
 

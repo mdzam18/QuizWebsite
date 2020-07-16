@@ -4,14 +4,15 @@ import Quiz.*;
 
 import UserPackage.User;
 import UserPackage.UserDao;
-import UserPackage.UserSqlDao;
 import org.junit.jupiter.api.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,6 +31,7 @@ public class AdministratorSqlDaoTest {
 		adminDao = new AdministratorSqlDao();
 		userDao = new UserSqlDao();
 		historyDao = new HistorySqlDao();
+		quizDao = new QuizSqlDao();
 		tables = new CreateTablesForTests();
 	}
 	
@@ -89,18 +91,21 @@ public class AdministratorSqlDaoTest {
 	
 	@Test
 	public void testDeleteQuiz() throws SQLException {
+		User user = userDao.addUser("MikeWheeler","Eleven11", false);
+		System.out.println(user.getUserId());
 		Quiz quiz = quizDao.addQuiz(1);
-		assertEquals(true, adminDao.deleteQuiz(new Quiz(1,1)));
-		assertEquals(null, quizDao.getQuiz(1));
+		assertEquals(true, adminDao.deleteQuiz(quiz));
+		assertNull(quizDao.getQuiz(1));
 	}
 	
 	@Test
 	public void testDeleteHistory() throws SQLException {
-//		Quiz quiz = new Quiz(1,1);
-//		quiz.setQuizId(1);
-//		historyDao.addToHistory(1,1,20,new Date(),new Date());
-//		assertEquals(true, adminDao.deleteHistory(quiz));
-//		assertEquals(null, historyDao.getHistoriesByQuizId(1));
+		List<History> answer = new ArrayList<>();
+		User user = userDao.addUser("Dustin","Suzie23", false);
+		Quiz quiz = quizDao.addQuiz(1);
+		historyDao.addToHistory(1,1,25, new Date(), new Date());
+		assertEquals(true, adminDao.deleteHistory(quiz));
+		assertEquals(answer, historyDao.getHistoriesByQuizId(1));
 	}
 	
 	@Test

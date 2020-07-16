@@ -1,7 +1,12 @@
-package ProfilePackage;
+package ProfilePackage.Statistics;
 
+import ProfilePackage.CreateTablesForTests;
+import ProfilePackage.HistoryDao;
+import ProfilePackage.HistorySqlDao;
+import ProfilePackage.ProfileDataSrc;
+import ProfilePackage.Statistics.StatisticsDao;
+import ProfilePackage.Statistics.StatisticsSqlDao;
 import Quiz.*;
-import UserPackage.User;
 import UserPackage.UserDao;
 import UserPackage.UserSqlDao;
 import org.junit.jupiter.api.*;

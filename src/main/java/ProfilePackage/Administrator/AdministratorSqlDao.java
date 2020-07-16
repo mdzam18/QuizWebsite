@@ -1,5 +1,8 @@
-package ProfilePackage;
+package ProfilePackage.Administrator;
 
+import ProfilePackage.Administrator.AdministratorDao;
+import ProfilePackage.CreateTablesForTests;
+import ProfilePackage.ProfileDataSrc;
 import Quiz.Quiz;
 import UserPackage.User;
 import UserPackage.UserSqlDao;
@@ -8,9 +11,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class AdministratorSqlDao extends UserSqlDao implements AdministratorDao{
+public class AdministratorSqlDao extends UserSqlDao implements AdministratorDao {
 	private Connection con;
 	private String userTable;
 	private String quizTable;

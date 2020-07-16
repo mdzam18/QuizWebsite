@@ -60,7 +60,7 @@ public class StatisticsSqlDaoTest {
 		quizzes.add(quiz1);
 		quizzes.add(quiz2);
 		quizzes.add(quiz3);
-		
+
 		historyDao.addToHistory(2, 3, 20, new Date(), new Date());
 		historyDao.addToHistory(2, 2, 23, new Date(), new Date());
 		historyDao.addToHistory(1, 1, 25, new Date(), new Date());

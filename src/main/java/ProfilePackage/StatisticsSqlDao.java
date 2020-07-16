@@ -21,7 +21,7 @@ public class StatisticsSqlDao implements StatisticsDao {
 		quizTable = CreateTablesForTests.QuizTableTest;
 		historyTable = CreateTablesForTests.HistoryTableTest;
 	}
-
+	
 	public List<Quiz> getAllQuizzes(int userId) throws SQLException {
 		List <Quiz> quizzes = new ArrayList<>();
 		PreparedStatement stm =
@@ -29,14 +29,15 @@ public class StatisticsSqlDao implements StatisticsDao {
 		stm.setInt(1, userId);
 		ResultSet rs = stm.executeQuery();
 		while(rs.next()){
-			int quizId = rs.getInt(1);
+			int quizId = rs.getInt(2);
 			stm = con.prepareStatement("SELECT * FROM " + quizTable + " WHERE QuizId = ?;");
 			stm.setInt(1, quizId);
-			Quiz quiz = new Quiz(rs.getInt(1), rs.getInt(9));
+			ResultSet rs2 = stm.executeQuery();
+			rs2.next();
+			Quiz quiz = new Quiz(rs2.getInt(1), rs2.getInt(9));
 			quizzes.add(quiz);
 		}
 		return quizzes;
-
 	}
 	
 	public List <Integer> getPastPerformances(int userId, int quizId) throws SQLException {
@@ -54,14 +55,16 @@ public class StatisticsSqlDao implements StatisticsDao {
 		return result;
 	}
 	
-	public Integer getMaxScore(int userId, int quizId) throws SQLException {
+	public double getMaxScore(int userId, int quizId) throws SQLException {
 		Integer max = null;
 		PreparedStatement stm =
 				con.prepareStatement("SELECT max(Score) FROM " + historyTable + " WHERE UserId = ? AND QuizId = ?;");
 		stm.setInt(1, userId);
 		stm.setInt(2, quizId);
 		ResultSet rs = stm.executeQuery();
-		if(rs.next()) max = rs.getInt("max(Score)");
+		if(rs.next()) {
+			max = rs.getInt("max(Score)");
+		}
 		return max;
 		
 	}
@@ -70,14 +73,14 @@ public class StatisticsSqlDao implements StatisticsDao {
 		User user = null;
 		long minTime = Long.MAX_VALUE;
 		int maxScore = 0;
-		int userId = 0;
+		int userId = 1;
 		PreparedStatement stm =
 				con.prepareStatement("SELECT * FROM " + historyTable + " WHERE QuizId = ?;");
-		stm.setInt(2, quizId);
+		stm.setInt(1, quizId);
 		ResultSet rs = stm.executeQuery();
 		while(rs.next()){
 			int score = rs.getInt(3);
-			if(score > maxScore){
+			if(score >= maxScore){
 				maxScore = score;
 				long elapsedTime = rs.getDate(5).getTime() - rs.getDate(4).getTime();
 				if(elapsedTime < minTime){
@@ -102,8 +105,8 @@ public class StatisticsSqlDao implements StatisticsDao {
 		return user;
 	}
 	
-	public Double getAverageScore(int quizId) throws SQLException {
-		Double result = null;
+	public double getAverageScore(int quizId) throws SQLException {
+		double result = 0;
 		PreparedStatement stm =
 				con.prepareStatement("SELECT avg(Score) FROM " + historyTable + " WHERE QuizId = ?;");
 		stm.setInt(1, quizId);

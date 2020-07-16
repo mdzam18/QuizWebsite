@@ -12,10 +12,10 @@ public interface StatisticsDao {
 	
 	public List<Integer> getPastPerformances(int userId, int quizId) throws SQLException;
 	
-	public Integer getMaxScore(int userId, int quizId) throws SQLException;
+	public double getMaxScore(int userId, int quizId) throws SQLException;
 	
 	public User getBestPlayer(int quizId) throws SQLException;
 	
-	public Double getAverageScore(int quizId) throws SQLException;
+	public double getAverageScore(int quizId) throws SQLException;
 	
 }

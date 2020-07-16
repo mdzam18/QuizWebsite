@@ -1,17 +1,14 @@
 package ProfilePackage;
 
-import Quiz.Quiz;
+import Quiz.*;
 import UserPackage.User;
 import UserPackage.UserDao;
-import UserPackage.UserSqlDao;
 import org.junit.jupiter.api.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -21,7 +18,7 @@ public class StatisticsSqlDaoTest {
 	private StatisticsDao statisticsDao;
 	private UserDao userDao;
 	private HistoryDao historyDao;
-	//	private Quiz.QuizDAO quizDao;
+	private QuizDao quizDao;
 	private Connection con;
 	private CreateTablesForTests tables;
 	
@@ -32,6 +29,7 @@ public class StatisticsSqlDaoTest {
 		statisticsDao = new StatisticsSqlDao();
 		userDao = new UserSqlDao();
 		historyDao = new HistorySqlDao();
+		quizDao = new QuizSqlDao();
 		tables = new CreateTablesForTests();
 	}
 	
@@ -52,7 +50,24 @@ public class StatisticsSqlDaoTest {
 	@Test
 	public void testGetAllQuizzes() throws SQLException {
 		assertEquals(0, statisticsDao.getAllQuizzes(1).size());
-		//...
+		HashSet <Quiz> quizzes = new HashSet<>();
+		
+		Quiz quiz1 = quizDao.addQuiz(2);
+		Quiz quiz2 = quizDao.addQuiz(2);
+		Quiz quiz3 = quizDao.addQuiz(2);
+		
+		quizzes.add(quiz1);
+		quizzes.add(quiz2);
+		quizzes.add(quiz3);
+		
+		historyDao.addToHistory(2, 3, 20, new Date(), new Date());
+		historyDao.addToHistory(2, 2, 23, new Date(), new Date());
+		historyDao.addToHistory(1, 1, 25, new Date(), new Date());
+		historyDao.addToHistory(2, 1, 24, new Date(), new Date());
+		
+		
+		assertEquals(3, statisticsDao.getAllQuizzes(2).size());
+		assertEquals(quizzes, new HashSet<>(statisticsDao.getAllQuizzes(2)));
 	}
 	
 	@Test
@@ -79,9 +94,9 @@ public class StatisticsSqlDaoTest {
 	
 	@Test
 	public void testGetMaxScore() throws SQLException {
-		Integer answer1 = null;
-		Integer answer2 = 28;
-		Integer answer3 =  25;
+		double answer1 = 0;
+		double answer2 = 28;
+		double answer3 =  25;
 		
 		historyDao.addToHistory(4, 5, 15, new Date(), new Date());
 		historyDao.addToHistory(2, 5, 20, new Date(), new Date());
@@ -99,19 +114,17 @@ public class StatisticsSqlDaoTest {
 	
 	@Test
 	public void testGetBestPlayer() throws SQLException {
-		userDao.addUser("UserN1", "userN1pass", false);
-		userDao.addUser("UserN2", "userN2pass", false);
-		userDao.addUser("UserN3", "userN3pass", false);
-		userDao.addUser("UserN4", "userN4pass", false);
+		User user1 = userDao.addUser("UserN1", "userN1pass", false);
+		User user2 = userDao.addUser("UserN2", "userN2pass", false);
+		User user3 = userDao.addUser("UserN3", "userN3pass", false);
+		User user4 = userDao.addUser("UserN4", "userN4pass", false);
 		
-		historyDao.addToHistory(1, 1,25, new Date(1100), new Date(1500));
-		historyDao.addToHistory(2, 1,20, new Date(1200), new Date(1401));
-		historyDao.addToHistory(3, 1,25, new Date(1000), new Date(1300));
-		historyDao.addToHistory(4, 1,25, new Date(1300), new Date(1625));
+		historyDao.addToHistory(1, 1,25, new Date(120, 3,5), new Date(120, 3, 15));
+		historyDao.addToHistory(2, 1,20, new Date(119, 2,1), new Date(119, 2, 2));
+		historyDao.addToHistory(3, 1,25, new Date(118, 5,3), new Date(118, 5, 9));
+		historyDao.addToHistory(4, 1,25, new Date(121, 4, 2), new Date(121, 4, 22));
 		
-		User user = userDao.getUser(3);
-		
-		assertEquals(user, statisticsDao.getBestPlayer(1));
+		assertEquals(user3, statisticsDao.getBestPlayer(1));
 	}
 	
 	@Test
@@ -120,12 +133,12 @@ public class StatisticsSqlDaoTest {
 		historyDao.addToHistory(1, 3, 18, new Date(), new Date());
 		historyDao.addToHistory(2, 2, 23, new Date(), new Date());
 		historyDao.addToHistory(3, 3, 23, new Date(), new Date());
-		historyDao.addToHistory(5, 2, 30, new Date(), new Date());
+		historyDao.addToHistory(2, 2, 30, new Date(), new Date());
 		historyDao.addToHistory(2, 3, 21, new Date(), new Date());
 		historyDao.addToHistory(2, 1, 15, new Date(), new Date());
 		
-		assertEquals(62/3, statisticsDao.getAverageScore(3));
-		assertEquals(53/2, statisticsDao.getAverageScore(2));
+		assertEquals(20.6667, statisticsDao.getAverageScore(3));
+		assertEquals(26.5, statisticsDao.getAverageScore(2));
 		assertEquals(15.0, statisticsDao.getAverageScore(1));
 	}
 	

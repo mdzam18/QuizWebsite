@@ -1,5 +1,7 @@
-package Administrator;
+package Administrator.dao;
 
+import Administrator.dao.AdministratorDao;
+import Administrator.dao.AdministratorSqlDao;
 import ProfilePackage.*;
 import Quiz.Quiz;
 import Quiz.QuizDao;

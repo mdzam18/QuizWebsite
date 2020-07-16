@@ -1,4 +1,4 @@
-package Administrator;
+package Administrator.dao;
 
 import Quiz.Quiz;
 import UserPackage.User;

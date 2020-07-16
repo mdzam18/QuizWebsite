@@ -1,5 +1,6 @@
-package Administrator;
+package Administrator.dao;
 
+import Administrator.dao.AdministratorDao;
 import ProfilePackage.CreateTablesForTests;
 import ProfilePackage.ProfileDataSrc;
 import Quiz.Quiz;

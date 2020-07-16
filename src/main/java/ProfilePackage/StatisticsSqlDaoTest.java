@@ -39,6 +39,7 @@ public class StatisticsSqlDaoTest {
 		assertEquals(true, tables.createUserTable());
 		assertEquals(true, tables.createQuizTable());
 		assertEquals(true, tables.createHistoryTable());
+		addDataInTables();
 	}
 	
 	@AfterEach
@@ -53,19 +54,14 @@ public class StatisticsSqlDaoTest {
 		assertEquals(0, statisticsDao.getAllQuizzes(1).size());
 		HashSet <Quiz> quizzes = new HashSet<>();
 		
-		Quiz quiz1 = quizDao.addQuiz(2);
-		Quiz quiz2 = quizDao.addQuiz(2);
-		Quiz quiz3 = quizDao.addQuiz(2);
-		
-		quizzes.add(quiz1);
-		quizzes.add(quiz2);
-		quizzes.add(quiz3);
+		quizzes.add(quizDao.getQuiz(1));
+		quizzes.add(quizDao.getQuiz(2));
+		quizzes.add(quizDao.getQuiz(3));
 		
 		historyDao.addToHistory(2, 3, 20, new Date(), new Date());
 		historyDao.addToHistory(2, 2, 23, new Date(), new Date());
 		historyDao.addToHistory(1, 1, 25, new Date(), new Date());
 		historyDao.addToHistory(2, 1, 24, new Date(), new Date());
-		
 		
 		assertEquals(3, statisticsDao.getAllQuizzes(2).size());
 		assertEquals(quizzes, new HashSet<>(statisticsDao.getAllQuizzes(2)));
@@ -99,38 +95,32 @@ public class StatisticsSqlDaoTest {
 		double answer2 = 28;
 		double answer3 =  25;
 		
-		historyDao.addToHistory(4, 5, 15, new Date(), new Date());
-		historyDao.addToHistory(2, 5, 20, new Date(), new Date());
-		historyDao.addToHistory(1, 7, 25, new Date(), new Date());
-		historyDao.addToHistory(4, 5, 26, new Date(), new Date());
-		historyDao.addToHistory(4, 5, 28, new Date(), new Date());
+		historyDao.addToHistory(4, 2, 15, new Date(), new Date());
+		historyDao.addToHistory(2, 1, 20, new Date(), new Date());
+		historyDao.addToHistory(1, 1, 25, new Date(), new Date());
+		historyDao.addToHistory(4, 2, 26, new Date(), new Date());
+		historyDao.addToHistory(4, 2, 28, new Date(), new Date());
 		historyDao.addToHistory(4, 4, 28, new Date(), new Date());
 		
 		assertEquals(answer1, statisticsDao.getMaxScore(4, 3));
-		assertEquals(answer1, statisticsDao.getMaxScore(3, 5));
-		assertEquals(answer2, statisticsDao.getMaxScore(4, 5));
-		assertEquals(answer3, statisticsDao.getMaxScore(1, 7));
+		assertEquals(answer1, statisticsDao.getMaxScore(3, 2));
+		assertEquals(answer2, statisticsDao.getMaxScore(4, 2));
+		assertEquals(answer3, statisticsDao.getMaxScore(1, 1));
 		
 	}
 	
 	@Test
 	public void testGetBestPlayer() throws SQLException {
-		User user1 = userDao.addUser("UserN1", "userN1pass", false);
-		User user2 = userDao.addUser("UserN2", "userN2pass", false);
-		User user3 = userDao.addUser("UserN3", "userN3pass", false);
-		User user4 = userDao.addUser("UserN4", "userN4pass", false);
-		
 		historyDao.addToHistory(1, 1,25, new Date(120, 3,5), new Date(120, 3, 15));
 		historyDao.addToHistory(2, 1,20, new Date(119, 2,1), new Date(119, 2, 2));
 		historyDao.addToHistory(3, 1,25, new Date(118, 5,3), new Date(118, 5, 9));
 		historyDao.addToHistory(4, 1,25, new Date(121, 4, 2), new Date(121, 4, 22));
 		
-		assertEquals(user3, statisticsDao.getBestPlayer(1));
+		assertEquals(userDao.getUser(3), statisticsDao.getBestPlayer(1));
 	}
 	
 	@Test
 	public void testGetAverageScore() throws SQLException {
-		
 		historyDao.addToHistory(1, 3, 18, new Date(), new Date());
 		historyDao.addToHistory(2, 2, 23, new Date(), new Date());
 		historyDao.addToHistory(3, 3, 23, new Date(), new Date());
@@ -141,6 +131,18 @@ public class StatisticsSqlDaoTest {
 		assertEquals(20.6667, statisticsDao.getAverageScore(3));
 		assertEquals(26.5, statisticsDao.getAverageScore(2));
 		assertEquals(15.0, statisticsDao.getAverageScore(1));
+	}
+	
+	private void addDataInTables() throws SQLException {
+		userDao.addUser("UserN1", "userN1pass", false);
+		userDao.addUser("UserN2", "userN2pass", false);
+		userDao.addUser("UserN3", "userN3pass", false);
+		userDao.addUser("UserN4", "userN4pass", false);
+		
+		quizDao.addQuiz(1);
+		quizDao.addQuiz(1);
+		quizDao.addQuiz(1);
+		quizDao.addQuiz(1);
 	}
 	
 }

@@ -1,5 +1,8 @@
-package ProfilePackage;
+package Administrator.dao;
 
+import Administrator.dao.AdministratorDao;
+import Administrator.dao.AdministratorSqlDao;
+import ProfilePackage.*;
 import Quiz.Quiz;
 import Quiz.QuizDao;
 import Quiz.QuizSqlDao;
@@ -59,6 +62,7 @@ public class AdministratorSqlDaoTest {
 		User admin1 = adminDao.addAdmin("adminN1","adminN1pass");
 		User admin2 = adminDao.addAdmin("adminN2","adminN2pass");
 		User admin3 = adminDao.addAdmin("adminN3", "adminN3pass");
+		
 		answer.add(admin1);
 		answer.add(admin2);
 		answer.add(admin3);

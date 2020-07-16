@@ -7,25 +7,29 @@ import java.sql.Statement;
 public class CreateTablesForTests {
     public static final String FriendsTableTest = "Friends2";
     public static final String UsersTableTest = "Users2";
+<<<<<<< HEAD
     public static String UsersTable = "Users";
+=======
+    public static String UsersTable = "Users2";
+>>>>>>> 18043a9073fba2526a26d322514300e0b2d30700
     public static String FriendsTable = "Friends";
     public static String MailsTableTest = "Mails2";
     public static String MailsTable = "Mails";
     public static final String HistoryTableTest = "History2";
     public static final String QuizTableTest = "Quiz2";
     public static final String QuestionTableTest = "Question2";
-
+    
     private Connection con;
-
+    
     public CreateTablesForTests() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
         //con = NanukaDatabase.getConnection();
         //con = ProfileDataSrc.getConnection("test", "root", "01234567");
     }
-
+    
     public boolean createUserTable() throws SQLException, ClassNotFoundException {
         Statement s = con.createStatement();
-
+        
         s.executeUpdate("CREATE TABLE " + UsersTableTest + " (\n" + "UserId int primary key, \n" +
                 "UserName varchar(255),\n" +
                 "Password varchar(255),\n" +
@@ -38,8 +42,8 @@ public class CreateTablesForTests {
                 "Status varchar(255)" + ");");
         return true;
     }
-
-
+    
+    
     public boolean createFriendsTable() throws SQLException, ClassNotFoundException {
         Statement s = con.createStatement();
         s.executeUpdate("CREATE TABLE " + FriendsTableTest + " (\n" + "SenderId int ,\n" +
@@ -50,16 +54,16 @@ public class CreateTablesForTests {
                 "foreign key (ReceiverId) references Users2(UserId));");
         return true;
     }
-
-
+    
+    
     public boolean dropTable(String tableName) throws SQLException {
         Statement stm = null;
         stm = con.createStatement();
         stm.executeUpdate("drop table " + tableName);
         return true;
     }
-
-
+    
+    
     public boolean createMailsTable() throws SQLException, ClassNotFoundException {
         Statement s = con.createStatement();
         //con.createStatement().executeQuery("drop table Mails2;");
@@ -76,21 +80,21 @@ public class CreateTablesForTests {
         s.executeUpdate(query);
         return true;
     }
-
+    
     public boolean createHistoryTable() throws SQLException {
         Statement state = con.createStatement();
         state.executeUpdate("CREATE TABLE " + HistoryTableTest + " (\n" +
                 "   UserId int ,\n" +
                 "   QuizId int ,\n" +
                 "   Score int,\n" +
-                "   StartDate Timestamp,\n" +
-                "   EndDate Timestamp/*,*/\n" +
-                //"   foreign key (UserId) references Users2(UserId),\n" +
-                //"   foreign key (QuizId) references Quiz2(QuizId)\n" +
+                "   StartDate Date,\n" +
+                "   EndDate Date,\n" +
+                "   foreign key (UserId) references Users2(UserId),\n" +
+                "   foreign key (QuizId) references Quiz2(QuizId)\n" +
                 ");");
         return true;
     }
-
+    
     public boolean createQuizTable() throws SQLException {
         Statement stm = con.createStatement();
         stm.executeUpdate("CREATE TABLE " + QuizTableTest + " (\n" +
@@ -102,8 +106,8 @@ public class CreateTablesForTests {
                 "NumberOfQuestions int,\n" +
                 "Description varchar(255),\n" +
                 "Category varchar(255),\n" +
-                "CreatorId int/*,*/\n" +
-                //"FOREIGN KEY (CreatorId) REFERENCES Users2 (UserId)\n" +
+                "CreatorId int,\n" +
+                "FOREIGN KEY (CreatorId) REFERENCES Users2 (UserId)\n" +
                 ");");
         return true;
     }

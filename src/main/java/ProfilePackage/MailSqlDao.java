@@ -16,7 +16,7 @@ public class MailSqlDao implements MailDao {
 
     public MailSqlDao() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
-        // con = NanukaDatabase.getConnection();
+         //con = NanukaDatabase.getConnection();
     }
 
     private Mail getMail(ResultSet rs) throws SQLException {
@@ -32,6 +32,9 @@ public class MailSqlDao implements MailDao {
 
     @Override
     public Mail getMailById(int mailId) throws SQLException {
+        //NanukaDatabase.closeConnection();
+        //con = NanukaDatabase.getConnection();
+
         PreparedStatement stm = con.prepareStatement("Select * from " + CreateTablesForTests.MailsTable + " where MailId = ?;");
         stm.setInt(1, mailId);
         ResultSet rs = stm.executeQuery();
@@ -43,6 +46,9 @@ public class MailSqlDao implements MailDao {
 
     @Override
     public boolean sendMail(Mail mail) throws SQLException {
+        //NanukaDatabase.closeConnection();
+        //con = NanukaDatabase.getConnection();
+
         PreparedStatement statement = con.prepareStatement(
                 "SELECT max(MailId) FROM " + CreateTablesForTests.MailsTable + ";");
         ResultSet res = statement.executeQuery();
@@ -66,6 +72,9 @@ public class MailSqlDao implements MailDao {
 
     @Override
     public ArrayList<Mail> getMails(int userId) throws SQLException {
+        //NanukaDatabase.closeConnection();
+        //con = NanukaDatabase.getConnection();
+
         ArrayList<Mail> result = new ArrayList<>();
         PreparedStatement stm = con.prepareStatement("Select * from " + CreateTablesForTests.MailsTable + " where ReceiverId = ?;");
         stm.setInt(1, userId);
@@ -78,6 +87,9 @@ public class MailSqlDao implements MailDao {
 
     @Override
     public boolean deleteMailById(int mailId) throws SQLException {
+        //NanukaDatabase.closeConnection();
+        //con = NanukaDatabase.getConnection();
+
         PreparedStatement stm = con.prepareStatement("Delete from " + CreateTablesForTests.MailsTable + " Where MailId = ?;");
         stm.setInt(1, mailId);
         stm.executeUpdate();

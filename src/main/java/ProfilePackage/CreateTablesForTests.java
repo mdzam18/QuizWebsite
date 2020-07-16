@@ -53,6 +53,9 @@ public class CreateTablesForTests {
     
     
     public boolean dropTable(String tableName) throws SQLException {
+        //NanukaDatabase.closeConnection();
+        //con = NanukaDatabase.getConnection();
+
         Statement stm = null;
         stm = con.createStatement();
         stm.executeUpdate("drop table " + tableName);

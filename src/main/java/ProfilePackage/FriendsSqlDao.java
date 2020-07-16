@@ -113,6 +113,9 @@ public class FriendsSqlDao implements FriendsDao {
 
     @Override
     public boolean sendFriendRequest(int from, int to) throws SQLException {
+        //NanukaDatabase.closeConnection();
+        //con = NanukaDatabase.getConnection();
+
         if (from == to) return false;
         if (areFriends(from, to) || isRequested(from, to) || isRequested(to, from)) return false;
         Date date = new Date(2020, 1, 1);
@@ -149,6 +152,9 @@ public class FriendsSqlDao implements FriendsDao {
 
     @Override
     public boolean confirmFriendRequest(int senderId, int receiverId) throws SQLException {
+        //NanukaDatabase.closeConnection();
+        //con = NanukaDatabase.getConnection();
+
         if (areFriends(senderId, receiverId)) {
             return false;
         }

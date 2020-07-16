@@ -37,6 +37,8 @@ public class MailSqlDaoTest {
 
     @BeforeEach
     public void setUp() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        //NanukaDatabase.closeConnection();
+        //con = NanukaDatabase.getConnection();
 
         CreateTablesForTests.MailsTable = CreateTablesForTests.MailsTableTest;
         CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
@@ -48,12 +50,15 @@ public class MailSqlDaoTest {
 
     @AfterEach
     public void tearDown() throws SQLException {
+        //NanukaDatabase.closeConnection();
+        //con = NanukaDatabase.getConnection();
+
         assertEquals(tables.dropTable(CreateTablesForTests.UsersTableTest), true);
         assertEquals(tables.dropTable(CreateTablesForTests.MailsTableTest), true);
         CreateTablesForTests.UsersTable = "Users";
         CreateTablesForTests.MailsTable = "Mails";
     }
-
+/*
     @Test
     void myTest() throws SQLException {
         userDao.addUser("nanuka", "123", false);
@@ -63,14 +68,14 @@ public class MailSqlDaoTest {
         assertTrue(friendDao.areFriends(1, 2));
     }
 
-
+*/
     @Test
     public void test4() throws SQLException {
 
         Mail mail = new Mail(1, 1, 2, Mail.noteType, "hello", new Date(2020, 1, 1), 1);
         mailDao.sendMail(mail);
-        ArrayList<Mail> list = mailDao.getMails(1);
-        assertEquals(list.size(), 1);
+        ArrayList<Mail> list = mailDao.getMails(2);
+        assertEquals(1,list.size());
         mailDao.deleteMailById(1);
         assertEquals(mailDao.getMails(1).size(), 0);
     }
@@ -109,10 +114,10 @@ public class MailSqlDaoTest {
                 new Mail(4, 1, 3, Mail.noteType, "hello",
                         new Date(2020, 1, 1), 1));
 
-        assertEquals(1, mailDao.getMails(1));
-        assertEquals(1, mailDao.getMails(2));
-        assertEquals(1, mailDao.getMails(3));
-        assertEquals(1, mailDao.getMails(4));
+        assertEquals(0, mailDao.getMails(1).size());
+        assertEquals(1, mailDao.getMails(2).size());
+        assertEquals(2, mailDao.getMails(3).size());
+        assertEquals(1, mailDao.getMails(4).size());
     }
 
     @Test
@@ -127,5 +132,9 @@ public class MailSqlDaoTest {
         assertEquals(Mail.noteType,mailDao.getMailById(1).getType());
         assertEquals("hello",mailDao.getMailById(2).getMessage());
         assertEquals(1,mailDao.getMailById(2).getReceiverId());
+    }
+    @Test
+    void test8() throws SQLException {
+        assertEquals(null,mailDao.getMailById(1));
     }
 }

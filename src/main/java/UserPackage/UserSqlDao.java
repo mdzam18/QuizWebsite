@@ -1,6 +1,7 @@
 package UserPackage;
 
 import ProfilePackage.CreateTablesForTests;
+import ProfilePackage.NanukaDatabase;
 import ProfilePackage.ProfileDataSrc;
 
 import java.security.MessageDigest;
@@ -39,6 +40,9 @@ public class UserSqlDao implements UserDao {
 
     @Override
     public User addUser(String userName, String password, boolean isAdministrator) throws SQLException {
+        //NanukaDatabase.closeConnection();
+        //con = NanukaDatabase.getConnection();
+
         String salt = createSalt();
         password = password + salt;
         password = findHashCode(password);

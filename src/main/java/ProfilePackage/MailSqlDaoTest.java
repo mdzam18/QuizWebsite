@@ -29,29 +29,32 @@ public class MailSqlDaoTest {
     public void getConnection() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         con = ProfileDataSrc.getConnection();
         //con = NanukaDatabase.getConnection();
-        tables = new CreateTablesForTests();
-        friendDao = new FriendsSqlDao();
-        mailDao = new MailSqlDao();
-        userDao = new UserSqlDao();
     }
 
     @BeforeEach
     public void setUp() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
-
+        tables = new CreateTablesForTests();
         CreateTablesForTests.MailsTable = CreateTablesForTests.MailsTableTest;
         CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
-        assertEquals(tables.createMailsTable(), true);
+        CreateTablesForTests.FriendsTable = CreateTablesForTests.FriendsTableTest;
+        friendDao = new FriendsSqlDao();
+        mailDao = new MailSqlDao();
+        userDao = new UserSqlDao();
         assertEquals(tables.createUserTable(), true);
+        assertEquals(tables.createFriendsTable(), true);
+        assertEquals(tables.createMailsTable(), true);
         userDao.addUser("nanuka", "123", false);
         userDao.addUser("ana", "123", false);
     }
 
     @AfterEach
     public void tearDown() throws SQLException {
-        assertEquals(tables.dropTable(CreateTablesForTests.UsersTableTest), true);
         assertEquals(tables.dropTable(CreateTablesForTests.MailsTableTest), true);
+        assertEquals(tables.dropTable(CreateTablesForTests.FriendsTableTest), true);
+        assertEquals(tables.dropTable(CreateTablesForTests.UsersTableTest), true);
         CreateTablesForTests.UsersTable = "Users";
         CreateTablesForTests.MailsTable = "Mails";
+        CreateTablesForTests.FriendsTable = "Friends";
     }
 
     @Test
@@ -66,7 +69,6 @@ public class MailSqlDaoTest {
 
     @Test
     public void test4() throws SQLException {
-
         Mail mail = new Mail(1, 1, 2, Mail.noteType, "hello", new Date(2020, 1, 1), 1);
         mailDao.sendMail(mail);
         ArrayList<Mail> list = mailDao.getMails(1);
@@ -116,16 +118,16 @@ public class MailSqlDaoTest {
     }
 
     @Test
-    void test7() throws SQLException{
+    void test7() throws SQLException {
         mailDao.sendMail(
                 new Mail(1, 1, 2, Mail.noteType, "hello",
                         new Date(2020, 1, 1), 1));
         mailDao.sendMail(
                 new Mail(2, 2, 1, Mail.noteType, "hello",
                         new Date(2020, 1, 1), 1));
-        assertEquals(1,mailDao.getMailById(1).getSenderId());
-        assertEquals(Mail.noteType,mailDao.getMailById(1).getType());
-        assertEquals("hello",mailDao.getMailById(2).getMessage());
-        assertEquals(1,mailDao.getMailById(2).getReceiverId());
+        assertEquals(1, mailDao.getMailById(1).getSenderId());
+        assertEquals(Mail.noteType, mailDao.getMailById(1).getType());
+        assertEquals("hello", mailDao.getMailById(2).getMessage());
+        assertEquals(1, mailDao.getMailById(2).getReceiverId());
     }
 }

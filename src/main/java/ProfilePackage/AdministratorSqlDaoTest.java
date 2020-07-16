@@ -1,9 +1,11 @@
 package ProfilePackage;
 
-import Quiz.*;
-
+import Quiz.Quiz;
+import Quiz.QuizDao;
+import Quiz.QuizSqlDao;
 import UserPackage.User;
 import UserPackage.UserDao;
+import UserPackage.UserSqlDao;
 import org.junit.jupiter.api.*;
 
 import java.security.NoSuchAlgorithmException;

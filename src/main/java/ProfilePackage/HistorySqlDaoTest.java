@@ -2,8 +2,6 @@ package ProfilePackage;
 
 import org.junit.jupiter.api.*;
 
-import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 

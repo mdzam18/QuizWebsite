@@ -52,7 +52,7 @@ public class MailSqlDao implements MailDao {
             id = res.getInt(1);
         }
         id++;
-        PreparedStatement ps = con.prepareStatement("insert into " + CreateTablesForTests.MailsTable + " value (?, ?, ?,?,?,?,?);");
+        PreparedStatement ps = con.prepareStatement("insert into " + CreateTablesForTests.MailsTable + " values (?, ?, ?,?,?,?,?);");
         ps.setInt(1, id);
         ps.setInt(2, mail.getSenderId());
         ps.setInt(3, mail.getReceiverId());

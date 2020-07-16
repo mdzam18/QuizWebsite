@@ -1,7 +1,5 @@
 package ProfilePackage;
 
-//import Quiz.*;
-
 import Quiz.Quiz;
 import UserPackage.User;
 import UserPackage.UserSqlDao;
@@ -65,19 +63,17 @@ public class AdministratorSqlDao extends UserSqlDao implements AdministratorDao{
 		PreparedStatement stm =
 				con.prepareStatement("DELETE FROM " + quizTable + " WHERE QuizId = ?;");
 		stm.setInt(1, quiz.getQuizId());
-		int n = stm.executeUpdate();
-		if(n == 1) return true;
-		return false;
+		stm.executeUpdate();
+		return true;
 	}
-
+	
 	@Override
 	public boolean deleteHistory(Quiz quiz) throws SQLException {
 		PreparedStatement stm =
 				con.prepareStatement("DELETE FROM " + historyTable + " WHERE QuizId = ?;");
 		stm.setInt(1, quiz.getQuizId());
-		int n = stm.executeUpdate();
-		if(n > 0) return true;
-		return false;
+		stm.executeUpdate();
+		return true;
 	}
 	
 	@Override
@@ -86,8 +82,7 @@ public class AdministratorSqlDao extends UserSqlDao implements AdministratorDao{
 				con.prepareStatement("UPDATE " + userTable + " SET IsAdministrator = ? WHERE UserId = ?;");
 		stm.setBoolean(1, true);
 		stm.setInt(2, user.getUserId());
-		int n = stm.executeUpdate();
-		if(n == 1) return true;
-		return false;
+		stm.executeUpdate();
+		return true;
 	}
 }

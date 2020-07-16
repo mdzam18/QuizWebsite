@@ -1,4 +1,4 @@
-package ProfilePackage.Statistics;
+package Statistics;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,6 @@ import java.util.List;
 
 import ProfilePackage.CreateTablesForTests;
 import ProfilePackage.ProfileDataSrc;
-import ProfilePackage.Statistics.StatisticsDao;
 import Quiz.*;
 import UserPackage.User;
 

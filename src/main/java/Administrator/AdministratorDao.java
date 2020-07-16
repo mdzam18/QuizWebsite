@@ -1,4 +1,4 @@
-package ProfilePackage.Administrator;
+package Administrator;
 
 import Quiz.Quiz;
 import UserPackage.User;

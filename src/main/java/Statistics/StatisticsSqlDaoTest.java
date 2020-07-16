@@ -1,11 +1,9 @@
-package ProfilePackage.Statistics;
+package Statistics;
 
 import ProfilePackage.CreateTablesForTests;
 import ProfilePackage.HistoryDao;
 import ProfilePackage.HistorySqlDao;
 import ProfilePackage.ProfileDataSrc;
-import ProfilePackage.Statistics.StatisticsDao;
-import ProfilePackage.Statistics.StatisticsSqlDao;
 import Quiz.*;
 import UserPackage.UserDao;
 import UserPackage.UserSqlDao;

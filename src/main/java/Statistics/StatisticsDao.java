@@ -1,4 +1,4 @@
-package ProfilePackage.Statistics;
+package Statistics;
 
 import java.sql.SQLException;
 import java.util.List;

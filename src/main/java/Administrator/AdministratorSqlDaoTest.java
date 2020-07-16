@@ -1,8 +1,6 @@
-package ProfilePackage.Administrator;
+package Administrator;
 
 import ProfilePackage.*;
-import ProfilePackage.Administrator.AdministratorDao;
-import ProfilePackage.Administrator.AdministratorSqlDao;
 import Quiz.Quiz;
 import Quiz.QuizDao;
 import Quiz.QuizSqlDao;

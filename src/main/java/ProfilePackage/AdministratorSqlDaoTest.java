@@ -59,6 +59,7 @@ public class AdministratorSqlDaoTest {
 		User admin1 = adminDao.addAdmin("adminN1","adminN1pass");
 		User admin2 = adminDao.addAdmin("adminN2","adminN2pass");
 		User admin3 = adminDao.addAdmin("adminN3", "adminN3pass");
+		
 		answer.add(admin1);
 		answer.add(admin2);
 		answer.add(admin3);

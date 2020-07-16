@@ -10,7 +10,7 @@ public class IndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         // if User has Cookies
         // Else
-        httpServletRequest.getRequestDispatcher("welcome.html").forward(httpServletRequest, httpServletResponse);
+        //httpServletRequest.getRequestDispatcher("welcome.jsp").forward(httpServletRequest, httpServletResponse);
     }
 
 }

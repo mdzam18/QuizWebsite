@@ -1,10 +1,10 @@
 window.onload = function() {
-    let imgNames = ["back", "back2", "back3", "back4"];
+    /*let imgNames = ["back", "back2", "back3", "back4"];
     let imgName = imgNames[Math.floor(Math.random() * imgNames.length)];
 
     let mainElem = document.getElementsByTagName("body")[0].style
     mainElem.background = "url(\"styles/images/" + imgName + ".jpg\")";
-    mainElem.backgroundSize = "cover";
+    mainElem.backgroundSize = "cover";*/
 
     document.getElementById("scrollRegistrationButton").addEventListener("click", globalVariables());
 }
@@ -72,8 +72,8 @@ function checkPasswords() {
     let errorStyle = "2px solid red";
     let goodStyle = "2px solid rgb(0, 200, 0)";
 
-    var pass = document.getElementById("passwordReg");
-    var passrep = document.getElementById("passwordRepReg");
+    let pass = document.getElementById("passwordReg");
+    let passrep = document.getElementById("passwordRepReg");
 
     if(passrep == ""){
         pass.style.border = defaultStyle;
@@ -91,7 +91,17 @@ function checkPasswords() {
 
 /* AJAX */
 function loginAction() {
+    let username = document.getElementById("username_input").value;
+    let password = document.getElementById("password_input").value;
 
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
+        }
+    };
+    xhttp.open("POST", "/LoginServlet?uname=" + username + "&password=" + password, true);
+    xhttp.send();
 }
 function signUpAction() {
 

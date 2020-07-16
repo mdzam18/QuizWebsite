@@ -15,8 +15,8 @@ public class MailSqlDao implements MailDao {
     private Connection con;
 
     public MailSqlDao() throws SQLException, ClassNotFoundException {
-        //con = ProfileDataSrc.getConnection();
-        con = NanukaDatabase.getConnection();
+        con = ProfileDataSrc.getConnection();
+        // con = NanukaDatabase.getConnection();
     }
 
     private Mail getMail(ResultSet rs) throws SQLException {
@@ -67,7 +67,7 @@ public class MailSqlDao implements MailDao {
     @Override
     public ArrayList<Mail> getMails(int userId) throws SQLException {
         ArrayList<Mail> result = new ArrayList<>();
-        PreparedStatement stm = con.prepareStatement("Select * from " + CreateTablesForTests.MailsTable + " where ReceiverId = ? order by 'Time' desc;");
+        PreparedStatement stm = con.prepareStatement("Select * from " + CreateTablesForTests.MailsTable + " where ReceiverId = ?;");
         stm.setInt(1, userId);
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {

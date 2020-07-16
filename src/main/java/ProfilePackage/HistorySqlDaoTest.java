@@ -1,7 +1,10 @@
 package ProfilePackage;
 
+import Quiz.*;
+import UserPackage.*;
 import org.junit.jupiter.api.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -14,18 +17,46 @@ class HistorySqlDaoTest {
     private final long ONE_DAY = 24*ONE_HOUR;  // Number milliseconds in a Day
     private CreateTablesForTests tables;
 
+    /* Testing HistorySqlDao Class */
+    private HistoryDao historyDao;
+    private UserSqlDao userDao;
+    private QuizSqlDao quizDao;
+
     /**
      * For Testing HistorySqlDao, update your database name in this class
      * **/
 
+    @BeforeEach
+    void setUpDataBase() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+        tables = new CreateTablesForTests();
+
+        assertTrue(tables.createUserTable());
+        assertTrue(tables.createQuizTable());
+        assertTrue(tables.createHistoryTable());
+
+        userDao = new UserSqlDao();
+        quizDao = new QuizSqlDao();
+        historyDao = new HistorySqlDao();
+    }
+
+    @AfterEach
+    void dropDataBase() throws SQLException {
+        assertTrue(tables.dropTable(CreateTablesForTests.HistoryTableTest));
+        assertTrue(tables.dropTable(CreateTablesForTests.QuizTableTest));
+        assertTrue(tables.dropTable(CreateTablesForTests.UsersTableTest));
+    }
+
     /* Testing History Class */
     @Test
-    void testHistory() {
-        int userId = 12076;
-        int quizId = 6852;
-        int score = 102;
+    void testHistory() throws SQLException {
+        int userId = 1;
+        int quizId = 1;
+        int score = 100;
         Date startDate = new Date(getModuloCurrentTime());
         Date endDate = new Date(getModuloCurrentTime());
+
+        userDao.addUser("Java", "Servlet", false);
+        quizDao.addQuiz(userId);
 
         History testHistory = new History(userId, quizId, score, startDate, endDate);
 
@@ -35,11 +66,14 @@ class HistorySqlDaoTest {
         assertEquals(testHistory.getStartDate(), startDate);
         assertEquals(testHistory.getEndDate(), endDate);
 
-        int newUserId = 8432;
-        int newQuizId = 750121;
-        int newScore = 83451;
+        int newUserId = 2;
+        int newQuizId = 2;
+        int newScore = 200;
         Date newStartDate = new Date(getModuloCurrentTime() - 4*ONE_DAY);
         Date newEndDate = new Date(getModuloCurrentTime() - 15*ONE_HOUR);
+
+        userDao.addUser("ABC", "DEF", false);
+        quizDao.addQuiz(newUserId);
 
         testHistory.setUserId(newUserId);
         testHistory.setQuizId(newQuizId);
@@ -60,45 +94,10 @@ class HistorySqlDaoTest {
         assertEquals(testHistory.hashCode(), testHistory.hashCode());
     }
 
-    /* Testing HistorySqlDao Class */
-    private HistoryDao historyDao;
-
     @Test
-    void testHistorySqlDao() throws SQLException, ClassNotFoundException {
-        historyDao = new HistorySqlDao();
-
-        int userId = 12312;
-        int quizId = 7221;
-        int score = 71;
-        Date startDate = new Date(getModuloCurrentTime() - ONE_HOUR);
-        Date endDate = new Date(getModuloCurrentTime());
-        History testHistory = new History(userId, quizId, score, startDate, endDate);
-
-        historyDao.addToHistory(testHistory);
-
-        assertTrue(historyDao.containsUser(userId));
-        assertTrue(historyDao.getQuizIds(userId).contains(quizId));
-
-        List<History> historyList = historyDao.getHistories(userId);
-        assertEquals(historyList.size(), 1);
-
-        History thisHistory = historyList.get(0);
-        assertEquals(testHistory, thisHistory);
-
-        historyDao.removeFromHistories(quizId);
-        historyList = historyDao.getHistories(userId);
-        assertTrue(historyList.isEmpty());
-
-        historyDao.removeUser(userId);
-        assertFalse(historyDao.containsUser(userId));
-    }
-
-    @Test
-    void testHistorySqlDaoSorting() throws SQLException, ClassNotFoundException {
-        historyDao = new HistorySqlDao();
-
-        int userId = 1241;
-        int quizId = 746;
+    void testHistorySqlDaoSorting() {
+        int userId = 1;
+        int quizId = 1;
         int score = 1001, score2 = 120, score3 = 312;
         Date startDate = new Date(System.currentTimeMillis() - 100*ONE_DAY);
         Date endDate, endDate2, endDate3;
@@ -123,49 +122,76 @@ class HistorySqlDaoTest {
         assertEquals(byScoreActual, byScore);
     }
 
-    @BeforeEach
-    void setUpDataBase() throws SQLException, ClassNotFoundException {
-        tables = new CreateTablesForTests();
-        assertTrue(tables.createUserTable());
-        assertTrue(tables.createQuizTable());
-        assertTrue(tables.createHistoryTable());
-    }
+    @Test
+    void testHistorySqlDao2() throws SQLException {
+        int userId = 1;
+        int quizId = 1;
+        int score = 200;
+        Date startDate = new Date(getModuloCurrentTime() - ONE_HOUR);
+        Date endDate = new Date(getModuloCurrentTime());
 
-    @AfterEach
-    void dropDataBase() throws SQLException {
-        assertTrue(tables.dropTable(CreateTablesForTests.HistoryTableTest));
-        assertTrue(tables.dropTable(CreateTablesForTests.QuizTableTest));
-        assertTrue(tables.dropTable(CreateTablesForTests.UsersTableTest));
-    }
+        userDao.addUser("test", "testpass", false);
+        quizDao.addQuiz(userId);
 
-    /**
-     * For Testing HistorySqlDao, update your database name in this class
-     * **/
+        History testHistory = new History(userId, quizId, score, startDate, endDate);
+
+        historyDao.addToHistory(testHistory);
+
+        assertTrue(historyDao.containsUser(userId));
+        assertTrue(historyDao.getQuizIds(userId).contains(quizId));
+
+        List<History> historyList = historyDao.getHistories(userId);
+        assertEquals(historyList.size(), 1);
+
+        History thisHistory = historyList.get(0);
+        assertEquals(testHistory, thisHistory);
+
+        historyDao.removeFromHistories(quizId);
+        historyList = historyDao.getHistories(userId);
+        assertTrue(historyList.isEmpty());
+
+        historyDao.removeUser(userId);
+        assertFalse(historyDao.containsUser(userId));
+    }
 
     @Test
-    void testHistorySqlDaoMySql() throws SQLException, ClassNotFoundException {
-        historyDao = new HistorySqlDao();
+    void testHistorySqlDao3() throws SQLException {
         historyDao.setTableName(historyDao.getTableName());
 
         List<History> histories = new ArrayList<>();
-        int[] userIds = {12, 75, 41};
-        int[] quizIds = {412, 800, 1020};
+        int[] userIds = {1, 2, 3};
+        int[] quizIds = {1, 2, 3};
+
+        for(int i = 0; i<userIds.length; i++) {
+            String username = "Bla" + String.valueOf(userIds[i]);
+            assertNotNull(userDao.addUser(username, "Foo", true));
+        }
+        for(int i = 0; i<userIds.length; i++) {
+            assertNotNull(userDao.getUser(userIds[i]));
+        }
+
+        for(int i = 0; i<quizIds.length; i++) {
+            quizDao.addQuiz(userIds[0]);
+        }
+        for(int i = 0; i<quizIds.length; i++) {
+            assertNotNull(quizDao.getQuiz(quizIds[i]));
+        }
 
         for(int i = 0; i<3; i++) {
             int score = getScore();
-            long start = System.currentTimeMillis() - 10*ONE_DAY;
+            long start = getModuloCurrentTime() - 10*ONE_DAY;
             long end = start + 6*ONE_DAY;
             histories.add(new History(userIds[0], quizIds[0], score, new Date(start), new Date(end)));
         }
         for(int i = 0; i<5; i++) {
             int score = getScore();
-            long start = System.currentTimeMillis() - 20*ONE_DAY;
+            long start = getModuloCurrentTime() - 20*ONE_DAY;
             long end = start + 19*ONE_DAY;
             histories.add(new History(userIds[1], quizIds[1], score, new Date(start), new Date(end)));
         }
         for(int i = 0; i<4; i++) {
             int score = getScore();
-            long start = System.currentTimeMillis() - 365*ONE_DAY;
+            long start = getModuloCurrentTime() - 365*ONE_DAY;
             long end = start + ONE_DAY/24;
             histories.add(new History(userIds[2], quizIds[2], score, new Date(start), new Date(end)));
         }
@@ -206,17 +232,21 @@ class HistorySqlDaoTest {
     }
 
     @Test
-    void testHistorySqlDaoMySql2() throws SQLException, ClassNotFoundException {
-        historyDao = new HistorySqlDao();
-
+    void testHistorySqlDao4() throws SQLException {
         List<History> histories = new ArrayList<>();
         final int USER_NUM = 30, QUIZ_NUM = 5;
         int[] userIds = new int[USER_NUM];
         int[] quizIds = new int[QUIZ_NUM];
-        for(int i = 0; i<USER_NUM; i++)
+        for (int i = 0; i < USER_NUM; i++) {
             userIds[i] = (1 + i);
-        for(int i = 0; i<QUIZ_NUM; i++)
-            quizIds[i] = (1001 + i);
+            String username = "BlaBla" + String.valueOf(userIds[i]);
+            assertNotNull(userDao.addUser(username, "FooFoo", false));
+        }
+        for (int i = 0; i < QUIZ_NUM; i++) {
+            quizIds[i] = (1 + i);
+            quizDao.addQuiz(userIds[0]);
+        }
+
         long startingDate = System.currentTimeMillis() - 1000*ONE_DAY;
 
         for(int u = 0; u<USER_NUM; u++) {
@@ -270,7 +300,6 @@ class HistorySqlDaoTest {
                 assertEquals(his.getQuizId(), quizIds[i]);
             }
         }
-
     }
 
     /* Some necessary methods */

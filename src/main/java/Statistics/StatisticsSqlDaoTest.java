@@ -29,8 +29,7 @@ public class StatisticsSqlDaoTest {
 	
 	@BeforeAll
 	public void init() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
-		//con = ProfileDataSrc.getConnection();
-		con = ProfileDataSrc.getConnection("test", "root", "01234567");
+		con = ProfileDataSrc.getConnection();
 		statisticsDao = new StatisticsSqlDao();
 		userDao = new UserSqlDao();
 		historyDao = new HistorySqlDao();

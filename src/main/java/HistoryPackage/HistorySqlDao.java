@@ -1,4 +1,4 @@
-package ProfilePackage;
+package HistoryPackage;
 
 import ProfilePackage.*;
 

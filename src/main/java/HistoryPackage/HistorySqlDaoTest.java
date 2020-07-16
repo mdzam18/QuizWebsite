@@ -1,5 +1,6 @@
-package ProfilePackage;
+package HistoryPackage;
 
+import ProfilePackage.CreateTablesForTests;
 import Quiz.*;
 import UserPackage.*;
 import org.junit.jupiter.api.*;

@@ -1,7 +1,8 @@
 package Administrator.dao;
 
-import Administrator.dao.AdministratorDao;
-import Administrator.dao.AdministratorSqlDao;
+import HistoryPackage.History;
+import HistoryPackage.HistoryDao;
+import HistoryPackage.HistorySqlDao;
 import ProfilePackage.*;
 import Quiz.Quiz;
 import Quiz.QuizDao;

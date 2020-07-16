@@ -1,4 +1,4 @@
-package ProfilePackage;
+package HistoryPackage;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

@@ -1,11 +1,8 @@
 package ProfilePackage;
 
-//import Quiz.*;
-
 import Quiz.Quiz;
 import UserPackage.User;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 

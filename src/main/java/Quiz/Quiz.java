@@ -1,6 +1,7 @@
 package Quiz;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Quiz {
 
@@ -91,5 +92,19 @@ public class Quiz {
 	}
 
 	public String getCategory() { return category; }
-
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Quiz quiz = (Quiz) o;
+		return quizId == quiz.quizId;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(quizId, creatorId);
+	}
+	
+	
 }

@@ -1,12 +1,11 @@
 window.onload = function() {
     /*let imgNames = ["back", "back2", "back3", "back4"];
     let imgName = imgNames[Math.floor(Math.random() * imgNames.length)];
-
     let mainElem = document.getElementsByTagName("body")[0].style
     mainElem.background = "url(\"styles/images/" + imgName + ".jpg\")";
     mainElem.backgroundSize = "cover";*/
 
-    document.getElementById("scrollRegistrationButton").addEventListener("click", globalVariables());
+    globalVariables();
 }
 
 let loginSpace,
@@ -67,45 +66,104 @@ function scrollContentRight(){
     registrationContent.style.marginLeft = "900px";
 }
 
-function checkPasswords() {
-    let defaultStyle = "1px solid rgb(80, 80, 80)";
-    let errorStyle = "2px solid red";
-    let goodStyle = "2px solid rgb(0, 200, 0)";
+/* JQuery/AJAX */
+$(document).ready(function () {
+    /* Constants */
+    const NO_USERNAME = "USERNAME_NOT_EXISTS";
+    const NO_PASSWORD = "INCORRECT_PASSWORD";
+    const USERNAME_BUSY = "USERNAME_IS_BUSY";
+    const SUCCESS = "SUCCESS";
 
-    let pass = document.getElementById("passwordReg");
-    let passrep = document.getElementById("passwordRepReg");
+    const NO_USERNAME_STR = "Username doesn't exist";
+    const NO_PASSWORD_STR = "Password is Incorrect";
+    const USERNAME_BUSY_STR = "Username is already used";
+    const RESPONSE_PROBLEM_STR = "Problem With Response";
 
-    if(passrep == ""){
-        pass.style.border = defaultStyle;
-        passrep.style.border = defaultStyle;
-    }
+    const EMPTY_FIELD = "Field is empty!";
+    const PASSWORD_CONFIRM_ERROR = "Password mismatch";
 
-    if(pass.value == passrep.value){
-        pass.style.border = goodStyle;
-        passrep.style.border = goodStyle;
-    }else{
-        pass.style.border = errorStyle;
-        passrep.style.border = errorStyle;
-    }
-}
-
-/* AJAX */
-function loginAction() {
-    let username = document.getElementById("username_input").value;
-    let password = document.getElementById("password_input").value;
-
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            alert(this.responseText);
+    /* Ajax */
+    $('#login_button').on('click', function () {
+        let username = $("#username_input").val();
+        let password = $("#password_input").val();
+        if(username == "" || password == "") {
+            $("#login_error_output").html(EMPTY_FIELD);
+            return;
         }
-    };
-    xhttp.open("POST", "/LoginServlet?uname=" + username + "&password=" + password, true);
-    xhttp.send();
-}
-function signUpAction() {
 
-}
-function checkUserName() {
+        $.ajax({
+            type: 'GET',
+            data: {
+                username: username,
+                password: password
+            },
+            url: 'LoginServlet',
+            success: function (res) {
+                if(res == NO_USERNAME) {
+                    $("#login_error_output").html(NO_USERNAME_STR);
+                } else if(res == NO_PASSWORD) {
+                    $("#login_error_output").html(NO_PASSWORD_STR);
+                } else if(res == SUCCESS) {
+                    $("#login_success_username").val(username);
+                    $("#login_success_password").val(password);
+                    $("#login_success_remember").val(document.getElementById("rememberUser").checked);
+                    $('#login_success').submit();
+                } else {
+                    alert(RESPONSE_PROBLEM_STR);
+                }
+            }
+        });
+    });
 
-}
+    $('#signup_button').on('click', function () {
+        let username = $('#usernameReg_input').val();
+        let password = $('#passwordReg_input').val();
+        if(username == "" || password == "") {
+            $("#registration_error_output").html(EMPTY_FIELD);
+            return;
+        }
+        if($('#passwordRepReg_input').val() != password) {
+            $('#registration_error_output').html(PASSWORD_CONFIRM_ERROR);
+            return;
+        }
+
+        $.ajax({
+            type: 'GET',
+            data: {
+                username: username
+            },
+            url: 'RegistrationServlet',
+            success: function (res) {
+                if(res == USERNAME_BUSY) {
+                    $('#registration_error_output').html(USERNAME_BUSY_STR);
+                } else if(res == SUCCESS) {
+                    $("#registration_success_username").val(username);
+                    $("#registration_success_password").val(password);
+                    $('#registration_success').submit();
+                } else {
+                    alert(RESPONSE_PROBLEM_STR);
+                }
+            }
+        });
+    });
+
+    /* Other Functions */
+    $('#username_input').on('change', function () {
+        $("#login_error_output").html("");
+    });
+    $('#password_input').on('change', function () {
+        $("#login_error_output").html("");
+    });
+    $('#usernameReg_input').on('change', function () {
+        $('#registration_error_output').html("");
+    });
+    $('#passwordReg_input').on('change', function () {
+        $('#registration_error_output').html("");
+    });
+    $('#passwordRepReg_input').on('change', function () {
+        $('#registration_error_output').html("");
+        if(this.val() != $('#passwordReg_input').val()) {
+            $('#registration_error_output').html(PASSWORD_CONFIRM_ERROR);
+        }
+    });
+});

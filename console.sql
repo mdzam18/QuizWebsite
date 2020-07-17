@@ -52,8 +52,8 @@ CREATE TABLE History(
                       UserId int ,
                       QuizId int ,
                       Score int,
-                      StartDate Date,
-                      EndDate Date,
+                      StartDate Timestamp, -- Date
+                      EndDate Timestamp, -- Date
                       foreign key (UserId) references Users(UserId),
                       foreign key (QuizId) references Quiz(QuizId)
 );

@@ -10,7 +10,7 @@
 
   <display-name>Archetype Created Web Application</display-name>
 
-  <servlet>
+  <!--<servlet>
     <servlet-name>dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
@@ -19,10 +19,10 @@
   <servlet-mapping>
     <servlet-name>dispatcher</servlet-name>
     <url-pattern>/</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping>-->
 
   <welcome-file-list>
-    <welcome-file>welcome.jsp</welcome-file>
+    <welcome-file>IndexServlet</welcome-file>
   </welcome-file-list>
 
   <servlet>

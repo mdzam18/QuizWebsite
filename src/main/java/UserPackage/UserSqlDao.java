@@ -19,7 +19,6 @@ public class UserSqlDao implements UserDao {
         con = ProfileDataSrc.getConnection();
         //con = NanukaDatabase.getConnection();
         //con = ProfileDataSrc.getConnection("test", "root", "01234567");
-        ProfileDataSrc p = new ProfileDataSrc();
         userTable = CreateTablesForTests.UsersTable;
         md = MessageDigest.getInstance("SHA");
     }
@@ -39,17 +38,13 @@ public class UserSqlDao implements UserDao {
 
     @Override
     public User addUser(String userName, String password, boolean isAdministrator) throws SQLException {
+        if (containsUserName(userName)) return null;
         String salt = createSalt();
         password = password + salt;
         password = findHashCode(password);
         PreparedStatement statement = con.prepareStatement(
-                "SELECT * FROM " + userTable + " WHERE UserName = ?;");
-        statement.setString(1, userName);
-        ResultSet res = statement.executeQuery();
-        if (res.next()) return null;
-        statement = con.prepareStatement(
                 "SELECT max(UserId) FROM " + userTable + ";");
-        res = statement.executeQuery();
+        ResultSet res = statement.executeQuery();
         int id = 0;
         res.next();
         if (res != null) {
@@ -191,4 +186,13 @@ public class UserSqlDao implements UserDao {
         return res.getString(5);
     }
 
+    @Override
+    public boolean containsUserName(String userName) throws SQLException {
+        PreparedStatement statement = con.prepareStatement(
+                "SELECT * FROM " + userTable + " WHERE UserName = ?;");
+        statement.setString(1, userName);
+        ResultSet res = statement.executeQuery();
+        if (res.next()) return true;
+        return false;
+    }
 }

@@ -1,0 +1,12 @@
+0:0:0:0:0:0:0:1 - - [18/Jul/2020:10:25:43 +0400] "GET / HTTP/1.1" 200 3719 http-bio-8089-exec-1 986
+0:0:0:0:0:0:0:1 - - [18/Jul/2020:10:25:43 +0400] "GET /styles/welcome_style1.css HTTP/1.1" 200 5336 http-bio-8089-exec-3 6
+0:0:0:0:0:0:0:1 - - [18/Jul/2020:10:25:43 +0400] "GET /js_code/welcome_js1.js HTTP/1.1" 200 6212 http-bio-8089-exec-2 5
+0:0:0:0:0:0:0:1 - - [18/Jul/2020:10:25:44 +0400] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8089-exec-5 2
+0:0:0:0:0:0:0:1 - - [18/Jul/2020:10:26:07 +0400] "GET /LoginServlet?username=Patrick&password=wdsdasdasda HTTP/1.1" 200 19 http-bio-8089-exec-6 4
+0:0:0:0:0:0:0:1 - - [18/Jul/2020:10:26:27 +0400] "GET /RegistrationServlet?username=Patrick HTTP/1.1" 200 7 http-bio-8089-exec-7 2
+0:0:0:0:0:0:0:1 - - [18/Jul/2020:10:26:27 +0400] "POST /RegistrationServlet HTTP/1.1" 200 83 http-bio-8089-exec-8 181
+0:0:0:0:0:0:0:1 - - [18/Jul/2020:10:26:42 +0400] "GET /LoginServlet?username=Patrick&password=AS HTTP/1.1" 200 19 http-bio-8089-exec-9 0
+0:0:0:0:0:0:0:1 - - [18/Jul/2020:10:26:46 +0400] "GET /LoginServlet?username=Patrick&password=as HTTP/1.1" 200 19 http-bio-8089-exec-10 0
+0:0:0:0:0:0:0:1 - - [18/Jul/2020:10:26:48 +0400] "GET /LoginServlet?username=Patrick&password=as HTTP/1.1" 200 19 http-bio-8089-exec-10 1
+0:0:0:0:0:0:0:1 - - [18/Jul/2020:10:26:48 +0400] "GET /LoginServlet?username=Patrick&password=as HTTP/1.1" 200 19 http-bio-8089-exec-10 1
+0:0:0:0:0:0:0:1 - - [18/Jul/2020:10:26:48 +0400] "GET /LoginServlet?username=Patrick&password=as HTTP/1.1" 200 19 http-bio-8089-exec-10 1

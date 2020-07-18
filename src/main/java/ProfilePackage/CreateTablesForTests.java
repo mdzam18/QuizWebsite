@@ -7,7 +7,7 @@ import java.sql.Statement;
 public class CreateTablesForTests {
     public static final String FriendsTableTest = "Friends2";
     public static final String UsersTableTest = "Users2";
-    public static String UsersTable = "Users2";
+    public static String UsersTable = "Users";
     public static String FriendsTable = "Friends";
     public static String MailsTableTest = "Mails2";
     public static String MailsTable = "Mails";

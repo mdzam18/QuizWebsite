@@ -22,4 +22,6 @@ public interface UserDao {
     String findHashCode(String str);
 
     String getSalt(int userId) throws SQLException;
+
+    boolean containsUserName(String userName) throws SQLException;
 }

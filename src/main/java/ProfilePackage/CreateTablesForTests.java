@@ -58,8 +58,8 @@ public class CreateTablesForTests {
         stm.executeUpdate("drop table " + tableName);
         return true;
     }
-    
-    
+
+
     public boolean createMailsTable() throws SQLException, ClassNotFoundException {
         Statement s = con.createStatement();
         //con.createStatement().executeQuery("drop table Mails2;");
@@ -71,12 +71,12 @@ public class CreateTablesForTests {
                 "Message varchar(255) ,\n" +
                 "Date Date ,\n" +
                 "Seen int, \n" +
-                "foreign key (SenderId) references Users2(UserId),\n" +
-                "foreign key (ReceiverId) references Users2(UserId));";
+                "foreign key (SenderId) references " + UsersTableTest + "(UserId),\n" +
+                "foreign key (ReceiverId) references " + UsersTableTest + "(UserId));";
         s.executeUpdate(query);
         return true;
     }
-    
+
     public boolean createHistoryTable() throws SQLException {
         Statement state = con.createStatement();
         state.executeUpdate("CREATE TABLE " + HistoryTableTest + " (\n" +
@@ -85,12 +85,12 @@ public class CreateTablesForTests {
                 "   Score int,\n" +
                 "   StartDate TIMESTAMP,\n" +
                 "   EndDate TIMESTAMP,\n" +
-                "   foreign key (UserId) references Users2(UserId),\n" +
-                "   foreign key (QuizId) references Quiz2(QuizId)\n" +
+                "   foreign key (UserId) references " + UsersTableTest + "(UserId),\n" +
+                "   foreign key (QuizId) references " + QuizTableTest + "(QuizId)\n" +
                 ");");
         return true;
     }
-    
+
     public boolean createQuizTable() throws SQLException {
         Statement stm = con.createStatement();
         stm.executeUpdate("CREATE TABLE " + QuizTableTest + " (\n" +
@@ -103,7 +103,7 @@ public class CreateTablesForTests {
                 "Description varchar(255),\n" +
                 "Category varchar(255),\n" +
                 "CreatorId int,\n" +
-                "FOREIGN KEY (CreatorId) REFERENCES Users2 (UserId)\n" +
+                "FOREIGN KEY (CreatorId) REFERENCES " + UsersTableTest + "(UserId)\n" +
                 ");");
         return true;
     }

@@ -14,18 +14,18 @@ public class CreateTablesForTests {
     public static final String HistoryTableTest = "History2";
     public static final String QuizTableTest = "Quiz2";
     public static final String QuestionTableTest = "Question2";
-    
+
     private Connection con;
-    
+
     public CreateTablesForTests() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
         //con = NanukaDatabase.getConnection();
         //con = ProfileDataSrc.getConnection("test", "root", "01234567");
     }
-    
+
     public boolean createUserTable() throws SQLException, ClassNotFoundException {
         Statement s = con.createStatement();
-        
+
         s.executeUpdate("CREATE TABLE " + UsersTableTest + " (\n" + "UserId int primary key, \n" +
                 "UserName varchar(255),\n" +
                 "Password varchar(255),\n" +
@@ -38,20 +38,20 @@ public class CreateTablesForTests {
                 "Status varchar(255)" + ");");
         return true;
     }
-    
-    
+
+
     public boolean createFriendsTable() throws SQLException, ClassNotFoundException {
         Statement s = con.createStatement();
         s.executeUpdate("CREATE TABLE " + FriendsTableTest + " (\n" + "SenderId int ,\n" +
                 "ReceiverId int ,\n" +
                 "Confirmed boolean,\n" +
                 "DateSent Date,\n" +
-                "foreign key (SenderId) references Users2(UserId),\n" +
-                "foreign key (ReceiverId) references Users2(UserId));");
+                "foreign key (SenderId) references " + UsersTableTest + "(UserId),\n" +
+                "foreign key (ReceiverId) references " + UsersTableTest + "(UserId));");
         return true;
     }
-    
-    
+
+
     public boolean dropTable(String tableName) throws SQLException {
         Statement stm = null;
         stm = con.createStatement();

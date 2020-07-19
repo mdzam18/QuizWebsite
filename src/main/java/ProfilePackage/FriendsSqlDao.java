@@ -12,7 +12,6 @@ public class FriendsSqlDao implements FriendsDao {
 
     public FriendsSqlDao() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
-        //con = NanukaDatabase.getConnection();
         friendsTable = CreateTablesForTests.FriendsTable;
     }
 

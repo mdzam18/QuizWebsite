@@ -18,7 +18,7 @@ public class MailSqlDao implements MailDao {
     public MailSqlDao() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
         // con = NanukaDatabase.getConnection();
-        tableName = CreateTablesForTests.MailsTableTest;
+        tableName = CreateTablesForTests.MailsTable;
     }
 
     private Mail getMail(ResultSet rs) throws SQLException {
@@ -44,7 +44,7 @@ public class MailSqlDao implements MailDao {
     }
 
     @Override
-    public boolean sendMail(Mail mail) throws SQLException {
+    public boolean sendMail(int senderId, int receiverId, String noteType, String message, Date date, boolean isSeen) throws SQLException {
         PreparedStatement statement = con.prepareStatement(
                 "SELECT max(MailId) FROM " + tableName + ";");
         ResultSet res = statement.executeQuery();
@@ -56,12 +56,12 @@ public class MailSqlDao implements MailDao {
         id++;
         PreparedStatement ps = con.prepareStatement("insert into " + tableName + " value (?, ?, ?,?,?,?,?);");
         ps.setInt(1, id);
-        ps.setInt(2, mail.getSenderId());
-        ps.setInt(3, mail.getReceiverId());
-        ps.setString(4, mail.getType());
-        ps.setString(5, mail.getMessage());
-        ps.setDate(6, mail.getDate());
-        ps.setBoolean(7, mail.isSeen());
+        ps.setInt(2, senderId);
+        ps.setInt(3, receiverId);
+        ps.setString(4, noteType);
+        ps.setString(5, message);
+        ps.setDate(6, date);
+        ps.setBoolean(7, isSeen);
         ps.executeUpdate();
         return true;
     }

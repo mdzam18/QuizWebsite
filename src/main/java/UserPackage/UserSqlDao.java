@@ -18,7 +18,6 @@ public class UserSqlDao implements UserDao {
     public UserSqlDao() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         con = ProfileDataSrc.getConnection();
         //con = NanukaDatabase.getConnection();
-        //con = ProfileDataSrc.getConnection("test", "root", "01234567");
         userTable = CreateTablesForTests.UsersTable;
         md = MessageDigest.getInstance("SHA");
     }

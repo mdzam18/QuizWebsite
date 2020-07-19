@@ -23,12 +23,16 @@ class HistorySqlDaoTest {
     private UserSqlDao userDao;
     private QuizSqlDao quizDao;
 
+    private String reName;
+
     /**
      * For Testing HistorySqlDao, update your database name in this class
      * **/
 
     @BeforeEach
     void setUpDataBase() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+        reName = CreateTablesForTests.UsersTable;
+        CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
         tables = new CreateTablesForTests();
 
         assertTrue(tables.createUserTable());
@@ -45,6 +49,7 @@ class HistorySqlDaoTest {
         assertTrue(tables.dropTable(CreateTablesForTests.HistoryTableTest));
         assertTrue(tables.dropTable(CreateTablesForTests.QuizTableTest));
         assertTrue(tables.dropTable(CreateTablesForTests.UsersTableTest));
+        CreateTablesForTests.UsersTable = reName;
     }
 
     /* Testing History Class */

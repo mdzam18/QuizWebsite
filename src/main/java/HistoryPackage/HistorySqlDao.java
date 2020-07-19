@@ -21,7 +21,6 @@ public class HistorySqlDao implements HistoryDao {
     public HistorySqlDao() throws SQLException, ClassNotFoundException {
         tableName = CreateTablesForTests.HistoryTableTest;
         connection = ProfileDataSrc.getConnection();
-      //  connection = ProfileDataSrc.getConnection("test", "root", "01234567");
     }
 
     @Override

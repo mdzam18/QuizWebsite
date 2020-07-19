@@ -29,7 +29,6 @@ public class QuizSqlDao implements QuizDao{
 
     public QuizSqlDao() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
-        //con = ProfileDataSrc.getConnection("test", "root", "01234567");
         quizTable = CreateTablesForTests.QuizTableTest;
     }
     

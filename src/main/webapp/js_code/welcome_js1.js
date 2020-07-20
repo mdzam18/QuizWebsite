@@ -162,7 +162,7 @@ $(document).ready(function () {
     });
     $('#passwordRepReg_input').on('change', function () {
         $('#registration_error_output').html("");
-        if(this.val() != $('#passwordReg_input').val()) {
+        if($('#passwordRepReg_input').val() != $('#passwordReg_input').val()) {
             $('#registration_error_output').html(PASSWORD_CONFIRM_ERROR);
         }
     });

@@ -45,7 +45,17 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        httpServletRequest.getRequestDispatcher("homepage.jsp").forward(httpServletRequest, httpServletResponse);
+        String username = httpServletRequest.getParameter("username").trim();
+        String password = httpServletRequest.getParameter("password").trim();
+        userDao = (UserDao) getServletContext().getAttribute(ContextDataNames.USER_DAO);
+
+        try {
+            userDao.addUser(username, password, false);
+
+            httpServletRequest.getRequestDispatcher("homepage.jsp").forward(httpServletRequest, httpServletResponse);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

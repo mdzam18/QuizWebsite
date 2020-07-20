@@ -26,9 +26,9 @@ public class UserSqlDao implements UserDao {
     private String createSalt() {
         String str = "";
         Random random = new Random();
-        int length = 1 + random.nextInt(5);
+        int length = 4 + random.nextInt(3);
         for (int i = 0; i < length; i++) {
-            int index = random.nextInt(129);
+            int index = 1 + random.nextInt(128);
             char c = (char) index;
             str = str + c;
         }

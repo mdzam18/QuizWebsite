@@ -10,10 +10,14 @@ import UserPackage.*;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-public class ContextDataListener implements ServletContextListener {
+@WebListener
+public class ContextDataListener implements ServletContextListener, HttpSessionListener {
 
     private AdministratorDao administratorDao;
     private HistoryDao historyDao;
@@ -24,13 +28,18 @@ public class ContextDataListener implements ServletContextListener {
     private UserDao userDao;
 
     public ContextDataListener() {
+
+    }
+
+    @Override
+    public void contextInitialized(ServletContextEvent servletContextEvent) {
         try {
-            administratorDao = new AdministratorSqlDao();
-            historyDao = new HistorySqlDao();
-            friendsDao = new FriendsSqlDao();
+            //administratorDao = new AdministratorSqlDao();
+            //historyDao = new HistorySqlDao();
+            //friendsDao = new FriendsSqlDao();
             mailDao = new MailSqlDao();
-            quizDao = new QuizSqlDao();
-            statisticsDao = new StatisticsSqlDao();
+            //quizDao = new QuizSqlDao();
+            //statisticsDao = new StatisticsSqlDao();
             userDao = new UserSqlDao();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,10 +48,7 @@ public class ContextDataListener implements ServletContextListener {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-    }
 
-    @Override
-    public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext servletContext = servletContextEvent.getServletContext();
 
         servletContext.setAttribute(ContextDataNames.ADMINISTRATOR_DAO, administratorDao);
@@ -57,6 +63,16 @@ public class ContextDataListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         // PASS
+    }
+
+    @Override
+    public void sessionCreated(HttpSessionEvent httpSessionEvent) {
+
+    }
+
+    @Override
+    public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+
     }
 
 }

@@ -1,5 +1,7 @@
 package UserPackage;
 
+import ServletContextPackage.ContextDataNames;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +16,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
-        UserSqlDao uDao = (UserSqlDao) servletContext.getAttribute(ListenerClass.uDaoAttribute);
+        UserSqlDao uDao = (UserSqlDao) servletContext.getAttribute(ContextDataNames.USER_DAO);
         String name = httpServletRequest.getParameter("username");
         String password = httpServletRequest.getParameter("password");
         String webPageName = "";

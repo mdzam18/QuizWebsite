@@ -1,6 +1,7 @@
 package UserPackage;
 
 import ProfilePackage.CreateTablesForTests;
+import ProfilePackage.NanukaDatabase;
 import ProfilePackage.ProfileDataSrc;
 
 import java.security.MessageDigest;
@@ -22,6 +23,16 @@ public class UserSqlDao implements UserDao {
         md = MessageDigest.getInstance("SHA");
     }
 
+    public int getUserIdByName(String username) throws SQLException{
+        PreparedStatement stm = null;
+        String s = "SELECT * FROM " + userTable + " WHERE UserName = " + username + ";";
+        stm = con.prepareStatement(
+                "SELECT * FROM " + userTable + " WHERE UserName = ?;");
+        stm.setString(1, username);
+        ResultSet res = stm.executeQuery();
+        if (!res.next()) return -1;
+        return res.getInt("UserId");
+    }
 
     private String createSalt() {
         String str = "";

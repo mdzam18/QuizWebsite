@@ -1,0 +1,5 @@
+0:0:0:0:0:0:0:1 - - [24/Jul/2020:00:42:56 +0400] "GET / HTTP/1.1" 200 3719 http-bio-8089-exec-2 2627
+0:0:0:0:0:0:0:1 - - [24/Jul/2020:00:42:56 +0400] "GET / HTTP/1.1" 200 3719 http-bio-8089-exec-3 1270
+0:0:0:0:0:0:0:1 - - [24/Jul/2020:00:43:15 +0400] "GET /LoginServlet?username=gio&password=1 HTTP/1.1" 200 7 http-bio-8089-exec-6 230
+0:0:0:0:0:0:0:1 - - [24/Jul/2020:00:43:17 +0400] "POST /LoginServlet HTTP/1.1" 200 1157 http-bio-8089-exec-7 1244
+0:0:0:0:0:0:0:1 - - [24/Jul/2020:00:43:24 +0400] "GET /readMessage.jsp?id=1&sender=nana HTTP/1.1" 200 126 http-bio-8089-exec-10 279

@@ -111,6 +111,16 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <resources>
+      <resource>
+        <directory>src/main/webapp/styles</directory>
+        <filtering>false</filtering>
+      </resource>
+      <resource>
+        <directory>src/main/webapp/js_code</directory>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
   </build>
 </project>
 

@@ -42,10 +42,11 @@ CREATE TABLE Achievements(
 );
 CREATE TABLE Questions(
                       QuestionId int primary key ,
-                      Question varchar(255) ,
-                      Answer varchar(255) ,
-                      Type varchar(255) ,
-                      QuizId int,
+                      Question varchar(512) ,
+                      Answer varchar(2048) ,
+                      Type int ,
+                      Score int ,
+                      QuizId int ,
                       foreign key (QuizId) references Quiz(QuizId)
 );
 CREATE TABLE History(

@@ -11,7 +11,7 @@ public class IndexServlet extends HttpServlet {
         // if User has Cookies
         // Else
         httpServletRequest.getRequestDispatcher("welcome.jsp").forward(httpServletRequest, httpServletResponse);
-        //httpServletRequest.getRequestDispatcher("createquiz.html").forward(httpServletRequest, httpServletResponse);
+        //httpServletRequest.getRequestDispatcher("createQuiz.jsp").forward(httpServletRequest, httpServletResponse);
     }
 
 }

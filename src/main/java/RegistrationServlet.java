@@ -15,15 +15,6 @@ public class RegistrationServlet extends HttpServlet {
     private final static String SUCCESS = "SUCCESS";
     private UserDao userDao;
 
-    /* // Testing
-    private Map<String, String> data = new HashMap<>();
-    private void runBefore() {
-        data.put("blabla", "blabla");
-        data.put("giorgi", "1234");
-        data.put("levka", "java");
-    }
-    */
-
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         httpServletResponse.setContentType("text/plain");

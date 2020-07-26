@@ -1,0 +1,80 @@
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(230, 229, 229);
+}
+
+#content {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 1000px;
+    min-height: 600px;
+    background: white;
+}
+
+#questions {
+    display: block;
+    margin-top: 20px;
+}
+
+#quiz_name, #quiz_description {
+    margin: 0 auto;
+    display: block;
+    width: 800px;
+}
+#quiz_name {
+    height: 50px;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+}
+#quiz_description {
+    font-size: 16px;
+    height: 100px;
+    margin-top: 15px;
+}
+
+#questionType {
+    display: block;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+#addButton, #createQuiz {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    padding: 4px;
+    font-size: 20px;
+}
+#createQuiz {
+    margin-bottom: 50px;
+}
+
+.questionField {
+    width: 600px;
+    font-size: 15px;
+}
+
+.urlImageInput {
+    width: 200px;
+    font-size: 16px;
+}
+
+.questionDiv {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid black;
+    width: 800px;
+    min-height: 100px;
+    margin-left: 100px;
+}
+
+.addQuestionButton {
+
+}
+.createQuizButton {
+
+}

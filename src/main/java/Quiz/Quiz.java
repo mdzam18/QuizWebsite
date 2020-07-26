@@ -1,5 +1,6 @@
 package Quiz;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,7 +11,6 @@ public class Quiz {
 	private boolean isOnePage;
 	private boolean isImmediate;
 	private boolean inPracticeMode;
-	private int numberOfQuestions;
 	private String description;
 	private List<Question> questions;
 	private String category;
@@ -20,6 +20,7 @@ public class Quiz {
 	{
 		this.quizId = quizId;
 		this.creatorId = creatorId;
+		this.questions = new ArrayList<>();
 	}
 
 	public void setQuizId(int quizId){
@@ -49,8 +50,7 @@ public class Quiz {
 	}
 
 	public void setQuestionSet(List<Question> questions){
-		this.questions = questions;
-		this.numberOfQuestions = questions.size();
+		this.questions.addAll(questions);
 	}
 
 	public void setCategory(String category) {
@@ -76,7 +76,7 @@ public class Quiz {
 	public boolean isInPracticeMode() { return inPracticeMode; }
 
 	public int getQuestionCount(){
-		return numberOfQuestions;
+		return questions.size();
 	}
 
 	public int getCreator(){

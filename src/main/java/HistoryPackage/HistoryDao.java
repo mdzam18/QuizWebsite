@@ -27,4 +27,6 @@ public interface HistoryDao {
 
     public String getTableName();
 
+    public int getMaxScore(int userId, int quizId) throws SQLException;
+
 }

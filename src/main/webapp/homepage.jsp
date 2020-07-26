@@ -42,6 +42,8 @@
             <input type="button" value="cancel" onclick=hide("id_div")>
         </form>
     </div>
+
+
     <input type=button Value=inbox onclick=show("inbox_div")>
     <div id=inbox_div>
         <form action="MailServlet" method="post">
@@ -52,6 +54,13 @@
                     out.print(output);
                 }
             %>
+        </form>
+    </div>
+
+    <input type=button Value=challenge onclick=show("challenge_div")>
+    <div id=challenge_div>
+        <form action="MailServlet" method="post">
+
         </form>
     </div>
 </div>

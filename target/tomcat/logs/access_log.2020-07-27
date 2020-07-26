@@ -1,0 +1,7 @@
+0:0:0:0:0:0:0:1 - - [27/Jul/2020:00:23:37 +0400] "GET / HTTP/1.1" 200 3719 http-bio-8089-exec-1 403
+0:0:0:0:0:0:0:1 - - [27/Jul/2020:00:23:38 +0400] "GET /js_code/welcome_js1.js HTTP/1.1" 304 - http-bio-8089-exec-4 133
+0:0:0:0:0:0:0:1 - - [27/Jul/2020:00:23:38 +0400] "GET /styles/welcome_style1.css HTTP/1.1" 304 - http-bio-8089-exec-3 136
+0:0:0:0:0:0:0:1 - - [27/Jul/2020:00:24:02 +0400] "GET /RegistrationServlet?username=t HTTP/1.1" 500 1429 http-bio-8089-exec-7 5
+0:0:0:0:0:0:0:1 - - [27/Jul/2020:00:24:08 +0400] "GET /RegistrationServlet?username=t HTTP/1.1" 500 1429 http-bio-8089-exec-8 2
+0:0:0:0:0:0:0:1 - - [27/Jul/2020:00:26:31 +0400] "GET /RegistrationServlet?username=t HTTP/1.1" 200 7 http-bio-8089-exec-1 69
+0:0:0:0:0:0:0:1 - - [27/Jul/2020:00:26:31 +0400] "POST /RegistrationServlet HTTP/1.1" 200 1155 http-bio-8089-exec-2 211

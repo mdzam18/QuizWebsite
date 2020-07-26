@@ -36,7 +36,7 @@ public class ContextDataListener implements ServletContextListener, HttpSessionL
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         try {
             //administratorDao = new AdministratorSqlDao();
-            //historyDao = new HistorySqlDao();
+            historyDao = new HistorySqlDao();
             //friendsDao = new FriendsSqlDao();
             mailDao = new MailSqlDao();
             //quizDao = new QuizSqlDao();

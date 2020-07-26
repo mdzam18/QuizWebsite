@@ -21,12 +21,25 @@ public class HistorySqlDao implements HistoryDao {
     public HistorySqlDao() throws SQLException, ClassNotFoundException {
         tableName = CreateTablesForTests.HistoryTableTest;
         connection = ProfileDataSrc.getConnection();
+        //connection = NanukaDatabase.getConnection();
     }
 
     @Override
     public boolean addToHistory(History history) throws SQLException {
         return addToHistory(history.getUserId(), history.getQuizId(), history.getScore(),
                 history.getStartDate(), history.getEndDate());
+    }
+
+    @Override
+    public int getMaxScore(int userId, int quizId) throws SQLException{
+        List<History> histories = getHistories(userId);
+        int maxScore = -1;
+        for(History history : histories){
+            if(history.getQuizId() == quizId && history.getScore() > maxScore){
+                maxScore = history.getScore();
+            }
+        }
+        return maxScore;
     }
 
     @Override

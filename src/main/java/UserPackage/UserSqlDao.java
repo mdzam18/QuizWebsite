@@ -17,8 +17,8 @@ public class UserSqlDao implements UserDao {
     private static MessageDigest md;
 
     public UserSqlDao() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
-        //con = ProfileDataSrc.getConnection();
-        con = NanukaDatabase.getConnection();
+        con = ProfileDataSrc.getConnection();
+        //con = NanukaDatabase.getConnection();
         userTable = CreateTablesForTests.UsersTable;
         md = MessageDigest.getInstance("SHA");
     }

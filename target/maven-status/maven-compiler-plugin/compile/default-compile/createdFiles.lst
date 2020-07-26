@@ -1,4 +1,3 @@
-UserPackage\ListenerClass.class
 Statistics\StatisticsSqlDao.class
 Quiz\MultipleChoiceQuestion.class
 HistoryPackage\HistorySqlDao$2.class
@@ -8,15 +7,14 @@ UserPackage\UserSqlDaoTest.class
 Administrator\dao\AdministratorDao.class
 Quiz\PictureResponseQuestion.class
 Quiz\Quiz.class
-ProfilePackage\DataManagerListener.class
 ProfilePackage\NanukaDatabase.class
 HistoryPackage\History.class
+MailServlet.class
 LoginServlet.class
 Quiz\QuizSqlDaoTest.class
 Statistics\StatisticsDao.class
 Statistics\StatisticsSqlDaoTest.class
 Quiz\QuizSqlDao.class
-ProfilePackage\MailServlet.class
 HistoryPackage\HistorySqlDao.class
 HistoryPackage\HistorySqlDaoTest.class
 Administrator\dao\AdministratorSqlDaoTest.class

@@ -1,6 +1,7 @@
 package UserPackage;
 
 import ProfilePackage.CreateTablesForTests;
+import ProfilePackage.NanukaDatabase;
 import ProfilePackage.ProfileDataSrc;
 
 import java.security.MessageDigest;
@@ -16,19 +17,30 @@ public class UserSqlDao implements UserDao {
     private static MessageDigest md;
 
     public UserSqlDao() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
-        con = ProfileDataSrc.getConnection();
-        //con = NanukaDatabase.getConnection();
+        //con = ProfileDataSrc.getConnection();
+        con = NanukaDatabase.getConnection();
         userTable = CreateTablesForTests.UsersTable;
         md = MessageDigest.getInstance("SHA");
+    }
+
+    public int getUserIdByName(String username) throws SQLException{
+        PreparedStatement stm = null;
+        String s = "SELECT * FROM " + userTable + " WHERE UserName = " + username + ";";
+        stm = con.prepareStatement(
+                "SELECT * FROM " + userTable + " WHERE UserName = ?;");
+        stm.setString(1, username);
+        ResultSet res = stm.executeQuery();
+        if (!res.next()) return -1;
+        return res.getInt("UserId");
     }
 
 
     private String createSalt() {
         String str = "";
         Random random = new Random();
-        int length = 4 + random.nextInt(3);
+        int length = 1 + random.nextInt(5);
         for (int i = 0; i < length; i++) {
-            int index = 1 + random.nextInt(128);
+            int index = random.nextInt(129);
             char c = (char) index;
             str = str + c;
         }

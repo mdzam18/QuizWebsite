@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import java.io.PrintWriter;
@@ -16,6 +17,8 @@ public class LoginServlet extends HttpServlet {
     private final static String NO_PASSWORD = "INCORRECT_PASSWORD";
     private final static String SUCCESS = "SUCCESS";
     private UserDao userDao;
+
+    private final static String currentUser = "currentUser";
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
@@ -43,6 +46,9 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        HttpSession session = httpServletRequest.getSession();
+        session.setAttribute(currentUser, httpServletRequest.getParameter("username").trim());
+
         httpServletRequest.getRequestDispatcher("homepage.jsp").forward(httpServletRequest, httpServletResponse);
     }
 

@@ -79,19 +79,31 @@ public class QuizTest {
 
         questions.add(new QuestionResponse("1", new HashSet<String>()));
         questions.add(new MultipleChoiceQuestion("2", new HashSet<String>(), new HashSet<String>()));
-        questions.add(new MultipleAnswerQuestion("3", new HashSet<String>(), new HashSet<String>()));
+        questions.add(new MultipleAnswerQuestion("3", new ArrayList<String>(), false));
         questions.add(new PictureResponseQuestion("4", new HashSet<String>(), "URL"));
         questions.add(new MultipleChoiceAnswerQuestion("5", new HashSet<String>(), new HashSet<String>()));
+
+        for(int i = 0; i<questions.size(); i++) {
+            questions.get(i).setScore(i*10);
+        }
 
         quiz.setQuestionSet(questions);
 
         assert(quiz.getQuestionCount() == 5);
 
         List<Question> result = quiz.getQuestionSet();
-
         for (int i = 0; i < 5; i++){
             assert(result.get(i).getQuestion().equals("" + (i + 1)));
         }
 
+        assert(result.get(0).getType() == QuestionType.QUESTION_RESPONSE);
+        assert(result.get(1).getType() == QuestionType.MULTIPLE_CHOICE_QUESTION);
+        assert(result.get(2).getType() == QuestionType.MULTI_ANSWER_QUESTION);
+        assert(result.get(3).getType() == QuestionType.PICTURE_RESPONSE_QUESTION);
+        assert(result.get(4).getType() == QuestionType.MULTIPLE_CHOICE_AND_ANSWER_QUESTION);
+
+        for(int i = 0; i<result.size(); i++) {
+            assert(result.get(i).getScore() == i*10);
+        }
     }
 }

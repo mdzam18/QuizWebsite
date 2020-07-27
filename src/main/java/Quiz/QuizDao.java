@@ -13,4 +13,6 @@ public interface QuizDao {
 
 	public Connection getConnection() throws SQLException;
 
+	public int getQuizIdByName(String description) throws SQLException;
+
 }

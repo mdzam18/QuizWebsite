@@ -65,6 +65,11 @@
       <version>5.4.2</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
+      <version>3.8.11.1</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -111,6 +116,16 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <resources>
+      <resource>
+        <directory>src/main/webapp/styles</directory>
+        <filtering>false</filtering>
+      </resource>
+      <resource>
+        <directory>src/main/webapp/js_code</directory>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
   </build>
 </project>
 

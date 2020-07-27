@@ -4,22 +4,28 @@ import java.util.*;
 
 public class MultipleAnswerQuestion extends Question {
 
-    private String question;
-    private Set<String> answers;
-    private Set<String> choices;
+    private boolean keepOrder;
+    private List<String> orderedAnswers;
 
     private static final int TYPE = QuestionType.MULTI_ANSWER_QUESTION;
 
-    public MultipleAnswerQuestion(String question, Set<String> answers, Set<String> choices) {
-        super(question, answers);
-        this.choices = choices;
+    public MultipleAnswerQuestion(String question, List<String> answers, boolean keepOrder) {
+        super(question, new HashSet<>(answers));
+        this.keepOrder = keepOrder;
+        this.orderedAnswers = new ArrayList<>(answers);
     }
 
-    public boolean checkAnswer(String answer) {
-        return (answers.contains(answer));
+    public boolean isOrdered() {
+        return keepOrder;
     }
 
-    public Set<String> getChoices() {
-        return choices;
+    public List<String> getOrderedAnswers() {
+        return orderedAnswers;
     }
+
+    @Override
+    public int getType() {
+        return TYPE;
+    }
+
 }

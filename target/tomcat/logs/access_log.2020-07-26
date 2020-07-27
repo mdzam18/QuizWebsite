@@ -1,0 +1,7 @@
+0:0:0:0:0:0:0:1 - - [26/Jul/2020:22:00:39 +0400] "GET / HTTP/1.1" 200 3719 http-bio-8089-exec-1 2266
+0:0:0:0:0:0:0:1 - - [26/Jul/2020:22:00:40 +0400] "GET /styles/welcome_style1.css HTTP/1.1" 200 5336 http-bio-8089-exec-4 266
+0:0:0:0:0:0:0:1 - - [26/Jul/2020:22:00:40 +0400] "GET /js_code/welcome_js1.js HTTP/1.1" 200 6234 http-bio-8089-exec-5 207
+0:0:0:0:0:0:0:1 - - [26/Jul/2020:22:00:41 +0400] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8089-exec-7 3
+0:0:0:0:0:0:0:1 - - [26/Jul/2020:22:00:48 +0400] "GET /LoginServlet?username=gio&password=1 HTTP/1.1" 200 7 http-bio-8089-exec-9 10
+0:0:0:0:0:0:0:1 - - [26/Jul/2020:22:00:48 +0400] "POST /LoginServlet HTTP/1.1" 200 1157 http-bio-8089-exec-10 272
+0:0:0:0:0:0:0:1 - - [26/Jul/2020:22:00:51 +0400] "GET /readMessage.jsp?id=1&sender=nana HTTP/1.1" 200 126 http-bio-8089-exec-10 179

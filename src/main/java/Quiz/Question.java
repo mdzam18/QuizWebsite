@@ -7,6 +7,8 @@ public class Question {
     private final int GENERAL_TYPE = 0;
     protected String question;
     protected Set<String> answers;
+    private int quizId;
+    private int questionId;
     protected int score;
 
     public Question(String question, Set<String> answers) {
@@ -38,5 +40,13 @@ public class Question {
     public int getScore() {
         return score;
     }
+
+    public int getQuizId() { return quizId; }
+
+    public void setQuizId(int quizId) { this.quizId = quizId; }
+
+    public int getQuestionId() { return questionId; }
+
+    public void setQuestionId(int questionId) { this.questionId = questionId; }
 
 }

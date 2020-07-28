@@ -49,7 +49,7 @@ public class RegistrationServlet extends HttpServlet {
             HttpSession session = httpServletRequest.getSession();
             session.setAttribute(currentUser, httpServletRequest.getParameter("username").trim());
 
-            httpServletRequest.getRequestDispatcher("homepage.jsp").forward(httpServletRequest, httpServletResponse);
+            httpServletRequest.getRequestDispatcher("UserPage.jsp").forward(httpServletRequest, httpServletResponse);
         } catch (SQLException e) {
             e.printStackTrace();
         }

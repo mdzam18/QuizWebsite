@@ -9,6 +9,8 @@ public interface UserDao {
 
     User getUser(int userId) throws SQLException;
 
+    int getUserIdByName(String username) throws SQLException;
+
     boolean deleteUser(User user) throws SQLException;
 
     boolean isCorrectPassword(String userName, String password) throws SQLException;

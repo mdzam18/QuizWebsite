@@ -1,6 +1,7 @@
 package Quiz;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -23,5 +24,10 @@ public interface QuizDao {
 	List<Quiz> recentlyCreatedQuizzes() throws SQLException;
 
 	List<Quiz> recentlyTakenQuizzes() throws SQLException;
+
+	public Quiz addQuiz(int creatorId, boolean isRandom, boolean isOnePage, boolean isImmediate,
+						boolean hasPracticeMode, int questionNum, String quizName, String category, Date createDate) throws SQLException;
+
+	public List<Quiz> getQuizzesForUser(int userId) throws SQLException;
 
 }

@@ -22,6 +22,7 @@ public class QuizSqlDao implements QuizDao{
     private static final int DESCRIPTION = 7;
     private static final int CATEGORY = 8;
     private static final int CREATOR_ID = 9;
+    private static final int CREATE_DATE = 10;
 
 
     public QuizSqlDao() throws SQLException, ClassNotFoundException {
@@ -62,7 +63,7 @@ public class QuizSqlDao implements QuizDao{
         }
         quizId++;
 
-        stm = con.prepareStatement("INSERT INTO " + quizTable + "  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+        stm = con.prepareStatement("INSERT INTO " + quizTable + "  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
         stm.setInt(QUIZ_ID, quizId);
         stm.setBoolean(IS_RANDOM, false);
         stm.setBoolean(IS_ONE_PAGE, false);
@@ -72,6 +73,7 @@ public class QuizSqlDao implements QuizDao{
         stm.setString(DESCRIPTION, null);
         stm.setString(CATEGORY, null);
         stm.setInt(CREATOR_ID, creatorId);
+        stm.setDate(CREATE_DATE, new java.sql.Date(System.currentTimeMillis()));
         stm.executeUpdate();
         quiz = new Quiz(quizId, creatorId);
         return quiz;
@@ -175,6 +177,69 @@ public class QuizSqlDao implements QuizDao{
             res.add(getQuiz(rs.getInt(2)));
         }
         return res;
+    }
+
+    @Override
+    public Quiz addQuiz(int creatorId, boolean isRandom, boolean isOnePage, boolean isImmediate, boolean hasPracticeMode, int questionNum, String quizName, String category, java.sql.Date createDate) throws SQLException
+    {
+        Statement state = con.createStatement();
+        ResultSet maxIdSet = state.executeQuery("SELECT max(QuizId) FROM " + quizTable);
+        int maxId = 1;
+        if(maxIdSet.next()) {
+            maxId = maxIdSet.getInt(1);
+            maxId++;
+        }
+
+        String sql = "INSERT INTO " + quizTable + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        PreparedStatement preState = con.prepareStatement(sql);
+        preState.setInt(QUIZ_ID, maxId);
+        preState.setBoolean(IS_RANDOM, isRandom);
+        preState.setBoolean(IS_ONE_PAGE, isOnePage);
+        preState.setBoolean(IS_IMMEDIATE, isImmediate);
+        preState.setBoolean(IN_PRACTICE_MODE, hasPracticeMode);
+        preState.setInt(NUMBER_QUESTIONS, questionNum);
+        preState.setString(DESCRIPTION, quizName);
+        preState.setString(CATEGORY, category);
+        preState.setInt(CREATOR_ID, creatorId);
+        preState.setDate(CREATE_DATE, createDate);
+        preState.executeUpdate();
+
+        Quiz quiz = new Quiz(maxId, creatorId);
+        quiz.setIsRandom(isRandom);
+        quiz.setIsOnePage(isOnePage);
+        quiz.setIsImmediate(isImmediate);
+        quiz.setInPracticeMode(hasPracticeMode);
+        quiz.setDescription(quizName);
+        quiz.setCategory(category);
+        quiz.setCreateDate(createDate);
+
+        // TODO Add Question to Quiz Class
+
+        return quiz;
+    }
+
+    @Override
+    public List<Quiz> getQuizzesForUser(int userId) throws SQLException {
+        String sql = "SELECT * FROM " + quizTable + " WHERE CreatorId = ?;";
+        PreparedStatement prepState = con.prepareStatement(sql);
+        prepState.setInt(1, userId);
+        ResultSet results = prepState.executeQuery();
+        List<Quiz> quizzes = new ArrayList<>();
+        while(results.next()) {
+            Quiz curQuiz = new Quiz(results.getInt(QUIZ_ID), results.getInt(CREATOR_ID));
+            curQuiz.setIsRandom(results.getBoolean(IS_RANDOM));
+            curQuiz.setIsOnePage(results.getBoolean(IS_ONE_PAGE));
+            curQuiz.setIsImmediate(results.getBoolean(IS_IMMEDIATE));
+            curQuiz.setInPracticeMode(results.getBoolean(IN_PRACTICE_MODE));
+            curQuiz.setDescription(results.getString(DESCRIPTION));
+            curQuiz.setCategory(results.getString(CATEGORY));
+            curQuiz.setCreateDate(results.getDate(CREATE_DATE));
+
+            // TODO Add Question to Quiz Class
+
+            quizzes.add(curQuiz);
+        }
+        return quizzes;
     }
 
 }

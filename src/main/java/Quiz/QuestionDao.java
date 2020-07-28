@@ -25,7 +25,7 @@ public class QuestionDao {
         questionTable = CreateTablesForTests.QuestionTableTest;
     }
 
-    public Question addQuestion(int questionId, String question, String answer, int quizId) throws SQLException {
+    public Question addQuestion(String question, String answer, int quizId) throws SQLException {
         Question q = null;
         PreparedStatement stm =
                 con.prepareStatement("SELECT max(QuestionId) FROM " + questionTable);
@@ -37,9 +37,9 @@ public class QuestionDao {
         last++;
 
         stm = con.prepareStatement("INSERT INTO " + questionTable + "  VALUES (?, ?, ?, ?, ?);");
-        stm.setInt(QUESTION_ID, questionId);
-        stm.setString(QUESTION, null);
-        stm.setString(ANSWER, null);
+        stm.setInt(QUESTION_ID, last);
+        stm.setString(QUESTION, question);
+        stm.setString(ANSWER, answer);
         stm.setInt(QUIZ_ID, quizId);
         stm.setInt(TYPE, 0);
 

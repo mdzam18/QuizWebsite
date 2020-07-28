@@ -11,9 +11,10 @@ public class CreateTablesForTests {
     public static String FriendsTable = "Friends";
     public static String MailsTableTest = "Mails2";
     public static String MailsTable = "Mails";
-    public static String QuizTable = "Quiz";
     public static final String HistoryTableTest = "History2";
+    public static final String HistoryTable = "History";
     public static final String QuizTableTest = "Quiz2";
+    public static final String QuizTable = "Quiz";
     public static final String QuestionTableTest = "Question2";
 
     private Connection con;
@@ -103,6 +104,7 @@ public class CreateTablesForTests {
                 "Description varchar(255),\n" +
                 "Category varchar(255),\n" +
                 "CreatorId int,\n" +
+                "CreateDate Date,\n" +
                 "FOREIGN KEY (CreatorId) REFERENCES " + UsersTableTest + "(UserId)\n" +
                 ");");
         return true;

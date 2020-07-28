@@ -10,6 +10,7 @@ public class QuizSqlDao implements QuizDao{
 
     private Connection con;
     private String quizTable;
+    private QuestionDao questionDao;
 
     public final static String TABLE_NAME  = "oop_base.Quiz";
 
@@ -28,6 +29,7 @@ public class QuizSqlDao implements QuizDao{
     public QuizSqlDao() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
         quizTable = CreateTablesForTests.QuizTable;
+        questionDao = new QuestionDao();
     }
 
     @Override
@@ -95,6 +97,9 @@ public class QuizSqlDao implements QuizDao{
         quiz.setDescription(rs.getString(DESCRIPTION));
         quiz.setCategory(rs.getString(CATEGORY));
         quiz.setCreateDate(rs.getDate(CREATE_DATE));
+
+        List<Question> questions = questionDao.getQuizQuestions(quizId);
+        quiz.setQuestionSet(questions);
         return quiz;
     }
 
@@ -243,7 +248,8 @@ public class QuizSqlDao implements QuizDao{
             curQuiz.setCategory(results.getString(CATEGORY));
             curQuiz.setCreateDate(results.getDate(CREATE_DATE));
 
-            // TODO Add Question to Quiz Class
+            List<Question> questions = questionDao.getQuizQuestions(results.getInt(QUIZ_ID));
+            curQuiz.setQuestionSet(questions);
 
             quizzes.add(curQuiz);
         }
@@ -267,10 +273,13 @@ public class QuizSqlDao implements QuizDao{
             curQuiz.setCategory(results.getString(CATEGORY));
             curQuiz.setCreateDate(results.getDate(CREATE_DATE));
 
-            // TODO Add Question to Quiz Class
+            List<Question> questions = questionDao.getQuizQuestions(results.getInt(QUIZ_ID));
+            curQuiz.setQuestionSet(questions);
 
             quizzes.add(curQuiz);
         }
+
+        return quizzes;
     }
 
 }

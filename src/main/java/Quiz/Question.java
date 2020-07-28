@@ -47,6 +47,6 @@ public class Question {
 
     public int getQuestionId() { return questionId; }
 
-    public int setQuestionId(int questionId) { this.questionId = questionId; }
+    public void setQuestionId(int questionId) { this.questionId = questionId; }
 
 }

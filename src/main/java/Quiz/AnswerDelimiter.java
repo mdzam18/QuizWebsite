@@ -19,8 +19,6 @@ public class AnswerDelimiter {
         return answers;
     }
 
-<<<<<<< HEAD
-=======
     public static String[] splitImage(String question) {
         return question.trim().split(IMAGE_DELIMITER);
     }
@@ -90,6 +88,4 @@ public class AnswerDelimiter {
         }
         return false;
     }
-
->>>>>>> 33e9b9235d0b714888f0a4ce7d26424a4c0e9925
 }

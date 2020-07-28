@@ -8,7 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class QuestionDao {
 
@@ -45,7 +47,11 @@ public class QuestionDao {
         stm.setInt(QUIZ_ID, quizId);
         stm.setInt(TYPE, type);
 
-        q = new Question(question, AnswerDelimiter.splitAnswer(answer));
+        List<String> list = AnswerDelimiter.splitAnswers(rs.getString(ANSWER));
+        Set<String> answers = new HashSet<String>(list);
+        answers.addAll(list);
+
+        q = new Question(question, answers);
 
         return q;
     }
@@ -59,16 +65,8 @@ public class QuestionDao {
 
         int type = rs.getInt(TYPE);
 
-        Question q;
+        Question q = createQuestionByType(rs, type);
 
-        if (type == 1){
-            q = new QuestionResponse(rs.getString(QUESTION), AnswerDelimiter.splitAnswer(rs.getString(ANSWER)));
-            q.setQuizId(rs.getInt(QUIZ_ID));
-            q.setQuestionId(rs.getInt(QUESTION_ID));
-        }
-        else if (type == 2){
-            q = new MultipleChoiceQuestion(rs.getString(QUESTION), AnswerDelimiter.splitAnswer(rs.getString(ANSWER)))
-        }
         return q;
     }
 
@@ -92,7 +90,57 @@ public class QuestionDao {
         ResultSet rs = stm.executeQuery();
 
         while (rs.next()) {
-
+            Question q;
+            int type = rs.getInt(TYPE);
+            q = createQuestionByType(rs, type);
+            questions.add(q);
         }
+
+        return questions;
+    }
+
+    private Question createQuestionByType(ResultSet rs, int type) throws SQLException {
+        Question q;
+
+        if (type == 1){
+            List<String> list = AnswerDelimiter.splitAnswers(rs.getString(ANSWER));
+            Set<String> answers = new HashSet<String>(list);
+            answers.addAll(list);
+            q = new QuestionResponse(rs.getString(QUESTION), answers);
+            q.setQuizId(rs.getInt(QUIZ_ID));
+            q.setQuestionId(rs.getInt(QUESTION_ID));
+        }
+        else if (type == 2){
+            Set<String> allAnswerOutput = new HashSet<>();
+            Set<String> trueAnswerOutput = new HashSet<>();
+            AnswerDelimiter.splitFewAnswers(rs.getString(ANSWER), allAnswerOutput, trueAnswerOutput);
+            q = new MultipleChoiceQuestion(rs.getString(QUESTION), trueAnswerOutput, allAnswerOutput);
+            q.setQuizId(rs.getInt(QUIZ_ID));
+            q.setQuestionId(rs.getInt(QUESTION_ID));
+        }
+        else if (type == 3){
+            List<String> list = AnswerDelimiter.splitAnswers(rs.getString(ANSWER));
+            Set<String> answers = new HashSet<String>(list);
+            answers.addAll(list);
+            String[] imageArray = AnswerDelimiter.splitImage(rs.getString(QUESTION));
+            q = new PictureResponseQuestion(rs.getString(QUESTION), answers, imageArray[1]);
+            q.setQuizId(rs.getInt(QUIZ_ID));
+            q.setQuestionId(rs.getInt(QUESTION_ID));
+        }
+        else if (type == 4){
+            q = new MultipleAnswerQuestion(rs.getString(QUESTION), AnswerDelimiter.splitAnswers(rs.getString(ANSWER)), false);
+            q.setQuizId(rs.getInt(QUIZ_ID));
+            q.setQuestionId(rs.getInt(QUESTION_ID));
+        }
+        else {
+            Set<String> allAnswerOutput = new HashSet<>();
+            Set<String> trueAnswerOutput = new HashSet<>();
+            AnswerDelimiter.splitFewAnswers(rs.getString(ANSWER), allAnswerOutput, trueAnswerOutput);
+            q = new MultipleChoiceAnswerQuestion(rs.getString(QUESTION), trueAnswerOutput, allAnswerOutput);
+            q.setQuizId(rs.getInt(QUIZ_ID));
+            q.setQuestionId(rs.getInt(QUESTION_ID));
+        }
+
+        return q;
     }
 }

@@ -4,8 +4,8 @@ import ProfilePackage.CreateTablesForTests;
 import ProfilePackage.ProfileDataSrc;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.Date;
 
 public class QuizSqlDao implements QuizDao{
 
@@ -62,7 +62,7 @@ public class QuizSqlDao implements QuizDao{
             quizId = rs.getInt(1);
         }
         quizId++;
-        
+
         stm = con.prepareStatement("INSERT INTO " + quizTable + "  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
         stm.setInt(QUIZ_ID, quizId);
         stm.setBoolean(IS_RANDOM, false);
@@ -77,7 +77,7 @@ public class QuizSqlDao implements QuizDao{
         quiz = new Quiz(quizId, creatorId);
         return quiz;
     }
-    
+
     @Override
     public Quiz getQuiz(int quizId) throws SQLException {
         PreparedStatement stm =
@@ -88,7 +88,7 @@ public class QuizSqlDao implements QuizDao{
         Quiz quiz = new Quiz(quizId, rs.getInt(9));
         return quiz;
     }
-    
+
     @Override
     public boolean deleteQuiz(Quiz quiz) throws SQLException {
         PreparedStatement stm =
@@ -103,8 +103,8 @@ public class QuizSqlDao implements QuizDao{
     public Connection getConnection(){
         return con;
     }
-    
-     @Override
+
+    @Override
     public List<Quiz> getPopularQuizzes() throws SQLException {
         List<Quiz> res = new ArrayList<>();
         PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.HistoryTable + ";");

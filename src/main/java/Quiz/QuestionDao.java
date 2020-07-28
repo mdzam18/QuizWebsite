@@ -7,10 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class QuestionDao {
 
@@ -114,7 +111,9 @@ public class QuestionDao {
             Set<String> allAnswerOutput = new HashSet<>();
             Set<String> trueAnswerOutput = new HashSet<>();
             AnswerDelimiter.splitFewAnswers(rs.getString(ANSWER), allAnswerOutput, trueAnswerOutput);
-            q = new MultipleChoiceQuestion(rs.getString(QUESTION), trueAnswerOutput, allAnswerOutput);
+            Iterator<String> it = trueAnswerOutput.iterator();
+            String answer = it.next();
+            q = new MultipleChoiceQuestion(rs.getString(QUESTION), allAnswerOutput, answer);
             q.setQuizId(rs.getInt(QUIZ_ID));
             q.setQuestionId(rs.getInt(QUESTION_ID));
         }

@@ -1,0 +1,99 @@
+body, ul, li, h1, h2, a{
+    margin: 0;
+    padding: 0;
+    font-family: arial;
+}
+
+header{
+    background-color: green;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+header h1{
+    color: white;
+    border: 8px solid white;
+    padding: 6px 12px;
+    display: inline-block;
+    border-radius: 12px;
+}
+
+.banner{
+    position: relative;
+}
+
+.banner img{
+    max-width: 100%;
+}
+
+.banner .welcome{
+
+    background-color: #FEB614;
+    color: white;
+    padding: 30px;
+    position: absolute;
+    right: 0;
+    top: 70%;
+}
+
+.banner h2{
+    font-size: 74px;
+}
+
+.banner h2 span{
+    font-size: 1.3em;
+    /* font-size: 90px; */
+}
+
+nav{
+    background-color: #F4F4F4;
+    padding: 20px;
+    position: sticky;
+    top: 106px
+}
+
+nav ul{
+    white-space: nowrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav li{
+    width: 25%;
+    display: inline-block;
+    font-size: 24px;
+}
+
+nav li a{
+    text-decoration: none;
+    color: #4B4B4B;
+
+}
+
+footer{
+    background: green;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Pseudo Classes */
+
+nav li a:hover{
+    color: red;
+    text-decoration: underline;
+}
+
+section.join p::first-letter{
+    font-size: 1.5em;
+}
+
+p::selection{
+    background-color: #F63232;
+    color: white;
+}

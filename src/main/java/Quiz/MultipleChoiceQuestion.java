@@ -4,17 +4,17 @@ import java.util.*;
 
 public class MultipleChoiceQuestion extends Question {
 
-	private Set<String> choices;
+	private String choice;
 
 	private static final int TYPE = QuestionType.MULTIPLE_CHOICE_QUESTION;
 
-	public MultipleChoiceQuestion(String question, Set<String> answers, Set<String> choices) {
+	public MultipleChoiceQuestion(String question, Set<String> answers, String choice) {
 		super(question, answers);
-		this.choices = new HashSet<>(choices);
+		this.choice = choice;
 	}
 
-	public Set<String> getChoices() {
-		return choices;
+	public String getChoices() {
+		return choice;
 	}
 
 	@Override

@@ -161,7 +161,7 @@ public class QuizSqlDao implements QuizDao{
     }
 
     @Override
-    public List<Quiz> recentlyCreatedQuizzes() throws SQLException {
+    public List<Quiz> getRecentlyCreatedQuizzes() throws SQLException {
         List<Quiz> res = new ArrayList<>();
         PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.QuizTable + " where CreateDate >= ?;");
         Calendar cal = Calendar.getInstance();
@@ -177,20 +177,6 @@ public class QuizSqlDao implements QuizDao{
         return res;
     }
 
-    @Override
-    public List<Quiz> recentlyTakenQuizzes() throws SQLException {
-        List<Quiz> res = new ArrayList<>();
-        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.HistoryTable + " where EndDate >= ?;");
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MONTH, -1);
-        Timestamp date = (Timestamp) cal.getTime();
-        stm.setTimestamp(1, date);
-        ResultSet rs = stm.executeQuery();
-        while (rs.next()) {
-            res.add(getQuiz(rs.getInt(2)));
-        }
-        return res;
-    }
 
     @Override
     public Quiz addQuiz(int creatorId, boolean isRandom, boolean isOnePage, boolean isImmediate, boolean hasPracticeMode, int questionNum, String quizName, String category, java.sql.Date createDate) throws SQLException

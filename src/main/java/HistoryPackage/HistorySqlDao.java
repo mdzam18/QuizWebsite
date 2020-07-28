@@ -76,6 +76,25 @@ public class HistorySqlDao implements HistoryDao {
     }
 
     @Override
+    public List<History> getAllHistories() throws SQLException {
+        String sql = "SELECT * FROM " + tableName + ";";
+        Statement state = connection.createStatement();
+
+        List<History> histories = new ArrayList<>();
+        ResultSet results = state.executeQuery(sql);
+        while(results.next()) {
+            History history = new History(
+                    results.getInt(USER_ID_COL),
+                    results.getInt(QUIZ_ID_COL),
+                    results.getInt(SCORE_COL),
+                    new Date(results.getTimestamp(START_DATE_COL).getTime()),
+                    new Date(results.getTimestamp(END_DATE_COL).getTime()));
+            histories.add(history);
+        }
+        return histories;
+    }
+
+    @Override
     public List<History> getHistoriesByQuizId(int quizId) throws SQLException {
         List<History> histories = new ArrayList<>();
         String sqlString = "SELECT * FROM " + tableName + " WHERE QuizId = ?;";

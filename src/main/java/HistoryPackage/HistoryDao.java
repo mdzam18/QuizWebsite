@@ -11,6 +11,8 @@ public interface HistoryDao {
 
     public List<History> getHistories(int userId) throws SQLException;
 
+    public List<History> getAllHistories() throws SQLException;
+
     public List<History> getHistoriesByQuizId(int quizId) throws SQLException;
 
     public Set<Integer> getQuizIds(int userId) throws SQLException;

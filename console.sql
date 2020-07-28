@@ -28,6 +28,7 @@ CREATE TABLE Quiz(
                       Description varchar(255),
                       Category varchar(255),
                       CreatorId int,
+                      CreateDate Date,
                       foreign key (CreatorId) references Users(UserId)
 );
 CREATE TABLE QuizTag(

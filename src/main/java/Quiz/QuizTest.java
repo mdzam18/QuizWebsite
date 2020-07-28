@@ -78,7 +78,7 @@ public class QuizTest {
         List<Question> questions = new ArrayList<Question>();
 
         questions.add(new QuestionResponse("1", new HashSet<String>()));
-        questions.add(new MultipleChoiceQuestion("2", new HashSet<String>(), new HashSet<String>()));
+        questions.add(new MultipleChoiceQuestion("2", new HashSet<String>(), ""));
         questions.add(new MultipleAnswerQuestion("3", new ArrayList<String>(), false));
         questions.add(new PictureResponseQuestion("4", new HashSet<String>(), "URL"));
         questions.add(new MultipleChoiceAnswerQuestion("5", new HashSet<String>(), new HashSet<String>()));

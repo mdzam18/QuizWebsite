@@ -33,15 +33,24 @@ public class QuizSqlDao implements QuizDao{
     @Override
     public int getQuizIdByName(String description) throws SQLException{
         PreparedStatement stm = null;
-        String s = "SELECT * FROM " + quizTable + " WHERE Description = " + description + ";";
         stm = con.prepareStatement(
-                "SELECT * FROM " + quizTable + " WHERE UserName = ?;");
+                "SELECT * FROM " + quizTable + " WHERE Description = ?;");
         stm.setString(1, description);
         ResultSet res = stm.executeQuery();
         if (!res.next()) return -1;
         return res.getInt("QuizId");
     }
-    
+
+    @Override
+    public boolean userHasQuizByName(int userId, String quizName) throws SQLException {
+        String sql = "SELECT * FROM " + quizTable + " WHERE CreatorId = ? AND Description = ?;";
+        PreparedStatement prepState = con.prepareStatement(sql);
+        prepState.setInt(1, userId);
+        prepState.setString(2, quizName.trim());
+        ResultSet resultSet = prepState.executeQuery();
+        return resultSet.next();
+    }
+
     @Override
     public Quiz addQuiz(int creatorId) throws SQLException {
         Quiz quiz = null;

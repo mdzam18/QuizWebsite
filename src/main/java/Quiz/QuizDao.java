@@ -15,4 +15,6 @@ public interface QuizDao {
 
 	public int getQuizIdByName(String description) throws SQLException;
 
+	public boolean userHasQuizByName(int userId, String	quizName) throws SQLException;
+
 }

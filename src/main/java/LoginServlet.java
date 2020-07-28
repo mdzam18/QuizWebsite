@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import java.io.PrintWriter;
@@ -17,14 +18,7 @@ public class LoginServlet extends HttpServlet {
     private final static String SUCCESS = "SUCCESS";
     private UserDao userDao;
 
-    /* // Testing
-    private Map<String, String> data = new HashMap<>();
-    private void runBefore() {
-        data.put("blabla", "blabla");
-        data.put("giorgi", "1234");
-        data.put("levka", "java");
-    }
-    */
+    private final static String currentUser = "currentUser";
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
@@ -52,6 +46,9 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        HttpSession session = httpServletRequest.getSession();
+        session.setAttribute(currentUser, httpServletRequest.getParameter("username").trim());
+
         httpServletRequest.getRequestDispatcher("UserPage.jsp").forward(httpServletRequest, httpServletResponse);
     }
 

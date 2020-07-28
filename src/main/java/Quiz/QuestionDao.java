@@ -22,7 +22,7 @@ public class QuestionDao {
 
     public QuestionDao() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
-        questionTable = CreateTablesForTests.QuestionTableTest;
+        questionTable = CreateTablesForTests.QuestionTable;
     }
 
     public Question addQuestion(String question, String answer, int quizId) throws SQLException {

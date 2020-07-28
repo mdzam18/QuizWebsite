@@ -1,5 +1,7 @@
 package Quiz;
 
+import java.sql.DatabaseMetaData;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +17,7 @@ public class Quiz {
 	private List<Question> questions;
 	private String category;
 	private int creatorId;
+	private Date createDate;
 
 	public Quiz(int quizId, int creatorId)
 	{
@@ -105,6 +108,13 @@ public class Quiz {
 	public int hashCode() {
 		return Objects.hash(quizId, creatorId);
 	}
-	
-	
+
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 }

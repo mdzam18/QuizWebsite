@@ -40,17 +40,20 @@
             <c:forEach var="user" items="${users}">
                 <div class="row">
                     <div class="cell" data-title="Id">
-                        user.userId
+                        ${user.userId}
                     </div>
                     <div class="cell" data-title="Name">
-                        user.name
+                        ${user.name}
                     </div>
                     <div class="cell" data-title="Surname">
-                        user.surname
+                        ${user.surname}
                     </div>
                     <div class="cell" data-title="Username">
-                        user.userName
+                        #{user.userName}
                     </div>
+                    <form action="/admin/users?id=${user.id}" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
                 </div>
             </c:forEach>
 

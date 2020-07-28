@@ -30,4 +30,6 @@ public interface QuizDao {
 
 	public List<Quiz> getQuizzesForUser(int userId) throws SQLException;
 
+	public List<Quiz> getAllQuizzes() throws SQLException;
+
 }

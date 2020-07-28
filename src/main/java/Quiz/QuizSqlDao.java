@@ -86,7 +86,15 @@ public class QuizSqlDao implements QuizDao{
         stm.setInt(1, quizId);
         ResultSet rs = stm.executeQuery();
         if(!rs.next()) return null;
-        Quiz quiz = new Quiz(quizId, rs.getInt(9));
+        Quiz quiz = new Quiz(quizId, rs.getInt(CREATOR_ID));
+        quiz.setIsRandom(rs.getBoolean(IS_RANDOM));
+        quiz.setIsOnePage(rs.getBoolean(IS_ONE_PAGE));
+        quiz.setIsImmediate(rs.getBoolean(IS_IMMEDIATE));
+        quiz.setIsRandom(rs.getBoolean(IS_RANDOM));
+        quiz.setInPracticeMode(rs.getBoolean(IN_PRACTICE_MODE));
+        quiz.setDescription(rs.getString(DESCRIPTION));
+        quiz.setCategory(rs.getString(CATEGORY));
+        quiz.setCreateDate(rs.getDate(CREATE_DATE));
         return quiz;
     }
 
@@ -240,6 +248,29 @@ public class QuizSqlDao implements QuizDao{
             quizzes.add(curQuiz);
         }
         return quizzes;
+    }
+
+    @Override
+    public List<Quiz> getAllQuizzes() throws SQLException {
+        PreparedStatement stmt = con.prepareStatement("SELECT * FROM " + quizTable + ";");
+        ResultSet results = stmt.executeQuery();
+
+        List<Quiz> quizzes = new ArrayList<>();
+
+        while(results.next()) {
+            Quiz curQuiz = new Quiz(results.getInt(QUIZ_ID), results.getInt(CREATOR_ID));
+            curQuiz.setIsRandom(results.getBoolean(IS_RANDOM));
+            curQuiz.setIsOnePage(results.getBoolean(IS_ONE_PAGE));
+            curQuiz.setIsImmediate(results.getBoolean(IS_IMMEDIATE));
+            curQuiz.setInPracticeMode(results.getBoolean(IN_PRACTICE_MODE));
+            curQuiz.setDescription(results.getString(DESCRIPTION));
+            curQuiz.setCategory(results.getString(CATEGORY));
+            curQuiz.setCreateDate(results.getDate(CREATE_DATE));
+
+            // TODO Add Question to Quiz Class
+
+            quizzes.add(curQuiz);
+        }
     }
 
 }

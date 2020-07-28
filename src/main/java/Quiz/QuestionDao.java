@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QuestionDao {
 
@@ -25,7 +27,7 @@ public class QuestionDao {
         questionTable = CreateTablesForTests.QuestionTableTest;
     }
 
-    public Question addQuestion(String question, String answer, int quizId) throws SQLException {
+    public Question addQuestion(String question, String answer, int quizId, int type) throws SQLException {
         Question q = null;
         PreparedStatement stm =
                 con.prepareStatement("SELECT max(QuestionId) FROM " + questionTable);
@@ -41,7 +43,7 @@ public class QuestionDao {
         stm.setString(QUESTION, question);
         stm.setString(ANSWER, answer);
         stm.setInt(QUIZ_ID, quizId);
-        stm.setInt(TYPE, 0);
+        stm.setInt(TYPE, type);
 
         q = new Question(question, AnswerDelimiter.splitAnswer(answer));
 
@@ -55,7 +57,18 @@ public class QuestionDao {
         ResultSet rs = stm.executeQuery();
         if(!rs.next()) return null;
 
-        Question q = new Question(rs.getString(QUESTION), AnswerDelimiter.splitAnswer(rs.getString(ANSWER)));
+        int type = rs.getInt(TYPE);
+
+        Question q;
+
+        if (type == 1){
+            q = new QuestionResponse(rs.getString(QUESTION), AnswerDelimiter.splitAnswer(rs.getString(ANSWER)));
+            q.setQuizId(rs.getInt(QUIZ_ID));
+            q.setQuestionId(rs.getInt(QUESTION_ID));
+        }
+        else if (type == 2){
+            q = new MultipleChoiceQuestion(rs.getString(QUESTION), AnswerDelimiter.splitAnswer(rs.getString(ANSWER)))
+        }
         return q;
     }
 
@@ -67,5 +80,19 @@ public class QuestionDao {
 
         if(n == 1) return true;
         return false;
+    }
+
+    public List<Question> getQuizQuestions(int quizId) throws SQLException {
+        PreparedStatement stm =
+                con.prepareStatement("SELECT * FROM " + questionTable + " WHERE QuizId = ?;");
+        stm.setInt(1, quizId);
+
+        List<Question> questions = new ArrayList<Question>();
+
+        ResultSet rs = stm.executeQuery();
+
+        while (rs.next()) {
+
+        }
     }
 }

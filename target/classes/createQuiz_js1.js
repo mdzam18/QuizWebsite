@@ -207,22 +207,19 @@ function getMultipleChoiceQuestion() {
     let answerRequiredLi = createElement("li");
     answerRequiredLi.id = "ID_" + questionId + "_answerN_1";
 
+    let answerRequired2Li = createElement("li");
+    answerRequired2Li.id = "ID_" + questionId + "_answerN_2";
+
     let answerRequiredRadio = createElement("input");
     answerRequiredRadio.type = "radio";
     answerRequiredRadio.name = "ID_" + questionId + "_answer_true";
-    answerRequiredRadio.checked = true;
+    answerRequiredRadio.required = true;
 
     let answerRequired = createElement("input");
     answerRequired.type = "text";
     answerRequired.name = "ID_" + questionId + "_answerN_1_input";
     answerRequired.required = true;
     answerRequiredRadio.value = answerRequired.name;
-
-    answerRequiredLi.appendChild(answerRequiredRadio);
-    answerRequiredLi.appendChild(answerRequired);
-
-    let answerRequired2Li = createElement("li");
-    answerRequired2Li.id = "ID_" + questionId + "_answerN_2";
 
     let answerRequired2Radio = createElement("input");
     answerRequired2Radio.type = "radio";
@@ -233,6 +230,9 @@ function getMultipleChoiceQuestion() {
     answerRequired2.name = "ID_" + questionId + "_answerN_2_input";
     answerRequired2.required = true;
     answerRequired2Radio.value = answerRequired2.name;
+
+    answerRequiredLi.appendChild(answerRequiredRadio);
+    answerRequiredLi.appendChild(answerRequired);
 
     answerRequired2Li.appendChild(answerRequired2Radio);
     answerRequired2Li.appendChild(answerRequired2);
@@ -292,7 +292,6 @@ function addMultipleChoiceQuestionAnswer(elemId, qId) {
 }
 function addMultipleChoiceQuestionDeleteAnswer(parId, answId) {
     addQuestionResponseDeleteAnswer(parId, answId);
-    alert(parId.childNodes.length);
 }
 
 
@@ -479,7 +478,7 @@ function getMultiAnswerQuestion() {
 
     let addAnswer = createElement("input");
     addAnswer.type = "button";
-    addAnswer.value = "Add Alternative Answer";
+    addAnswer.value = "Add Answer";
     addAnswer.setAttribute("onclick", "addMultiAnswerQuestionAnswer('" + answerListId + "', " + questionId + ")");
 
     // appendElements()
@@ -553,6 +552,7 @@ function getMultiChoiceAndAnswerQuestion() {
     let requiredCheckbox = createElement("input");
     requiredCheckbox.type = "checkbox";
     requiredCheckbox.name = requiredName;
+    requiredCheckbox.checked = true;
 
     let requiredInput = createElement("input");
     requiredInput.type = "text";
@@ -635,6 +635,9 @@ function addMultiChoiceAndAnswerQuestionAnswer(elemId, qId) {
 }
 function addMultiChoiceAndAnswerQuestionDeleteAnswer(parOd, answId) {
     addMultipleChoiceQuestionDeleteAnswer(parOd, answId);
+    for(let i = 0; i<parOd.childNodes.length; i++) {
+        alert(parOd.childNodes[i].id)
+    }
 }
 
 /* Other Functions */
@@ -648,9 +651,6 @@ function getById(id) {
     return document.getElementById(id);
 }
 function createElement(tag) {
-    let o = document.createElement("input");
-    o.type = "checkbox";
-    document.getElementsByTagName("body")[0].appendChild(o);
     return document.createElement(tag);
 }
 function createInputByType(type) {

@@ -39,7 +39,7 @@ public class ContextDataListener implements ServletContextListener, HttpSessionL
             historyDao = new HistorySqlDao();
             //friendsDao = new FriendsSqlDao();
             mailDao = new MailSqlDao();
-            //quizDao = new QuizSqlDao();
+            quizDao = new QuizSqlDao();
             //statisticsDao = new StatisticsSqlDao();
             userDao = new UserSqlDao();
         } catch (SQLException e) {

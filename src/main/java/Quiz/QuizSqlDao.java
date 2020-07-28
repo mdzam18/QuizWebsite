@@ -27,7 +27,7 @@ public class QuizSqlDao implements QuizDao{
 
     public QuizSqlDao() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();
-        quizTable = CreateTablesForTests.QuizTableTest;
+        quizTable = CreateTablesForTests.QuizTable;
     }
 
     @Override

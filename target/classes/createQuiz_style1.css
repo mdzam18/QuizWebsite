@@ -6,12 +6,12 @@ html, body {
 }
 
 #content {
-    position: relative;
     margin: 0 auto;
     margin-top: 20px;
     width: 1000px;
     min-height: 600px;
     background: white;
+    font-family: 'Roboto', sans-serif;
 }
 
 #questions {
@@ -51,6 +51,16 @@ html, body {
 }
 #createQuiz {
     margin-bottom: 50px;
+}
+
+.tableContent {
+    display: block;
+    width: 600px;
+    margin-left: 100px;
+}
+.tableContent tr td {
+    border-collapse: collapse;
+    text-align: left;
 }
 
 .questionField {

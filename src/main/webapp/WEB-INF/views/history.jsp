@@ -54,9 +54,11 @@
                     <%--  DATE-is time-ad gardaqmna   --%>
                         ${(history.startDate - history.endDate)/1000}
                     </div>
-                    <form action="/admin/history?userId=${history.userId}&quizId=${history.quizId}" method="POST">
-                        <button type="submit">Delete</button>
-                    </form>
+                    <div class="centered">
+                        <form action="/admin/history?userId=${history.userId}&quizId=${history.quizId}" method="POST">
+                            <button class="small red button" type="submit">Delete</button>
+                        </form>
+                    </div>
                 </div>
             </c:forEach>
 

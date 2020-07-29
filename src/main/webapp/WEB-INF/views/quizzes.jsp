@@ -57,9 +57,11 @@
                     <div class="cell" data-title="Description">
                         ${quiz.description}
                     </div>
-                    <form action="/admin/quizzes?id=${quiz.id}" method="POST">
-                        <button type="submit">Delete</button>
-                    </form>
+                    <div class="centered">
+                        <form action="/admin/quizzes?id=${quiz.id}" method="POST">
+                            <button class="small red button" type="submit">Delete</button>
+                        </form>
+                    </div>
                 </div>
             </c:forEach>
 

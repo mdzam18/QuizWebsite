@@ -51,9 +51,14 @@
                     <div class="cell" data-title="Username">
                         #{user.userName}
                     </div>
-                    <form action="/admin/users?id=${user.id}" method="POST">
-                        <button type="submit">Delete</button>
-                    </form>
+                    <div class="centered">
+                        <form action="/admin/users?id=${user.id}" method="POST">
+                            <button class="small red button" type="submit"> Delete</button>
+                        </form>
+                        <form action="/admin/admins?id=${user.id}" method="POST">
+                            <button class="small blue button" type="submit">Promote</button>
+                        </form>
+                    </div>
                 </div>
             </c:forEach>
 

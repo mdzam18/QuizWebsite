@@ -55,40 +55,40 @@
 
     <p><button type = "button" Value="friends" onclick=show("friends_id")>Friends</button></p>
     <div id = "friends_id" style="display: none">
-        <%--<%
+        <%
             String name = request.getParameter("username");
             User user = uDao.getUser(uDao.getUserIdByName(name));
             List<User> list = fDao.getFriends(user);
             for(User user2 : list){
                 out.println("<li><a href=\"ProfilePage.jsp?id=" +  user2.getUserId() + "\">" + user2.getUserName() + "</a> </li>" );
             }
-        %>--%>
+        %>
         <input type="button" value="bla" onclick=hide("friends_id")>
     </div>
 
     <p><button type = "button" Value= "sentRequests" onclick= show("sentRequest_id")>Sent Requests</button></p>
     <div id = "sentRequest_id" style="display: none">
-        <%--<%
+        <%
             name = request.getParameter("username");
             user = uDao.getUser(uDao.getUserIdByName(name));
             list = fDao.getSentRequests(user);
             for(User user2 : list){
                 out.println("<li><a href=\"ProfilePage.jsp?id=" +  user2.getUserId() + "\">" + user2.getUserName() + "</a> </li>" );
             }
-        %>--%>
+        %>
         <input type="button" value="bla" onclick=hide("sentRequest_id")>
     </div>
 
     <p><button type = "button" Value= "request" onclick= show("requests_id")>Friend Requests</button></p>
     <div id = "requests_id" style="display: none">
-        <%--<%
+        <%
             name = request.getParameter("username");
             user = uDao.getUser(uDao.getUserIdByName(name));
             list = fDao.getReceivedRequests(user);
             for(User user2 : list){
                 out.println("<li><a href=\"ProfilePage.jsp?id=" +  user2.getUserId() + "\">" + user2.getUserName() + "</a> </li>" );
             }
-        %>--%>
+        %>
         <input type="button" value="bla" onclick=hide("requests_id")>
     </div>
 

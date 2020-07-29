@@ -25,19 +25,32 @@ body, ul, li, h1, h2, a{
 }
 
 .row:nth-of-type(odd) {
-    background: darksalmon;
+    /*background: darksalmon;*/
 }
 
 .row.header {
     font-weight: bold;
     font-size: 23px;
     color: #ffffff;
-    background: darksalmon;
-}
-
-.row.header {
+    background: palevioletred;
     padding: 0;
     height: 6px;
+}
+
+.row.yellow{
+    background: darkgoldenrod;
+}
+
+.row.green {
+    background: #27ae60;
+}
+
+.row.purple {
+    background: purple;
+}
+
+.row.blue{
+    background: mediumblue;
 }
 
 .row .cell {

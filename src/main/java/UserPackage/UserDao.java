@@ -13,7 +13,7 @@ public interface UserDao {
 
     int getUserIdByName(String username) throws SQLException;
 
-    boolean deleteUser(User user) throws SQLException;
+    boolean deleteUser(User user) throws SQLException, ClassNotFoundException;
 
     boolean isCorrectPassword(String userName, String password) throws SQLException;
 

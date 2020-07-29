@@ -1,6 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<%@ page import="ProfilePackage.FriendsSqlDao" %>
+<%@ page import="FriendsPackage.FriendsSqlDao" %>
 <%@ page import="UserPackage.UserSqlDao" %>
 <%@ page import="UserPackage.User" %>
 <%@ page import="Quiz.Quiz" %>

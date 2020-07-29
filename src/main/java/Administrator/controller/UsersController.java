@@ -31,7 +31,7 @@ public class UsersController extends HttpServlet {
             try {
                     User user = userDao.getUser(Integer.valueOf(id));
                     userDao.deleteUser(user);
-            } catch (SQLException throwables) {
+            } catch (SQLException | ClassNotFoundException throwables) {
                     throwables.printStackTrace();
             }
         }

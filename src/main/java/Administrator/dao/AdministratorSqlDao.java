@@ -56,7 +56,7 @@ public class AdministratorSqlDao extends UserSqlDao implements AdministratorDao 
 	}
 	
 	@Override
-	public boolean deleteUser(User user) throws SQLException {
+	public boolean deleteUser(User user) throws SQLException, ClassNotFoundException {
 		return super.deleteUser(user);
 	}
 	

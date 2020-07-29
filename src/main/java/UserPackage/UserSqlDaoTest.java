@@ -59,7 +59,9 @@ public class UserSqlDaoTest {
         assertEquals(user.getBirthDate(), date);
         assertEquals(user.getBirthPlace(), "USA");
         assertEquals(user.getStatus(), "working");
+        assertEquals(1, uDao.getUserIdByName("ChandlerTheBest"));
 
+        assertEquals(-1, uDao.getUserIdByName("Chandler"));
         user = uDao.getUser(2);
         assertEquals(user, null);
     }

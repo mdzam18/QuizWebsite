@@ -20,9 +20,9 @@ public class AdministratorSqlDao extends UserSqlDao implements AdministratorDao 
 	
 	public AdministratorSqlDao() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
 		con = ProfileDataSrc.getConnection();
-		userTable = CreateTablesForTests.UsersTableTest;
-		quizTable = CreateTablesForTests.QuizTableTest;
-		historyTable = CreateTablesForTests.HistoryTableTest;
+		userTable = CreateTablesForTests.UsersTable;
+		quizTable = CreateTablesForTests.QuizTable;
+		historyTable = CreateTablesForTests.HistoryTable;
 	}
 	
 	@Override

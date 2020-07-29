@@ -20,8 +20,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/admin/history",
-            initParams = {@WebInitParam(name = "userId", value = "{userId}"),
-                          @WebInitParam(name = "quizId", value = "{quizId}")})
+        initParams = {@WebInitParam(name = "userId", value = "{userId}"),
+                @WebInitParam(name = "quizId", value = "{quizId}")})
 public class HistoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,7 +47,7 @@ public class HistoryController extends HttpServlet {
         }
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/history.jsp");
-        dispatcher.forward(req,resp);
+        dispatcher.forward(req, resp);
     }
 
     @Override

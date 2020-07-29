@@ -32,17 +32,20 @@ public class AdministratorSqlDaoTest {
 	private CreateTablesForTests tables;
 	
 	@BeforeAll
-	public void init() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+	public void init() throws SQLException, ClassNotFoundException{
 		con = ProfileDataSrc.getConnection();
-		adminDao = new AdministratorSqlDao();
-		userDao = new UserSqlDao();
-		historyDao = new HistorySqlDao();
-		quizDao = new QuizSqlDao();
 		tables = new CreateTablesForTests();
 	}
 	
 	@BeforeEach
-	public void setUp() throws SQLException, ClassNotFoundException {
+	public void setUp() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+		CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
+		CreateTablesForTests.HistoryTable = CreateTablesForTests.HistoryTableTest;
+		CreateTablesForTests.QuizTable = CreateTablesForTests.QuizTableTest;
+		adminDao = new AdministratorSqlDao();
+		userDao = new UserSqlDao();
+		historyDao = new HistorySqlDao();
+		quizDao = new QuizSqlDao();
 		assertEquals(true, tables.createUserTable());
 		assertEquals(true, tables.createQuizTable());
 		assertEquals(true, tables.createHistoryTable());
@@ -50,9 +53,12 @@ public class AdministratorSqlDaoTest {
 	
 	@AfterEach
 	public void tearDown() throws SQLException {
-		assertEquals(true, tables.dropTable("History2"));
-		assertEquals(true, tables.dropTable("Quiz2"));
-		assertEquals(true, tables.dropTable("Users2"));
+		assertEquals(true, tables.dropTable(CreateTablesForTests.HistoryTableTest));
+		assertEquals(true, tables.dropTable(CreateTablesForTests.QuizTableTest));
+		assertEquals(true, tables.dropTable(CreateTablesForTests.UsersTableTest));
+		CreateTablesForTests.UsersTable = "Users";
+		CreateTablesForTests.HistoryTable = "History";
+		CreateTablesForTests.QuizTable = "Quiz";
 	}
 	
 	@Test

@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/admin/quizzes",
-            initParams = {@WebInitParam(name = "id", value = "{id}")})
+        initParams = {@WebInitParam(name = "id", value = "{id}")})
 public class QuizzesController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,7 +43,7 @@ public class QuizzesController extends HttpServlet {
             throwables.printStackTrace();
         }
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/quizzes.jsp");
-        dispatcher.forward(req,resp);
+        dispatcher.forward(req, resp);
     }
 
     @Override

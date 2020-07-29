@@ -20,9 +20,9 @@ public class StatisticsSqlDao implements StatisticsDao {
 	
 	public StatisticsSqlDao() throws SQLException, ClassNotFoundException {
 		con = ProfileDataSrc.getConnection();
-		userTable = CreateTablesForTests.UsersTableTest;
-		quizTable = CreateTablesForTests.QuizTableTest;
-		historyTable = CreateTablesForTests.HistoryTableTest;
+		userTable = CreateTablesForTests.UsersTable;
+		quizTable = CreateTablesForTests.QuizTable;
+		historyTable = CreateTablesForTests.HistoryTable;
 	}
 	
 	public List<Quiz> getAllQuizzes(int userId) throws SQLException {

@@ -148,4 +148,16 @@ public class QuestionDao {
 
         return q;
     }
+
+    public int getFullScore(int quizId) throws SQLException {
+        String sql = "SELECT SUM(Score) FROM " + questionTable + " WHERE QuizId = ?;";
+        PreparedStatement prepState = con.prepareStatement(sql);
+        prepState.setInt(1, quizId);
+        ResultSet resultSet = prepState.executeQuery();
+        if(resultSet.next()) {
+            return resultSet.getInt(1);
+        }
+        return 0;
+    }
+
 }

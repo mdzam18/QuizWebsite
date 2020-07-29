@@ -149,5 +149,28 @@
               %>
             <input type="button" value="bla" onclick=hide("recentlyTaken_id")>
           </div>
+
+        <p> <button type ="button" value = "recently created quizzes" onclick= show("recentlyCreated_id")>recently created quizzes</button></p>
+        <div id = "recently taken quizzes" style="display: none">
+            <%
+
+//                name = request.getParameter("username");
+//                List <Quiz> recentlyCreated = null;
+//                try {
+//                    recentlyCreated = qDao.getQuizzesForUser(uDao.getUserIdByName(name));
+//                } catch (SQLException throwables) {
+//                    throwables.printStackTrace();
+//                }
+//                List<Quiz> sortedRecentlyCreated = qDao.sortQuizzesByDate(recentlyCreated);
+//                int i = 0;
+//                for(Quiz quiz: sortedRecentlyCreated){
+//                    out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
+//                    i++;
+//                    if (i >= 5) break;
+//                }
+
+            %>
+            <input type="button" value="bla" onclick=hide("recentlyCreated_id")>
+        </div>
     </body>
  </html>

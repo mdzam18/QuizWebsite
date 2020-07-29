@@ -19,7 +19,14 @@
     </div>
 </section>
 <nav class="main-nav">
-    <div class="wrapper">
+    <ul>
+        <li><a href="/admin/admins" class="admins">Admins</a></li>
+        <li><a href="/admin/users">Users</a></li>
+        <li><a href="/admin/quizzes">Quizzes</a></li>
+        <li><a href="/admin/history">History</a></li>
+    </ul>
+</nav>
+<div class="wrapper">
 
         <div class="table">
 
@@ -64,7 +71,6 @@
 
         </div>
     </div>
-</nav>
 <footer>
     <p class="Copyright">Copyright 2020 QuizWebsite</p>
 </footer>

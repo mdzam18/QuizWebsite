@@ -18,7 +18,14 @@
     </div>
 </section>
 <nav class="main-nav">
-    <div class="wrapper">
+    <ul>
+        <li><a href="/admin/admins" class="admins">Admins</a></li>
+        <li><a href="/admin/users">Users</a></li>
+        <li><a href="/admin/quizzes">Quizzes</a></li>
+        <li><a href="/admin/history">History</a></li>
+    </ul>
+</nav>
+<div class="wrapper">
 
         <div class="table">
 
@@ -40,16 +47,16 @@
             <c:forEach var="user" items="${users}">
                 <div class="row">
                     <div class="cell" data-title="Id">
-                        ${user.userId}
+                            ${user.userId}
                     </div>
                     <div class="cell" data-title="Name">
-                        ${user.name}
+                            ${user.name}
                     </div>
                     <div class="cell" data-title="Surname">
-                        ${user.surname}
+                            ${user.surname}
                     </div>
                     <div class="cell" data-title="Username">
-                        #{user.userName}
+                            #{user.userName}
                     </div>
                     <div class="centered">
                         <form action="/admin/users?id=${user.id}" method="POST">
@@ -64,7 +71,6 @@
 
         </div>
     </div>
-</nav>
 <footer>
     <p class="Copyright">Copyright 2020 QuizWebsite</p>
 </footer>

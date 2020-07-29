@@ -32,7 +32,7 @@
         %>
         <h1 style="text-align:center">User Profile</h1>
         <div class "Profile">
-                   <h1 <label for="username">User Name: <%= request.getParameter("username")%> </label> </h1>
+                   <h1 <label for="username">User Name: <%= uDao.getUser(Integer.parseInt(request.getParameter("id"))).getUserName()%> </label> </h1>
                    <h2 <label for="name">Name: <%= request.getParameter("name")%> </label> </h2>
                    <h2 <label for="surname">Surname: <%= request.getParameter("surname")%> </label> </h2>
                    <h2 <label for="birthDate">Birth Date: <%= request.getParameter("birthDate")%> </label> </h2>
@@ -44,12 +44,13 @@
         <p><button type = "button" Value="friends" onclick=show("friends_id2")>Friends</button></p>
         <div id = "friends_id2" style="display: none">
                     <%
-                      String name = request.getParameter("username");
+                  /*    String name = request.getParameter("username");
                       User user = uDao.getUser(uDao.getUserIdByName(name));
                       List<User> list = fDao.getFriends(user);
                       for(User user2 : list){
                         out.println("<li><a href=\"ProfilePage.jsp?id=" +  user2.getUserId() + "\">" + user2.getUserName() + "</a> </li>" );
                       }
+                      */
                     %>
                    <input type="button" value="bla" onclick=hide("friends_id2")>
         </div>

@@ -168,6 +168,7 @@ p::selection{
     width: 100px;
     height: 35px;
     border-radius: 10%;
+    font-size: 18px;
 }
 
 .button:hover{

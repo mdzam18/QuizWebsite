@@ -1,48 +1,103 @@
 import Quiz.*;
+import ServletContextPackage.ContextDataNames;
+import UserPackage.UserDao;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.util.*;
 
 public class CreateQuizServlet extends HttpServlet {
 
-    private int questionCounter = 1;
+    private final static String currentUser = "currentUser";
+    private final static String SUCCESS = "SUCCESS";
+    private final static String ALREADY_HAS = "FAILURE";
+
+    @Override
+    protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        ServletContext servletContext = httpServletRequest.getServletContext();
+        HttpSession session = httpServletRequest.getSession();
+        UserDao userDao = (UserDao) servletContext.getAttribute(ContextDataNames.USER_DAO);
+        QuizDao quizDao = (QuizDao) servletContext.getAttribute(ContextDataNames.QUIZ_DAO);
+
+        String sessionUserName = (String) session.getAttribute(currentUser);
+        try {
+            int userId = userDao.getUserIdByName(sessionUserName);
+            String quizName = httpServletRequest.getParameter("quizName");
+            PrintWriter out = httpServletResponse.getWriter();
+            if(quizDao.userHasQuizByName(userId, quizName)) {
+                out.print(ALREADY_HAS);
+            } else {
+                out.print(SUCCESS);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        PrintStream out = System.out;
-
         Map<String, String[]> pars = new HashMap<>(httpServletRequest.getParameterMap());
         Map<Integer, HashMap<String, String[]>> data = new HashMap<>();
 
-        out.println("Quiz Name: " + pars.get("quiz_name")[0]);
+        ServletContext context = getServletContext();
+        HttpSession session = httpServletRequest.getSession();
+
+        /* DAOs */
+        UserDao userDao = (UserDao) context.getAttribute(ContextDataNames.USER_DAO);
+        QuizDao quizDao = (QuizDao) context.getAttribute(ContextDataNames.QUIZ_DAO);
+        QuestionDao questionDao = (QuestionDao) context.getAttribute(ContextDataNames.QUESTION_DAO);
+        /* DAOs */
+
+        String userName = (String) session.getAttribute(currentUser);
+        int userId = 1;
+        try {
+            userId = userDao.getUserIdByName(userName);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String quizName = pars.get("quiz_name")[0].trim();
         pars.remove("quiz_name");
 
-        boolean questionRandomSequenceBool = (pars.get("questionRandomSequence") != null);
-        out.println("Random Sequence: " + String.valueOf(questionRandomSequenceBool));
-        if(questionRandomSequenceBool) {
+        String category = "";
+        if(pars.get("category") != null) {
+            category = pars.get("category")[0].trim();
+            pars.remove("category");
+        }
+
+        boolean questionRandomSequence = (pars.get("questionRandomSequence") != null);
+        if(questionRandomSequence) {
             pars.remove("questionRandomSequence");
         }
 
-        boolean oneQuestionPerPageBool = (pars.get("oneQuestionPerPage") != null);
-        out.println("One Question Per Page: " + String.valueOf(oneQuestionPerPageBool));
-        if(oneQuestionPerPageBool) {
+        boolean oneQuestionPerPage = (pars.get("oneQuestionPerPage") != null);
+        if(oneQuestionPerPage) {
             pars.remove("oneQuestionPerPage");
         }
 
-        boolean hasPracticeModeBool = (pars.get("hasPracticeMode") != null);
-        out.println("Has Practice Mode: " + String.valueOf(hasPracticeModeBool));
-        if(hasPracticeModeBool) {
+        boolean hasPracticeMode = (pars.get("hasPracticeMode") != null);
+        if(hasPracticeMode) {
             pars.remove("hasPracticeMode");
         }
 
+        boolean isImmediate = (pars.get("isImmediate") != null);
+        if(isImmediate) {
+            pars.remove("isImmediate");
+        }
+
         for(String key : pars.keySet()) {
+            System.out.println(key);
             int n = getNumber(key);
             String str = removeExtra(key);
-            if(data.containsKey(n)) {
+            if (data.containsKey(n)) {
                 data.get(n).put(str, pars.get(key));
             } else {
                 HashMap<String, String[]> mp = new HashMap<>();
@@ -51,18 +106,29 @@ public class CreateQuizServlet extends HttpServlet {
             }
         }
 
-        if(data.isEmpty()) {
-            out.print("No Questions");
-            return;
-        }
-
-        questionCounter = 1;
-
         List<Question> questions = new ArrayList<>();
         for(Integer k : data.keySet()) {
             printByType(data.get(k));
             questions.add(createQuestion(data.get(k)));
         }
+
+        Quiz quiz = null;
+        try {
+            quiz = quizDao.addQuiz(
+                    userId,
+                    questionRandomSequence, oneQuestionPerPage, isImmediate, hasPracticeMode,
+                    questions.size(),
+                    quizName,
+                    category,
+                    new java.sql.Date(System.currentTimeMillis()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        httpServletRequest.setAttribute("Quiz", quiz);
+
+        RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("quizInfo.jsp");
+        dispatcher.forward(httpServletRequest, httpServletResponse);
     }
 
     private Question createQuestion(Map<String, String[]> arg) {
@@ -99,16 +165,75 @@ public class CreateQuizServlet extends HttpServlet {
         } else if(type == QuestionType.MULTIPLE_CHOICE_QUESTION) {
             String answerTrue = removeExtra(map.get("answer_true")[0]);
             map.remove("answer_true");
-        } else if(type == QuestionType.MULTIPLE_CHOICE_AND_ANSWER_QUESTION) {
-        }
 
+            String rightAnswer = null;
+
+            Set<String> answersSet = new HashSet<>();
+            for(String key : map.keySet()) {
+                String curAnswer = map.get(key)[0].trim();
+                answersSet.add(curAnswer);
+                if(parseAnswerInput(answerTrue) == parseAnswerInput(key)) {
+                    rightAnswer = curAnswer;
+                }
+            }
+            if(rightAnswer == null) {
+                rightAnswer = answersSet.iterator().next();
+            }
+            question = new MultipleChoiceQuestion(questionText, answersSet, rightAnswer);
+        } else if(type == QuestionType.MULTIPLE_CHOICE_AND_ANSWER_QUESTION) {
+            Set<String> answers = new HashSet<>();
+            Set<String> choices = new HashSet<>();
+
+            for(String key : map.keySet()) {
+                String[] values = map.get(key);
+                if(values.length == 1) {
+                    answers.add(values[0].trim());
+                } else {
+                    String curAnswer;
+                    if(values[0].equalsIgnoreCase("on")) {
+                        curAnswer = values[1].trim();
+                    } else {
+                        curAnswer = values[0].trim();
+                    }
+                    answers.add(curAnswer);
+                    choices.add(curAnswer);
+                }
+            }
+            if(choices.size() == 0) {
+                choices.add(answers.iterator().next());
+            }
+            question = new MultipleChoiceAnswerQuestion(questionText, answers, choices);
+        }
         if(question != null) {
             question.setScore(score);
         }
         return question;
     }
 
+    /* Some Important Methods */
+    private int getNumber(String str) {
+        str = str.substring(3);
+        String number = str.substring(0, str.indexOf("_"));
+        return Integer.parseInt(number);
+    }
+
+    private String removeExtra(String str) {
+        str = str.substring(3);
+        return str.substring(str.indexOf("_") + 1);
+    }
+
+    private int parseAnswerInput(String str) {
+        str = str.substring(8);
+        str = str.substring(0, str.length() - 6);
+        return Integer.parseInt(str);
+    }
+
+    /* Other Methods (For Testing) */
+    private int questionCounter = 1;
+
     private void printByType(Map<String, String[]> arg) {
+        questionCounter = 1;
+
         Map<String, String[]> map = new HashMap<>(arg);
 
         String questionText = map.get("questionText")[0];
@@ -192,23 +317,6 @@ public class CreateQuizServlet extends HttpServlet {
         }
 
         System.out.println(stringBuilder.toString());
-    }
-
-    private int getNumber(String str) {
-        str = str.substring(3);
-        String number = str.substring(0, str.indexOf("_"));
-        return Integer.parseInt(number);
-    }
-
-    private String removeExtra(String str) {
-        str = str.substring(3);
-        return str.substring(str.indexOf("_") + 1);
-    }
-
-    private int parseAnswerInput(String str) {
-        str = str.substring(8);
-        str = str.substring(0, str.length() - 6);
-        return Integer.parseInt(str);
     }
 
 }

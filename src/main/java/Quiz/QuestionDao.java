@@ -17,8 +17,9 @@ public class QuestionDao {
     private static final int QUESTION_ID = 1;
     private static final int QUESTION = 2;
     private static final int ANSWER = 3;
-    private static final int QUIZ_ID = 4;
-    private static final int TYPE = 5;
+    private static final int TYPE = 4;
+    private static final int SCORE = 5;
+    private static final int QUIZ_ID = 6;
 
 
     public QuestionDao() throws SQLException, ClassNotFoundException {
@@ -26,8 +27,7 @@ public class QuestionDao {
         questionTable = CreateTablesForTests.QuestionTable;
     }
 
-    public Question addQuestion(String question, String answer, int quizId, int type) throws SQLException {
-        Question q = null;
+    public Question addQuestion(String question, String answer, int type, int score, int quizId) throws SQLException {
         PreparedStatement stm =
                 con.prepareStatement("SELECT max(QuestionId) FROM " + questionTable);
         ResultSet rs = stm.executeQuery();
@@ -37,19 +37,20 @@ public class QuestionDao {
         }
         last++;
 
-        stm = con.prepareStatement("INSERT INTO " + questionTable + "  VALUES (?, ?, ?, ?, ?);");
+        stm = con.prepareStatement("INSERT INTO " + questionTable + "  VALUES (?, ?, ?, ?, ?, ?);");
         stm.setInt(QUESTION_ID, last);
         stm.setString(QUESTION, question);
         stm.setString(ANSWER, answer);
-        stm.setInt(QUIZ_ID, quizId);
         stm.setInt(TYPE, type);
+        stm.setInt(SCORE, score);
+        stm.setInt(QUIZ_ID, quizId);
+        stm.executeUpdate();
 
         List<String> list = AnswerDelimiter.splitAnswers(rs.getString(ANSWER));
-        Set<String> answers = new HashSet<String>(list);
-        answers.addAll(list);
+        Set<String> answers = new HashSet<>(list);
 
-        q = new Question(question, answers);
-
+        Question q = new Question(question, answers);
+        q.setQuestionId(last);
         return q;
     }
 
@@ -106,6 +107,7 @@ public class QuestionDao {
             q = new QuestionResponse(rs.getString(QUESTION), answers);
             q.setQuizId(rs.getInt(QUIZ_ID));
             q.setQuestionId(rs.getInt(QUESTION_ID));
+            q.setScore(rs.getInt(SCORE));
         }
         else if (type == 2){
             Set<String> allAnswerOutput = new HashSet<>();
@@ -116,6 +118,7 @@ public class QuestionDao {
             q = new MultipleChoiceQuestion(rs.getString(QUESTION), allAnswerOutput, answer);
             q.setQuizId(rs.getInt(QUIZ_ID));
             q.setQuestionId(rs.getInt(QUESTION_ID));
+            q.setScore(rs.getInt(SCORE));
         }
         else if (type == 3){
             List<String> list = AnswerDelimiter.splitAnswers(rs.getString(ANSWER));
@@ -125,11 +128,13 @@ public class QuestionDao {
             q = new PictureResponseQuestion(rs.getString(QUESTION), answers, imageArray[1]);
             q.setQuizId(rs.getInt(QUIZ_ID));
             q.setQuestionId(rs.getInt(QUESTION_ID));
+            q.setScore(rs.getInt(SCORE));
         }
         else if (type == 4){
             q = new MultipleAnswerQuestion(rs.getString(QUESTION), AnswerDelimiter.splitAnswers(rs.getString(ANSWER)), false);
             q.setQuizId(rs.getInt(QUIZ_ID));
             q.setQuestionId(rs.getInt(QUESTION_ID));
+            q.setScore(rs.getInt(SCORE));
         }
         else {
             Set<String> allAnswerOutput = new HashSet<>();
@@ -138,6 +143,7 @@ public class QuestionDao {
             q = new MultipleChoiceAnswerQuestion(rs.getString(QUESTION), trueAnswerOutput, allAnswerOutput);
             q.setQuizId(rs.getInt(QUIZ_ID));
             q.setQuestionId(rs.getInt(QUESTION_ID));
+            q.setScore(rs.getInt(SCORE));
         }
 
         return q;

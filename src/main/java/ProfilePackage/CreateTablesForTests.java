@@ -12,9 +12,10 @@ public class CreateTablesForTests {
     public static String MailsTableTest = "Mails2";
     public static String MailsTable = "Mails";
     public static final String HistoryTableTest = "History2";
-    public static final String HistoryTable = "History";
+    public static String HistoryTable = "History";
     public static final String QuizTableTest = "Quiz2";
-    public static final String QuizTable = "Quiz";
+    public static String QuizTable = "Quiz";
+    public static String QuestionTable = "Question";
     public static final String QuestionTableTest = "Question2";
 
     private Connection con;
@@ -37,6 +38,19 @@ public class CreateTablesForTests {
                 "Birth_Date Date,\n" +
                 "Birth_Place varchar(255),\n" +
                 "Status varchar(255)" + ");");
+        return true;
+    }
+
+    public boolean createQuestionTable() throws SQLException {
+        Statement s = con.createStatement();
+        s.executeUpdate("CREATE TABLE " + QuestionTableTest + " (" +
+                " QuestionId int primary key ,\n" +
+                " Question varchar(512) ,\n" +
+                "Answer varchar(2048) ,\n" +
+                "Type int ,\n" +
+                "Score int ,\n" +
+                "QuizId int ,\n" +
+                "foreign key (QuizId) references " + CreateTablesForTests.QuizTableTest + "(QuizId)\n" + ");");
         return true;
     }
 

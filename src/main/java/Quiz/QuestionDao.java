@@ -46,7 +46,6 @@ public class QuestionDao {
 
         List<String> list = AnswerDelimiter.splitAnswers(rs.getString(ANSWER));
         Set<String> answers = new HashSet<String>(list);
-        answers.addAll(list);
 
         q = new Question(question, answers);
 

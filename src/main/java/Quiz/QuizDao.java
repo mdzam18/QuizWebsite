@@ -21,9 +21,7 @@ public interface QuizDao {
 
 	List<Quiz> getPopularQuizzes() throws SQLException;
 
-	List<Quiz> recentlyCreatedQuizzes() throws SQLException;
-
-	List<Quiz> recentlyTakenQuizzes() throws SQLException;
+	List<Quiz> getRecentlyCreatedQuizzes() throws SQLException;
 
 	public Quiz addQuiz(int creatorId, boolean isRandom, boolean isOnePage, boolean isImmediate,
 						boolean hasPracticeMode, int questionNum, String quizName, String category, Date createDate) throws SQLException;

@@ -22,7 +22,13 @@ public class UserServlet extends HttpServlet {
         ServletContext servletContext = getServletContext();
         UserSqlDao uDao = (UserSqlDao) servletContext.getAttribute(ContextDataNames.USER_DAO);
         String name = httpServletRequest.getParameter("username");
-        String webPageName = "ProfilePage.jsp";
+        int id = 0;
+        try {
+            id = uDao.getUserIdByName(name);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String webPageName = "ProfilePage.jsp?id=" + id;
         try {
             if (uDao.containsUserName(name)) {
                 httpServletRequest.getRequestDispatcher(webPageName).forward(httpServletRequest, httpServletResponse);
@@ -48,7 +54,10 @@ public class UserServlet extends HttpServlet {
         String webPageName = "FriendsPage.jsp";
         try {
             assert fDao != null;
-            servletContext.setAttribute(ContextDataNames.FRIENDS_DAO, fDao.getFriends(uDao.getUser(uDao.getUserIdByName(name))));
+            User user = uDao.getUser(uDao.getUserIdByName(name));
+            servletContext.setAttribute(ContextDataNames.FRIENDS_DAO, fDao.getFriends(user));
+            servletContext.setAttribute(ContextDataNames.Received_Requests, fDao.getReceivedRequests(user));
+            servletContext.setAttribute(ContextDataNames.Sent_Requests, fDao.getSentRequests(user));
         } catch (SQLException e) {
             e.printStackTrace();
         }

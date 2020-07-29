@@ -28,14 +28,26 @@ public class UserServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String webPageName = "ProfilePage.jsp?id=" + id;
-        try {
-            if (uDao.containsUserName(name)) {
-                httpServletRequest.getRequestDispatcher(webPageName).forward(httpServletRequest, httpServletResponse);
+        String webPageName = "";
+        if (httpServletRequest.getParameter("button").equals("delete")) {
+            try {
+                uDao.deleteUser(uDao.getUser(id));
+                webPageName = "DeletePage.jsp";
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } else {
+            try {
+                if (uDao.containsUserName(name)) {
+                    webPageName = "ProfilePage.jsp?id=" + id;
+                } else {
+                    webPageName = "UserNotFoundPage.jsp";
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+        httpServletRequest.getRequestDispatcher(webPageName).forward(httpServletRequest, httpServletResponse);
     }
 
     @Override

@@ -11,9 +11,9 @@ public class ProfileDataSrc {
         if (con != null) {
             return con;
         }
-        Class.forName("com.mysql.jdbc.Driver");
+        //Class.forName("com.mysql.jdbc.Driver");
         con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/", "", "");
-        //con = (Connection) getConnection("test", "root", "01234567");
+        //con = getConnection("test", "root", "01234567");
         return con;
     }
 

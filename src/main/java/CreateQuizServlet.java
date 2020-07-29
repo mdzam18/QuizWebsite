@@ -57,7 +57,7 @@ public class CreateQuizServlet extends HttpServlet {
         /* DAOs */
 
         String userName = (String) session.getAttribute(currentUser);
-        int userId = -1;
+        int userId = 1;
         try {
             userId = userDao.getUserIdByName(userName);
         } catch (SQLException e) {
@@ -111,8 +111,6 @@ public class CreateQuizServlet extends HttpServlet {
             printByType(data.get(k));
             questions.add(createQuestion(data.get(k)));
         }
-
-        System.out.println(userId); // TODO
 
         Quiz quiz = null;
         try {

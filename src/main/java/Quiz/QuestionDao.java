@@ -27,8 +27,7 @@ public class QuestionDao {
         questionTable = CreateTablesForTests.QuestionTable;
     }
 
-    public Question addQuestion(String question, String answer, int quizId, int type) throws SQLException {
-        Question q = null;
+    public Question addQuestion(String question, String answer, int type, int score, int quizId) throws SQLException {
         PreparedStatement stm =
                 con.prepareStatement("SELECT max(QuestionId) FROM " + questionTable);
         ResultSet rs = stm.executeQuery();
@@ -42,16 +41,16 @@ public class QuestionDao {
         stm.setInt(QUESTION_ID, last);
         stm.setString(QUESTION, question);
         stm.setString(ANSWER, answer);
-        stm.setInt(QUIZ_ID, quizId);
         stm.setInt(TYPE, type);
-        stm.setInt(SCORE, 0);
+        stm.setInt(SCORE, score);
+        stm.setInt(QUIZ_ID, quizId);
+        stm.executeUpdate();
 
         List<String> list = AnswerDelimiter.splitAnswers(rs.getString(ANSWER));
-        Set<String> answers = new HashSet<String>(list);
-        answers.addAll(list);
+        Set<String> answers = new HashSet<>(list);
 
-        q = new Question(question, answers);
-
+        Question q = new Question(question, answers);
+        q.setQuestionId(last);
         return q;
     }
 
@@ -149,4 +148,16 @@ public class QuestionDao {
 
         return q;
     }
+
+    public int getFullScore(int quizId) throws SQLException {
+        String sql = "SELECT SUM(Score) FROM " + questionTable + " WHERE QuizId = ?;";
+        PreparedStatement prepState = con.prepareStatement(sql);
+        prepState.setInt(1, quizId);
+        ResultSet resultSet = prepState.executeQuery();
+        if(resultSet.next()) {
+            return resultSet.getInt(1);
+        }
+        return 0;
+    }
+
 }

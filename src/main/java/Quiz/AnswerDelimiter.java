@@ -34,11 +34,27 @@ public class AnswerDelimiter {
         return builder.toString();
     }
 
+    public static String mergeAnswers(Set<String> answers) {
+        return mergeAnswers(new ArrayList<>(answers));
+    }
+
     public static String mergeImg(String question, String imgUrl) {
         StringBuilder builder = new StringBuilder();
         builder.append(question);
         builder.append(IMAGE_DELIMITER);
         builder.append(imgUrl);
+        return builder.toString();
+    }
+
+    public static String mergeKeepOrderBool(String question, boolean keepOrder) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(question);
+        builder.append(IMAGE_DELIMITER);
+        if(keepOrder) {
+            builder.append(ANSWER_TRUE);
+        } else {
+            builder.append(ANSWER_FALSE);
+        }
         return builder.toString();
     }
 

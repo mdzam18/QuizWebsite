@@ -41,7 +41,7 @@ public class AdministratorsController extends HttpServlet {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/users.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/admins.jsp");
         dispatcher.forward(req,resp);
     }
 

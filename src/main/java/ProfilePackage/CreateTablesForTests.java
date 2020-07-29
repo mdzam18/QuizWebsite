@@ -5,18 +5,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class CreateTablesForTests {
-    public static final String FriendsTableTest = "Friends2";
-    public static final String UsersTableTest = "Users2";
-    public static String UsersTable = "Users";
-    public static String FriendsTable = "Friends";
-    public static String MailsTableTest = "Mails2";
-    public static String MailsTable = "Mails";
-    public static final String HistoryTableTest = "History2";
-    public static String HistoryTable = "History";
-    public static final String QuizTableTest = "Quiz2";
-    public static String QuizTable = "Quiz";
-    public static String QuestionTable = "Question";
-    public static final String QuestionTableTest = "Question2";
+    public static final String FriendsTableTest = "test.Friends2";
+    public static final String UsersTableTest = "test.Users2";
+    public static String UsersTable = "test.Users";
+    public static String FriendsTable = "test.Friends";
+    public static String MailsTableTest = "test.Mails2";
+    public static String MailsTable = "test.Mails";
+    public static final String HistoryTableTest = "test.History2";
+    public static String HistoryTable = "test.History";
+    public static final String QuizTableTest = "test.Quiz2";
+    public static String QuizTable = "test.Quiz";
+    public static String QuestionTable = "test.Question";
+    public static final String QuestionTableTest = "test.Question2";
 
     private Connection con;
 

@@ -22,6 +22,7 @@ class HistorySqlDaoTest {
     private HistoryDao historyDao;
     private UserSqlDao userDao;
     private QuizSqlDao quizDao;
+    private QuestionDao qDao;
 
     private String reName;
 
@@ -33,23 +34,32 @@ class HistorySqlDaoTest {
     void setUpDataBase() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         reName = CreateTablesForTests.UsersTable;
         CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
+        CreateTablesForTests.HistoryTable = CreateTablesForTests.HistoryTableTest;
+        CreateTablesForTests.QuizTable = CreateTablesForTests.QuizTableTest;
+        CreateTablesForTests.QuestionTable = CreateTablesForTests.QuestionTableTest;
         tables = new CreateTablesForTests();
 
         assertTrue(tables.createUserTable());
         assertTrue(tables.createQuizTable());
         assertTrue(tables.createHistoryTable());
+        assertTrue(tables.createQuestionTable());
 
         userDao = new UserSqlDao();
         quizDao = new QuizSqlDao();
         historyDao = new HistorySqlDao();
+        qDao = new QuestionDao();
     }
 
     @AfterEach
     void dropDataBase() throws SQLException {
+        assertTrue(tables.dropTable(CreateTablesForTests.QuestionTableTest));
         assertTrue(tables.dropTable(CreateTablesForTests.HistoryTableTest));
         assertTrue(tables.dropTable(CreateTablesForTests.QuizTableTest));
         assertTrue(tables.dropTable(CreateTablesForTests.UsersTableTest));
         CreateTablesForTests.UsersTable = reName;
+        CreateTablesForTests.HistoryTable = "History";
+        CreateTablesForTests.QuizTable = "Quiz";
+        CreateTablesForTests.QuestionTable = "Question";
     }
 
     /* Testing History Class */

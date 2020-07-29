@@ -47,7 +47,7 @@ public class RegistrationServlet extends HttpServlet {
             userDao.addUser(username, password, false);
 
             HttpSession session = httpServletRequest.getSession();
-            session.setAttribute(currentUser, httpServletRequest.getParameter("username").trim());
+            session.setAttribute(currentUser, username);
 
             httpServletRequest.getRequestDispatcher("UserPage.jsp").forward(httpServletRequest, httpServletResponse);
         } catch (SQLException e) {

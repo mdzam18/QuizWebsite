@@ -98,7 +98,8 @@ public class QuizSqlDao implements QuizDao{
         quiz.setCategory(rs.getString(CATEGORY));
         quiz.setCreateDate(rs.getDate(CREATE_DATE));
 
-        List<Question> questions = questionDao.getQuizQuestions(quizId);
+        List<Question> questions = new ArrayList<Question>();
+        questions = questionDao.getQuizQuestions(quizId);
         quiz.setQuestionSet(questions);
         return quiz;
     }

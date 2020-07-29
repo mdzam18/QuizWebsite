@@ -17,8 +17,30 @@ public class CreateTablesForTests {
     public static String QuizTable = "test.Quiz";
     public static String QuestionTable = "test.Question";
     public static final String QuestionTableTest = "test.Question2";
+    public static final String AchievementsTableTest = "test.Achievements2";
+    public static String AchievementsTable = "test.Achievements";
+    public static String QuizTagTable = "test.QuizTag";
+    public static final String QuizTagTableTest = "test.QuizTag2";
 
     private Connection con;
+
+
+    public boolean createQuizTagTable() throws SQLException {
+        Statement s = con.createStatement();
+        s.executeUpdate("CREATE TABLE " + QuizTagTableTest + " (QuizId int ,\n" +
+                " Tag varchar(255) ,\n" +
+                "foreign key (QuizId) references " + QuizTableTest + "(QuizId));");
+        return true;
+    }
+
+
+    public boolean createAchievementsTable() throws SQLException {
+        Statement s = con.createStatement();
+        s.executeUpdate("CREATE TABLE " + AchievementsTableTest + " (UserId int ,\n" +
+                "Achievement varchar(255) ,\n" +
+                "foreign key (UserId) references " + UsersTableTest + "(UserId));");
+        return true;
+    }
 
     public CreateTablesForTests() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();

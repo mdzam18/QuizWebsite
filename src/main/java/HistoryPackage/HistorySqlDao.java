@@ -19,7 +19,7 @@ public class HistorySqlDao implements HistoryDao {
 
     /* Constructor For Testing */
     public HistorySqlDao() throws SQLException, ClassNotFoundException {
-        tableName = CreateTablesForTests.HistoryTableTest;
+        tableName = CreateTablesForTests.HistoryTable;
         connection = ProfileDataSrc.getConnection();
         //connection = NanukaDatabase.getConnection();
     }

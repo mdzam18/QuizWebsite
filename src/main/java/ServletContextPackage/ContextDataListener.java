@@ -4,13 +4,10 @@ import Administrator.dao.*;
 import HistoryPackage.*;
 import ProfilePackage.*;
 import Quiz.*;
-import ServletContextPackage.ContextDataNames;
 import Statistics.*;
 import UserPackage.*;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import javax.servlet.*;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
@@ -27,10 +24,7 @@ public class ContextDataListener implements ServletContextListener, HttpSessionL
     private QuizDao quizDao;
     private StatisticsDao statisticsDao;
     private UserDao userDao;
-
-    public ContextDataListener() {
-
-    }
+    private QuestionDao questionDao;
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -42,6 +36,7 @@ public class ContextDataListener implements ServletContextListener, HttpSessionL
             quizDao = new QuizSqlDao();
             //statisticsDao = new StatisticsSqlDao();
             userDao = new UserSqlDao();
+            questionDao = new QuestionDao();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -59,6 +54,7 @@ public class ContextDataListener implements ServletContextListener, HttpSessionL
         servletContext.setAttribute(ContextDataNames.QUIZ_DAO, quizDao);
         servletContext.setAttribute(ContextDataNames.STATISTICS_DAO, statisticsDao);
         servletContext.setAttribute(ContextDataNames.USER_DAO, userDao);
+        servletContext.setAttribute(ContextDataNames.QUESTION_DAO, questionDao);
     }
 
     @Override
@@ -68,12 +64,12 @@ public class ContextDataListener implements ServletContextListener, HttpSessionL
 
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-
+        // PASS
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-
+        // PASS
     }
 
 }

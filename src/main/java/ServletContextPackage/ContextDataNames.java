@@ -9,5 +9,6 @@ public class ContextDataNames {
     public static final String QUIZ_DAO = "QUIZ_DAO";
     public static final String STATISTICS_DAO = "STATISTICS_DAO";
     public static final String USER_DAO = "USER_DAO";
+    public static final String QUESTION_DAO = "QUESTION_DAO";
 
 }

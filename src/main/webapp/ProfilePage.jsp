@@ -33,26 +33,6 @@
         <h1 style="text-align:center">User Profile</h1>
         <div class "Profile">
                    <h1 <label for="username">User Name: <%= uDao.getUser(Integer.parseInt(request.getParameter("id"))).getUserName()%> </label> </h1>
-                   <h2 <label for="name">Name: <%= request.getParameter("name")%> </label> </h2>
-                   <h2 <label for="surname">Surname: <%= request.getParameter("surname")%> </label> </h2>
-                   <h2 <label for="birthDate">Birth Date: <%= request.getParameter("birthDate")%> </label> </h2>
-                   <h2 <label for="birthPlace">Birth Place: <%= request.getParameter("birthPlace")%> </label> </h2>
-                   <h2 <label for="status">Status: <%= request.getParameter("status")%> </label> </h2>
          </div>
-
-
-        <p><button type = "button" Value="friends" onclick=show("friends_id2")>Friends</button></p>
-        <div id = "friends_id2" style="display: none">
-                    <%
-                  /*    String name = request.getParameter("username");
-                      User user = uDao.getUser(uDao.getUserIdByName(name));
-                      List<User> list = fDao.getFriends(user);
-                      for(User user2 : list){
-                        out.println("<li><a href=\"ProfilePage.jsp?id=" +  user2.getUserId() + "\">" + user2.getUserName() + "</a> </li>" );
-                      }
-                      */
-                    %>
-                   <input type="button" value="bla" onclick=hide("friends_id2")>
-        </div>
   </body>
  </html>

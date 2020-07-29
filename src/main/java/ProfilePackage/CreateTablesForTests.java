@@ -15,8 +15,8 @@ public class CreateTablesForTests {
     public static String HistoryTable = "test.History";
     public static final String QuizTableTest = "test.Quiz2";
     public static String QuizTable = "test.Quiz";
-    public static String QuestionTable = "test.Question";
-    public static final String QuestionTableTest = "test.Question2";
+    public static String QuestionTable = "test.Questions";
+    public static final String QuestionTableTest = "test.Questions2";
     public static final String AchievementsTableTest = "test.Achievements2";
     public static String AchievementsTable = "test.Achievements";
     public static String QuizTagTable = "test.QuizTag";

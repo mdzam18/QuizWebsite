@@ -45,11 +45,6 @@
 
     <div class="Profile">
         <h1> User Name: <%= request.getParameter("username")%> </h1>
-        <h2> Name: <%= request.getParameter("name")%></h2>
-        <h2> Surname: <%= request.getParameter("surname")%> </h2>
-        <h2> Birth Date: <%= request.getParameter("birthDate")%> </h2>
-        <h2> Birth Place: <%= request.getParameter("birthPlace")%>  </h2>
-        <h2> Status: <%= request.getParameter("status")%> </h2>
     </div>
 
     <button style="font-size: 25px;" onclick="toCreateQuizPage()">Create New Quiz</button>
@@ -64,7 +59,7 @@
                 out.println("<li><a href=\"ProfilePage.jsp?id=" +  user2.getUserId() + "\">" + user2.getUserName() + "</a> </li>" );
             }
         %>
-        <input type="button" value="bla" onclick=hide("friends_id")>
+        <input type="button" value="close" onclick=hide("friends_id")>
     </div>
 
     <p><button type = "button" Value= "sentRequests" onclick= show("sentRequest_id")>Sent Requests</button></p>
@@ -77,7 +72,8 @@
                 out.println("<li><a href=\"ProfilePage.jsp?id=" +  user2.getUserId() + "\">" + user2.getUserName() + "</a> </li>" );
             }
         %>
-        <input type="button" value="bla" onclick=hide("sentRequest_id")>
+        <input type="button" value="close" onclick=hide("sentRequest_id")>
+        <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
     </div>
 
     <p><button type = "button" Value= "request" onclick= show("requests_id")>Friend Requests</button></p>
@@ -90,16 +86,13 @@
                 out.println("<li><a href=\"ProfilePage.jsp?id=" +  user2.getUserId() + "\">" + user2.getUserName() + "</a> </li>" );
             }
         %>
-        <input type="button" value="bla" onclick=hide("requests_id")>
+        <input type="button" value="close" onclick=hide("requests_id")>
+        <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
     </div>
 
     <form action= UserServlet method="POST">
      <input type="submit" name="button" value="delete">
      <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
-    </form>
-
-    <form action= "UserServlet" method="POST">
-        <p><button>Edit Profile</button></p>
     </form>
 
     <p> <button value = "popular quizzes" onclick= show("popular_id")>popular quizzes</button></p>
@@ -111,7 +104,7 @@
              }
              */
         %>
-        <input type="button" value="bla" onclick=hide("popular_id")>
+        <input type="button" value="close" onclick=hide("popular_id")>
     </div>
 
     <p> <button value = "recently quizzes" onclick= show("recently_id")>recently created quizzes</button></p>
@@ -124,7 +117,7 @@
             }
             */
         %>
-        <input type="button" value="bla" onclick=hide("recently_id")>
+        <input type="button" value="close" onclick=hide("recently_id")>
     </div>
 
     <p> <button value = "recently taken quizzes" onclick= show("recentlyTaken_id")>recently taken quizzes</button></p>
@@ -139,7 +132,7 @@
               }
               */
         %>
-        <input type="button" value="bla" onclick=hide("recentlyTaken_id")>
+        <input type="button" value="close" onclick=hide("recentlyTaken_id")>
     </div>
 
     <p> <button value = "recently created quizzes" onclick= show("recentlyCreated_id")>recently created quizzes</button></p>
@@ -160,7 +153,7 @@
         //                    if (i >= 5) break;
         //                }
         %>
-        <input type="button" value="bla" onclick=hide("recentlyCreated_id")>
+        <input type="button" value="close" onclick=hide("recentlyCreated_id")>
     </div>
 </body>
 </html>

@@ -14,17 +14,20 @@
         <title>Welcome</title>
     </head>
     <body>
-        <script language=javascript>
-                function hide(id) {
-                    var div_ref = document.getElementById(id);
-                    div_ref.style.display = "none";
-                }
-
-                function show(id) {
-                    var div_ref = document.getElementById(id);
-                    div_ref.style.display = "block";
-                }
+        <script type="text/javascript">
+            function hide(id) {
+                let div_ref = document.getElementById(id);
+                div_ref.style.display = "none";
+            }
+            function show(id) {
+                let div_ref = document.getElementById(id);
+                div_ref.style.display = "block";
+            }
+            function toCreateQuizPage() {
+                window.location.href = "createQuiz.jsp";
+            }
         </script>
+
         <%
             UserSqlDao uDao = new UserSqlDao();
             FriendsSqlDao fDao = new FriendsSqlDao();
@@ -37,18 +40,20 @@
              </form>
         </div>
 
-        <div class "title"> Welcome <%= request.getParameter("username")%></div>
+        <div class="title">Welcome <%= request.getParameter("username")%></div>
 
-        <div class "Profile">
+        <div class="Profile">
             <h1> User Name: <%= request.getParameter("username")%> </h1>
             <h2> Name: <%= request.getParameter("name")%></h2>
             <h2> Surname: <%= request.getParameter("surname")%> </h2>
             <h2> Birth Date: <%= request.getParameter("birthDate")%> </h2>
             <h2> Birth Place: <%= request.getParameter("birthPlace")%>  </h2>
             <h2> Status: <%= request.getParameter("status")%> </h2>
-         </div>
+        </div>
 
-          <p><button type = "button" Value="friends" onclick=show("friends_id")>Friends</button></p>
+        <button style="font-size: 25px;" onclick="toCreateQuizPage()">Create New Quiz</button>
+
+        <p><button type = "button" Value="friends" onclick=show("friends_id")>Friends</button></p>
           <div id = "friends_id" style="display: none">
             <%
               String name = request.getParameter("username");

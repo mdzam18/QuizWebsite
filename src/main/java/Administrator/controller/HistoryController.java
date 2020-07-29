@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/admin/history", "/admin/history/{userId}/{quizId}"},
+@WebServlet(urlPatterns = "/admin/history",
             initParams = {@WebInitParam(name = "userId", value = "{userId}"),
                           @WebInitParam(name = "quizId", value = "{quizId}")})
 public class HistoryController extends HttpServlet {

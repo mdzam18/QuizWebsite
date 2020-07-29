@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = {"/admin/quizzes", "/admin/quizzes/{id}"},
+@WebServlet(urlPatterns = "/admin/quizzes",
             initParams = {@WebInitParam(name = "id", value = "{id}")})
 public class QuizzesController extends HttpServlet {
     @Override

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = {"/admin/users", "/admin/users/{id}"},
+@WebServlet(urlPatterns = "/admin/users",
             initParams = {@WebInitParam(name = "id", value = "{id}")})
 
 public class UsersController extends HttpServlet {

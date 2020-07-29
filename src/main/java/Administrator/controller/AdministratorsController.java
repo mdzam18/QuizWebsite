@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = {"/admin/admins", "/admin/admins/{id}"},
+@WebServlet(urlPatterns = "/admin/admins",
             initParams = {@WebInitParam(name = "id", value = "{id}")})
 public class AdministratorsController extends HttpServlet {
     @Override

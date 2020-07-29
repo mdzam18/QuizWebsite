@@ -5,6 +5,7 @@
 <%@ page import="UserPackage.User" %>
 <%@ page import="Quiz.Quiz" %>
 <%@ page import="Quiz.QuizSqlDao" %>
+<%@ page import= "java.sql.SQLException" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page isELIgnored = "false" %>
 
@@ -91,7 +92,11 @@
                     <%
                       name = request.getParameter("username");
                       user = uDao.getUser(uDao.getUserIdByName(name));
-                     /* uDao.deleteUser(user); */
+                      try{
+                        uDao.deleteUser(user);
+                      } catch (SQLException e) {
+                           e.printStackTrace();
+                      }
                     %>
                   <input type="button" value="bla" onclick=hide("delete_id")>
             </div>

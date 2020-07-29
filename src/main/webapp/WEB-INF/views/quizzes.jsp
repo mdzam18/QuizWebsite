@@ -29,7 +29,7 @@
 
         <div class="table">
 
-            <div class="row header">
+            <div class="row header purple">
                 <div class="cell">
                     Id
                 </div>

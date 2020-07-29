@@ -30,7 +30,7 @@
 
         <div class="table">
 
-            <div class="row header">
+            <div class="row header yellow">
                 <div class="cell">
                     User Id
                 </div>

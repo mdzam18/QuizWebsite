@@ -1,4 +1,4 @@
-package ProfilePackage;
+package MailPackage;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

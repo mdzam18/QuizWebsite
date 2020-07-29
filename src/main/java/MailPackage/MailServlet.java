@@ -1,8 +1,6 @@
-package ProfilePackage;
+package MailPackage;
 
 import HistoryPackage.HistorySqlDao;
-import ProfilePackage.Mail;
-import ProfilePackage.MailSqlDao;
 import Quiz.QuizSqlDao;
 import ServletContextPackage.ContextDataNames;
 import UserPackage.UserSqlDao;

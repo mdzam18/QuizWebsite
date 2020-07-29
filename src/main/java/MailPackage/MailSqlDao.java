@@ -1,6 +1,9 @@
-package ProfilePackage;
+package MailPackage;
 
 
+import ProfilePackage.CreateTablesForTests;
+import ProfilePackage.NanukaDatabase;
+import ProfilePackage.ProfileDataSrc;
 import UserPackage.User;
 
 import java.sql.*;
@@ -47,8 +50,8 @@ public class MailSqlDao implements MailDao {
 
     @Override
     public boolean sendMail(int senderId, int receiverId, String noteType, String message, Date date, boolean isSeen) throws SQLException {
-        NanukaDatabase.closeConnection();
-        con = NanukaDatabase.getConnection();
+       /* NanukaDatabase.closeConnection();
+        con = NanukaDatabase.getConnection();*/
 
         PreparedStatement statement = con.prepareStatement(
                 "SELECT max(MailId) FROM " + tableName + ";");

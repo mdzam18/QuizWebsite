@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import ProfilePackage.FriendsDao;
-import ProfilePackage.FriendsSqlDao;
+import FriendsPackage.FriendsDao;
+import FriendsPackage.FriendsSqlDao;
 import ServletContextPackage.ContextDataNames;
 
 @WebServlet(name = "UserServlet", urlPatterns = {"/UserServlet"})

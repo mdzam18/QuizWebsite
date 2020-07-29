@@ -1,7 +1,10 @@
 package ServletContextPackage;
 
 import Administrator.dao.*;
+import FriendsPackage.FriendsDao;
 import HistoryPackage.*;
+import MailPackage.MailDao;
+import MailPackage.MailSqlDao;
 import ProfilePackage.*;
 import Quiz.*;
 import Statistics.*;

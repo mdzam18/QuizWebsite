@@ -7,7 +7,7 @@ body, ul, li, h1, h2, a{
 /*table design*/
 
 .wrapper {
-    margin: 0 auto;
+    margin: 60px auto;
     padding: 20px;
     max-width: 800px;
 }

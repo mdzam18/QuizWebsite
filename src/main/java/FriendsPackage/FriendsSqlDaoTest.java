@@ -1,5 +1,7 @@
-package ProfilePackage;
+package FriendsPackage;
 
+import ProfilePackage.CreateTablesForTests;
+import ProfilePackage.ProfileDataSrc;
 import UserPackage.User;
 import UserPackage.UserDao;
 import UserPackage.UserSqlDao;

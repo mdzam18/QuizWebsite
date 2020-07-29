@@ -1,5 +1,9 @@
-package ProfilePackage;
+package MailPackage;
 
+import FriendsPackage.FriendsSqlDao;
+import MailPackage.MailSqlDao;
+import ProfilePackage.CreateTablesForTests;
+import ProfilePackage.ProfileDataSrc;
 import UserPackage.UserSqlDao;
 import org.junit.jupiter.api.*;
 

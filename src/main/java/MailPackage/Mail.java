@@ -1,4 +1,4 @@
-package ProfilePackage;
+package MailPackage;
 
 import java.sql.Date;
 

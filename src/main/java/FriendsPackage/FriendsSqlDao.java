@@ -1,5 +1,7 @@
-package ProfilePackage;
+package FriendsPackage;
 
+import ProfilePackage.CreateTablesForTests;
+import ProfilePackage.ProfileDataSrc;
 import UserPackage.User;
 
 import java.sql.*;
@@ -159,18 +161,5 @@ public class FriendsSqlDao implements FriendsDao {
         statement.executeUpdate();
         return true;
     }
-
-  /*  @Override
-    public void addFriendship(int user1, int user2, Timestamp time) throws SQLException {
-        Connection cn = null;
-        PreparedStatement ps = cn.prepareStatement("Insert into `Friends` (`SenderId`, `ReceiverId`, `Confirmed`, `Date`) VALUE (?,?,?,?)");
-        ps.setInt(1, user1);
-        ps.setInt(2, user2);
-        ps.setInt(3, 1);
-        ps.setTimestamp(4, time);
-        ps.executeQuery();
-    }
-
-   */
 
 }

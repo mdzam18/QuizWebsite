@@ -1,4 +1,4 @@
-package ProfilePackage;
+package FriendsPackage;
 
 import UserPackage.User;
 
@@ -23,6 +23,4 @@ public interface FriendsDao {
     boolean areFriends(int user1, int user2) throws SQLException;
 
     boolean confirmFriendRequest(int senderId, int receiverId) throws SQLException;
-
-    // void addFriendship(int user1, int user2, Timestamp time) throws SQLException; //?
 }

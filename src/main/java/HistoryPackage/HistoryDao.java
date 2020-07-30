@@ -5,6 +5,8 @@ import java.util.*;
 
 public interface HistoryDao {
 
+    List<String> forChallenge(int userId) throws SQLException, ClassNotFoundException;
+
     public boolean addToHistory(History history) throws SQLException;
 
     public boolean addToHistory(int userId, int quizId, int score, Date startDate, Date endDate) throws SQLException;

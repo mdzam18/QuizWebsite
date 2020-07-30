@@ -27,6 +27,7 @@ public class UserSqlDao implements UserDao {
         md = MessageDigest.getInstance("SHA");
     }
 
+    @Override
     public int getUserIdByName(String username) throws SQLException {
         PreparedStatement stm = null;
         String s = "SELECT * FROM " + userTable + " WHERE UserName = " + username + ";";

@@ -1,7 +1,11 @@
 package HistoryPackage;
 
 import ProfilePackage.*;
+import Quiz.Quiz;
+import Quiz.QuizSqlDao;
+import UserPackage.UserSqlDao;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
@@ -22,6 +26,24 @@ public class HistorySqlDao implements HistoryDao {
         tableName = CreateTablesForTests.HistoryTable;
         connection = ProfileDataSrc.getConnection();
         //connection = NanukaDatabase.getConnection();
+    }
+
+    @Override
+    public List<String> forChallenge(int userId) throws SQLException, ClassNotFoundException {
+        QuizSqlDao quizDao = new QuizSqlDao();
+        UserSqlDao userDao = null;
+        try {
+            userDao = new UserSqlDao();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        Set<Integer> quizIds = getQuizIds(userId);
+        List<String> result = new ArrayList<>();
+        for (int quizId : quizIds){
+            Quiz quiz = quizDao.getQuiz(quizId);
+            result.add(userDao.getUser(quiz.getCreator()).getUserName() + " - " + quiz.getDescription());
+        }
+        return result;
     }
 
     @Override

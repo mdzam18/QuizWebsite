@@ -33,7 +33,8 @@ public class UserServlet extends HttpServlet {
             try {
                 uDao.deleteUser(uDao.getUser(id));
                 webPageName = "DeletePage.jsp";
-            } catch (SQLException | ClassNotFoundException e) {
+                //} catch (SQLException | ClassNotFoundException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {

@@ -15,7 +15,9 @@ public interface QuizDao {
 
 	public Connection getConnection() throws SQLException;
 
-	public int getQuizIdByName(String description) throws SQLException;
+    int getQuizId(int authorId, String description) throws SQLException;
+
+    public int getQuizIdByName(String description) throws SQLException;
 
 	public boolean userHasQuizByName(int userId, String	quizName) throws SQLException;
 

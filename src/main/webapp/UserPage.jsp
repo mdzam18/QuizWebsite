@@ -35,8 +35,9 @@
         QuizSqlDao qDao = new QuizSqlDao();
         HistorySqlDao historyDao = new HistorySqlDao();
         int id = uDao.getUserIdByName(request.getParameter("username"));
-        System.out.println(uDao.getUser(id).getName());
+        System.out.println(uDao.getUser(id).getUserName());
     %>
+
     <div class= "SearchBox">
         <form action= "UserServlet" method="POST">
             <input class= "search-txt" type = "text" name = "username"  id = "id" placeholder= "Type To Search" value="${username}" value = "${id}">

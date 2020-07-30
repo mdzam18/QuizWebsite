@@ -2,6 +2,7 @@ package ServletContextPackage;
 
 import Administrator.dao.*;
 import FriendsPackage.FriendsDao;
+import FriendsPackage.FriendsSqlDao;
 import HistoryPackage.*;
 import MailPackage.MailDao;
 import MailPackage.MailSqlDao;
@@ -34,7 +35,7 @@ public class ContextDataListener implements ServletContextListener, HttpSessionL
         try {
             //administratorDao = new AdministratorSqlDao();
             historyDao = new HistorySqlDao();
-            //friendsDao = new FriendsSqlDao();
+            friendsDao = new FriendsSqlDao();
             mailDao = new MailSqlDao();
             quizDao = new QuizSqlDao();
             //statisticsDao = new StatisticsSqlDao();

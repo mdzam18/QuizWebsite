@@ -53,3 +53,14 @@
 0:0:0:0:0:0:0:1 - - [31/Jul/2020:00:37:28 +0400] "GET /js_code/createQuiz_js1.js HTTP/1.1" 304 - http-bio-8089-exec-9 31
 0:0:0:0:0:0:0:1 - - [31/Jul/2020:00:37:35 +0400] "POST /CreateQuizServlet HTTP/1.1" 200 1848 http-bio-8089-exec-9 964
 0:0:0:0:0:0:0:1 - - [31/Jul/2020:00:37:35 +0400] "GET /styles/quizInfo_style1.css HTTP/1.1" 200 983 http-bio-8089-exec-9 4
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:02:33:27 +0400] "GET / HTTP/1.1" 200 3719 http-bio-8089-exec-2 136
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:02:33:27 +0400] "GET /js_code/welcome_js1.js HTTP/1.1" 304 - http-bio-8089-exec-1 16
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:02:33:27 +0400] "GET /styles/welcome_style1.css HTTP/1.1" 304 - http-bio-8089-exec-3 19
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:02:33:38 +0400] "GET /LoginServlet?username=giorgi&password=1234 HTTP/1.1" 200 7 http-bio-8089-exec-6 118
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:02:33:40 +0400] "POST /LoginServlet HTTP/1.1" 200 4224 http-bio-8089-exec-7 1695
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:02:33:43 +0400] "GET /createQuiz.jsp HTTP/1.1" 200 1610 http-bio-8089-exec-10 12
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:02:33:43 +0400] "GET /styles/createQuiz_style1.css HTTP/1.1" 304 - http-bio-8089-exec-10 19
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:02:33:43 +0400] "GET /js_code/createQuiz_js1.js HTTP/1.1" 304 - http-bio-8089-exec-2 21
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:02:38:00 +0400] "POST /CreateQuizServlet HTTP/1.1" 200 2858 http-bio-8089-exec-6 527
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:02:38:01 +0400] "GET /styles/onePageQuiz_style1.css HTTP/1.1" 200 619 http-bio-8089-exec-6 18
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:02:48:24 +0400] "POST /CheckTakenQuiz HTTP/1.1" 200 - http-bio-8089-exec-3 164

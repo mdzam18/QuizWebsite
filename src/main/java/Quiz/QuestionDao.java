@@ -78,6 +78,16 @@ public class QuestionDao {
         return false;
     }
 
+    public boolean deleteQuestionsByQuizId(int quizId) throws SQLException {
+        PreparedStatement stm =
+                con.prepareStatement("DELETE FROM " + questionTable + " WHERE quizId = ?;");
+        stm.setInt(1, quizId);
+        int n = stm.executeUpdate();
+
+        if(n == 1) return true;
+        return false;
+    }
+
     public List<Question> getQuizQuestions(int quizId) throws SQLException {
         PreparedStatement stm =
                 con.prepareStatement("SELECT * FROM " + questionTable + " WHERE QuizId = ?;");

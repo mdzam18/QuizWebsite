@@ -110,65 +110,41 @@
         <p><button>Edit Profile</button></p>
     </form>
 
-    <p> <button value = "popular quizzes" onclick= show("popular_id")>popular quizzes</button></p>
+    <p> <button value = "Popular quizzes" onclick= show("popular_id")>Popular quizzes</button></p>
     <div id = "popular_id" style="display: none">
-        <%
-            /* List<Quiz> popularQuizzes = qDao.getPopularQuizzes();
-             for(Quiz quiz: popularQuizzes){
-                 out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
-             }
-             */
-        %>
+<%--        <%--%>
+<%--            List<Quiz> popularQuizzes = qDao.getPopularQuizzes();--%>
+<%--             for(Quiz quiz: popularQuizzes){ %>--%>
+<%--                 <% String href = "/quizInfo.jsp?id=" + quiz.getQuizId(); %>--%>
+<%--                <li><a href="<%= href %>"><%= quiz.getDescription() %></a></li>--%>
+<%--            <% } %>--%>
+
         <input type="button" value="bla" onclick=hide("popular_id")>
     </div>
 
     <p> <button value = "recently quizzes" onclick= show("recently_id")>recently created quizzes</button></p>
     <div id = "recently quizzes" style="display: none">
-        <%
-            /*
-            List<Quiz> recentlyCreated = qDao.getRecentlyCreatedQuizzes();
-            for(Quiz quiz: recentlyCreated){
-                out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
-            }
-            */
-        %>
+<%--        <%--%>
+<%--            List<Quiz> recentQuizzes = qDao.getRecentlyCreatedQuizzes();--%>
+<%--            for(Quiz quiz: recentQuizzes){ %>--%>
+<%--        <% String href = "/quizInfo.jsp?id=" + quiz.getQuizId(); %>--%>
+<%--        <li><a href="<%= href %>"><%= quiz.getDescription() %></a></li>--%>
+<%--        <% } %>--%>
         <input type="button" value="bla" onclick=hide("recently_id")>
     </div>
 
     <p> <button value = "recently taken quizzes" onclick= show("recentlyTaken_id")>recently taken quizzes</button></p>
     <div id = "recently taken quizzes" style="display: none">
         <%
-            /*
-              name = request.getParameter("username");
-              user = uDao.getUser(uDao.getUserIdByName(name));
-              List <Quiz> recentlyTaken = uDao.getRecentlyTakenQuizzes(user);
-              for(Quiz quiz: recentlyTaken){
-                  out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
-              }
-              */
+
+//              name = request.getParameter("username");
+//              user = uDao.getUser(uDao.getUserIdByName(name));
+//              List <Quiz> recentlyTaken = uDao.getRecentlyTakenQuizzes(user);
+//              for(Quiz quiz: recentlyTaken){
+//                  out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
+//              }
         %>
         <input type="button" value="bla" onclick=hide("recentlyTaken_id")>
-    </div>
-
-    <p> <button value = "recently created quizzes" onclick= show("recentlyCreated_id")>recently created quizzes</button></p>
-    <div id = "recently taken quizzes" style="display: none">
-        <%
-        //                name = request.getParameter("username");
-        //                List <Quiz> recentlyCreated = null;
-        //                try {
-        //                    recentlyCreated = qDao.getQuizzesForUser(uDao.getUserIdByName(name));
-        //                } catch (SQLException throwables) {
-        //                    throwables.printStackTrace();
-        //                }
-        //                List<Quiz> sortedRecentlyCreated = qDao.sortQuizzesByDate(recentlyCreated);
-        //                int i = 0;
-        //                for(Quiz quiz: sortedRecentlyCreated){
-        //                    out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
-        //                    i++;
-        //                    if (i >= 5) break;
-        //                }
-        %>
-        <input type="button" value="bla" onclick=hide("recentlyCreated_id")>
     </div>
 </body>
 </html>

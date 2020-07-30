@@ -1,5 +1,6 @@
 package Quiz;
 
+import HistoryPackage.HistorySqlDao;
 import ProfilePackage.CreateTablesForTests;
 import ProfilePackage.ProfileDataSrc;
 import java.sql.*;
@@ -11,6 +12,7 @@ public class QuizSqlDao implements QuizDao{
     private Connection con;
     private String quizTable;
     private QuestionDao questionDao;
+    private HistorySqlDao historyDao;
 
     public final static String TABLE_NAME  = "oop_base.Quiz";
 
@@ -30,6 +32,7 @@ public class QuizSqlDao implements QuizDao{
         con = ProfileDataSrc.getConnection();
         quizTable = CreateTablesForTests.QuizTable;
         questionDao = new QuestionDao();
+        historyDao = new HistorySqlDao();
     }
 
     @Override
@@ -106,6 +109,8 @@ public class QuizSqlDao implements QuizDao{
 
     @Override
     public boolean deleteQuiz(Quiz quiz) throws SQLException {
+        questionDao.deleteQuestionsByQuizId(quiz.getQuizId());
+        historyDao.removeFromHistories(quiz.getQuizId());
         PreparedStatement stm =
                 con.prepareStatement("DELETE FROM " + quizTable + " WHERE QuizId = ?;");
         stm.setInt(1, quiz.getQuizId());
@@ -164,11 +169,7 @@ public class QuizSqlDao implements QuizDao{
     @Override
     public List<Quiz> getRecentlyCreatedQuizzes() throws SQLException {
         List<Quiz> res = new ArrayList<>();
-        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.QuizTable + " where CreateDate >= ?;");
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MONTH, -1);
-        Date date = cal.getTime();
-        stm.setDate(1, (java.sql.Date) date);
+        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.QuizTable + " order by QuizId DESC LIMIT 5;");
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {
             Quiz quiz = new Quiz(rs.getInt(1), rs.getInt(9));
@@ -213,14 +214,12 @@ public class QuizSqlDao implements QuizDao{
         quiz.setCategory(category);
         quiz.setCreateDate(createDate);
 
-        // TODO Add Question to Quiz Class
-
         return quiz;
     }
 
     @Override
     public List<Quiz> getQuizzesForUser(int userId) throws SQLException {
-        String sql = "SELECT * FROM " + quizTable + " WHERE CreatorId = ?;";
+        String sql = "SELECT * FROM " + quizTable + " WHERE CreatorId = ? SORT BY QUIZ ID DESC";
         PreparedStatement prepState = con.prepareStatement(sql);
         prepState.setInt(1, userId);
         ResultSet results = prepState.executeQuery();

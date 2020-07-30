@@ -41,11 +41,12 @@ public class MailServlet extends HttpServlet {
         friendsDao = (FriendsSqlDao) getServletContext().getAttribute(ContextDataNames.FRIENDS_DAO);
 
 
-        try {
-            historyDao.addToHistory(3,4,12,new Date(),new Date());
+        /*try {
+            //historyDao.addToHistory(3,4,12,new Date(),new Date());
         } catch (SQLException e) {
             e.printStackTrace();
         }
+         */
 
 
 
@@ -78,7 +79,7 @@ public class MailServlet extends HttpServlet {
                 String[] desc = request.getParameter("quizzes").split(" - ");
                 String author = desc[0];
                 String description = desc[1];
-
+                receiverId = userDao.getUserIdByName(request.getParameter("username"));
                 int authorId = userDao.getUserIdByName(author);
                 int quizId = quizSqlDao.getQuizId(authorId, description);
                 int score = historyDao.getMaxScore(senderId, quizId);

@@ -41,13 +41,6 @@ public class MailServlet extends HttpServlet {
         friendsDao = (FriendsSqlDao) getServletContext().getAttribute(ContextDataNames.FRIENDS_DAO);
 
 
-        try {
-            historyDao.addToHistory(3,4,12,new Date(),new Date());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
 
         String current = String.valueOf(request.getSession().getAttribute("currentUser"));
         int senderId = 0;
@@ -78,7 +71,7 @@ public class MailServlet extends HttpServlet {
                 String[] desc = request.getParameter("quizzes").split(" - ");
                 String author = desc[0];
                 String description = desc[1];
-
+                receiverId = userDao.getUserIdByName(request.getParameter("username"));
                 int authorId = userDao.getUserIdByName(author);
                 int quizId = quizSqlDao.getQuizId(authorId, description);
                 int score = historyDao.getMaxScore(senderId, quizId);
@@ -88,7 +81,7 @@ public class MailServlet extends HttpServlet {
                     mailDao.sendMail(senderId,receiverId,Mail.challengeType, quizId + "", new java.sql.Date(System.currentTimeMillis()), false);
                     out.println("challenge successfully sent");
                 }
-            } else if(type.equals("sendRequest")){
+            } else if(type.equals("sendRequest") || type.equals("sendRequestFromProfile")){
                 receiverId = userDao.getUserIdByName(request.getParameter("username"));
                 if(receiverId == -1) {
                     out.println("user doesn't exist");

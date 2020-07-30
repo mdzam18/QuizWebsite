@@ -8,6 +8,9 @@ public class NanukaDatabase {
 
     public static Connection getConnection() {
         // SQLite connection string
+        if(conn != null) {
+            return conn;
+        }
         String url = "jdbc:sqlite:C:/Users/Nanuka/Desktop/SQLite/mydatabase.db";
         conn = null;
         try {

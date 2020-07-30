@@ -56,7 +56,7 @@
                             ${user.surname}
                     </div>
                     <div class="cell" data-title="Username">
-                            #{user.userName}
+                            ${user.userName}
                     </div>
                     <div class="centered">
                         <form action="/admin/users?id=${user.id}" method="POST">

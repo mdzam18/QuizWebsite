@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -22,10 +21,11 @@ public class CreateQuizServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        ServletContext servletContext = httpServletRequest.getServletContext();
         HttpSession session = httpServletRequest.getSession();
-        UserDao userDao = (UserDao) servletContext.getAttribute(ContextDataNames.USER_DAO);
-        QuizDao quizDao = (QuizDao) servletContext.getAttribute(ContextDataNames.QUIZ_DAO);
+
+        ServletContext context = getServletContext();
+        UserDao userDao = (UserDao) context.getAttribute(ContextDataNames.USER_DAO);
+        QuizDao quizDao = (QuizDao) context.getAttribute(ContextDataNames.QUIZ_DAO);
 
         String sessionUserName = (String) session.getAttribute(currentUser);
         try {
@@ -47,14 +47,12 @@ public class CreateQuizServlet extends HttpServlet {
         Map<String, String[]> pars = new HashMap<>(httpServletRequest.getParameterMap());
         Map<Integer, HashMap<String, String[]>> data = new HashMap<>();
 
-        ServletContext context = getServletContext();
         HttpSession session = httpServletRequest.getSession();
 
-        /* DAOs */
+        ServletContext context = getServletContext();
         UserDao userDao = (UserDao) context.getAttribute(ContextDataNames.USER_DAO);
         QuizDao quizDao = (QuizDao) context.getAttribute(ContextDataNames.QUIZ_DAO);
         QuestionDao questionDao = (QuestionDao) context.getAttribute(ContextDataNames.QUESTION_DAO);
-        /* DAOs */
 
         String userName = (String) session.getAttribute(currentUser);
         int userId = 1;
@@ -94,7 +92,6 @@ public class CreateQuizServlet extends HttpServlet {
         }
 
         for(String key : pars.keySet()) {
-            System.out.println(key);
             int n = getNumber(key);
             String str = removeExtra(key);
             if (data.containsKey(n)) {
@@ -108,7 +105,6 @@ public class CreateQuizServlet extends HttpServlet {
 
         List<Question> questions = new ArrayList<>();
         for(Integer k : data.keySet()) {
-            printByType(data.get(k));
             questions.add(createQuestion(data.get(k)));
         }
 
@@ -125,10 +121,53 @@ public class CreateQuizServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        httpServletRequest.setAttribute("Quiz", quiz);
+        if(quiz != null) {
+            int quizId = quiz.getQuizId();
+            for(Question question : questions) {
+                appendQuestion(questionDao, question, quizId);
+            }
+        }
+
+        httpServletRequest.setAttribute("username", userName);
+        httpServletRequest.setAttribute("quizname", quizName);
 
         RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("quizInfo.jsp");
         dispatcher.forward(httpServletRequest, httpServletResponse);
+    }
+
+    private void appendQuestion(QuestionDao questionDao, Question question, int quizId) {
+        if(question == null) return;
+
+        int type = question.getType();
+        String questionText = "";
+        String answer = "";
+
+        if(type == QuestionType.QUESTION_RESPONSE) {
+            questionText = question.getQuestion();
+            answer = AnswerDelimiter.mergeAnswers(question.getAnswerSet());
+        } else if(type == QuestionType.MULTIPLE_CHOICE_QUESTION) {
+            MultipleChoiceQuestion questionType = (MultipleChoiceQuestion) question;
+            questionText = question.getQuestion();
+            answer = AnswerDelimiter.mergeFewAnswers(question.getAnswerSet(), questionType.getChoices());
+        } else if(type == QuestionType.PICTURE_RESPONSE_QUESTION) {
+            PictureResponseQuestion questionType = (PictureResponseQuestion) question;
+            questionText = AnswerDelimiter.mergeImg(question.getQuestion(), questionType.getImage());
+            answer = AnswerDelimiter.mergeAnswers(question.getAnswerSet());
+        } else if(type == QuestionType.MULTI_ANSWER_QUESTION) {
+            MultipleAnswerQuestion questionType = (MultipleAnswerQuestion) question;
+            questionText = AnswerDelimiter.mergeKeepOrderBool(question.getQuestion(), questionType.isOrdered());
+            answer = AnswerDelimiter.mergeAnswers(questionType.getOrderedAnswers());
+        } else if(type == QuestionType.MULTIPLE_CHOICE_AND_ANSWER_QUESTION) {
+            MultipleChoiceAnswerQuestion questionType = (MultipleChoiceAnswerQuestion) question;
+            questionText = question.getQuestion();
+            answer = AnswerDelimiter.mergeFewAnswers(questionType.getAnswerSet(), questionType.getChoices());
+        }
+
+        try {
+            questionDao.addQuestion(questionText, answer, type, question.getScore(), quizId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private Question createQuestion(Map<String, String[]> arg) {
@@ -145,8 +184,8 @@ public class CreateQuizServlet extends HttpServlet {
         map.remove("score");
 
         if(type == QuestionType.QUESTION_RESPONSE
-                || type == QuestionType.MULTI_ANSWER_QUESTION
-                || type == QuestionType.PICTURE_RESPONSE_QUESTION) {
+        || type == QuestionType.MULTI_ANSWER_QUESTION
+        || type == QuestionType.PICTURE_RESPONSE_QUESTION) {
             String[] answers = map.get("answers").clone();
             for(int i = 0; i<answers.length; i++) {
                 answers[i] = answers[i].trim();
@@ -229,6 +268,7 @@ public class CreateQuizServlet extends HttpServlet {
     }
 
     /* Other Methods (For Testing) */
+    /* TODO
     private int questionCounter = 1;
 
     private void printByType(Map<String, String[]> arg) {
@@ -317,6 +357,6 @@ public class CreateQuizServlet extends HttpServlet {
         }
 
         System.out.println(stringBuilder.toString());
-    }
+    }*/
 
 }

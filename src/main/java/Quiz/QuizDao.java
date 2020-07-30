@@ -19,13 +19,15 @@ public interface QuizDao {
 
     public int getQuizIdByName(String description) throws SQLException;
 
-	public boolean userHasQuizByName(int userId, String	quizName) throws SQLException;
+	boolean userHasQuizByName(int userId, String	quizName) throws SQLException;
+
+	Quiz getQuizByCreatorAndName(int userId, String	quizName) throws SQLException;
 
 	List<Quiz> getPopularQuizzes() throws SQLException;
 
 	List<Quiz> getRecentlyCreatedQuizzes() throws SQLException;
 
-	public Quiz addQuiz(int creatorId, boolean isRandom, boolean isOnePage, boolean isImmediate,
+	Quiz addQuiz(int creatorId, boolean isRandom, boolean isOnePage, boolean isImmediate,
 						boolean hasPracticeMode, int questionNum, String quizName, String category, Date createDate) throws SQLException;
 
 	public List<Quiz> getQuizzesForUser(int userId) throws SQLException;

@@ -2,6 +2,7 @@ package Administrator.controller;
 
 import Administrator.dao.AdministratorDao;
 import Administrator.dao.AdministratorSqlDao;
+import ServletContextPackage.ContextDataNames;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -22,7 +23,7 @@ public class AdministratorController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
-        AdministratorDao adminDao = (AdministratorSqlDao) servletContext.getAttribute("adminDao");
+        AdministratorDao adminDao = (AdministratorSqlDao) servletContext.getAttribute(ContextDataNames.ADMINISTRATOR_DAO);
 
         RequestDispatcher dispatcher= req.getRequestDispatcher("/WEB-INF/views/admin.jsp");
         dispatcher.forward(req,resp);

@@ -5,6 +5,7 @@ import Administrator.dao.AdministratorSqlDao;
 import Quiz.Quiz;
 import Quiz.QuizDao;
 import Quiz.QuizSqlDao;
+import ServletContextPackage.ContextDataNames;
 import UserPackage.User;
 import UserPackage.UserDao;
 import UserPackage.UserSqlDao;
@@ -26,7 +27,7 @@ public class QuizzesController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
-        QuizDao quizDao = (QuizSqlDao) servletContext.getAttribute("quizDao");
+        QuizDao quizDao = (QuizSqlDao) servletContext.getAttribute(ContextDataNames.QUIZ_DAO);
 
         String id = req.getParameter("id");
         if (id != null) {

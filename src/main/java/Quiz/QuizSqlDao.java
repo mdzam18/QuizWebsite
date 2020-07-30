@@ -69,6 +69,28 @@ public class QuizSqlDao implements QuizDao{
     }
 
     @Override
+    public Quiz getQuizByCreatorAndName(int userId, String quizName) throws SQLException {
+        String sql = "SELECT * FROM " + quizTable + " WHERE CreatorId = ? AND Description = ?;";
+        PreparedStatement prepState = con.prepareStatement(sql);
+        prepState.setInt(1, userId);
+        prepState.setString(2, quizName.trim());
+        ResultSet resultSet = prepState.executeQuery();
+        if(resultSet.next()) {
+            int quizId = resultSet.getInt(QUIZ_ID);
+            Quiz quiz = new Quiz(quizId, userId);
+            quiz.setIsRandom(resultSet.getBoolean(IS_RANDOM));
+            quiz.setIsOnePage(resultSet.getBoolean(IS_ONE_PAGE));
+            quiz.setIsImmediate(resultSet.getBoolean(IS_IMMEDIATE));
+            quiz.setInPracticeMode(resultSet.getBoolean(IN_PRACTICE_MODE));
+            quiz.setDescription(resultSet.getString(DESCRIPTION));
+            quiz.setCategory(resultSet.getString(CATEGORY));
+            quiz.setCreateDate(resultSet.getDate(CREATE_DATE));
+            return quiz;
+        }
+        return null;
+    }
+
+    @Override
     public Quiz addQuiz(int creatorId) throws SQLException {
         Quiz quiz = null;
         PreparedStatement stm =

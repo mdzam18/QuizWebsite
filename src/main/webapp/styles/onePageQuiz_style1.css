@@ -12,11 +12,13 @@ html, body {
     font-family: 'Roboto', sans-serif;
 }
 #quizName {
-    height: 100px;
+    height: 60px;
     text-align: center;
+    vertical-align: middle;
 }
 #quizName span {
-    font-size: 20px;
+    margin-top: 10px;
+    font-size: 30px;
 }
 #content {
     min-height: 600px;
@@ -25,13 +27,23 @@ html, body {
 .questionDivStyle {
     width: 800px;
     margin-left: 100px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border: 1.5px solid black;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid black;
 }
 
 .questionDivImgStyle {
     display: block;
     margin: 0 auto;
     width: 500px;
+}
+
+.submitButton {
+    display: block;
+    font-size: 30px;
+    margin: 10px auto;
+}
+
+.notListTypeUl {
+    list-style-type: none;
 }

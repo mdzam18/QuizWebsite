@@ -20,7 +20,7 @@ public class CheckTakenQuiz extends HttpServlet {
         long startTime = Long.parseLong(startTimeStr);
 
         for(String key : pars.keySet()) {
-            String subkey = key.substring(3);
+            int n = getNumber(key);
         }
 
         /*for(String s : pars.keySet()) {
@@ -35,6 +35,12 @@ public class CheckTakenQuiz extends HttpServlet {
             }
             System.out.println(";");
         }*/
+    }
+
+    private int getNumber(String str) {
+        str = str.substring(3);
+        String number = str.substring(0, str.indexOf("_"));
+        return Integer.parseInt(number);
     }
 
 }

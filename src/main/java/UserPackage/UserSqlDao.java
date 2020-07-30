@@ -18,16 +18,33 @@ import java.util.Random;
 public class UserSqlDao implements UserDao {
     private Connection con;
     private String userTable;
+    private String friendsTable;
+    private String MailsTable;
+    private String historyTable;
+    private String achievementsTable;
+    private String quizTable;
+    private String quizTagTable;
+    private String questionTable;
     private static MessageDigest md;
 
     public UserSqlDao() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         con = ProfileDataSrc.getConnection();
         //con = NanukaDatabase.getConnection();
-        userTable = CreateTablesForTests.UsersTable;
+        init();
         md = MessageDigest.getInstance("SHA");
     }
 
-    @Override
+    private void init() {
+        userTable = CreateTablesForTests.UsersTable;
+        friendsTable = CreateTablesForTests.FriendsTable;
+        MailsTable = CreateTablesForTests.MailsTable;
+        historyTable = CreateTablesForTests.HistoryTable;
+        achievementsTable = CreateTablesForTests.AchievementsTable;
+        quizTable = CreateTablesForTests.QuizTable;
+        quizTagTable = CreateTablesForTests.QuizTagTable;
+        questionTable = CreateTablesForTests.QuestionTable;
+    }
+
     public int getUserIdByName(String username) throws SQLException {
         PreparedStatement stm = null;
         String s = "SELECT * FROM " + userTable + " WHERE UserName = " + username + ";";
@@ -101,13 +118,42 @@ public class UserSqlDao implements UserDao {
         return user;
     }
 
-    @Override
-    public boolean deleteUser(User user) throws SQLException {
+    private void delete(User user, String tableName) throws SQLException {
+        PreparedStatement stm = null;
+        if (tableName.equals(CreateTablesForTests.FriendsTable) || tableName.equals(CreateTablesForTests.MailsTable)) {
+            stm = con.prepareStatement(
+                    "delete from " + tableName + " where SenderId = ? or ReceiverId = ?;");
+            stm.setInt(1, user.getUserId());
+            stm.setInt(2, user.getUserId());
+        } else {
+            stm = con.prepareStatement(
+                    "delete from " + tableName + " where UserId = ?;");
+            stm.setInt(1, user.getUserId());
+        }
+        stm.executeUpdate();
+    }
+
+    private void deleteQuiz(int id, String tableName) throws SQLException {
         PreparedStatement stm = null;
         stm = con.prepareStatement(
-                "delete from " + userTable + " where UserId = ?;");
-        stm.setInt(1, user.getUserId());
-        stm.executeUpdate();
+                "delete from " + tableName + " where QuizId = ?;");
+        stm.setInt(1, id);
+    }
+
+    @Override
+    public boolean deleteUser(User user) throws SQLException, ClassNotFoundException {
+        delete(user, friendsTable);
+        delete(user, MailsTable);
+        delete(user, historyTable);
+        delete(user, achievementsTable);
+        QuizSqlDao qDao = new QuizSqlDao();
+        List<Quiz> list = qDao.getQuizzesForUser(user.getUserId());
+        for (int i = 0; i < list.size(); i++) {
+            deleteQuiz(list.get(i).getQuizId(), quizTagTable);
+            deleteQuiz(list.get(i).getQuizId(), questionTable);
+            deleteQuiz(list.get(i).getQuizId(), quizTable);
+        }
+        delete(user, userTable);
         return true;
     }
 

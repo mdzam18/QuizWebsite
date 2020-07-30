@@ -1,0 +1,49 @@
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: whitesmoke;
+}
+
+#quizName, #content {
+    margin: 20px auto;
+    width: 1000px;
+    background: white;
+    font-family: 'Roboto', sans-serif;
+}
+#quizName {
+    height: 60px;
+    text-align: center;
+    vertical-align: middle;
+}
+#quizName span {
+    margin-top: 10px;
+    font-size: 30px;
+}
+#content {
+    min-height: 600px;
+}
+
+.questionDivStyle {
+    width: 800px;
+    margin-left: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid black;
+}
+
+.questionDivImgStyle {
+    display: block;
+    margin: 0 auto;
+    width: 500px;
+}
+
+.submitButton {
+    display: block;
+    font-size: 30px;
+    margin: 10px auto;
+}
+
+.notListTypeUl {
+    list-style-type: none;
+}

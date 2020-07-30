@@ -82,7 +82,7 @@ public class AdministratorSqlDaoTest {
 	}
 	
 	@Test
-	public void testDeleteUser() throws SQLException {
+	public void testDeleteUser() throws SQLException, ClassNotFoundException {
 		HashSet<User> answer = new HashSet<>();
 		
 		User admin1 = adminDao.addAdmin("adminN1","adminN1pass");

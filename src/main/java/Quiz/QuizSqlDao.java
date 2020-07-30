@@ -34,6 +34,17 @@ public class QuizSqlDao implements QuizDao{
         questionDao = new QuestionDao();
         historyDao = new HistorySqlDao();
     }
+    @Override
+    public int getQuizId(int authorId,String description) throws SQLException{
+        PreparedStatement stm = null;
+        stm = con.prepareStatement(
+                "SELECT * FROM " + quizTable + " WHERE CreatorId = ? and Description = ?;");
+        stm.setInt(1, authorId);
+        stm.setString(2, description);
+        ResultSet res = stm.executeQuery();
+        if (!res.next()) return -1;
+        return res.getInt("QuizId");
+    }
 
     @Override
     public int getQuizIdByName(String description) throws SQLException{

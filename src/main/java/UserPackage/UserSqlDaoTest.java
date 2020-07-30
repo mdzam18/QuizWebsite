@@ -33,15 +33,55 @@ public class UserSqlDaoTest {
 
     @BeforeEach
     public void setUp() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
-        CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
+        init();
         uDao = new UserSqlDao();
+        createTables();
+    }
+
+    private void createTables() throws SQLException, ClassNotFoundException {
         assertEquals(tables.createUserTable(), true);
+        assertEquals(tables.createQuizTable(), true);
+        assertEquals(tables.createFriendsTable(), true);
+        assertEquals(tables.createMailsTable(), true);
+        assertEquals(tables.createHistoryTable(), true);
+        assertEquals(tables.createQuestionTable(), true);
+        assertEquals(tables.createAchievementsTable(), true);
+        assertEquals(tables.createQuizTagTable(), true);
+    }
+
+    private void init() {
+        CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
+        CreateTablesForTests.FriendsTable = CreateTablesForTests.FriendsTableTest;
+        CreateTablesForTests.MailsTable = CreateTablesForTests.MailsTableTest;
+        CreateTablesForTests.HistoryTable = CreateTablesForTests.HistoryTableTest;
+        CreateTablesForTests.AchievementsTable = CreateTablesForTests.AchievementsTableTest;
+        CreateTablesForTests.QuizTable = CreateTablesForTests.QuizTableTest;
+        CreateTablesForTests.QuizTagTable = CreateTablesForTests.QuizTagTableTest;
+        CreateTablesForTests.QuestionTable = CreateTablesForTests.QuestionTableTest;
     }
 
     @AfterEach
     public void tearDown() throws SQLException {
+        dropTables();
+        CreateTablesForTests.UsersTable = "Users";//chemtvis test unda davmato win.;
+        CreateTablesForTests.FriendsTable = "Friends";
+        CreateTablesForTests.MailsTable = "Mails";
+        CreateTablesForTests.HistoryTable = "History";
+        CreateTablesForTests.AchievementsTable = "Achievements";
+        CreateTablesForTests.QuizTable = "Quiz";
+        CreateTablesForTests.QuizTagTable = "QuizTag";
+        CreateTablesForTests.QuestionTable = "Question";
+    }
+
+    private void dropTables() throws SQLException {
+        assertEquals(tables.dropTable(CreateTablesForTests.FriendsTableTest), true);
+        assertEquals(tables.dropTable(CreateTablesForTests.MailsTableTest), true);
+        assertEquals(tables.dropTable(CreateTablesForTests.HistoryTableTest), true);
+        assertEquals(tables.dropTable(CreateTablesForTests.QuestionTableTest), true);
+        assertEquals(tables.dropTable(CreateTablesForTests.AchievementsTableTest), true);
+        assertEquals(tables.dropTable(CreateTablesForTests.QuizTagTableTest), true);
+        assertEquals(tables.dropTable(CreateTablesForTests.QuizTableTest), true);
         assertEquals(tables.dropTable(CreateTablesForTests.UsersTableTest), true);
-        CreateTablesForTests.UsersTable = "Users";//chemtvis test unda davmato win.
     }
 
 
@@ -99,7 +139,7 @@ public class UserSqlDaoTest {
     }
 
     @Test
-    public void testDelete() throws SQLException {
+    public void testDelete() throws SQLException, ClassNotFoundException {
         Date date = new Date(2000, 12, 12);
         assertEquals(uDao.addUser("ChandlerTheBest", "friends", false).equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
         User user = uDao.getUser(1);

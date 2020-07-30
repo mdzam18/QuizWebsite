@@ -27,50 +27,50 @@
 </nav>
 <div class="wrapper">
 
-        <div class="table">
+    <div class="table">
 
-            <div class="row header">
-                <div class="cell">
-                    Id
+        <div class="row header">
+            <div class="cell">
+                Id
+            </div>
+            <div class="cell">
+                Name
+            </div>
+            <div class="cell">
+                Surname
+            </div>
+            <div class="cell">
+                Username
+            </div>
+        </div>
+
+        <c:forEach var="user" items="${users}">
+            <div class="row">
+                <div class="cell" data-title="Id">
+                        ${user.userId}
                 </div>
-                <div class="cell">
-                    Name
+                <div class="cell" data-title="Name">
+                        ${user.name}
                 </div>
-                <div class="cell">
-                    Surname
+                <div class="cell" data-title="Surname">
+                        ${user.surname}
                 </div>
-                <div class="cell">
-                    Username
+                <div class="cell" data-title="Username">
+                        ${user.userName}
+                </div>
+                <div class="centered">
+                    <form action="/admin/users?id=${user.userId}" method="POST">
+                        <button class="small red button" type="submit"> Delete</button>
+                    </form>
+                    <form action="/admin/admins?id=${user.userId}" method="POST">
+                        <button class="small blue button" type="submit">Promote</button>
+                    </form>
                 </div>
             </div>
+        </c:forEach>
 
-            <c:forEach var="user" items="${users}">
-                <div class="row">
-                    <div class="cell" data-title="Id">
-                            ${user.userId}
-                    </div>
-                    <div class="cell" data-title="Name">
-                            ${user.name}
-                    </div>
-                    <div class="cell" data-title="Surname">
-                            ${user.surname}
-                    </div>
-                    <div class="cell" data-title="Username">
-                            ${user.userName}
-                    </div>
-                    <div class="centered">
-                        <form action="/admin/users?id=${user.id}" method="POST">
-                            <button class="small red button" type="submit"> Delete</button>
-                        </form>
-                        <form action="/admin/admins?id=${user.id}" method="POST">
-                            <button class="small blue button" type="submit">Promote</button>
-                        </form>
-                    </div>
-                </div>
-            </c:forEach>
-
-        </div>
     </div>
+</div>
 <footer>
     <p class="Copyright">Copyright 2020 QuizWebsite</p>
 </footer>

@@ -11,6 +11,7 @@ public class QuizSqlDao implements QuizDao{
 
     private Connection con;
     private String quizTable;
+    private String quizTagTable;
     private QuestionDao questionDao;
     private HistorySqlDao historyDao;
 
@@ -160,41 +161,12 @@ public class QuizSqlDao implements QuizDao{
     @Override
     public List<Quiz> getPopularQuizzes() throws SQLException {
         List<Quiz> res = new ArrayList<>();
-        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.HistoryTable + ";");
+        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.HistoryTable + " group by QuizId order by count(*) DESC limit 5;");
         ResultSet rs = stm.executeQuery();
-        HashMap<Integer, Integer> mp = new HashMap<>();
-        TreeMap<Integer, List<Integer>> mp2 = new TreeMap<>();
-        while (rs.next()) {
-            if (mp.containsKey(rs.getInt(2))) {
-                int value = mp.get(rs.getInt(2));
-                value++;
-                mp.put(rs.getInt(2), value);
-            } else {
-                mp.put(rs.getInt(2), 1);
-            }
-        }
-        List<Integer> ids = new ArrayList<>();
-        for (Integer i : mp.keySet()) {
-            if (mp2.containsKey(mp.get(i))) {
-                mp2.get(mp.get(i)).add(i);
-            } else {
-                List<Integer> list = new ArrayList<>();
-                list.add(i);
-                mp2.put(mp.get(i), list);
-                ids.add(mp.get(i));
-            }
-        }
-        ids.sort(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1 - o2;
-            }
-        });
-        for (int i = ids.size() - 1; i >= 0; i--) {
-            List<Integer> current = mp2.get(ids.get(i));
-            for (int j = 0; j < current.size(); j++) {
-                res.add(getQuiz(current.get(j)));
-            }
+        while (rs.next()){
+            int quizId = rs.getInt(2);
+            Quiz q = getQuiz(quizId);
+            res.add(q);
         }
         return res;
     }

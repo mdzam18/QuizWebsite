@@ -5,6 +5,7 @@
 <%@ page import="UserPackage.User" %>
 <%@ page import="Quiz.Quiz" %>
 <%@ page import="Quiz.QuizSqlDao" %>
+<%@ page import="HistoryPackage.HistorySqlDao" %>
 <%@ page import= "java.sql.SQLException" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page isELIgnored = "false" %>
@@ -32,7 +33,9 @@
         UserSqlDao uDao = new UserSqlDao();
         FriendsSqlDao fDao = new FriendsSqlDao();
         QuizSqlDao qDao = new QuizSqlDao();
+        HistorySqlDao historyDao = new HistorySqlDao();
         int id = uDao.getUserIdByName(request.getParameter("username"));
+        System.out.println(uDao.getUser(id).getName());
     %>
     <div class= "SearchBox">
         <form action= "UserServlet" method="POST">
@@ -46,7 +49,7 @@
 
     <div class="Profile">
         <h1> User Name: <%= request.getParameter("username")%> </h1>
-        <h2> Name: <% uDao.getUser(id).getName(); %></h2>
+        <h2> Name: <%= uDao.getUser(id).getName() %></h2>
         <h2> Surname: <% uDao.getUser(id).getSurname(); %> </h2>
         <h2> Birth Date: <% uDao.getUser(id).getBirthDate(); %> </h2>
         <h2> Birth Place: <% uDao.getUser(id).getBirthPlace(); %>  </h2>
@@ -106,18 +109,8 @@
          <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
     </form>
 
-    <p> <button value = "Popular quizzes" onclick= show("popular_id")>Popular quizzes</button></p>
+    <p> <button value = "popular quizzes" onclick= show("popular_id")>popular quizzes</button></p>
     <div id = "popular_id" style="display: none">
-<<<<<<< HEAD
-<%--        <%--%>
-<%--            List<Quiz> popularQuizzes = qDao.getPopularQuizzes();--%>
-<%--             for(Quiz quiz: popularQuizzes){ %>--%>
-<%--                 <% String href = "/quizInfo.jsp?id=" + quiz.getQuizId(); %>--%>
-<%--                <li><a href="<%= href %>"><%= quiz.getDescription() %></a></li>--%>
-<%--            <% } %>--%>
-
-        <input type="button" value="bla" onclick=hide("popular_id")>
-=======
         <%
             /* List<Quiz> popularQuizzes = qDao.getPopularQuizzes();
              for(Quiz quiz: popularQuizzes){
@@ -126,20 +119,10 @@
              */
         %>
         <input type="button" value="close" onclick=hide("popular_id")>
->>>>>>> 9bd0b7ea6a2d588adf4cb4822470cbdc32092290
     </div>
 
     <p> <button value = "recently quizzes" onclick= show("recently_id")>recently created quizzes</button></p>
     <div id = "recently quizzes" style="display: none">
-<<<<<<< HEAD
-<%--        <%--%>
-<%--            List<Quiz> recentQuizzes = qDao.getRecentlyCreatedQuizzes();--%>
-<%--            for(Quiz quiz: recentQuizzes){ %>--%>
-<%--        <% String href = "/quizInfo.jsp?id=" + quiz.getQuizId(); %>--%>
-<%--        <li><a href="<%= href %>"><%= quiz.getDescription() %></a></li>--%>
-<%--        <% } %>--%>
-        <input type="button" value="bla" onclick=hide("recently_id")>
-=======
         <%
             /*
             List<Quiz> recentlyCreated = qDao.getRecentlyCreatedQuizzes();
@@ -149,14 +132,11 @@
             */
         %>
         <input type="button" value="close" onclick=hide("recently_id")>
->>>>>>> 9bd0b7ea6a2d588adf4cb4822470cbdc32092290
     </div>
 
     <p> <button value = "recently taken quizzes" onclick= show("recentlyTaken_id")>recently taken quizzes</button></p>
     <div id = "recently taken quizzes" style="display: none">
         <%
-<<<<<<< HEAD
-=======
             /*
               name = request.getParameter("username");
               user = uDao.getUser(uDao.getUserIdByName(name));
@@ -168,20 +148,48 @@
         %>
         <input type="button" value="close" onclick=hide("recentlyTaken_id")>
     </div>
->>>>>>> 9bd0b7ea6a2d588adf4cb4822470cbdc32092290
 
-//              name = request.getParameter("username");
-//              user = uDao.getUser(uDao.getUserIdByName(name));
-//              List <Quiz> recentlyTaken = uDao.getRecentlyTakenQuizzes(user);
-//              for(Quiz quiz: recentlyTaken){
-//                  out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
-//              }
+    <p> <button value = "recently created quizzes" onclick= show("recentlyCreated_id")>recently created quizzes</button></p>
+    <div id = "recently taken quizzes" style="display: none">
+        <%
+        //                name = request.getParameter("username");
+        //                List <Quiz> recentlyCreated = null;
+        //                try {
+        //                    recentlyCreated = qDao.getQuizzesForUser(uDao.getUserIdByName(name));
+        //                } catch (SQLException throwables) {
+        //                    throwables.printStackTrace();
+        //                }
+        //                List<Quiz> sortedRecentlyCreated = qDao.sortQuizzesByDate(recentlyCreated);
+        //                int i = 0;
+        //                for(Quiz quiz: sortedRecentlyCreated){
+        //                    out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
+        //                    i++;
+        //                    if (i >= 5) break;
+        //                }
         %>
-<<<<<<< HEAD
-        <input type="button" value="bla" onclick=hide("recentlyTaken_id")>
-=======
         <input type="button" value="close" onclick=hide("recentlyCreated_id")>
->>>>>>> 9bd0b7ea6a2d588adf4cb4822470cbdc32092290
     </div>
+
+    <input type=button Value=challenge onclick=show("challenge_div")>
+        <div id=challenge_div style="display: none">
+            <form action="MailServlet" method="post">
+                to: <input type="text" name="username"> <br/>
+                <label for="quizzes">
+                    choose a quiz:
+                </label>
+                <select name="quizzes" id="quizzes">
+                    <%
+                        int id2 = uDao.getUserIdByName(request.getParameter("username"));
+                        List<String> list2 = historyDao.forChallenge(id2);
+                        for (String s : list2){
+                            String output = "<option value=\"" + s + "\">" + s + "</option>";
+                            out.print(output);
+                        }
+                    %>
+                </select>
+                <input type="submit" name="button" value="challenge">
+                <input type="button" value="cancel" onclick=hide("challenge_div")>
+            </form>
+        </div>
 </body>
 </html>

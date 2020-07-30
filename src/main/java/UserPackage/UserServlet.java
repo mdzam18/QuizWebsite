@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 
 import FriendsPackage.FriendsDao;
@@ -37,7 +38,14 @@ public class UserServlet extends HttpServlet {
                 e.printStackTrace();
             }
         } else if (httpServletRequest.getParameter("button").equals("edit profile")) {
-            webPageName = "editProfilePage.jsp";
+            webPageName = "EditProfilePage.jsp";
+        } else if (httpServletRequest.getParameter("button").equals("edit")) {
+            webPageName = "UserPage.jsp";
+            try {
+                uDao.addProfile(id, httpServletRequest.getParameter("name"), httpServletRequest.getParameter("surname"), null, httpServletRequest.getParameter("birthPlace"), httpServletRequest.getParameter("status"));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         } else {
             try {
                 if (uDao.containsUserName(name)) {

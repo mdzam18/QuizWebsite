@@ -56,7 +56,7 @@
                         ${user.surname}
                 </div>
                 <div class="cell" data-title="Username">
-                        #{user.userName}
+                        ${user.userName}
                 </div>
             </div>
         </c:forEach>

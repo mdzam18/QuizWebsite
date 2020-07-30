@@ -12,7 +12,7 @@ public class ProfileDataSrc {
             return con;
         }
         Class.forName("com.mysql.jdbc.Driver");
-        con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/", "root", "itachi!");
+        con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/", "", "");
         //con = (Connection) getConnection("test", "root", "01234567");
         return con;
     }

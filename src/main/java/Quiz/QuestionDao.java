@@ -29,7 +29,7 @@ public class QuestionDao {
 
     public Question addQuestion(String question, String answer, int type, int score, int quizId) throws SQLException {
         PreparedStatement stm =
-                con.prepareStatement("SELECT max(QuestionId) FROM " + questionTable);
+                con.prepareStatement("SELECT max(QuestionId) FROM " + questionTable +";");
         ResultSet rs = stm.executeQuery();
         int last = 0;
         if (rs.next()) {
@@ -46,7 +46,7 @@ public class QuestionDao {
         stm.setInt(QUIZ_ID, quizId);
         stm.executeUpdate();
 
-        List<String> list = AnswerDelimiter.splitAnswers(rs.getString(ANSWER));
+        List<String> list = AnswerDelimiter.splitAnswers(answer);
         Set<String> answers = new HashSet<>(list);
 
         Question q = new Question(question, answers);

@@ -32,6 +32,7 @@
         UserSqlDao uDao = new UserSqlDao();
         FriendsSqlDao fDao = new FriendsSqlDao();
         QuizSqlDao qDao = new QuizSqlDao();
+        int id = uDao.getUserIdByName(request.getParameter("username"));
     %>
     <div class= "SearchBox">
         <form action= "UserServlet" method="POST">
@@ -45,6 +46,11 @@
 
     <div class="Profile">
         <h1> User Name: <%= request.getParameter("username")%> </h1>
+        <h2> Name: <% uDao.getUser(id).getName(); %></h2>
+        <h2> Surname: <% uDao.getUser(id).getSurname(); %> </h2>
+        <h2> Birth Date: <% uDao.getUser(id).getBirthDate(); %> </h2>
+        <h2> Birth Place: <% uDao.getUser(id).getBirthPlace(); %>  </h2>
+        <h2> Status: <% uDao.getUser(id).getStatus();%> </h2>
     </div>
 
     <button style="font-size: 25px;" onclick="toCreateQuizPage()">Create New Quiz</button>
@@ -93,6 +99,11 @@
     <form action= UserServlet method="POST">
      <input type="submit" name="button" value="delete">
      <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
+    </form>
+
+    <form action= UserServlet method="POST">
+         <input type="submit" name="button" value="edit profile">
+         <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
     </form>
 
     <p> <button value = "popular quizzes" onclick= show("popular_id")>popular quizzes</button></p>

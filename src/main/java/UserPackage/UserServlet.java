@@ -36,6 +36,8 @@ public class UserServlet extends HttpServlet {
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        } else if (httpServletRequest.getParameter("button").equals("edit profile")) {
+            webPageName = "editProfilePage.jsp";
         } else {
             try {
                 if (uDao.containsUserName(name)) {

@@ -5,6 +5,7 @@ import Administrator.dao.AdministratorSqlDao;
 import HistoryPackage.History;
 import HistoryPackage.HistoryDao;
 import HistoryPackage.HistorySqlDao;
+import ServletContextPackage.ContextDataNames;
 import UserPackage.User;
 
 import javax.servlet.RequestDispatcher;
@@ -26,7 +27,7 @@ public class HistoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
-        HistoryDao historyDao = (HistorySqlDao) servletContext.getAttribute("historyDao");
+        HistoryDao historyDao = (HistorySqlDao) servletContext.getAttribute(ContextDataNames.HISTORY_DAO);
 
         String userId = req.getParameter("userId");
         String quizId = req.getParameter("quizId");

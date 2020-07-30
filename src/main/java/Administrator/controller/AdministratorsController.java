@@ -2,6 +2,7 @@ package Administrator.controller;
 
 import Administrator.dao.AdministratorDao;
 import Administrator.dao.AdministratorSqlDao;
+import ServletContextPackage.ContextDataNames;
 import UserPackage.User;
 import UserPackage.UserDao;
 import UserPackage.UserSqlDao;
@@ -23,8 +24,8 @@ public class AdministratorsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
-        AdministratorDao adminDao = (AdministratorSqlDao) servletContext.getAttribute("adminDao");
-        UserDao userDao = (UserSqlDao) servletContext.getAttribute("userDao");
+        AdministratorDao adminDao = (AdministratorSqlDao) servletContext.getAttribute(ContextDataNames.ADMINISTRATOR_DAO);
+        UserDao userDao = (UserSqlDao) servletContext.getAttribute(ContextDataNames.USER_DAO);
 
         String id = req.getParameter("id");
         if (id != null) {

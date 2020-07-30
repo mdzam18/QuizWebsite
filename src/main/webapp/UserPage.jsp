@@ -34,7 +34,7 @@
         FriendsSqlDao fDao = new FriendsSqlDao();
         QuizSqlDao qDao = new QuizSqlDao();
         HistorySqlDao historyDao = new HistorySqlDao();
-        int id = uDao.getUserIdByName(request.getParameter("username"));
+        int id = uDao.getUserIdByName((String)session.getAttribute("currentUser"));
         System.out.println(uDao.getUser(id).getName());
     %>
     <div class= "SearchBox">
@@ -45,15 +45,15 @@
         </form>
     </div>
 
-    <div class="title">Welcome <%= request.getParameter("username")%></div>
+    <div class="title">Welcome <%= (String)session.getAttribute("currentUser")%></div>
 
     <div class="Profile">
-        <h1> User Name: <%= request.getParameter("username")%> </h1>
+        <h1> User Name: <%= (String)session.getAttribute("currentUser")%> </h1>
         <h2> Name: <%= uDao.getUser(id).getName() %></h2>
-        <h2> Surname: <% uDao.getUser(id).getSurname(); %> </h2>
-        <h2> Birth Date: <% uDao.getUser(id).getBirthDate(); %> </h2>
-        <h2> Birth Place: <% uDao.getUser(id).getBirthPlace(); %>  </h2>
-        <h2> Status: <% uDao.getUser(id).getStatus();%> </h2>
+        <h2> Surname: <%= uDao.getUser(id).getSurname() %> </h2>
+        <h2> Birth Date: <%= uDao.getUser(id).getBirthDate() %> </h2>
+        <h2> Birth Place: <%= uDao.getUser(id).getBirthPlace() %>  </h2>
+        <h2> Status: <%= uDao.getUser(id).getStatus()%> </h2>
     </div>
 
     <button style="font-size: 25px;" onclick="toCreateQuizPage()">Create New Quiz</button>
@@ -61,7 +61,7 @@
     <p><button type = "button" Value="friends" onclick=show("friends_id")>Friends</button></p>
     <div id = "friends_id" style="display: none">
         <%
-            String name = request.getParameter("username");
+            String name = (String)session.getAttribute("currentUser");
             User user = uDao.getUser(uDao.getUserIdByName(name));
             List<User> list = fDao.getFriends(user);
             for(User user2 : list){
@@ -74,7 +74,7 @@
     <p><button type = "button" Value= "sentRequests" onclick= show("sentRequest_id")>Sent Requests</button></p>
     <div id = "sentRequest_id" style="display: none">
         <%
-            name = request.getParameter("username");
+            name = (String)session.getAttribute("currentUser");
             user = uDao.getUser(uDao.getUserIdByName(name));
             list = fDao.getSentRequests(user);
             for(User user2 : list){
@@ -82,13 +82,13 @@
             }
         %>
         <input type="button" value="close" onclick=hide("sentRequest_id")>
-        <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
+        <input type="hidden" name="username" VALUE= <%=(String)session.getAttribute("currentUser")%>>
     </div>
 
     <p><button type = "button" Value= "request" onclick= show("requests_id")>Friend Requests</button></p>
     <div id = "requests_id" style="display: none">
         <%
-            name = request.getParameter("username");
+            name = (String)session.getAttribute("currentUser");
             user = uDao.getUser(uDao.getUserIdByName(name));
             list = fDao.getReceivedRequests(user);
             for(User user2 : list){
@@ -96,17 +96,17 @@
             }
         %>
         <input type="button" value="close" onclick=hide("requests_id")>
-        <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
+        <input type="hidden" name="username" VALUE= <%=(String)session.getAttribute("currentUser")%>>
     </div>
 
     <form action= UserServlet method="POST">
      <input type="submit" name="button" value="delete">
-     <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
+     <input type="hidden" name="username" VALUE= <%=(String)session.getAttribute("currentUser")%>>
     </form>
 
     <form action= UserServlet method="POST">
          <input type="submit" name="button" value="edit profile">
-         <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
+         <input type="hidden" name="username" VALUE= <%=(String)session.getAttribute("currentUser")%>>
     </form>
 
     <p> <button value = "popular quizzes" onclick= show("popular_id")>popular quizzes</button></p>
@@ -138,7 +138,7 @@
     <div id = "recently taken quizzes" style="display: none">
         <%
             /*
-              name = request.getParameter("username");
+              name = (String)session.getAttribute("currentUser");
               user = uDao.getUser(uDao.getUserIdByName(name));
               List <Quiz> recentlyTaken = uDao.getRecentlyTakenQuizzes(user);
               for(Quiz quiz: recentlyTaken){
@@ -152,7 +152,7 @@
     <p> <button value = "recently created quizzes" onclick= show("recentlyCreated_id")>recently created quizzes</button></p>
     <div id = "recently taken quizzes" style="display: none">
         <%
-        //                name = request.getParameter("username");
+        //                name = (String)session.getAttribute("currentUser");
         //                List <Quiz> recentlyCreated = null;
         //                try {
         //                    recentlyCreated = qDao.getQuizzesForUser(uDao.getUserIdByName(name));
@@ -179,10 +179,10 @@
                 </label>
                 <select name="quizzes" id="quizzes">
                     <%
-                        int id2 = uDao.getUserIdByName(request.getParameter("username"));
+                        int id2 = uDao.getUserIdByName((String)session.getAttribute("currentUser"));
                         List<String> list2 = historyDao.forChallenge(id2);
                         for (String s : list2){
-                            String output = "<option value=\"" + s + "\">" + s + "</option>";
+                            String output = "<option value='" + s + "'>" + s + "</option>";
                             out.print(output);
                         }
                     %>

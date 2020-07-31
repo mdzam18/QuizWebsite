@@ -42,7 +42,7 @@ public class HistorySqlDao implements HistoryDao {
         List<String> result = new ArrayList<>();
         for (int quizId : quizIds) {
             Quiz quiz = quizDao.getQuiz(quizId);
-            result.add(userDao.getUser(quiz.getCreator()).getUserName() + " - " + quiz.getDescription());
+            result.add(userDao.getUser(quiz.getCreatorId()).getUserName() + " - " + quiz.getDescription());
         }
         return result;
     }

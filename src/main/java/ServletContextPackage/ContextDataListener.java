@@ -38,7 +38,7 @@ public class ContextDataListener implements ServletContextListener, HttpSessionL
             friendsDao = new FriendsSqlDao();
             mailDao = new MailSqlDao();
             quizDao = new QuizSqlDao();
-            //statisticsDao = new StatisticsSqlDao();
+            statisticsDao = new StatisticsSqlDao();
             userDao = new UserSqlDao();
             questionDao = new QuestionDao();
         } catch (SQLException e) {
@@ -56,7 +56,7 @@ public class ContextDataListener implements ServletContextListener, HttpSessionL
         servletContext.setAttribute(ContextDataNames.FRIENDS_DAO, friendsDao);
         servletContext.setAttribute(ContextDataNames.MAIL_DAO, mailDao);
         servletContext.setAttribute(ContextDataNames.QUIZ_DAO, quizDao);
-//        servletContext.setAttribute(ContextDataNames.STATISTICS_DAO, statisticsDao);
+        servletContext.setAttribute(ContextDataNames.STATISTICS_DAO, statisticsDao);
         servletContext.setAttribute(ContextDataNames.USER_DAO, userDao);
         servletContext.setAttribute(ContextDataNames.QUESTION_DAO, questionDao);
     }

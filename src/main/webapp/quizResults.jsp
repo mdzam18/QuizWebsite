@@ -1,16 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: user
-  Date: 31.07.2020
-  Time: 13:52
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Quiz Results</title>
+    <title>Your Results</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="styles/quizResults_style1.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="content">
 
+    </div>
 </body>
 </html>

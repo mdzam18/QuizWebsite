@@ -3,6 +3,7 @@ package HistoryPackage;
 import ProfilePackage.*;
 import Quiz.Quiz;
 import Quiz.QuizSqlDao;
+import UserPackage.User;
 import UserPackage.UserSqlDao;
 
 import java.security.NoSuchAlgorithmException;
@@ -39,7 +40,7 @@ public class HistorySqlDao implements HistoryDao {
         }
         Set<Integer> quizIds = getQuizIds(userId);
         List<String> result = new ArrayList<>();
-        for (int quizId : quizIds){
+        for (int quizId : quizIds) {
             Quiz quiz = quizDao.getQuiz(quizId);
             result.add(userDao.getUser(quiz.getCreator()).getUserName() + " - " + quiz.getDescription());
         }
@@ -53,11 +54,11 @@ public class HistorySqlDao implements HistoryDao {
     }
 
     @Override
-    public int getMaxScore(int userId, int quizId) throws SQLException{
+    public int getMaxScore(int userId, int quizId) throws SQLException {
         List<History> histories = getHistories(userId);
         int maxScore = -1;
-        for(History history : histories){
-            if(history.getQuizId() == quizId && history.getScore() > maxScore){
+        for (History history : histories) {
+            if (history.getQuizId() == quizId && history.getScore() > maxScore) {
                 maxScore = history.getScore();
             }
         }
@@ -85,7 +86,7 @@ public class HistorySqlDao implements HistoryDao {
         PreparedStatement prepState = connection.prepareStatement(sqlString);
         prepState.setInt(1, userId);
         ResultSet rset = prepState.executeQuery();
-        while(rset.next()) {
+        while (rset.next()) {
             History history = new History(
                     rset.getInt(USER_ID_COL),
                     rset.getInt(QUIZ_ID_COL),
@@ -104,7 +105,7 @@ public class HistorySqlDao implements HistoryDao {
 
         List<History> histories = new ArrayList<>();
         ResultSet results = state.executeQuery(sql);
-        while(results.next()) {
+        while (results.next()) {
             History history = new History(
                     results.getInt(USER_ID_COL),
                     results.getInt(QUIZ_ID_COL),
@@ -123,7 +124,7 @@ public class HistorySqlDao implements HistoryDao {
         PreparedStatement prepState = connection.prepareStatement(sqlString);
         prepState.setInt(1, quizId);
         ResultSet rset = prepState.executeQuery();
-        while(rset.next()) {
+        while (rset.next()) {
             History history = new History(
                     rset.getInt(USER_ID_COL),
                     rset.getInt(QUIZ_ID_COL),
@@ -142,7 +143,7 @@ public class HistorySqlDao implements HistoryDao {
         PreparedStatement prepState = connection.prepareStatement(sqlString);
         prepState.setInt(1, userId);
         ResultSet rset = prepState.executeQuery();
-        while(rset.next()) {
+        while (rset.next()) {
             quizIds.add(rset.getInt(1));
         }
         return quizIds;
@@ -154,7 +155,7 @@ public class HistorySqlDao implements HistoryDao {
         String sqlString = "SELECT UserId FROM " + tableName + " GROUP BY UserId;";
         Statement state = connection.createStatement();
         ResultSet rset = state.executeQuery(sqlString);
-        while(rset.next()) {
+        while (rset.next()) {
             usersIds.add(rset.getInt(1));
         }
         return usersIds;
@@ -189,7 +190,7 @@ public class HistorySqlDao implements HistoryDao {
         list.sort(new Comparator<History>() {
             @Override
             public int compare(History hist1, History hist2) {
-                return (int)(hist2.getEndDate().getTime() - hist1.getEndDate().getTime());
+                return (int) (hist2.getEndDate().getTime() - hist1.getEndDate().getTime());
             }
         });
         return list;
@@ -200,7 +201,7 @@ public class HistorySqlDao implements HistoryDao {
         list.sort(new Comparator<History>() {
             @Override
             public int compare(History hist1, History hist2) {
-                return (int)(hist2.getScore() - hist1.getScore());
+                return (int) (hist2.getScore() - hist1.getScore());
             }
         });
         return list;
@@ -214,6 +215,23 @@ public class HistorySqlDao implements HistoryDao {
     @Override
     public String getTableName() {
         return tableName;
+    }
+
+    @Override
+    public List<Quiz> getRecentlyTakenQuizzes(User user) throws SQLException, ClassNotFoundException {
+        List<History> histories = getHistories(user.getUserId());
+        histories = HistorySqlDao.sortByEndDate(histories);
+        List<Quiz> res = new ArrayList<>();
+        QuizSqlDao qDao = new QuizSqlDao();
+        int n = 0;
+        for (int i = histories.size() - 1; i >= 0; i--) {
+            if (n == 5) break;
+            if (histories.size() >= 5) {
+                n++;
+            }
+            res.add(qDao.getQuiz(histories.get(i).getQuizId()));
+        }
+        return res;
     }
 
 }

@@ -42,7 +42,7 @@ public class UserServlet extends HttpServlet {
         } else if (httpServletRequest.getParameter("button").equals("edit")) {
             webPageName = "UserPage.jsp";
             try {
-                uDao.addProfile(id, httpServletRequest.getParameter("name"), httpServletRequest.getParameter("surname"), null, httpServletRequest.getParameter("birthPlace"), httpServletRequest.getParameter("status"));
+                uDao.addProfile(id, httpServletRequest.getParameter("name"), httpServletRequest.getParameter("surname"), httpServletRequest.getParameter("birthPlace"), httpServletRequest.getParameter("status"));
             } catch (SQLException e) {
                 e.printStackTrace();
             }

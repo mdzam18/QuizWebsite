@@ -57,7 +57,6 @@ public class CreateTablesForTests {
                 "Salt varchar (255),\n" +
                 "Name varchar(255),\n" +
                 "Surname varchar(255),\n" +
-                "Birth_Date Date,\n" +
                 "Birth_Place varchar(255),\n" +
                 "Status varchar(255)" + ");");
         return true;

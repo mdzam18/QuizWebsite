@@ -12,11 +12,21 @@ html, body {
     font-family: 'Roboto', sans-serif;
 }
 #quizName {
+<<<<<<< HEAD
     height: 100px;
     text-align: center;
 }
 #quizName span {
     font-size: 20px;
+=======
+    height: 60px;
+    text-align: center;
+    vertical-align: middle;
+}
+#quizName span {
+    margin-top: 10px;
+    font-size: 30px;
+>>>>>>> d0fc37a5f5a3465aaab991f56bba0bb68cdf9b22
 }
 #content {
     min-height: 600px;
@@ -25,9 +35,15 @@ html, body {
 .questionDivStyle {
     width: 800px;
     margin-left: 100px;
+<<<<<<< HEAD
     margin-top: 15px;
     margin-bottom: 15px;
     border: 1.5px solid black;
+=======
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid black;
+>>>>>>> d0fc37a5f5a3465aaab991f56bba0bb68cdf9b22
 }
 
 .questionDivImgStyle {
@@ -35,3 +51,16 @@ html, body {
     margin: 0 auto;
     width: 500px;
 }
+<<<<<<< HEAD
+=======
+
+.submitButton {
+    display: block;
+    font-size: 30px;
+    margin: 10px auto;
+}
+
+.notListTypeUl {
+    list-style-type: none;
+}
+>>>>>>> d0fc37a5f5a3465aaab991f56bba0bb68cdf9b22

@@ -1,5 +1,8 @@
 package HistoryPackage;
 
+import Quiz.Quiz;
+import UserPackage.User;
+
 import java.sql.SQLException;
 import java.util.*;
 
@@ -32,5 +35,7 @@ public interface HistoryDao {
     public String getTableName();
 
     public int getMaxScore(int userId, int quizId) throws SQLException;
+
+    List<Quiz> getRecentlyTakenQuizzes(User user) throws SQLException, ClassNotFoundException;
 
 }

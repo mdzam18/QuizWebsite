@@ -84,7 +84,7 @@ public class UserSqlDao implements UserDao {
             id = res.getInt(1);
         }
         id++;
-        statement = con.prepareStatement("insert into " + userTable + "  values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        statement = con.prepareStatement("insert into " + userTable + "  values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         statement.setInt(1, id);
         statement.setString(2, userName);
         statement.setString(3, password);
@@ -92,9 +92,8 @@ public class UserSqlDao implements UserDao {
         statement.setString(5, salt);
         statement.setString(6, null);
         statement.setString(7, null);
-        statement.setDate(8, null);
+        statement.setString(8, null);
         statement.setString(9, null);
-        statement.setString(10, null);
         statement.executeUpdate();
         User user = new User(userName, id, password);
         return user;
@@ -112,9 +111,8 @@ public class UserSqlDao implements UserDao {
         user.setAdministrator(res.getBoolean(4));
         user.setName(res.getString(6));
         user.setSurname(res.getString(7));
-        user.setBirthDate(res.getDate(8));
-        user.setBirthPlace(res.getString(9));
-        user.setStatus(res.getString(10));
+        user.setBirthPlace(res.getString(8));
+        user.setStatus(res.getString(9));
         return user;
     }
 
@@ -138,6 +136,7 @@ public class UserSqlDao implements UserDao {
         stm = con.prepareStatement(
                 "delete from " + tableName + " where QuizId = ?;");
         stm.setInt(1, id);
+        stm.executeUpdate();
     }
 
     @Override
@@ -191,9 +190,8 @@ public class UserSqlDao implements UserDao {
             user.setAdministrator(res.getBoolean(4));
             user.setName(res.getString(6));
             user.setSurname(res.getString(7));
-            user.setBirthDate(res.getDate(8));
-            user.setBirthPlace(res.getString(9));
-            user.setStatus(res.getString(10));
+            user.setBirthPlace(res.getString(8));
+            user.setStatus(res.getString(9));
             result.add(user);
         }
         return result;
@@ -201,14 +199,13 @@ public class UserSqlDao implements UserDao {
 
 
     @Override
-    public boolean addProfile(int userId, String name, String surname, Date birthDate, String birthPlace, String status) throws SQLException {
-        PreparedStatement statement = con.prepareStatement("update " + userTable + " set Name = ? , Surname = ?, Birth_Date = ? , Birth_Place = ? , Status = ? where UserId = ?;");
+    public boolean addProfile(int userId, String name, String surname, String birthPlace, String status) throws SQLException {
+        PreparedStatement statement = con.prepareStatement("update " + userTable + " set Name = ? , Surname = ?, Birth_Place = ? , Status = ? where UserId = ?;");
         statement.setString(1, name);
         statement.setString(2, surname);
-        statement.setDate(3, birthDate);
-        statement.setString(4, birthPlace);
-        statement.setString(5, status);
-        statement.setInt(6, userId);
+        statement.setString(3, birthPlace);
+        statement.setString(4, status);
+        statement.setInt(5, userId);
         statement.executeUpdate();
         return true;
     }
@@ -256,23 +253,5 @@ public class UserSqlDao implements UserDao {
         ResultSet res = statement.executeQuery();
         if (res.next()) return true;
         return false;
-    }
-
-    @Override
-    public List<Quiz> getRecentlyTakenQuizzes(User user) throws SQLException, ClassNotFoundException {
-        HistorySqlDao hDao = new HistorySqlDao();
-        List<History> histories = hDao.getHistories(user.getUserId());
-        histories = HistorySqlDao.sortByEndDate(histories);
-        List<Quiz> res = new ArrayList<>();
-        QuizSqlDao qDao = new QuizSqlDao();
-        int n = 0;
-        for (int i = histories.size() - 1; i >= 0; i--) {
-            if (n == 5) break;
-            if (histories.size() >= 5) {
-                n++;
-            }
-            res.add(qDao.getQuiz(histories.get(i).getQuizId()));
-        }
-        return res;
     }
 }

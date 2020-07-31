@@ -17,14 +17,14 @@ public class AdministratorSqlDao extends UserSqlDao implements AdministratorDao 
 	private String userTable;
 	private String quizTable;
 	private String historyTable;
-	
+
 	public AdministratorSqlDao() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
 		con = ProfileDataSrc.getConnection();
 		userTable = CreateTablesForTests.UsersTable;
 		quizTable = CreateTablesForTests.QuizTable;
 		historyTable = CreateTablesForTests.HistoryTable;
 	}
-	
+
 	@Override
 	public List<User> getAllAdmins() throws SQLException {
 		List <User> admins = new ArrayList<>();
@@ -37,29 +37,33 @@ public class AdministratorSqlDao extends UserSqlDao implements AdministratorDao 
 			admin.setAdministrator(rs.getBoolean(4));
 			admin.setName(rs.getString(6));
 			admin.setSurname(rs.getString(7));
-			admin.setBirthDate(rs.getDate(8));
-			admin.setBirthPlace(rs.getString(9));
-			admin.setStatus(rs.getString(10));
+			admin.setBirthPlace(rs.getString(8));
+			admin.setStatus(rs.getString(9));
 			admins.add(admin);
 		}
 		return admins;
 	}
-	
+
 	@Override
 	public User addAdmin(String username, String password) throws SQLException {
 		return super.addUser(username, password, true);
 	}
-	
+
 	@Override
 	public User getAdmin(int userId) throws SQLException {
 		return super.getUser(userId);
 	}
-	
+
 	@Override
 	public boolean deleteUser(User user) throws SQLException, ClassNotFoundException {
-		return super.deleteUser(user);
+//		return super.deleteUser(user);
+		PreparedStatement stm =
+				con.prepareStatement("DELETE FROM " + userTable + " WHERE UserId = ?;");
+		stm.setInt(1,user.getUserId());
+		stm.execute();
+		return true;
 	}
-	
+
 	@Override
 	public boolean deleteQuiz(Quiz quiz) throws SQLException {
 		PreparedStatement stm =
@@ -68,7 +72,7 @@ public class AdministratorSqlDao extends UserSqlDao implements AdministratorDao 
 		stm.executeUpdate();
 		return true;
 	}
-	
+
 	@Override
 	public boolean deleteHistory(Quiz quiz) throws SQLException {
 		PreparedStatement stm =
@@ -77,7 +81,7 @@ public class AdministratorSqlDao extends UserSqlDao implements AdministratorDao 
 		stm.executeUpdate();
 		return true;
 	}
-	
+
 	@Override
 	public boolean promoteUser(User user) throws SQLException {
 		PreparedStatement stm =

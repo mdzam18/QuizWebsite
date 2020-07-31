@@ -49,7 +49,7 @@ public class AnswerDelimiter {
     public static String mergeKeepOrderBool(String question, boolean keepOrder) {
         StringBuilder builder = new StringBuilder();
         builder.append(question);
-        builder.append(IMAGE_DELIMITER);
+        builder.append(ANSWER_DELIMITER);
         if(keepOrder) {
             builder.append(ANSWER_TRUE);
         } else {

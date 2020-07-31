@@ -1,0 +1,62 @@
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: whitesmoke;
+}
+
+#content {
+    margin: 0 auto;
+    height: 100%;
+    width: 1000px;
+}
+
+.quizName {
+    padding: 5px;
+    font-size: 25px;
+    margin-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.historyTable {
+    position: relative;
+    width: 600px;
+    height: 290px;
+    margin-left: 200px;
+    margin-top: 40px;
+    overflow: auto;
+}
+.historyTable p {
+    width: 100%;
+    text-align: center;
+}
+.historyTable table {
+    position: absolute;
+    display: block;
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+.historyTable table td {
+    height: 30px;
+    vertical-align: middle;
+    border: 1px solid black;
+}
+
+.otherHistories {
+    width: 820px;
+    margin-left: 90px;
+    margin-top: 50px;
+}
+
+.top10Performers, .last12HourDiv {
+    position: absolute;
+    overflow: auto;
+    width: 400px;
+    height: 300px;
+}
+
+.last12HourDiv {
+    margin-left: 420px;
+}

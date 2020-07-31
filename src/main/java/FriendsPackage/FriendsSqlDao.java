@@ -49,9 +49,8 @@ public class FriendsSqlDao implements FriendsDao {
             user2.setAdministrator(rs2.getBoolean(4));
             user2.setName(rs2.getString(6));
             user2.setSurname(rs2.getString(7));
-            user2.setBirthDate(rs2.getDate(8));
-            user2.setBirthPlace(rs2.getString(9));
-            user2.setStatus(rs2.getString(10));
+            user2.setBirthPlace(rs2.getString(8));
+            user2.setStatus(rs2.getString(9));
             result.add(user2);
         }
         return result;
@@ -75,9 +74,8 @@ public class FriendsSqlDao implements FriendsDao {
             user2.setAdministrator(rs2.getBoolean(4));
             user2.setName(rs2.getString(6));
             user2.setSurname(rs2.getString(7));
-            user2.setBirthDate(rs2.getDate(8));
-            user2.setBirthPlace(rs2.getString(9));
-            user2.setStatus(rs2.getString(10));
+            user2.setBirthPlace(rs2.getString(8));
+            user2.setStatus(rs2.getString(9));
             result.add(user2);
         }
         return result;
@@ -104,9 +102,8 @@ public class FriendsSqlDao implements FriendsDao {
             user2.setAdministrator(rs2.getBoolean(4));
             user2.setName(rs2.getString(6));
             user2.setSurname(rs2.getString(7));
-            user2.setBirthDate(rs2.getDate(8));
-            user2.setBirthPlace(rs2.getString(9));
-            user2.setStatus(rs2.getString(10));
+            user2.setBirthPlace(rs2.getString(8));
+            user2.setStatus(rs2.getString(9));
             result.add(user2);
         }
         return result;

@@ -9,7 +9,6 @@ public class User {
     private String userName;
     private String name;
     private String surname;
-    private Date birthDate;
     private String birthPlace;
     private String status;
     private boolean isAdministrator;
@@ -49,14 +48,6 @@ public class User {
         this.surname = surname;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
     public String getBirthPlace() {
         return birthPlace;
     }
@@ -92,7 +83,7 @@ public class User {
         return userName.equals(((User) user).getUserName()) &&
                 userId == ((User) user).getUserId() && password.equals(((User) user).getPassword());
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(userName, userId, password);

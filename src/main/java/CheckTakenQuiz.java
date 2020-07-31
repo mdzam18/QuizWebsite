@@ -19,7 +19,7 @@ import java.util.*;
 public class CheckTakenQuiz extends HttpServlet {
 
     private static final String ANSWER = "answer";
-    private static final String ANSWER_ARRAY = "answer";
+    private static final String ANSWER_ARRAY = "answers";
     private final static String currentUser = "currentUser";
 
     @Override
@@ -69,9 +69,11 @@ public class CheckTakenQuiz extends HttpServlet {
         int quizId = 1;
 
         for(Integer que : data.keySet()) {
-            Map<String, String[]> mp = data.get(que);
-            String qIdStr = mp.get("qId")[0];
+            Map<String, String[]> dataMap = data.get(que);
+            String qIdStr = dataMap.get("qId")[0];
             int qId = Integer.parseInt(qIdStr);
+
+            System.out.println(que + ": " + dataMap.toString());
 
             Question questionFromBase;
             try {
@@ -83,7 +85,6 @@ public class CheckTakenQuiz extends HttpServlet {
             }
 
             int type = questionFromBase.getType();
-            Map<String, String[]> dataMap = data.get(que);
 
             QuestionPassResult passResult = null;
 
@@ -203,7 +204,6 @@ public class CheckTakenQuiz extends HttpServlet {
                             passResult.setPassType(QuestionPassResult.PARTIAL_QUESTION_PASS);
                         }
                     }
-                    //quizPass.put(que, passResult);
                 }
                 quizPass.put(que, passResult);
             } else {
@@ -211,8 +211,8 @@ public class CheckTakenQuiz extends HttpServlet {
             }
         }
 
-        /*for(Integer i : data.keySet()) {
-            System.out.println("Question" + i);
+        for(Integer i : data.keySet()) {
+            System.out.println("Question " + i);
             Map<String, String[]> mp = data.get(i);
             for (String s : mp.keySet()) {
                 System.out.print("\t" + s + ": ");
@@ -226,7 +226,7 @@ public class CheckTakenQuiz extends HttpServlet {
                 System.out.println(";");
             }
             System.out.println();
-        }*/
+        }
 
         try {
             History history = new History(userId, quizId, fullScore, new Date(startTime), new Date());
@@ -237,11 +237,7 @@ public class CheckTakenQuiz extends HttpServlet {
 
         httpServletRequest.setAttribute("RESULTS", quizPass);
 
-
-    }
-
-    private QuestionPassResult getPassResult(Map<String, String[]> mp) {
-        return null;
+        httpServletRequest.getRequestDispatcher("quizResults.jsp").forward(httpServletRequest, httpServletResponse);
     }
 
     private int getNumber(String str) {

@@ -106,6 +106,24 @@ public class UserSqlDaoTest {
     }
 
     @Test
+    public void testAddAndGet2() throws SQLException {
+        assertEquals(uDao.addUser("ChandlerTheBest", "friends", false).equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
+        User user = uDao.getUser(1);
+        assertEquals(user.getUserName(), "ChandlerTheBest");
+        assertEquals(user.getPassword(), uDao.findHashCode("friends" + uDao.getSalt(1)));
+        assertEquals(user.getName(), "");
+        assertEquals(user.getSurname(), "");
+        assertEquals(user.isAdministrator(), false);
+        assertEquals(user.getBirthPlace(), "");
+        assertEquals(user.getStatus(), "");
+        assertEquals(1, uDao.getUserIdByName("ChandlerTheBest"));
+
+        assertEquals(-1, uDao.getUserIdByName("Chandler"));
+        user = uDao.getUser(2);
+        assertEquals(user, null);
+    }
+
+    @Test
     public void testAddSameUserName() throws SQLException {
         assertEquals(uDao.addUser("ChandlerTheBest", "friends", false).equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
         assertEquals(uDao.addUser("ChandlerTheBest", "", false), null);

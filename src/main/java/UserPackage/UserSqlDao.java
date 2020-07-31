@@ -132,6 +132,7 @@ public class UserSqlDao implements UserDao {
         return user;
     }
 
+    //Deletes user from the current table.
     private void delete(User user, String tableName) throws SQLException {
         PreparedStatement stm = null;
         if (tableName.equals(CreateTablesForTests.FriendsTable) || tableName.equals(CreateTablesForTests.MailsTable)) {

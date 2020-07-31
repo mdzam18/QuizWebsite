@@ -90,10 +90,10 @@ public class UserSqlDao implements UserDao {
         statement.setString(3, password);
         statement.setBoolean(4, isAdministrator);
         statement.setString(5, salt);
-        statement.setString(6, null);
-        statement.setString(7, null);
-        statement.setString(8, null);
-        statement.setString(9, null);
+        statement.setString(6, "");
+        statement.setString(7, "");
+        statement.setString(8, "");
+        statement.setString(9, "");
         statement.executeUpdate();
         User user = new User(userName, id, password);
         return user;

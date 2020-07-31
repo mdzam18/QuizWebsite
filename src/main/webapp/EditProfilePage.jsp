@@ -26,8 +26,6 @@
             <input type="text" name="name" value= <% uDao.getUser(id).getName(); %> /><br/>
             <label for="surname">Surname</label>
             <input type="text" name="surname" value= <% uDao.getUser(id).getSurname(); %>/><br/>
-            <label for="birthDate">Birth Date</label>
-            <input type="date" name="birthDate" value= <% uDao.getUser(id).getBirthDate(); %>/><br/>
             <label for="birthPlace">Birth Place</label>
             <input type="text" name="birthPlace" value= <% uDao.getUser(id).getBirthPlace(); %>/><br/>
             <label for="status">Status</label>

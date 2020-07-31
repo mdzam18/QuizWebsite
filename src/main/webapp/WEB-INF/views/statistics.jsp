@@ -297,9 +297,9 @@
     }
 
     p{
-        font-size: 25px;
+        font-size: 27px;
         text-align: center;
-        font-family: Georgia, serif;
+        font-family: arial;
     }
 
     p span{

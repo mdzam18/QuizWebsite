@@ -99,6 +99,17 @@ public class UserSqlDao implements UserDao {
         return user;
     }
 
+    //Returns string which should be placed in user;
+    private String findString(int i, ResultSet res) throws SQLException {
+        String str = "";
+        if (res.getString(i) == null) {
+            str = "";
+        } else {
+            str = res.getString(i);
+        }
+        return str;
+    }
+
     @Override
     public User getUser(int userId) throws SQLException {
         PreparedStatement stm = null;
@@ -110,29 +121,13 @@ public class UserSqlDao implements UserDao {
         User user = new User(res.getString(2), res.getInt(1), res.getString(3));
         user.setAdministrator(res.getBoolean(4));
         String str = "";
-        if(res.getString(6) == null){
-            str = "";
-        } else {
-            str = res.getString(6);
-        }
+        str = findString(6, res);
         user.setName(str);
-        if(res.getString(7) == null){
-            str = "";
-        } else {
-            str = res.getString(7);
-        }
+        str = findString(7, res);
         user.setSurname(str);
-        if(res.getString(8) == null){
-            str = "";
-        } else {
-            str = res.getString(8);
-        }
+        str = findString(8, res);
         user.setBirthPlace(str);
-        if(res.getString(9) == null){
-            str = "";
-        } else {
-            str = res.getString(9);
-        }
+        str = findString(8, res);
         user.setStatus(str);
         return user;
     }
@@ -152,6 +147,7 @@ public class UserSqlDao implements UserDao {
         stm.executeUpdate();
     }
 
+    //Deletes quiz table.
     private void deleteQuiz(int id, String tableName) throws SQLException {
         PreparedStatement stm = null;
         stm = con.prepareStatement(

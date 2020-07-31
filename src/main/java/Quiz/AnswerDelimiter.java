@@ -4,8 +4,8 @@ import java.util.*;
 
 public class AnswerDelimiter {
 
-    public static final String ANSWER_DELIMITER = "<-|::|->";
-    public static final String IMAGE_DELIMITER = "<-|:IMG:|->";
+    public static final String ANSWER_DELIMITER = "<-::->";
+    public static final String IMAGE_DELIMITER = "<-:IMG:->";
     public static final String ANSWER_TRUE = "[_TRUE]";
     public static final String ANSWER_FALSE = "[FALSE]";
     public static final int ANSWER_T_F_LEN = 7;

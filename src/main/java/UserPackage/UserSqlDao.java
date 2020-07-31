@@ -84,7 +84,7 @@ public class UserSqlDao implements UserDao {
             id = res.getInt(1);
         }
         id++;
-        statement = con.prepareStatement("insert into " + userTable + "  values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        statement = con.prepareStatement("insert into " + userTable + "  values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         statement.setInt(1, id);
         statement.setString(2, userName);
         statement.setString(3, password);
@@ -92,9 +92,8 @@ public class UserSqlDao implements UserDao {
         statement.setString(5, salt);
         statement.setString(6, null);
         statement.setString(7, null);
-        statement.setDate(8, null);
+        statement.setString(8, null);
         statement.setString(9, null);
-        statement.setString(10, null);
         statement.executeUpdate();
         User user = new User(userName, id, password);
         return user;
@@ -110,23 +109,10 @@ public class UserSqlDao implements UserDao {
         if (!res.next()) return null;
         User user = new User(res.getString(2), res.getInt(1), res.getString(3));
         user.setAdministrator(res.getBoolean(4));
-        String str = res.getString(6);
-        if (str == null) str = "";
-        user.setName(str);
-        str = res.getString(7);
-        if (str == null) str = "";
-        user.setSurname(str);
-
-        user.setBirthDate(res.getDate(8));
-
-        str = res.getString(9);
-        if (str == null) str = "";
-        user.setBirthPlace(str);
-
-
-        str = res.getString(10);
-        if (str == null) str = "";
-        user.setStatus(str);
+        user.setName(res.getString(6));
+        user.setSurname(res.getString(7));
+        user.setBirthPlace(res.getString(8));
+        user.setStatus(res.getString(9));
         return user;
     }
 
@@ -150,6 +136,7 @@ public class UserSqlDao implements UserDao {
         stm = con.prepareStatement(
                 "delete from " + tableName + " where QuizId = ?;");
         stm.setInt(1, id);
+        stm.executeUpdate();
     }
 
     @Override
@@ -203,9 +190,8 @@ public class UserSqlDao implements UserDao {
             user.setAdministrator(res.getBoolean(4));
             user.setName(res.getString(6));
             user.setSurname(res.getString(7));
-            user.setBirthDate(res.getDate(8));
-            user.setBirthPlace(res.getString(9));
-            user.setStatus(res.getString(10));
+            user.setBirthPlace(res.getString(8));
+            user.setStatus(res.getString(9));
             result.add(user);
         }
         return result;
@@ -213,14 +199,13 @@ public class UserSqlDao implements UserDao {
 
 
     @Override
-    public boolean addProfile(int userId, String name, String surname, Date birthDate, String birthPlace, String status) throws SQLException {
-        PreparedStatement statement = con.prepareStatement("update " + userTable + " set Name = ? , Surname = ?, Birth_Date = ? , Birth_Place = ? , Status = ? where UserId = ?;");
+    public boolean addProfile(int userId, String name, String surname, String birthPlace, String status) throws SQLException {
+        PreparedStatement statement = con.prepareStatement("update " + userTable + " set Name = ? , Surname = ?, Birth_Place = ? , Status = ? where UserId = ?;");
         statement.setString(1, name);
         statement.setString(2, surname);
-        statement.setDate(3, birthDate);
-        statement.setString(4, birthPlace);
-        statement.setString(5, status);
-        statement.setInt(6, userId);
+        statement.setString(3, birthPlace);
+        statement.setString(4, status);
+        statement.setInt(5, userId);
         statement.executeUpdate();
         return true;
     }

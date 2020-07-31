@@ -171,6 +171,13 @@ public class HistorySqlDao implements HistoryDao {
     }
 
     @Override
+    public boolean removeAllHistories() throws SQLException {
+        Statement state = connection.createStatement();
+        state.executeUpdate("DELETE FROM " + tableName);
+        return true;
+    }
+
+    @Override
     public boolean containsUser(int userId) throws SQLException {
         return getUserIds().contains(userId);
     }

@@ -26,6 +26,8 @@ public interface HistoryDao {
 
     public boolean removeFromHistories(int quizId) throws SQLException;
 
+    public boolean removeAllHistories() throws SQLException;
+
     public boolean containsUser(int userId) throws SQLException;
 
     public boolean removeUser(int userId) throws SQLException;

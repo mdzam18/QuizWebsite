@@ -20,13 +20,10 @@ public class UserTest {
         user.setBirthPlace("FireNation");
         user.setAdministrator(true);
         assertEquals(user.isAdministrator(), true);
-        Date date = new Date(12, 12, 12);
-        user.setBirthDate(date);
         user.setStatus("working");
         assertEquals(user.getName(), "Zuko");
         assertEquals(user.getSurname(), null);
         assertEquals(user.getBirthPlace(), "FireNation");
-        assertEquals(user.getBirthDate(), date);
         assertEquals(user.getStatus(), "working");
         user.setUserName("ZukoZuko");
         assertEquals(user.getUserName(), "ZukoZuko");

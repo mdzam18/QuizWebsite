@@ -12,7 +12,7 @@
     <h1>Administrator</h1>
 </header>
 <section class="banner">
-    <img src="img/cat.jpg" alt="Administrator Welcome Banner">
+    <img src="images/cat.jpg" alt="Administrator Welcome Banner">
     <div class="welcome">
         <h2>Welcome to <br><span>Administrator Page</span></h2>
     </div>
@@ -23,6 +23,7 @@
         <li><a href="/admin/users">Users</a></li>
         <li><a href="/admin/quizzes">Quizzes</a></li>
         <li><a href="/admin/history">History</a></li>
+        <li><a href="/admin/statistics">Statistics</a></li>
     </ul>
 </nav>
 <div class="wrapper">

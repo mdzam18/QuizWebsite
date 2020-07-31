@@ -23,6 +23,7 @@
         <li><a href="/admin/users">Users</a></li>
         <li><a href="/admin/quizzes">Quizzes</a></li>
         <li><a href="/admin/history">History</a></li>
+        <li><a href="/admin/statistics">Statistics</a></li>
     </ul>
 </nav>
 <footer>

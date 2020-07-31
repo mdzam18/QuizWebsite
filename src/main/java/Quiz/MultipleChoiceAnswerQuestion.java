@@ -17,6 +17,13 @@ public class MultipleChoiceAnswerQuestion extends Question {
 		return choices;
 	}
 
+	public boolean checkAnswers(Set<String> userAnswers) {
+		if(choices.size() != userAnswers.size()) {
+			return false;
+		}
+		return choices.equals(userAnswers);
+	}
+
 	@Override
 	public int getType() {
 		return TYPE;

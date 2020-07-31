@@ -19,7 +19,7 @@ public interface UserDao {
 
     List<User> getAllUsers() throws SQLException;
 
-    boolean addProfile(int userId, String name, String surname, Date birthDate, String birthPlace, String status) throws SQLException;
+    boolean addProfile(int userId, String name, String surname, String birthPlace, String status) throws SQLException;
 
     String hexToString(byte[] bytes);
 

@@ -151,3 +151,17 @@
 0:0:0:0:0:0:0:1 - - [31/Jul/2020:21:39:39 +0400] "GET /CreateQuizServlet?quizName=Test HTTP/1.1" 200 7 http-bio-8089-exec-10 15
 0:0:0:0:0:0:0:1 - - [31/Jul/2020:21:41:33 +0400] "POST /CreateQuizServlet HTTP/1.1" 200 2647 http-bio-8089-exec-1 119
 0:0:0:0:0:0:0:1 - - [31/Jul/2020:21:41:52 +0400] "POST /CheckTakenQuiz HTTP/1.1" 200 1698 http-bio-8089-exec-7 851
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:01:01 +0400] "GET / HTTP/1.1" 200 3719 http-bio-8089-exec-2 335
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:01:01 +0400] "GET /js_code/welcome_js1.js HTTP/1.1" 304 - http-bio-8089-exec-3 16
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:01:01 +0400] "GET /styles/welcome_style1.css HTTP/1.1" 304 - http-bio-8089-exec-1 16
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:01:06 +0400] "GET /LoginServlet?username=giorgi&password=1234 HTTP/1.1" 200 7 http-bio-8089-exec-6 78
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:01:06 +0400] "POST /LoginServlet HTTP/1.1" 200 5558 http-bio-8089-exec-7 96
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:01:08 +0400] "GET /createQuiz.jsp HTTP/1.1" 200 2659 http-bio-8089-exec-10 13
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:01:08 +0400] "GET /js_code/createQuiz_js2.js HTTP/1.1" 304 - http-bio-8089-exec-10 5
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:01:08 +0400] "GET /js_code/createQuiz_js1.js HTTP/1.1" 304 - http-bio-8089-exec-2 5
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:01:08 +0400] "GET /styles/createQuiz_style1.css HTTP/1.1" 304 - http-bio-8089-exec-1 11
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:01:35 +0400] "GET /CreateQuizServlet?quizName=Test HTTP/1.1" 200 7 http-bio-8089-exec-7 11
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:02:48 +0400] "POST /CreateQuizServlet HTTP/1.1" 200 1952 http-bio-8089-exec-3 102
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:02:48 +0400] "GET /styles/onePageQuiz_style1.css HTTP/1.1" 304 - http-bio-8089-exec-3 7
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:03:03 +0400] "POST /CheckTakenQuiz HTTP/1.1" 200 1488 http-bio-8089-exec-2 1431
+0:0:0:0:0:0:0:1 - - [31/Jul/2020:22:03:47 +0400] "POST /CheckTakenQuiz HTTP/1.1" 200 1488 http-bio-8089-exec-1 52

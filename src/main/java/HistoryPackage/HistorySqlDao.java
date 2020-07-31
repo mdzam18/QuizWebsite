@@ -82,7 +82,7 @@ public class HistorySqlDao implements HistoryDao {
     @Override
     public List<History> getHistories(int userId) throws SQLException {
         List<History> histories = new ArrayList<>();
-        String sqlString = "SELECT * FROM " + tableName + " WHERE UserId = ? SORT BY StartDate DESC;";
+        String sqlString = "SELECT * FROM " + tableName + " WHERE UserId = ?;";
         PreparedStatement prepState = connection.prepareStatement(sqlString);
         prepState.setInt(1, userId);
         ResultSet rset = prepState.executeQuery();

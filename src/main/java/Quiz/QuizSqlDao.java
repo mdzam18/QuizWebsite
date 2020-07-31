@@ -84,10 +84,22 @@ public class QuizSqlDao implements QuizDao{
             quiz.setInPracticeMode(resultSet.getBoolean(IN_PRACTICE_MODE));
             quiz.setDescription(resultSet.getString(DESCRIPTION));
             quiz.setCategory(resultSet.getString(CATEGORY));
+            quiz.setNumberOfQuestions(resultSet.getInt(NUMBER_QUESTIONS));
             quiz.setCreateDate(resultSet.getDate(CREATE_DATE));
             return quiz;
         }
         return null;
+    }
+
+    @Override
+    public boolean setDescription(int quizId, String description) throws SQLException {
+        PreparedStatement stm =
+                con.prepareStatement("UPDATE " + quizTable + " SET Description = ? WHERE QuizId = ?;");
+        stm.setString(1, description);
+        stm.setInt(2, quizId);
+        int results = stm.executeUpdate();
+        if (results == 1) return true;
+        return false;
     }
 
     @Override
@@ -109,7 +121,7 @@ public class QuizSqlDao implements QuizDao{
         stm.setBoolean(IS_IMMEDIATE, false);
         stm.setBoolean(IN_PRACTICE_MODE, false);
         stm.setInt(NUMBER_QUESTIONS, 0);
-        stm.setString(DESCRIPTION, null);
+        stm.setString(DESCRIPTION, "");
         stm.setString(CATEGORY, null);
         stm.setInt(CREATOR_ID, creatorId);
         stm.setDate(CREATE_DATE, new java.sql.Date(System.currentTimeMillis()));
@@ -131,6 +143,7 @@ public class QuizSqlDao implements QuizDao{
         quiz.setIsImmediate(rs.getBoolean(IS_IMMEDIATE));
         quiz.setIsRandom(rs.getBoolean(IS_RANDOM));
         quiz.setInPracticeMode(rs.getBoolean(IN_PRACTICE_MODE));
+        quiz.setNumberOfQuestions(rs.getInt(NUMBER_QUESTIONS));
         quiz.setDescription(rs.getString(DESCRIPTION));
         quiz.setCategory(rs.getString(CATEGORY));
         quiz.setCreateDate(rs.getDate(CREATE_DATE));
@@ -184,9 +197,10 @@ public class QuizSqlDao implements QuizDao{
         return res;
     }
 
+    @Override
     public List<Quiz> getRecentlyCreatedQuizzesByUser(int userId) throws SQLException {
         List<Quiz> res = new ArrayList<>();
-        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.QuizTable + " where UserId = ? order by QuizId DESC LIMIT 5;");
+        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.QuizTable + " where CreatorId = ? order by QuizId DESC LIMIT 5;");
         stm.setInt(1, userId);
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {

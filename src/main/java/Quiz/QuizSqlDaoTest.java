@@ -18,7 +18,7 @@ public class QuizSqlDaoTest {
 
     private Quiz quiz;
     private QuizSqlDao database;
-    private UserDao userDao;
+    private UserSqlDao userDatabase;
     private Connection con;
     private String quizTable = CreateTablesForTests.QuizTableTest;
     private CreateTablesForTests tables;
@@ -35,8 +35,8 @@ public class QuizSqlDaoTest {
     public void setUp() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         CreateTablesForTests.QuizTable = CreateTablesForTests.QuizTableTest;
         CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
+        userDatabase = new UserSqlDao();
         database = new QuizSqlDao();
-        userDao = new UserSqlDao();
         tables = new CreateTablesForTests();
         assertTrue(tables.createUserTable());
         assertTrue(tables.createQuizTable());
@@ -50,6 +50,40 @@ public class QuizSqlDaoTest {
         CreateTablesForTests.QuizTable = "Quiz";
         CreateTablesForTests.UsersTable = "Users";
     }
+
+    @Test
+    public void testGetQuizId() throws SQLException {
+        Quiz q1 = database.getQuiz(1);
+        Quiz q2 = database.getQuiz(2);
+        Quiz q3 = database.getQuiz(3);
+
+        assertEquals(database.getQuizId(q1.getCreatorId(), q1.getDescription()), 1);
+        assertEquals(database.getQuizId(q2.getCreatorId(), q2.getDescription()), 2);
+        assertEquals(database.getQuizId(q3.getCreatorId(), q3.getDescription()), 3);
+    }
+
+    @Test
+    public void testGetQuizIdByName() throws SQLException {
+        Quiz q1 = database.getQuiz(1);
+        Quiz q2 = database.getQuiz(2);
+        Quiz q3 = database.getQuiz(3);
+
+        assertEquals(database.getQuizIdByName(q1.getDescription()), 1);
+        assertEquals(database.getQuizIdByName(q2.getDescription()), 2);
+        assertEquals(database.getQuizIdByName(q3.getDescription()), 3);
+    }
+
+    @Test
+    public void testQuizByCreatorAndName() throws SQLException {
+        Quiz q1 = database.getQuiz(1);
+        Quiz q2 = database.getQuiz(2);
+        Quiz q3 = database.getQuiz(3);
+
+        assert(database.getQuizByCreatorAndName(q1.getCreatorId(), q1.getDescription()).equals(q1));
+        assert(database.getQuizByCreatorAndName(q2.getCreatorId(), q2.getDescription()).equals(q2));
+        assert(database.getQuizByCreatorAndName(q2.getCreatorId(), q2.getDescription()).equals(q2));
+    }
+
 
     @Test
     public void testGetQuiz() throws SQLException {
@@ -66,8 +100,75 @@ public class QuizSqlDaoTest {
         assertFalse(q1.isImmediate());
         assertFalse(q1.isInPracticeMode());
         assertEquals(q1.getQuestionCount(), 0);
-        assertEquals(q1.getDescription(), null);
+        assert(q1.getDescription().equals("1"));
         assertEquals(q1.getCategory(), null);
+    }
+
+    @Test
+    public void testUserHasQuizByName() throws SQLException {
+        Quiz q1 = database.getQuiz(1);
+        Quiz q2 = database.getQuiz(2);
+        Quiz q3 = database.getQuiz(3);
+
+        assertTrue(database.userHasQuizByName(q1.getCreatorId(), q1.getDescription()));
+        assertTrue(database.userHasQuizByName(q2.getCreatorId(), q2.getDescription()));
+        assertTrue(database.userHasQuizByName(q3.getCreatorId(), q3.getDescription()));
+
+        assertFalse(database.userHasQuizByName(q1.getCreatorId(), "0"));
+        assertFalse(database.userHasQuizByName(q2.getCreatorId(), "0"));
+        assertFalse(database.userHasQuizByName(q3.getCreatorId(), "0"));
+    }
+
+    @Test
+    public void testSetDescription() throws SQLException {
+        Quiz q1 = database.getQuiz(1);
+        Quiz q2 = database.getQuiz(2);
+        Quiz q3 = database.getQuiz(3);
+
+        database.setDescription(q1.getQuizId(), "4");
+        database.setDescription(q2.getQuizId(), "5");
+        database.setDescription(q3.getQuizId(), "6");
+
+        q1 = database.getQuiz(1);
+        q2 = database.getQuiz(2);
+        q3 = database.getQuiz(3);
+
+        assert(q1.getDescription().equals("4"));
+        assert(q2.getDescription().equals("5"));
+        assert(q3.getDescription().equals("6"));
+    }
+
+    @Test
+    public void testGetRecentlyCreatedQuizzes() throws SQLException {
+        database.addQuiz(1);
+        database.addQuiz(2);
+        database.addQuiz(3);
+
+        database.setDescription(4, "4");
+        database.setDescription(5, "5");
+        database.setDescription(6, "6");
+
+        List<Quiz> recent = database.getRecentlyCreatedQuizzes();
+
+        Quiz q1 = database.getQuiz(1);
+        Quiz q2 = database.getQuiz(2);
+        Quiz q3 = database.getQuiz(3);
+        Quiz q4 = database.getQuiz(4);
+        Quiz q5 = database.getQuiz(5);
+        Quiz q6 = database.getQuiz(6);
+
+        assert(recent.size() == 5);
+        assert(q6.equals(recent.get(0)));
+        assert(q5.equals(recent.get(1)));
+        assert(q4.equals(recent.get(2)));
+        assert(q3.equals(recent.get(3)));
+        assert(q2.equals(recent.get(4)));
+    }
+
+    @Test
+    public void testAddQuiz() throws SQLException {
+        database.addQuiz(3);
+        assertTrue(database.getQuizzesForUser(3).size() == 2);
     }
 
     @Test
@@ -95,13 +196,46 @@ public class QuizSqlDaoTest {
         assertEquals(user1.get(0).getQuizId(), 1);
     }
 
+    @Test
+    public void testGetAllQuizzes() throws SQLException {
+        database.addQuiz(1);
+        database.addQuiz(2);
+        database.addQuiz(3);
+
+        database.setDescription(1, "4");
+        database.setDescription(2, "5");
+        database.setDescription(3, "6");
+
+        List<Quiz> allQuizzes = database.getAllQuizzes();
+
+        Quiz q1 = database.getQuiz(1);
+        Quiz q2 = database.getQuiz(2);
+        Quiz q3 = database.getQuiz(3);
+        Quiz q4 = database.getQuiz(4);
+        Quiz q5 = database.getQuiz(5);
+        Quiz q6 = database.getQuiz(6);
+
+        assert(allQuizzes.size() == 6);
+
+        assert(q1.equals(allQuizzes.get(0)));
+        assert(q2.equals(allQuizzes.get(1)));
+        assert(q3.equals(allQuizzes.get(2)));
+        assert(q4.equals(allQuizzes.get(3)));
+        assert(q5.equals(allQuizzes.get(4)));
+        assert(q6.equals(allQuizzes.get(5)));
+    }
+
     private void addData() throws SQLException {
-        userDao.addUser("a" , "a" , false);
-        userDao.addUser("b" , "b", false);
-        userDao.addUser("c", "c", false);
+        userDatabase.addUser("a" , "a" , false);
+        userDatabase.addUser("b" , "b", false);
+        userDatabase.addUser("c", "c", false);
         
         database.addQuiz(1);
         database.addQuiz(2);
         database.addQuiz(3);
+
+        database.setDescription(1, "1");
+        database.setDescription(2, "2");
+        database.setDescription(3, "3");
     }
 }

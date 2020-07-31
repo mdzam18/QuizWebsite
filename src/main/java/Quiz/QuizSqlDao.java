@@ -178,7 +178,20 @@ public class QuizSqlDao implements QuizDao{
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {
             Quiz quiz = new Quiz(rs.getInt(1), rs.getInt(9));
-            quiz.setCategory(rs.getString(8));
+            quiz.setDescription(rs.getString(7));
+            res.add(quiz);
+        }
+        return res;
+    }
+
+    public List<Quiz> getRecentlyCreatedQuizzesByUser(int userId) throws SQLException {
+        List<Quiz> res = new ArrayList<>();
+        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.QuizTable + " where UserId = ? order by QuizId DESC LIMIT 5;");
+        stm.setInt(1, userId);
+        ResultSet rs = stm.executeQuery();
+        while (rs.next()) {
+            Quiz quiz = new Quiz(rs.getInt(1), rs.getInt(9));
+            quiz.setDescription(rs.getString(7));
             res.add(quiz);
         }
         return res;

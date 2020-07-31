@@ -7,6 +7,7 @@
 <%@ page import="Quiz.QuizSqlDao" %>
 <%@ page import="HistoryPackage.HistorySqlDao" %>
 <%@ page import= "java.sql.SQLException" %>
+<%@ page import="HistoryPackage.History" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page isELIgnored = "false" %>
 
@@ -109,65 +110,67 @@
         <input type="hidden" name="username" VALUE= <%=(String)session.getAttribute("currentUser")%>>
     </form>
 
-    <p> <button value = "popular quizzes" onclick= show("popular_id")>popular quizzes</button></p>
+    <p> <button value = "popular quizzes" onclick= show("popular_id")>Popular quizzes</button></p>
     <div id = "popular_id" style="display: none">
         <%
-            /* List<Quiz> popularQuizzes = qDao.getPopularQuizzes();
-             for(Quiz quiz: popularQuizzes){
-                 out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
-             }
-             */
+            List<Quiz> popularQuizzes = qDao.getPopularQuizzes();
+            for(Quiz quiz: popularQuizzes){ %>
+        <% String href = "/quizInfo.jsp?id=" + quiz.getQuizId(); %>
+        <li><a href="<%= href %>"><%= quiz.getDescription() %></a></li>
+        <% } %>
         %>
-        <input type="button" value="close" onclick=hide("popular_id")>
+        <input type="button" value="Hide" onclick=hide("popular_id")>
     </div>
 
-    <p> <button value = "recently quizzes" onclick= show("recently_id")>recently created quizzes</button></p>
+    <p> <button value = "recently quizzes" onclick= show("recently_id")>Recently created quizzes</button></p>
     <div id = "recently quizzes" style="display: none">
+                <%
+                    List<Quiz> recentQuizzes = qDao.getRecentlyCreatedQuizzes();
+                    for(Quiz quiz: recentQuizzes){ %>
+                <% String href = "/quizInfo.jsp?id=" + quiz.getQuizId(); %>
+                <li><a href="<%= href %>"><%= quiz.getDescription() %></a></li>
+                <% } %>
+        <input type="button" value="Hide" onclick=hide("recently_id")>
+    </div>
+
+    <p> <button value = "recently taken quizzes" onclick= show("recentlyTaken_id")>Recently taken quizzes</button></p>
+    <div id = "recently taken quizzes" style="display: none">
         <%
-            /*
-            List<Quiz> recentlyCreated = qDao.getRecentlyCreatedQuizzes();
-            for(Quiz quiz: recentlyCreated){
-                out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
+            List<History> recentlyTakenQuizzes = historyDao.getHistories(id);
+            for(History history : recentlyTakenQuizzes ){
+            %>
+        <% String href = "/quizInfo.jsp?id=" + history.getQuizId(); %>
+        <li><a href="<%= href %>"><%= qDao.getQuiz(history.getQuizId()).getDescription() %></a></li>
+        <% } %>
+        <input type="button" value="Hide" onclick=hide("recentlyTaken_id")>
+    </div>
+
+    <p> <button value = "your recently created quizzes" onclick= show("your_recently_id")>Your recently created quizzes</button></p>
+    <div id = "your recently created quizzes" style="display: none">
+        <%
+            List<Quiz> recentQuizzesByUser = qDao.getRecentlyCreatedQuizzesByUser(id);
+            for(Quiz quiz: recentQuizzes){ %>
+        <% String href = "/quizInfo.jsp?id=" + quiz.getQuizId(); %>
+        <li><a href="<%= href %>"><%= quiz.getDescription() %></a></li>
+        <% } %>
+        <input type="button" value="Hide" onclick=hide("your_recently_id")>
+    </div>
+
+    <p> <button value = "friends activity" onclick= show("friends_activity_id")>Your friends' recent activity</button></p>
+    <div id = "friends activity" style="display: none">
+        <%
+            user = uDao.getUser(uDao.getUserIdByName(name));
+            list = fDao.getFriends(user);
+            List<History> friendHistories = new ArrayList<History>();
+            for (User u : list){
+                List<History> h = historyDao.getHistories(u.getUserId());
+                friendHistories.addAll(h);
             }
-            */
-        %>
-        <input type="button" value="close" onclick=hide("recently_id")>
-    </div>
-
-    <p> <button value = "recently taken quizzes" onclick= show("recentlyTaken_id")>recently taken quizzes</button></p>
-    <div id = "recently taken quizzes" style="display: none">
-        <%
-            /*
-              name = (String)session.getAttribute("currentUser");
-              user = uDao.getUser(uDao.getUserIdByName(name));
-              List <Quiz> recentlyTaken = uDao.getRecentlyTakenQuizzes(user);
-              for(Quiz quiz: recentlyTaken){
-                  out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
-              }
-              */
-        %>
-        <input type="button" value="close" onclick=hide("recentlyTaken_id")>
-    </div>
-
-    <p> <button value = "recently created quizzes" onclick= show("recentlyCreated_id")>recently created quizzes</button></p>
-    <div id = "recently taken quizzes" style="display: none">
-        <%
-            //                name = (String)session.getAttribute("currentUser");
-            //                List <Quiz> recentlyCreated = null;
-            //                try {
-            //                    recentlyCreated = qDao.getQuizzesForUser(uDao.getUserIdByName(name));
-            //                } catch (SQLException throwables) {
-            //                    throwables.printStackTrace();
-            //                }
-            //                List<Quiz> sortedRecentlyCreated = qDao.sortQuizzesByDate(recentlyCreated);
-            //                int i = 0;
-            //                for(Quiz quiz: sortedRecentlyCreated){
-            //                    out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
-            //                    i++;
-            //                    if (i >= 5) break;
-            //                }
-        %>
-        <input type="button" value="close" onclick=hide("recentlyCreated_id")>
+            for(History h : friendHistories){ %>
+        <% String href = "/quizInfo.jsp?id=" + h.getQuizId(); %>
+        <li><a href="<%= href %>"><%= qDao.getQuiz(h.getQuizId()).getDescription() %></a></li>
+        <% } %>
+        <input type="button" value="Hide" onclick=hide("friends_activity_id")>
     </div>
 
     <input type=button Value=challenge onclick=show("challenge_div")>

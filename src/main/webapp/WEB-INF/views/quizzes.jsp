@@ -40,9 +40,6 @@
                     Creator Id
                 </div>
                 <div class="cell">
-                    Creator Username
-                </div>
-                <div class="cell">
                     Description
                 </div>
             </div>
@@ -58,14 +55,11 @@
                     <div class="cell" data-title="Creator Id">
                         ${quiz.creatorId}
                     </div>
-                    <div class="cell" data-title="Username">
-                        ${quiz.surname}
-                    </div>
                     <div class="cell" data-title="Description">
                         ${quiz.description}
                     </div>
                     <div class="centered">
-                        <form action="/admin/quizzes?id=${quiz.id}" method="POST">
+                        <form action="/admin/quizzes?id=${quiz.quizId}" method="POST">
                             <button class="small red button" type="submit">Delete</button>
                         </form>
                     </div>

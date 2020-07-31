@@ -51,12 +51,12 @@
     <div class="historyTable">
         <p>Quiz History</p>
         <table>
-            <th>
-            <td>User Name</td>
-            <td>Score</td>
-            <td>Start Time</td>
-            <td>Finish Time</td>
-            </th>
+            <tr>
+                <th>User Name</th>
+                <th>Score</th>
+                <th>Start Time</th>
+                <th>Finish Time</th>
+            </tr>
             <%
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss dd MMMMm yyyy");
                 List<History> historiesUnsorted = historyDao.getHistoriesByQuizId(quizId);
@@ -83,10 +83,10 @@
         <div class="top10Performers">
             <p>Top 10 Performers</p>
             <table>
-                <th>
-                <td>User Name</td>
-                <td>Score</td>
-                </th>
+                <tr>
+                    <th>User Name</th>
+                    <th>Score</th>
+                </tr>
                 <%
                     List<History> historiesByScore = HistorySqlDao.sortByScore(historiesUnsorted);
                     List<History> subListHistoriesByScore = historiesByScore.subList(0, Math.min(historiesByScore.size(), 10));
@@ -106,10 +106,10 @@
         <div class="last12HourDiv">
             <p>Quiz Performers of last 12 Hour</p>
             <table>
-                <th>
-                <td>User Name</td>
-                <td>Score</td>
-                </th>
+                <tr>
+                    <th>User Name</th>
+                    <th>Score</th>
+                </tr>
                 <%
                     final long HOUR_12 = 1000*60*60*12;
                     long currentTime = System.currentTimeMillis();
@@ -134,14 +134,14 @@
 
     <div class="quizStatistics">
         <table>
-            <th>
-            <td>User Name</td>
-            <td>Attempts</td>
-            <td>Last Attempt</td>
-            <td>Min. Score</td>
-            <td>Avg. Score</td>
-            <td>Max. Score</td>
-            </th>
+            <tr>
+                <th>User Name</th>
+                <th>Attempts</th>
+                <th>Last Attempt</th>
+                <th>Min. Score</th>
+                <th>Avg. Score</th>
+                <th>Max. Score</th>
+            </tr>
             <%
                 Map<Integer, List<Integer>> scoresPerUser = new HashMap<Integer, List<Integer>>();
                 Map<Integer, Date> lastAttempt = new HashMap<Integer, Date>();

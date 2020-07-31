@@ -5,6 +5,12 @@ html, body {
     background: whitesmoke;
 }
 
+.headerNameP {
+    width: 100%;
+    font-size: 30px;
+    text-align: center;
+}
+
 #content {
     margin: 10px auto;
     height: 100%;
@@ -13,12 +19,28 @@ html, body {
 }
 
 .currentResult {
+    display: block;
     width: 1300px;
     margin-left: 50px;
     border-collapse: collapse;
     border: 1px solid black;
 }
 .currentResult th {
-    font-weight: bold;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.otherHistories {
+    display: block;
+    width: 800px;
+    margin-left: 300px;
+    margin-top: 80px;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+.otherHistories th td {
+    border: 1px solid black;
+}
+.otherHistories td {
     text-align: center;
 }

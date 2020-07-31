@@ -59,30 +59,5 @@ public class UserServlet extends HttpServlet {
         }
         httpServletRequest.getRequestDispatcher(webPageName).forward(httpServletRequest, httpServletResponse);
     }
-
-    @Override
-    protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        ServletContext servletContext = getServletContext();
-        UserSqlDao uDao = (UserSqlDao) servletContext.getAttribute(ContextDataNames.USER_DAO);
-        FriendsDao fDao = null;
-        try {
-            fDao = new FriendsSqlDao();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        String name = httpServletRequest.getParameter("username");
-        String webPageName = "FriendsPage.jsp";
-        try {
-            assert fDao != null;
-            User user = uDao.getUser(uDao.getUserIdByName(name));
-            servletContext.setAttribute(ContextDataNames.FRIENDS_DAO, fDao.getFriends(user));
-            servletContext.setAttribute(ContextDataNames.Received_Requests, fDao.getReceivedRequests(user));
-            servletContext.setAttribute(ContextDataNames.Sent_Requests, fDao.getSentRequests(user));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        httpServletRequest.getRequestDispatcher(webPageName).forward(httpServletRequest, httpServletResponse);
-    }
+    
 }

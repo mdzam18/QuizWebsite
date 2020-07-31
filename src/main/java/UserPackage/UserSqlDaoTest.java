@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.jws.soap.SOAPBinding;
 import java.sql.Date;
 
 
@@ -156,7 +157,6 @@ public class UserSqlDaoTest {
 
     @Test
     public void testDelete() throws SQLException, ClassNotFoundException {
-        Date date = new Date(2000, 12, 12);
         assertEquals(uDao.addUser("ChandlerTheBest", "friends", false).equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
         User user = uDao.getUser(1);
         QuizSqlDao qDao = new QuizSqlDao();
@@ -167,9 +167,16 @@ public class UserSqlDaoTest {
 
     @Test
     public void testIsCorrectPassword() throws SQLException {
-        Date date = new Date(2000, 12, 12);
         assertEquals(uDao.addUser("ChandlerTheBest", "friends", false).equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
         assertEquals(uDao.isCorrectPassword("ChandlerTheBest", "friends"), true);
         assertEquals(uDao.isCorrectPassword("ChandlerTheBest", "frieds"), false);
     }
+
+    @Test
+    public void testContainsUser() throws SQLException {
+        assertEquals(uDao.addUser("ChandlerTheBest", "friends", false).equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
+        assertEquals(uDao.containsUserName("ChandlerTheBest"), true);
+        assertEquals(uDao.containsUserName("ChandlerTheBest2"), false);
+    }
 }
+

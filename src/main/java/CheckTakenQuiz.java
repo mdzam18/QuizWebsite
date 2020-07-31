@@ -19,13 +19,14 @@ import java.util.*;
 public class CheckTakenQuiz extends HttpServlet {
 
     private static final String ANSWER = "answer";
+    private static final String ANSWER_ARRAY = "answer";
     private final static String currentUser = "currentUser";
 
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         ServletContext context = getServletContext();
         UserDao userDao = (UserDao) context.getAttribute(ContextDataNames.USER_DAO);
-        QuizDao quizdao = (QuizDao) context.getAttribute(ContextDataNames.QUIZ_DAO);
+        //QuizDao quizdao = (QuizDao) context.getAttribute(ContextDataNames.QUIZ_DAO);
         QuestionDao questionDao = (QuestionDao) context.getAttribute(ContextDataNames.QUESTION_DAO);
         HistoryDao historyDao = (HistoryDao) context.getAttribute(ContextDataNames.HISTORY_DAO);
 
@@ -41,6 +42,7 @@ public class CheckTakenQuiz extends HttpServlet {
             userId = userDao.getUserIdByName(username.trim());
         } catch (SQLException e) {
             e.printStackTrace();
+            return;
         }
 
         Map<String, String[]> pars = new HashMap<>(httpServletRequest.getParameterMap());
@@ -64,39 +66,148 @@ public class CheckTakenQuiz extends HttpServlet {
 
         Map<Integer, QuestionPassResult> quizPass = new HashMap<>();
         int fullScore = 0;
+        int quizId = 1;
 
-        for(Integer user : data.keySet()) {
-            Map<String, String[]> mp = data.get(user);
+        for(Integer que : data.keySet()) {
+            Map<String, String[]> mp = data.get(que);
             String qIdStr = mp.get("qId")[0];
             int qId = Integer.parseInt(qIdStr);
-            QuestionPassResult passResult;
+
+            Question questionFromBase;
             try {
-                Question questionFromBase = questionDao.getQuestion(qId);
-                int type = questionFromBase.getType();
-                Map<String, String[]> dataMap;
-                if(type == QuestionType.QUESTION_RESPONSE) {
-                    dataMap = data.get(user);
-                    String answer = dataMap.get(ANSWER)[0];
-                    int curScore = questionFromBase.getScore();
-                    passResult = new QuestionPassResult(userId, questionFromBase);
-                    if(questionFromBase.checkAnswer(answer)) {
-                        fullScore += curScore;
-                    } else {
-
-                    }
-                } else if(type == QuestionType.MULTIPLE_CHOICE_QUESTION) {
-
-                } else if(type == QuestionType.PICTURE_RESPONSE_QUESTION) {
-
-                } else if(type == QuestionType.MULTI_ANSWER_QUESTION) {
-
-                } else if(type == QuestionType.MULTIPLE_CHOICE_AND_ANSWER_QUESTION) {
-
-                } else {
-                    break;
-                }
+                questionFromBase = questionDao.getQuestion(qId);
+                quizId = questionDao.getQuestionQuizId(questionFromBase.getQuestionId());
             } catch (SQLException e) {
                 e.printStackTrace();
+                return;
+            }
+
+            int type = questionFromBase.getType();
+            Map<String, String[]> dataMap = data.get(que);
+
+            QuestionPassResult passResult = null;
+
+            if(type == QuestionType.QUESTION_RESPONSE
+            || type == QuestionType.PICTURE_RESPONSE_QUESTION) {
+                String answer = dataMap.get(ANSWER)[0].trim();
+                List<String> uAnswers = new ArrayList<>();
+                uAnswers.add(answer);
+
+                int curScore = questionFromBase.getScore();
+                passResult = new QuestionPassResult(userId, questionFromBase, uAnswers);
+                if(questionFromBase.checkAnswer(answer)) {
+                    fullScore += curScore;
+                    passResult.setPassType(QuestionPassResult.FULL_QUESTION_PASS);
+                    passResult.setUserScore(curScore);
+                } else {
+                    passResult.setPassType(QuestionPassResult.NOT_QUESTION_PASS);
+                    passResult.setUserScore(0);
+                }
+                quizPass.put(que, passResult);
+            } else if (type == QuestionType.MULTIPLE_CHOICE_QUESTION
+                    || type == QuestionType.MULTI_ANSWER_QUESTION
+                    || type == QuestionType.MULTIPLE_CHOICE_AND_ANSWER_QUESTION) {
+                String[] answers = dataMap.get(ANSWER_ARRAY);
+
+                if(type == QuestionType.MULTIPLE_CHOICE_QUESTION) {
+                    if(answers.length == 1) {
+                        passResult = new QuestionPassResult(userId, questionFromBase, new ArrayList<>());
+                        passResult.setUserScore(0);
+                        passResult.setPassType(QuestionPassResult.NOT_QUESTION_PASS);
+                    } else {
+                        String trueAnswer = answers[1];
+                        List<String> list = new ArrayList<>();
+                        list.add(trueAnswer);
+                        if(questionFromBase.checkAnswer(trueAnswer)) {
+                            int curScore = questionFromBase.getScore();
+                            fullScore += curScore;
+                            passResult = new QuestionPassResult(userId, questionFromBase, list);
+                            passResult.setUserScore(curScore);
+                            passResult.setPassType(QuestionPassResult.FULL_QUESTION_PASS);
+                        } else {
+                            passResult = new QuestionPassResult(userId, questionFromBase, list);
+                            passResult.setUserScore(0);
+                            passResult.setPassType(QuestionPassResult.NOT_QUESTION_PASS);
+                        }
+                    }
+                    //quizPass.put(que, passResult);
+                } else if(type == QuestionType.MULTI_ANSWER_QUESTION) {
+                    MultipleAnswerQuestion multipleAnswer = (MultipleAnswerQuestion) questionFromBase;
+                    int curScore = questionFromBase.getScore();
+                    if(multipleAnswer.isOrdered()) {
+                        List<String> list = Arrays.asList(answers);
+                        int checked = multipleAnswer.checkAnswerList(list);
+                        if(checked == 0) {
+                            passResult = new QuestionPassResult(userId, questionFromBase, list);
+                            passResult.setUserScore(0);
+                            passResult.setPassType(QuestionPassResult.NOT_QUESTION_PASS);
+                        } else if(checked == multipleAnswer.getAnswerSet().size()) {
+                            fullScore += curScore;
+                            passResult = new QuestionPassResult(userId, questionFromBase, list);
+                            passResult.setUserScore(curScore);
+                            passResult.setPassType(QuestionPassResult.FULL_QUESTION_PASS);
+                        } else {
+                            curScore += (curScore*list.size())/multipleAnswer.getAnswerSet().size();
+                            passResult = new QuestionPassResult(userId, questionFromBase, list);
+                            passResult.setUserScore((curScore*list.size())/multipleAnswer.getAnswerSet().size());
+                            passResult.setPassType(QuestionPassResult.PARTIAL_QUESTION_PASS);
+                        }
+                    } else {
+                        Set<String> set = new HashSet<>(Arrays.asList(answers));
+                        int checked = multipleAnswer.checkAnswerSet(set);
+                        if(checked == 0) {
+                            passResult = new QuestionPassResult(userId, questionFromBase, new ArrayList<>(set));
+                            passResult.setUserScore(0);
+                            passResult.setPassType(QuestionPassResult.NOT_QUESTION_PASS);
+                        } else if(checked == multipleAnswer.getAnswerSet().size()) {
+                            fullScore += curScore;
+                            passResult = new QuestionPassResult(userId, questionFromBase, new ArrayList<>(set));
+                            passResult.setUserScore(curScore);
+                            passResult.setPassType(QuestionPassResult.FULL_QUESTION_PASS);
+                        } else {
+                            curScore += (curScore*set.size())/multipleAnswer.getAnswerSet().size();
+                            passResult = new QuestionPassResult(userId, questionFromBase, new ArrayList<>(set));
+                            passResult.setUserScore((curScore*set.size())/multipleAnswer.getAnswerSet().size());
+                            passResult.setPassType(QuestionPassResult.PARTIAL_QUESTION_PASS);
+                        }
+                    }
+                } else {//type == QuestionType.MULTIPLE_CHOICE_AND_ANSWER_QUESTION
+                    if(answers.length == 1) {
+                        passResult = new QuestionPassResult(userId, questionFromBase, new ArrayList<>());
+                        passResult.setUserScore(0);
+                        passResult.setPassType(QuestionPassResult.NOT_QUESTION_PASS);
+                    } else {
+                        List<String> list = new ArrayList<>();
+                        Set<String> set = new HashSet<>();
+                        for(int i = 1; i<answers.length; i++) {
+                            list.add(answers[i]);
+                            set.add(answers[i]);
+                        }
+                        MultipleChoiceAnswerQuestion multipleChoiceAnswer = (MultipleChoiceAnswerQuestion) questionFromBase;
+                        int curScore = questionFromBase.getScore();
+                        int checked = multipleChoiceAnswer.checkAnswers(set);
+
+                        if(checked == 0) {
+                            passResult = new QuestionPassResult(userId, questionFromBase, list);
+                            passResult.setUserScore(0);
+                            passResult.setPassType(QuestionPassResult.NOT_QUESTION_PASS);
+                        } else if(checked == multipleChoiceAnswer.getChoices().size()) {
+                            fullScore += curScore;
+                            passResult = new QuestionPassResult(userId, questionFromBase, list);
+                            passResult.setUserScore(curScore);
+                            passResult.setPassType(QuestionPassResult.FULL_QUESTION_PASS);
+                        } else {
+                            fullScore += (curScore*set.size())/multipleChoiceAnswer.getChoices().size();
+                            passResult = new QuestionPassResult(userId, questionFromBase, list);
+                            passResult.setUserScore((curScore*set.size())/multipleChoiceAnswer.getChoices().size());
+                            passResult.setPassType(QuestionPassResult.PARTIAL_QUESTION_PASS);
+                        }
+                    }
+                    //quizPass.put(que, passResult);
+                }
+                quizPass.put(que, passResult);
+            } else {
+                return;
             }
         }
 
@@ -117,7 +228,20 @@ public class CheckTakenQuiz extends HttpServlet {
             System.out.println();
         }*/
 
-        //History history = new History();
+        try {
+            History history = new History(userId, quizId, fullScore, new Date(startTime), new Date());
+            historyDao.addToHistory(history);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        httpServletRequest.setAttribute("RESULTS", quizPass);
+
+
+    }
+
+    private QuestionPassResult getPassResult(Map<String, String[]> mp) {
+        return null;
     }
 
     private int getNumber(String str) {

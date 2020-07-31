@@ -41,6 +41,31 @@ public class MultipleAnswerQuestion extends Question {
         return result;
     }
 
+    public int checkAnswerList(List<String> userAnswers) {
+        int result = 0;
+        List<String> orderedAnswersNew = new ArrayList<>();
+        List<String> userAnswersNew = new ArrayList<>();
+        for(String str : orderedAnswers) {
+            orderedAnswersNew.add(str.toUpperCase());
+        }
+        for(String str : userAnswers) {
+            userAnswersNew.add(str.toUpperCase());
+        }
+        int index = 0;
+        for(int i = 0; i<orderedAnswersNew.size(); i++) {
+            if(index >= userAnswersNew.size()) {
+                break;
+            }
+            if(orderedAnswersNew.get(i).equalsIgnoreCase(userAnswersNew.get(index))) {
+                result++;
+                index++;
+            } else if(index != 0) {
+                break;
+            }
+        }
+        return result;
+    }
+
     @Override
     public int getType() {
         return TYPE;

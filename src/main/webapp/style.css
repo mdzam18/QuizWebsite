@@ -8,6 +8,13 @@
 .Profile{
     text-align: center;
 }
+.label {
+    color: #ca3535;
+    background: #4B4B4B;
+    padding: 8px;
+    font-family: "Bradley Hand ITC";
+    background-color: #4CAF50;
+}
 
 .button {
     background-color: #4CAF50; /* Green */

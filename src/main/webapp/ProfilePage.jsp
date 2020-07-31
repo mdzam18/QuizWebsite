@@ -10,34 +10,39 @@
 
 
 <html>
- <head>
-        <title>Welcome</title>
- </head>
-  <body>
-        <script language=javascript>
-                function hide(id) {
-                    var div_ref = document.getElementById(id);
-                    div_ref.style.display = "none";
-                }
+<head>
+    <link href="../style.css" rel="stylesheet" type="text/css">
+    <title>Welcome</title>
+    <%
+        UserSqlDao uDao = new UserSqlDao();
+        FriendsSqlDao fDao = new FriendsSqlDao();
+        String name = uDao.getUser(Integer.parseInt(request.getParameter("id"))).getUserName();
+    %>
 
-                function show(id) {
-                    var div_ref = document.getElementById(id);
-                    div_ref.style.display = "block";
-                }
-        </script>
+</head>
+<body>
+<script language=javascript>
+    function hide(id) {
+        var div_ref = document.getElementById(id);
+        div_ref.style.display = "none";
+    }
 
-        <%
-            UserSqlDao uDao = new UserSqlDao();
-            FriendsSqlDao fDao = new FriendsSqlDao();
-            int id = Integer.parseInt(request.getParameter("id"));
-        %>
-        <h1 style="text-align:center">User Profile</h1>
-        <div class "Profile">
-                   <h1 <label for="username">User Name: <%= uDao.getUser(id).getUserName()%> </label> </h1>
-                   <h2> Name: <%= uDao.getUser(id).getName() %></h2>
-                   <h2> Surname: <%= uDao.getUser(id).getSurname() %> </h2>
-                   <h2> Birth Place: <%= uDao.getUser(id).getBirthPlace() %>  </h2>
-                   <h2> Status: <%= uDao.getUser(id).getStatus()%> </h2>
-         </div>
-  </body>
- </html>
+    function show(id) {
+        var div_ref = document.getElementById(id);
+        div_ref.style.display = "block";
+    }
+</script>
+
+
+<h1 style="text-align:center">User Profile</h1>
+<div> class "Profile">
+<h1> <label >User Name: <%= uDao.getUser(Integer.parseInt(request.getParameter("id"))).getUserName()%> </label> </h1>
+</div>
+
+<form action="MailServlet" method="post">
+    <input class = "button button7" type="submit" name="button" value="sendRequestFromProfile">
+    <input type="hidden" name="username" value=<%=name%>>
+</form>
+
+</body>
+</html>

@@ -24,7 +24,6 @@ Quiz\QuizSqlDao.class
 Administrator\controller\AdministratorsController.class
 Administrator\controller\QuizzesController.class
 Quiz\QuizServlet.class
-Quiz\QuizSqlDao$1.class
 HistoryPackage\HistorySqlDao.class
 Administrator\controller\UsersController.class
 Administrator\listeners\DBConnectionListener.class

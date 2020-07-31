@@ -24,17 +24,19 @@
     %>
 
     <div id="quizName">
-            <span><%= getDescription(request.getAttribute("quiz")) %></span>
-        </div>
+        <span><%= getDescription(request.getAttribute("quiz")) %></span>
+    </div>
 
-        <div id="content">
-        <%
-            List<Question> list = getQuestionList(request.getAttribute("quiz"));
-            for(int i = 0; i<list.size(); i++) {
-                out.println(QuestionToHTML.convertQuestion(list.get(i), i+1));
-            }
-        %>
-        <form>
+    <div id="content">
+        <form action="/CheckTakenQuiz" method="POST">
+            <input type="hidden" name="startTime" value="<%= System.currentTimeMillis() %>">
+            <%
+                List<Question> list = getQuestionList(request.getAttribute("quiz"));
+                for(int i = 0; i<list.size(); i++) {
+                    out.println(QuestionToHTML.convertQuestion(list.get(i), i+1));
+                }
+            %>
+            <input type="submit" value="Submit Quiz" class="submitButton">
         </form>
     </div>
 

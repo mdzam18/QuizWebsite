@@ -17,11 +17,14 @@ public class MultipleChoiceAnswerQuestion extends Question {
 		return choices;
 	}
 
-	public boolean checkAnswers(Set<String> userAnswers) {
-		if(choices.size() != userAnswers.size()) {
-			return false;
+	public int checkAnswers(Set<String> userAnswers) {
+		int result = 0;
+		for(String str : userAnswers) {
+			if(choices.contains(str)) {
+				result++;
+			}
 		}
-		return choices.equals(userAnswers);
+		return result;
 	}
 
 	@Override

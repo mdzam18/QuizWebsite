@@ -101,9 +101,8 @@ public class StatisticsSqlDao implements StatisticsDao {
 			user.setAdministrator(res.getBoolean(4));
 			user.setName(res.getString(6));
 			user.setSurname(res.getString(7));
-			user.setBirthDate(res.getDate(8));
-			user.setBirthPlace(res.getString(9));
-			user.setStatus(res.getString(10));
+			user.setBirthPlace(res.getString(8));
+			user.setStatus(res.getString(9));
 		}
 		return user;
 	}

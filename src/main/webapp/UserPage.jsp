@@ -135,7 +135,6 @@
         <h1> User Name: <%= (String)session.getAttribute("currentUser")%> </h1>
         <h2> Name: <%= uDao.getUser(id).getName() %></h2>
         <h2> Surname: <%= uDao.getUser(id).getSurname() %> </h2>
-        <h2> Birth Date: <%= uDao.getUser(id).getBirthDate() %> </h2>
         <h2> Birth Place: <%= uDao.getUser(id).getBirthPlace() %>  </h2>
         <h2> Status: <%= uDao.getUser(id).getStatus()%> </h2>
     </div>

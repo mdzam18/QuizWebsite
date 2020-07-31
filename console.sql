@@ -6,7 +6,6 @@ CREATE TABLE Users(
                        Salt varchar(255),
                        Name varchar(255),
                        Surname varchar(255),
-                       Birth_Date Date,
                        Birth_Place varchar(255),
                        Status varchar(255)
 );

@@ -128,11 +128,15 @@ public class CreateQuizServlet extends HttpServlet {
             }
         }
 
-        httpServletRequest.setAttribute("username", userName);
-        httpServletRequest.setAttribute("quizname", quizName);
-
-        RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("quizInfo.jsp");
+        quiz.setQuestionSet(questions);
+        httpServletRequest.setAttribute("quiz", quiz);
+        RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("onePageQuiz.jsp");
         dispatcher.forward(httpServletRequest, httpServletResponse);
+
+        /*httpServletRequest.setAttribute("username", userName);
+        httpServletRequest.setAttribute("quizname", quizName);
+        RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("quizInfo.jsp");
+        dispatcher.forward(httpServletRequest, httpServletResponse);*/
     }
 
     private void appendQuestion(QuestionDao questionDao, Question question, int quizId) {
@@ -164,7 +168,8 @@ public class CreateQuizServlet extends HttpServlet {
         }
 
         try {
-            questionDao.addQuestion(questionText, answer, type, question.getScore(), quizId);
+            Question q = questionDao.addQuestion(questionText, answer, type, question.getScore(), quizId);
+            question.setQuestionId(q.getQuestionId());
         } catch (SQLException e) {
             e.printStackTrace();
         }

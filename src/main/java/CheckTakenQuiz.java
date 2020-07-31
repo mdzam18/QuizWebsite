@@ -38,8 +38,9 @@ public class CheckTakenQuiz extends HttpServlet {
             List<Question> questions = quiz.getQuestionSet();
             if(quiz.isRandom()) {
                 questions = QuestionToHTML.shuffleList(questions);
+                quiz.getQuestionSet().clear();
+                quiz.setQuestionSet(questions);
             }
-            quiz.setQuestionSet(questions);
 
             httpServletRequest.setAttribute(QUIZ_ATR_NAME, quiz);
 
@@ -163,7 +164,6 @@ public class CheckTakenQuiz extends HttpServlet {
                             passResult.setPassType(QuestionPassResult.NOT_QUESTION_PASS);
                         }
                     }
-                    //quizPass.put(que, passResult);
                 } else if(type == QuestionType.MULTI_ANSWER_QUESTION) {
                     MultipleAnswerQuestion multipleAnswer = (MultipleAnswerQuestion) questionFromBase;
                     int curScore = questionFromBase.getScore();
@@ -243,7 +243,8 @@ public class CheckTakenQuiz extends HttpServlet {
             }
         }
 
-        for(Integer i : data.keySet()) {
+        // TODO
+        /*for(Integer i : data.keySet()) {
             System.out.println("Question " + i);
             Map<String, String[]> mp = data.get(i);
             for (String s : mp.keySet()) {
@@ -258,7 +259,7 @@ public class CheckTakenQuiz extends HttpServlet {
                 System.out.println(";");
             }
             System.out.println();
-        }
+        }*/
 
         try {
             History history = new History(userId, quizId, fullScore, new Date(startTime), new Date());
@@ -268,6 +269,12 @@ public class CheckTakenQuiz extends HttpServlet {
         }
 
         httpServletRequest.setAttribute("RESULTS", quizPass);
+        try {
+            List<History> histories = historyDao.getHistories(userId);
+            httpServletRequest.setAttribute("HISTORY", HistorySqlDao.sortByEndDate(histories));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         httpServletRequest.getRequestDispatcher("quizResults.jsp").forward(httpServletRequest, httpServletResponse);
     }

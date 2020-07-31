@@ -266,7 +266,6 @@ public class CreateQuizServlet extends HttpServlet {
         return Integer.parseInt(str);
     }
 
-    /* Other Methods (For Testing) */
     /* TODO
     private int questionCounter = 1;
 

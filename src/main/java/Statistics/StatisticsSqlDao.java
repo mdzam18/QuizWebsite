@@ -17,14 +17,14 @@ public class StatisticsSqlDao implements StatisticsDao {
 	private String userTable;
 	private String quizTable;
 	private String historyTable;
-	
+
 	public StatisticsSqlDao() throws SQLException, ClassNotFoundException {
 		con = ProfileDataSrc.getConnection();
 		userTable = CreateTablesForTests.UsersTable;
 		quizTable = CreateTablesForTests.QuizTable;
 		historyTable = CreateTablesForTests.HistoryTable;
 	}
-	
+
 	public List<Quiz> getAllQuizzes(int userId) throws SQLException {
 		List <Quiz> quizzes = new ArrayList<>();
 		PreparedStatement stm =
@@ -38,11 +38,20 @@ public class StatisticsSqlDao implements StatisticsDao {
 			ResultSet rs2 = stm.executeQuery();
 			rs2.next();
 			Quiz quiz = new Quiz(rs2.getInt(1), rs2.getInt(9));
+			quiz.setIsRandom(rs2.getBoolean(2));
+			quiz.setIsOnePage(rs2.getBoolean(3));
+			quiz.setIsImmediate(rs2.getBoolean(4));
+			quiz.setInPracticeMode(rs2.getBoolean(5));
+			quiz.setNumberOfQuestions(rs2.getInt(6));
+			quiz.setDescription(rs2.getString(7));
+			quiz.setCategory(rs2.getString(8));
+			quiz.setCreateDate(rs2.getDate(10));
+
 			quizzes.add(quiz);
 		}
 		return quizzes;
 	}
-	
+
 	public List <Integer> getPastPerformances(int userId, int quizId) throws SQLException {
 		List <Integer> result = new ArrayList<>();
 		PreparedStatement stm =
@@ -50,14 +59,14 @@ public class StatisticsSqlDao implements StatisticsDao {
 		stm.setInt(1, userId);
 		stm.setInt(2, quizId);
 		ResultSet rs = stm.executeQuery();
-		
+
 		while(rs.next()){
 			int score = rs.getInt(3);
 			result.add(score);
 		}
 		return result;
 	}
-	
+
 	public double getMaxScore(int userId, int quizId) throws SQLException {
 		Integer max = null;
 		PreparedStatement stm =
@@ -69,9 +78,9 @@ public class StatisticsSqlDao implements StatisticsDao {
 			max = rs.getInt("max(Score)");
 		}
 		return max;
-		
+
 	}
-	
+
 	public User getBestPlayer(int quizId) throws SQLException {
 		User user = null;
 		long minTime = Long.MAX_VALUE;
@@ -106,7 +115,7 @@ public class StatisticsSqlDao implements StatisticsDao {
 		}
 		return user;
 	}
-	
+
 	public double getAverageScore(int quizId) throws SQLException {
 		double result = 0;
 		PreparedStatement stm =
@@ -116,5 +125,5 @@ public class StatisticsSqlDao implements StatisticsDao {
 		if(rs.next()) result = rs.getDouble("avg(Score)");
 		return result;
 	}
-	
+
 }

@@ -23,6 +23,24 @@ public class MultipleAnswerQuestion extends Question {
         return orderedAnswers;
     }
 
+    public int checkAnswerSet(Set<String> userAnswers) {
+        int result = 0;
+        Set<String> answersNew = new HashSet<>();
+        Set<String> userAnswersNew = new HashSet<>();
+        for(String str : answers) {
+            answersNew.add(str.toUpperCase());
+        }
+        for(String str : userAnswers) {
+            userAnswersNew.add(str.toUpperCase());
+        }
+        for(String str : userAnswersNew) {
+            if(answersNew.contains(str)) {
+                result++;
+            }
+        }
+        return result;
+    }
+
     @Override
     public int getType() {
         return TYPE;

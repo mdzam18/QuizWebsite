@@ -18,6 +18,11 @@ public class MultipleChoiceQuestion extends Question {
 	}
 
 	@Override
+	public boolean checkAnswer(String answer) {
+		return choice.equalsIgnoreCase(answer);
+	}
+
+	@Override
 	public int getType() {
 		return TYPE;
 	}

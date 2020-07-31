@@ -10,7 +10,7 @@ public class PictureResponseQuestion extends Question {
 
 	public PictureResponseQuestion(String question, Set<String> answers, String imgURL) {
 		super(question, answers);
-		this.imgURL = new String(imgURL);
+		this.imgURL = imgURL;
 	}
 
 	public String getImage(){

@@ -26,7 +26,12 @@ public class Question {
     }
 
     public boolean checkAnswer(String answer) {
-        return answers.contains(answer);
+        for(String str : answers) {
+            if(str.equalsIgnoreCase(answer)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getType() {

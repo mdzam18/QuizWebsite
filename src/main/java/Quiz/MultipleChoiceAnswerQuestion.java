@@ -19,9 +19,19 @@ public class MultipleChoiceAnswerQuestion extends Question {
 
 	public int checkAnswers(Set<String> userAnswers) {
 		int result = 0;
-		for(String str : userAnswers) {
-			if(choices.contains(str)) {
-				result++;
+		if(userAnswers.size() <= choices.size()) {
+			Set<String> choicesNew = new HashSet<>();
+			Set<String> userAnswersNew = new HashSet<>();
+			for(String str : choices) {
+				choicesNew.add(str.toUpperCase());
+			}
+			for(String str : userAnswers) {
+				userAnswersNew.add(str.toUpperCase());
+			}
+			for(String str : userAnswersNew) {
+				if(choicesNew.contains(str)) {
+					result++;
+				}
 			}
 		}
 		return result;

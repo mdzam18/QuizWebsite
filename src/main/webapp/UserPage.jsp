@@ -100,6 +100,12 @@
         list = fDao.getReceivedRequests(user);
         for(User user2 : list){
             out.println("<li><a href=\"ProfilePage.jsp?id=" +  user2.getUserId() + "\">" + user2.getUserName() + "</a> </li>" );
+            String s = "<form action=\"MailServlet\" method=\"post\">\n" +
+                    "        <input type=\"hidden\" name=\"username\" value=" + user2.getUserId() +
+                    ">\n" +
+                    "        <input class=\"button button7\" type=\"submit\" name=\"button\" value=\"confirmRequest\">\n" +
+                    "    </form>";
+            out.println(s);
         }
     %>
     <input class="button button6" type="button" value="close" onclick=hide("requests_id")>

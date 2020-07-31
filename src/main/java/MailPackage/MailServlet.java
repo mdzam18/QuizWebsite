@@ -36,10 +36,9 @@ public class MailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         mailDao = (MailSqlDao) getServletContext().getAttribute(ContextDataNames.MAIL_DAO);
         userDao = (UserSqlDao) getServletContext().getAttribute(ContextDataNames.USER_DAO);
-        historyDao = (HistorySqlDao) getServletContext().getAttribute(ContextDataNames.HISTORY_DAO);
-        quizSqlDao = (QuizSqlDao) getServletContext().getAttribute(ContextDataNames.QUIZ_DAO);
+        //historyDao = (HistorySqlDao) getServletContext().getAttribute(ContextDataNames.HISTORY_DAO);
+        //quizSqlDao = (QuizSqlDao) getServletContext().getAttribute(ContextDataNames.QUIZ_DAO);
         friendsDao = (FriendsSqlDao) getServletContext().getAttribute(ContextDataNames.FRIENDS_DAO);
-
 
 
         String current = String.valueOf(request.getSession().getAttribute("currentUser"));
@@ -72,6 +71,7 @@ public class MailServlet extends HttpServlet {
                 String author = desc[0];
                 String description = desc[1];
                 receiverId = userDao.getUserIdByName(request.getParameter("username"));
+
                 int authorId = userDao.getUserIdByName(author);
                 int quizId = quizSqlDao.getQuizId(authorId, description);
                 int score = historyDao.getMaxScore(senderId, quizId);
@@ -85,11 +85,19 @@ public class MailServlet extends HttpServlet {
                 receiverId = userDao.getUserIdByName(request.getParameter("username"));
                 if(receiverId == -1) {
                     out.println("user doesn't exist");
-                }else {
+                }else if(friendsDao.areFriends(senderId,receiverId)) {
+                    out.println("you are already friends");
+                } else if(friendsDao.isRequested(receiverId,senderId)){
+                    out.println(request.getParameter("username") + "sent you friend request, you can confirm");
+                }
+                else {
                     friendsDao.sendFriendRequest(senderId,receiverId);
                     out.println("friend request sent successfully");
                 }
 
+            } else if (type.equals("confirmRequest")){
+                receiverId = Integer.parseInt(request.getParameter("username"));
+                friendsDao.confirmFriendRequest(receiverId,senderId);
             }
 
         } catch (SQLException e) {

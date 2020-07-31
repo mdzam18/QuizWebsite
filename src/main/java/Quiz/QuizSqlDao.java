@@ -224,7 +224,7 @@ public class QuizSqlDao implements QuizDao{
 
     @Override
     public List<Quiz> getQuizzesForUser(int userId) throws SQLException {
-        String sql = "SELECT * FROM " + quizTable + " WHERE CreatorId = ? SORT BY QUIZ ID DESC";
+        String sql = "SELECT * FROM " + quizTable + " WHERE CreatorId = ?;";
         PreparedStatement prepState = con.prepareStatement(sql);
         prepState.setInt(1, userId);
         ResultSet results = prepState.executeQuery();

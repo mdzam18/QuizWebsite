@@ -257,22 +257,4 @@ public class UserSqlDao implements UserDao {
         if (res.next()) return true;
         return false;
     }
-
-    @Override
-    public List<Quiz> getRecentlyTakenQuizzes(User user) throws SQLException, ClassNotFoundException {
-        HistorySqlDao hDao = new HistorySqlDao();
-        List<History> histories = hDao.getHistories(user.getUserId());
-        histories = HistorySqlDao.sortByEndDate(histories);
-        List<Quiz> res = new ArrayList<>();
-        QuizSqlDao qDao = new QuizSqlDao();
-        int n = 0;
-        for (int i = histories.size() - 1; i >= 0; i--) {
-            if (n == 5) break;
-            if (histories.size() >= 5) {
-                n++;
-            }
-            res.add(qDao.getQuiz(histories.get(i).getQuizId()));
-        }
-        return res;
-    }
 }

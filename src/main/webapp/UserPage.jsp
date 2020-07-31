@@ -140,7 +140,7 @@
             /*
               name = (String)session.getAttribute("currentUser");
               user = uDao.getUser(uDao.getUserIdByName(name));
-              List <Quiz> recentlyTaken = uDao.getRecentlyTakenQuizzes(user);
+              List <Quiz> recentlyTaken = historyDao.getRecentlyTakenQuizzes(user);
               for(Quiz quiz: recentlyTaken){
                   out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
               }

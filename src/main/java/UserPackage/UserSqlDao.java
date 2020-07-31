@@ -45,6 +45,7 @@ public class UserSqlDao implements UserDao {
         questionTable = CreateTablesForTests.QuestionTable;
     }
 
+    @Override
     public int getUserIdByName(String username) throws SQLException {
         PreparedStatement stm = null;
         String s = "SELECT * FROM " + userTable + " WHERE UserName = " + username + ";";

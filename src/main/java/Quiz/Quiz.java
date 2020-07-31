@@ -44,7 +44,7 @@ public class Quiz {
 
 	public void setInPracticeMode(boolean inPracticeMode) { this.inPracticeMode = inPracticeMode; }
 
-	public void setCreator(int creatorId){
+	public void setCreatorId(int creatorId){
 		this.creatorId = creatorId;
 	}
 
@@ -82,7 +82,7 @@ public class Quiz {
 		return questions.size();
 	}
 
-	public int getCreator(){
+	public int getCreatorId(){
 		return creatorId;
 	}
 

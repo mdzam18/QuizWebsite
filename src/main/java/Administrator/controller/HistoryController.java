@@ -21,21 +21,18 @@ import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/admin/history",
-        initParams = {@WebInitParam(name = "userId", value = "{userId}"),
-                @WebInitParam(name = "quizId", value = "{quizId}")})
+        initParams = {@WebInitParam(name = "id", value = "{id}")})
 public class HistoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
         HistoryDao historyDao = (HistorySqlDao) servletContext.getAttribute(ContextDataNames.HISTORY_DAO);
 
-        String userId = req.getParameter("userId");
-        String quizId = req.getParameter("quizId");
+        String id = req.getParameter("id");
 
-        if (userId != null && quizId != null) {
+        if (id != null) {
             try {
-                List<History> histories = historyDao.getHistories(Integer.valueOf(userId));
-                /** Add id to historyDao (for deletion) **/
+                historyDao.removeAllHistories();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

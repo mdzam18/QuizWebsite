@@ -17,6 +17,7 @@
         UserSqlDao uDao = new UserSqlDao();
         FriendsSqlDao fDao = new FriendsSqlDao();
         String name = uDao.getUser(Integer.parseInt(request.getParameter("id"))).getUserName();
+        int id = Integer.parseInt(request.getParameter("id"));
     %>
 
 </head>
@@ -36,7 +37,11 @@
 
 <h1 style="text-align:center">User Profile</h1>
 <div> class "Profile">
-<h1> <label >User Name: <%= uDao.getUser(Integer.parseInt(request.getParameter("id"))).getUserName()%> </label> </h1>
+        <h1 <label for="username">User Name: <%= uDao.getUser(id).getUserName()%> </label> </h1>
+       <h2> Name: <%= uDao.getUser(id).getName() %></h2>
+       <h2> Surname: <%= uDao.getUser(id).getSurname() %> </h2>
+       <h2> Birth Place: <%= uDao.getUser(id).getBirthPlace() %>  </h2>
+       <h2> Status: <%= uDao.getUser(id).getStatus()%> </h2>
 </div>
 
 <form action="MailServlet" method="post">

@@ -37,9 +37,8 @@ public class AdministratorSqlDao extends UserSqlDao implements AdministratorDao 
 			admin.setAdministrator(rs.getBoolean(4));
 			admin.setName(rs.getString(6));
 			admin.setSurname(rs.getString(7));
-			admin.setBirthDate(rs.getDate(8));
-			admin.setBirthPlace(rs.getString(9));
-			admin.setStatus(rs.getString(10));
+			admin.setBirthPlace(rs.getString(8));
+			admin.setStatus(rs.getString(9));
 			admins.add(admin);
 		}
 		return admins;

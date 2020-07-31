@@ -96,6 +96,10 @@ public class QuizSqlDaoTest {
     }
 
     private void addData() throws SQLException {
+        userDao.addUser("a" , "a" , false);
+        userDao.addUser("b" , "b", false);
+        userDao.addUser("c", "c", false);
+        
         database.addQuiz(1);
         database.addQuiz(2);
         database.addQuiz(3);

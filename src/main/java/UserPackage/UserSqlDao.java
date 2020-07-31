@@ -109,10 +109,31 @@ public class UserSqlDao implements UserDao {
         if (!res.next()) return null;
         User user = new User(res.getString(2), res.getInt(1), res.getString(3));
         user.setAdministrator(res.getBoolean(4));
-        user.setName(res.getString(6));
-        user.setSurname(res.getString(7));
-        user.setBirthPlace(res.getString(8));
-        user.setStatus(res.getString(9));
+        String str = "";
+        if(res.getString(6) == null){
+            str = "";
+        } else {
+            str = res.getString(6);
+        }
+        user.setName(str);
+        if(res.getString(7) == null){
+            str = "";
+        } else {
+            str = res.getString(7);
+        }
+        user.setSurname(str);
+        if(res.getString(8) == null){
+            str = "";
+        } else {
+            str = res.getString(8);
+        }
+        user.setBirthPlace(str);
+        if(res.getString(9) == null){
+            str = "";
+        } else {
+            str = res.getString(9);
+        }
+        user.setStatus(str);
         return user;
     }
 

@@ -275,7 +275,22 @@ ol.scores li{
 }
 
 /* display: flex */
-.score-list {
+.score-list, .div .div1, .div2, .div3 {
     display: flex;
     justify-content: center;
+}
+
+h4{
+    color: pink;
+    background-color: gray;
+    font-size: 20px;
+    text-decoration: underline;
+    font-family: arial;
+    text-align: center;
+}
+
+.div{
+    top: 20px;
+    padding: 20px;
+
 }

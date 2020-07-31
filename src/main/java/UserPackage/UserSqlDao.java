@@ -127,7 +127,7 @@ public class UserSqlDao implements UserDao {
         user.setSurname(str);
         str = findString(8, res);
         user.setBirthPlace(str);
-        str = findString(8, res);
+        str = findString(9, res);
         user.setStatus(str);
         return user;
     }

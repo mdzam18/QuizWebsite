@@ -55,8 +55,6 @@
     </form>
 </div>
 
-<div class="title">Welcome <%= (String)session.getAttribute("currentUser")%></div>
-
 <div class="Profile">
     <h1> User Name: <%= (String)session.getAttribute("currentUser")%> </h1>
     <h2> Name: <%= uDao.getUser(id).getName() %></h2>

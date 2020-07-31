@@ -44,19 +44,19 @@
             </div>
         </div>
 
-        <c:forEach var="user" items="${users}">
+        <c:forEach var="admin" items="${admins}">
             <div class="row">
                 <div class="cell" data-title="Id">
-                        ${user.userId}
+                        ${admin.userId}
                 </div>
                 <div class="cell" data-title="Name">
-                        ${user.name}
+                        ${admin.name}
                 </div>
                 <div class="cell" data-title="Surname">
-                        ${user.surname}
+                        ${admin.surname}
                 </div>
                 <div class="cell" data-title="Username">
-                        ${user.userName}
+                        ${admin.userName}
                 </div>
             </div>
         </c:forEach>

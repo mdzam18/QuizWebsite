@@ -21,7 +21,7 @@ import java.sql.SQLException;
 @WebListener
 public class ContextDataListener implements ServletContextListener, HttpSessionListener {
 
-    private AdministratorDao administratorDao;
+    private AdministratorDao adminDao;
     private HistoryDao historyDao;
     private FriendsDao friendsDao;
     private MailDao mailDao;
@@ -33,7 +33,7 @@ public class ContextDataListener implements ServletContextListener, HttpSessionL
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         try {
-            //administratorDao = new AdministratorSqlDao();
+            adminDao = new AdministratorSqlDao();
             historyDao = new HistorySqlDao();
             friendsDao = new FriendsSqlDao();
             mailDao = new MailSqlDao();
@@ -51,12 +51,12 @@ public class ContextDataListener implements ServletContextListener, HttpSessionL
 
         ServletContext servletContext = servletContextEvent.getServletContext();
 
-        servletContext.setAttribute(ContextDataNames.ADMINISTRATOR_DAO, administratorDao);
+        servletContext.setAttribute(ContextDataNames.ADMINISTRATOR_DAO, adminDao);
         servletContext.setAttribute(ContextDataNames.HISTORY_DAO, historyDao);
         servletContext.setAttribute(ContextDataNames.FRIENDS_DAO, friendsDao);
         servletContext.setAttribute(ContextDataNames.MAIL_DAO, mailDao);
         servletContext.setAttribute(ContextDataNames.QUIZ_DAO, quizDao);
-        servletContext.setAttribute(ContextDataNames.STATISTICS_DAO, statisticsDao);
+//        servletContext.setAttribute(ContextDataNames.STATISTICS_DAO, statisticsDao);
         servletContext.setAttribute(ContextDataNames.USER_DAO, userDao);
         servletContext.setAttribute(ContextDataNames.QUESTION_DAO, questionDao);
     }

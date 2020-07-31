@@ -19,21 +19,22 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/admin/users",
-            initParams = {@WebInitParam(name = "id", value = "{id}")})
+        initParams = {@WebInitParam(name = "id", value = "{id}")})
 
 public class UsersController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
+        AdministratorDao adminDao = (AdministratorSqlDao) servletContext.getAttribute(ContextDataNames.ADMINISTRATOR_DAO);
         UserDao userDao = (UserSqlDao) servletContext.getAttribute(ContextDataNames.USER_DAO);
 
         String id = req.getParameter("id");
         if (id != null) {
             try {
-                    User user = userDao.getUser(Integer.valueOf(id));
-                    userDao.deleteUser(user);
+                User user = userDao.getUser(Integer.valueOf(id));
+                adminDao.deleteUser(user);
             } catch (SQLException | ClassNotFoundException throwables) {
-                    throwables.printStackTrace();
+                throwables.printStackTrace();
             }
         }
 

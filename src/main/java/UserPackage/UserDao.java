@@ -28,6 +28,4 @@ public interface UserDao {
     String getSalt(int userId) throws SQLException;
 
     boolean containsUserName(String userName) throws SQLException;
-
-    List<Quiz> getRecentlyTakenQuizzes(User user) throws SQLException, ClassNotFoundException;
 }

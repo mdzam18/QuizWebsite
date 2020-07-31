@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/admin/admins",
-            initParams = {@WebInitParam(name = "id", value = "{id}")})
+        initParams = {@WebInitParam(name = "id", value = "{id}")})
 public class AdministratorsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +38,7 @@ public class AdministratorsController extends HttpServlet {
         }
 
         try {
-            req.setAttribute("users", adminDao.getAllAdmins());
+            req.setAttribute("admins", adminDao.getAllAdmins());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

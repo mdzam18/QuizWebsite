@@ -18,12 +18,21 @@ public class Quiz {
 	private String category;
 	private int creatorId;
 	private Date createDate;
+	private int numberOfQuestions;
 
 	public Quiz(int quizId, int creatorId)
 	{
 		this.quizId = quizId;
 		this.creatorId = creatorId;
 		this.questions = new ArrayList<>();
+	}
+
+	public int getNumberOfQuestions() {
+		return numberOfQuestions;
+	}
+
+	public void setNumberOfQuestions(int numberOfQuestions) {
+		this.numberOfQuestions = numberOfQuestions;
 	}
 
 	public void setQuizId(int quizId){
@@ -95,7 +104,7 @@ public class Quiz {
 	}
 
 	public String getCategory() { return category; }
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -103,7 +112,7 @@ public class Quiz {
 		Quiz quiz = (Quiz) o;
 		return quizId == quiz.quizId;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(quizId, creatorId);

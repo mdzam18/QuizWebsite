@@ -138,6 +138,7 @@ public class UserSqlDao implements UserDao {
         stm = con.prepareStatement(
                 "delete from " + tableName + " where QuizId = ?;");
         stm.setInt(1, id);
+        stm.executeUpdate();
     }
 
     @Override

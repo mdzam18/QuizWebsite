@@ -2,6 +2,7 @@ package UserPackage;
 
 import ProfilePackage.CreateTablesForTests;
 import ProfilePackage.ProfileDataSrc;
+import Quiz.QuizSqlDao;
 import org.junit.jupiter.api.*;
 
 import java.security.NoSuchAlgorithmException;
@@ -143,6 +144,8 @@ public class UserSqlDaoTest {
         Date date = new Date(2000, 12, 12);
         assertEquals(uDao.addUser("ChandlerTheBest", "friends", false).equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
         User user = uDao.getUser(1);
+        QuizSqlDao qDao = new QuizSqlDao();
+        qDao.addQuiz(1, false, false, false, false, 1, "quiz", "category", null);
         assertEquals(uDao.deleteUser(user), true);
         assertEquals(uDao.getAllUsers().size(), 0);
     }

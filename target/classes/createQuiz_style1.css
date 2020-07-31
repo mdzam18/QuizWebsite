@@ -56,11 +56,11 @@ html, body {
 .tableContent {
     display: block;
     width: 600px;
-    margin-left: 100px;
+    margin-left: 200px;
 }
 .tableContent tr td {
     border-collapse: collapse;
-    text-align: left;
+    text-align: right;
 }
 
 .questionField {

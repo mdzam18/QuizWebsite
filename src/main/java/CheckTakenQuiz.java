@@ -3,6 +3,7 @@ import Quiz.*;
 import ServletContextPackage.*;
 import UserPackage.*;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,11 +23,42 @@ public class CheckTakenQuiz extends HttpServlet {
     private static final String ANSWER_ARRAY = "answers";
     private final static String currentUser = "currentUser";
 
+    private final static String QUIZ_ATR_NAME = "QUIZ";
+
+    @Override
+    protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        String quizIdStr = httpServletRequest.getParameter("quizId");
+        int quizId = Integer.parseInt(quizIdStr);
+        ServletContext context = getServletContext();
+        QuizDao quizDao = (QuizDao) context.getAttribute(ContextDataNames.QUIZ_DAO);
+        QuestionDao questionDao = (QuestionDao) context.getAttribute(ContextDataNames.QUESTION_DAO);
+
+        try {
+            Quiz quiz = quizDao.getQuiz(quizId);
+            List<Question> questions = quiz.getQuestionSet();
+            if(quiz.isRandom()) {
+                questions = QuestionToHTML.shuffleList(questions);
+            }
+            quiz.setQuestionSet(questions);
+
+            httpServletRequest.setAttribute(QUIZ_ATR_NAME, quiz);
+
+            RequestDispatcher dispatcher;
+            if(quiz.isOnePage()) {
+                dispatcher = httpServletRequest.getRequestDispatcher("onePageQuiz.jsp");
+            } else {
+                dispatcher = httpServletRequest.getRequestDispatcher("onePageQuiz.jsp");
+            }
+            dispatcher.forward(httpServletRequest, httpServletResponse);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         ServletContext context = getServletContext();
         UserDao userDao = (UserDao) context.getAttribute(ContextDataNames.USER_DAO);
-        //QuizDao quizdao = (QuizDao) context.getAttribute(ContextDataNames.QUIZ_DAO);
         QuestionDao questionDao = (QuestionDao) context.getAttribute(ContextDataNames.QUESTION_DAO);
         HistoryDao historyDao = (HistoryDao) context.getAttribute(ContextDataNames.HISTORY_DAO);
 

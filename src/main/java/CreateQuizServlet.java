@@ -126,17 +126,11 @@ public class CreateQuizServlet extends HttpServlet {
             for(Question question : questions) {
                 appendQuestion(questionDao, question, quizId);
             }
+
+            String path = "quizInfo.jsp?id=" + quizId;
+            RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher(path);
+            dispatcher.forward(httpServletRequest, httpServletResponse);
         }
-
-        quiz.setQuestionSet(questions);
-        httpServletRequest.setAttribute("quiz", quiz);
-        RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("onePageQuiz.jsp");
-        dispatcher.forward(httpServletRequest, httpServletResponse);
-
-        /*httpServletRequest.setAttribute("username", userName);
-        httpServletRequest.setAttribute("quizname", quizName);
-        RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("quizInfo.jsp");
-        dispatcher.forward(httpServletRequest, httpServletResponse);*/
     }
 
     private void appendQuestion(QuestionDao questionDao, Question question, int quizId) {

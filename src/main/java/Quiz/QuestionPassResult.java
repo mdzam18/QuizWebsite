@@ -1,5 +1,6 @@
 package Quiz;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionPassResult {
@@ -11,10 +12,12 @@ public class QuestionPassResult {
     public final Question question;
     public int userScore;
     public byte passType;
+    public List<String> userAnswers;
 
     public QuestionPassResult(int userId, Question question, List<String> userAnswers) {
         this.userId = userId;
         this.question = question;
+        this.userAnswers = new ArrayList<>(userAnswers);
         userScore = 0;
         passType = NOT_QUESTION_PASS;
     }

@@ -122,17 +122,17 @@
     <input type="hidden" name="username" VALUE= <%=(String)session.getAttribute("currentUser")%>>
 </form>
 
-<p> <button class = "button button2" value = "popular quizzes" onclick= show("popular_id")>popular quizzes</button></p>
-<div id = "popular_id" style="display: none">
-    <%
-        /* List<Quiz> popularQuizzes = qDao.getPopularQuizzes();
-         for(Quiz quiz: popularQuizzes){
-             out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
-         }
-         */
-    %>
-    <input class="button button6" type="button" value="close" onclick=hide("popular_id")>
-</div>
+<p> <button value = "popular quizzes" onclick= show("popular_id")>Popular quizzes</button></p>
+    <div id = "popular_id" style="display: none">
+        <%
+            List<Quiz> popularQuizzes = qDao.getPopularQuizzes();
+            for(Quiz quiz: popularQuizzes){ %>
+        <% String href = "/quizInfo.jsp?id=" + quiz.getQuizId(); %>
+        <li><a href="<%= href %>"><%= quiz.getDescription() %></a></li>
+        <% } %>
+        %>
+        <input type="button" value="Hide" onclick=hide("popular_id")>
+    </div>
 
 <p> <button class = "button button2" value = "recently quizzes" onclick= show("recently_id")>recently created quizzes</button></p>
 <div id = "recently_id" style="display: none">

@@ -21,7 +21,6 @@
      %>
 
     <body>
-        <div
         <form action="UserServlet" method="post">
             <label for="name">Name</label>
             <input type="text" name="name" value= <%= uDao.getUser(id).getName() %> ><br/>

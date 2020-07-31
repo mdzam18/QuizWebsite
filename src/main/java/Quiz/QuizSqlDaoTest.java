@@ -8,13 +8,8 @@ import org.junit.jupiter.api.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -62,9 +57,9 @@ public class QuizSqlDaoTest {
         Quiz q2 = database.getQuiz(2);
         Quiz q3 = database.getQuiz(3);
 
-        assertEquals(q1.getCreator(), 1);
-        assertEquals(q2.getCreator(), 2);
-        assertEquals(q3.getCreator(), 3);
+        assertEquals(q1.getCreatorId(), 1);
+        assertEquals(q2.getCreatorId(), 2);
+        assertEquals(q3.getCreatorId(), 3);
 
         assertFalse(q1.isRandom());
         assertFalse(q1.isOnePage());
@@ -96,7 +91,7 @@ public class QuizSqlDaoTest {
         List<Quiz> user1 = database.getQuizzesForUser(1);
 
         assertEquals(user1.size(), 1);
-        assertEquals(user1.get(0).getCreator(), 1);
+        assertEquals(user1.get(0).getCreatorId(), 1);
         assertEquals(user1.get(0).getQuizId(), 1);
     }
 

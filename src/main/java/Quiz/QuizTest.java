@@ -24,10 +24,10 @@ public class QuizTest {
 
     @Test
     public void testCheckCreator(){
-        assert(quiz.getCreator() == CREATOR);
+        assert(quiz.getCreatorId() == CREATOR);
 
-        quiz.setCreator(0);
-        assert(quiz.getCreator() == 0);
+        quiz.setCreatorId(0);
+        assert(quiz.getCreatorId() == 0);
     }
 
     @Test

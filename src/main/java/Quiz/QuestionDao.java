@@ -174,4 +174,13 @@ public class QuestionDao {
         return 0;
     }
 
+    public int getQuestionQuizId(int questionId) throws SQLException {
+        String sql = "SELECT QuizId FROM " + questionTable + " WHERE QuestionId = ?";
+        PreparedStatement prepState = con.prepareStatement(sql);
+        prepState.setInt(1, questionId);
+        ResultSet resultSet = prepState.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(1);
+    }
+
 }

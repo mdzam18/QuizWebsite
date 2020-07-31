@@ -15,6 +15,8 @@ public class QuestionPassResult {
     public QuestionPassResult(int userId, Question question, List<String> userAnswers) {
         this.userId = userId;
         this.question = question;
+        userScore = 0;
+        passType = NOT_QUESTION_PASS;
     }
 
     public void setPassType(byte passType) {

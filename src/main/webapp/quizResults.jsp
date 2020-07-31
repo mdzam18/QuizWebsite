@@ -10,6 +10,11 @@
 </head>
 <body>
     <div id="content">
+        <p></p>
+
+        <!-- TODO add old histories -->
+
+        <!-- TODO this history -->
 
     </div>
 </body>

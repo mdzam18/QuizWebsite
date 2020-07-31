@@ -37,7 +37,7 @@
 <%
     UserSqlDao uDao = new UserSqlDao();
     FriendsSqlDao fDao = new FriendsSqlDao();
-    //QuizSqlDao qDao = new QuizSqlDao();
+    QuizSqlDao qDao = new QuizSqlDao();
     //HistorySqlDao historyDao = new HistorySqlDao();
     int id = uDao.getUserIdByName((String)session.getAttribute("currentUser"));
     System.out.println(uDao.getUser(id).getName());
@@ -64,6 +64,21 @@
 </div>
 
 <button class = "button" style="font-size: 20px;" onclick="toCreateQuizPage()">Create New Quiz</button>
+
+<ul>
+    <%
+        List<Quiz> allQuizzes = qDao.getAllQuizzes();
+        for(Quiz quiz : allQuizzes) {
+            out.print("<li>");
+            out.print("<a href=\"quizInfo.jsp?id=" + quiz.getQuizId() + "\">");
+            out.print("<strong>" + quiz.getDescription());
+            out.print("</strong> by <strong>");
+            int uId = quiz.getCreatorId();
+            out.print(userDao.getUser(uId).getUserName());
+            out.print("</strong><</a>/li>");
+        }
+    %>
+</ul>
 
 <p><button class = "button button4" type = "button" Value="friends" onclick=show("friends_id")>Friends</button></p>
 <div id = "friends_id" style="display: none">

@@ -134,19 +134,6 @@
         <input type="button" value="Hide" onclick=hide("popular_id")>
     </div>
 
-<p> <button class = "button button2" value = "recently quizzes" onclick= show("recently_id")>recently created quizzes</button></p>
-<div id = "recently_id" style="display: none">
-    <%
-        /*
-        List<Quiz> recentlyCreated = qDao.getRecentlyCreatedQuizzes();
-        for(Quiz quiz: recentlyCreated){
-            out.println("description: "+ quiz.getDescription() + " category: " + quiz.getCategory());
-        }
-        */
-    %>
-    <input class="button button6" type="button" value="close" onclick=hide("recently_id")>
-</div>
-
  <p> <button value = "recently quizzes" onclick= show("recently_id")>Recently created quizzes</button></p>
     <div id = "recently quizzes" style="display: none">
                 <%

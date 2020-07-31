@@ -34,13 +34,13 @@
                     Id
                 </div>
                 <div class="cell">
+                    Description
+                </div>
+                <div class="cell">
                     Category
                 </div>
                 <div class="cell">
                     Creator Id
-                </div>
-                <div class="cell">
-                    Description
                 </div>
             </div>
 
@@ -49,14 +49,14 @@
                     <div class="cell" data-title="Id">
                         ${quiz.quizId}
                     </div>
+                    <div class="cell" data-title="Description">
+                            ${quiz.description}
+                    </div>
                     <div class="cell" data-title="Category">
                         ${quiz.category}
                     </div>
                     <div class="cell" data-title="Creator Id">
                         ${quiz.creatorId}
-                    </div>
-                    <div class="cell" data-title="Description">
-                        ${quiz.description}
                     </div>
                     <div class="centered">
                         <form action="/admin/quizzes?id=${quiz.quizId}" method="POST">

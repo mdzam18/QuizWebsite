@@ -9,6 +9,7 @@
 <%@ page import= "java.sql.SQLException" %>
 <%@ page import="MailPackage.Mail" %>
 <%@ page import="MailPackage.MailSqlDao" %>
+<%@ page import="HistoryPackage.History" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page isELIgnored = "false" %>
 
@@ -37,8 +38,8 @@
 <%
     UserSqlDao uDao = new UserSqlDao();
     FriendsSqlDao fDao = new FriendsSqlDao();
-    //QuizSqlDao qDao = new QuizSqlDao();
-    //HistorySqlDao historyDao = new HistorySqlDao();
+    QuizSqlDao qDao = new QuizSqlDao();
+    HistorySqlDao historyDao = new HistorySqlDao();
     int id = uDao.getUserIdByName((String)session.getAttribute("currentUser"));
     System.out.println(uDao.getUser(id).getName());
 

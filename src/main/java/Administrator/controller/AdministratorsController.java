@@ -32,6 +32,10 @@ public class AdministratorsController extends HttpServlet {
             try {
                 User user = userDao.getUser(Integer.valueOf(id));
                 adminDao.promoteUser(user);
+                req.setAttribute("users", userDao.getAllUsers());
+                RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/users.jsp");
+                dispatcher.forward(req,resp);
+                return;
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

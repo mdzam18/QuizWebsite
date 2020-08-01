@@ -1,15 +1,15 @@
+import ProfilePackage.CookieManager;
 import ServletContextPackage.ContextDataNames;
 import UserPackage.UserDao;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
+@WebServlet("/RegistrationServlet")
 public class RegistrationServlet extends HttpServlet {
 
     private final static String USERNAME_BUSY = "USERNAME_IS_BUSY";
@@ -48,6 +48,10 @@ public class RegistrationServlet extends HttpServlet {
 
             HttpSession session = httpServletRequest.getSession();
             session.setAttribute(currentUser, username);
+
+            String path = httpServletRequest.getContextPath();
+            Cookie[] newCookies = CookieManager.convertToCookies(path, username, password);
+            CookieManager.cookiesToResponse(httpServletResponse, newCookies);
 
             httpServletRequest.getRequestDispatcher("UserPage.jsp").forward(httpServletRequest, httpServletResponse);
         } catch (SQLException e) {

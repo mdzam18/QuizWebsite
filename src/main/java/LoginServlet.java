@@ -1,16 +1,17 @@
+import ProfilePackage.CookieManager;
 import ServletContextPackage.ContextDataNames;
 import UserPackage.*;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Map;
 
+@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
     private final static String NO_USERNAME = "USERNAME_NOT_EXISTS";
@@ -49,11 +50,33 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        String username = httpServletRequest.getParameter("username").trim();
+        String password = httpServletRequest.getParameter("password").trim();
+        boolean remember = (httpServletRequest.getParameter("remember") != null);
+
         HttpSession session = httpServletRequest.getSession();
-        session.setAttribute(currentUser, httpServletRequest.getParameter("username").trim());
+        session.setAttribute(currentUser, username);
+
+        Cookie[] cookies = httpServletRequest.getCookies();
+        if(remember) {
+            Map<String, Cookie> map = CookieManager.getData(cookies);
+            if(map != null) {
+                for(Cookie c : map.values()) {
+                    c.setMaxAge(CookieManager.THREE_WEEKS);
+                }
+            } else {
+                String path = httpServletRequest.getContextPath();
+                Cookie[] newCookies = CookieManager.convertToCookies(path, username, password);
+                CookieManager.cookiesToResponse(httpServletResponse, newCookies);
+            }
+        } else {
+            if(cookies != null) {
+                CookieManager.deleteMyCookies(httpServletResponse, cookies);
+            }
+        }
 
         try {
-            if(userDao.getUser(userDao.getUserIdByName(httpServletRequest.getParameter("username"))).isAdministrator()){
+            if(userDao.getUser(userDao.getUserIdByName(username)).isAdministrator()){
                 httpServletRequest.setAttribute("isAdmin", 1);
             }
         } catch (SQLException throwables) {

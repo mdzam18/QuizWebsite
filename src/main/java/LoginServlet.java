@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 
         try {
             if(userDao.getUser(userDao.getUserIdByName(httpServletRequest.getParameter("username"))).isAdministrator()){
-                session.setAttribute("isAdmin", 1);
+                httpServletRequest.setAttribute("isAdmin", 1);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

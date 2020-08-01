@@ -13,7 +13,7 @@ import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 
 public final class welcome_jsp extends org.apache.jasper.runtime.HttpJspBase
-    implements org.apache.jasper.runtime.JspSourceDependent {
+        implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final javax.servlet.jsp.JspFactory _jspxFactory =
           javax.servlet.jsp.JspFactory.getDefaultFactory();
@@ -36,7 +36,7 @@ public final class welcome_jsp extends org.apache.jasper.runtime.HttpJspBase
   }
 
   public void _jspService(final javax.servlet.http.HttpServletRequest request, final javax.servlet.http.HttpServletResponse response)
-        throws java.io.IOException, javax.servlet.ServletException {
+          throws java.io.IOException, javax.servlet.ServletException {
 
     final javax.servlet.jsp.PageContext pageContext;
     javax.servlet.http.HttpSession session = null;
@@ -51,7 +51,7 @@ public final class welcome_jsp extends org.apache.jasper.runtime.HttpJspBase
     try {
       response.setContentType("text/html;charset=UTF-8");
       pageContext = _jspxFactory.getPageContext(this, request, response,
-      			null, true, 8192, true);
+              null, true, 8192, true);
       _jspx_page_context = pageContext;
       application = pageContext.getServletContext();
       config = pageContext.getServletConfig();

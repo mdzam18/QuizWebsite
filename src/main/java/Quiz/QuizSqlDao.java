@@ -1,5 +1,6 @@
 package Quiz;
 
+import HistoryPackage.History;
 import HistoryPackage.HistorySqlDao;
 import ProfilePackage.CreateTablesForTests;
 import ProfilePackage.ProfileDataSrc;
@@ -173,7 +174,7 @@ public class QuizSqlDao implements QuizDao{
     @Override
     public List<Quiz> getPopularQuizzes() throws SQLException {
         List<Quiz> res = new ArrayList<>();
-        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.HistoryTable + " group by QuizId order by count(*) DESC limit 5;");
+        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.HistoryTable + " group by QuizId order by count(QuizId) DESC limit 5;");
         ResultSet rs = stm.executeQuery();
         while (rs.next()){
             int quizId = rs.getInt(2);
@@ -199,7 +200,7 @@ public class QuizSqlDao implements QuizDao{
     @Override
     public List<Quiz> getRecentlyCreatedQuizzesByUser(int userId) throws SQLException {
         List<Quiz> res = new ArrayList<>();
-        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.QuizTable + " where CreatorId = ? order by QuizId DESC LIMIT 5;");
+        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.QuizTable + " where CreatorId = ? LIMIT 5;");
         stm.setInt(1, userId);
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {
@@ -297,6 +298,17 @@ public class QuizSqlDao implements QuizDao{
         }
 
         return quizzes;
+    }
+
+    public static List<Quiz> sortByQuizIdDescending(List<Quiz> quizzes){
+        ArrayList<Quiz> list = new ArrayList<>(quizzes);
+        list.sort(new Comparator<Quiz>() {
+            @Override
+            public int compare(Quiz q1, Quiz q2) {
+                return (int) (q2.getQuizId() - q1.getQuizId());
+            }
+        });
+        return list;
     }
 
 }

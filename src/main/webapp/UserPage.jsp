@@ -121,7 +121,7 @@
     <input type="hidden" name="username" VALUE= <%=(String)session.getAttribute("currentUser")%>>
 </form>
 
-<p> <button value = "popular quizzes" onclick= show("popular_id")>Popular quizzes</button></p>
+<p> <button class = "button" value = "popular quizzes" onclick= show("popular_id")>Popular quizzes</button></p>
 <div id = "popular_id" style="display: none">
     <%
         List<Quiz> popularQuizzes = qDao.getPopularQuizzes();
@@ -130,10 +130,10 @@
             out.println("<li><a href=\"CheckTakenQuiz?quizId=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + "</a> </li>");
         }
     %>
-    <input type="button" value="Hide" onclick=hide("popular_id")>
+    <input class="button button6" type="button" value="Hide" onclick=hide("popular_id")>
 </div>
 
-<p> <button value = "recently quizzes" onclick= show("recently_id")>Recently created quizzes</button></p>
+<p> <button class = "button" value = "recently quizzes" onclick= show("recently_id")>Recently created quizzes</button></p>
 <div id = "recently_id" style="display: none">
     <%
         List<Quiz> recentQuizzes = qDao.getRecentlyCreatedQuizzes();
@@ -143,10 +143,10 @@
             out.println("<li><a href=\"CheckTakenQuiz?quizId=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + "</a> </li>");
         }
     %>
-    <input type="button" value="Hide" onclick=hide("recently_id")>
+    <input class="button button6" type="button" value="Hide" onclick=hide("recently_id")>
 </div>
 
-<p> <button value = "recently taken quizzes" onclick= show("recentlyTaken_id")>Recently taken quizzes</button></p>
+<p> <button class = "button" value = "recently taken quizzes" onclick= show("recentlyTaken_id")>Recently taken quizzes</button></p>
 <div id = "recentlyTaken_id" style="display: none">
     <%
         List<History> recentlyTakenQuizzes = historyDao.getHistories(id);
@@ -155,10 +155,10 @@
             out.println("<li><a href=\"CheckTakenQuiz?quizId=" +  history.getQuizId() + "\">" + qDao.getQuiz(history.getQuizId()).getDescription() + "</a> </li>");
         }
     %>
-    <input type="button" value="Hide" onclick=hide("recentlyTaken_id")>
+    <input class="button button6" type="button" value="Hide" onclick=hide("recentlyTaken_id")>
 </div>
 
-<p> <button value = "your recently created quizzes" onclick= show("your_recently_id")>Your recently created quizzes</button></p>
+<p> <button class = "button" value = "your recently created quizzes" onclick= show("your_recently_id")>Your recently created quizzes</button></p>
 <div id = "your_recently_id" style="display: none">
     <%
         recentQuizzes = qDao.getRecentlyCreatedQuizzes();
@@ -168,10 +168,10 @@
             out.println("<li><a href=\"CheckTakenQuiz?quizId=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + "</a> </li>");
         }
     %>
-    <input type="button" value="Hide" onclick=hide("your_recently_id")>
+    <input class="button button6" type="button" value="Hide" onclick=hide("your_recently_id")>
 </div>
 
-<p> <button value = "friends activity" onclick= show("friends_activity_id")>Your friends' recent activity</button></p>
+<p> <button class = "button" value = "friends activity" onclick= show("friends_activity_id")>Your friends' recent activity</button></p>
 <div id = "friends_activity_id" style="display: none">
     <%
         user = uDao.getUser(uDao.getUserIdByName(name));
@@ -186,7 +186,7 @@
             out.println("<li><a href=\"CheckTakenQuiz?quizId=" +  history.getQuizId() + "\">" + qDao.getQuiz(history.getQuizId()).getDescription() + "</a> </li>");
         }
         %>
-    <input type="button" value="Hide" onclick=hide("friends_activity_id")>
+    <input class="button button6" type="button" value="Hide" onclick=hide("friends_activity_id")>
 </div>
 
 

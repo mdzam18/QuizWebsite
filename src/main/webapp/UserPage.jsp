@@ -121,6 +121,10 @@
     <input type="hidden" name="username" VALUE= <%=(String)session.getAttribute("currentUser")%>>
 </form>
 
+<c:if test="${isAdmin != null}">
+    <a href="/admin">Go as Administrator</a>
+</c:if>
+
 <p> <button class = "button" value = "popular quizzes" onclick= show("popular_id")>Popular quizzes</button></p>
 <div id = "popular_id" style="display: none">
     <%

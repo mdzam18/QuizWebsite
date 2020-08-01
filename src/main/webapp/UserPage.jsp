@@ -153,7 +153,7 @@
         List<Quiz> popularQuizzes = qDao.getPopularQuizzes();
         List<Quiz> sorted = qDao.sortByQuizIdDescending(popularQuizzes);
         for(Quiz quiz: sorted) {
-            out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + "</a> </li>");
+            out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + " (Author: " + uDao.getUser(quiz.getCreatorId()).getUserName() + ")" + "</a> </li>");
         }
     %>
     </ul>
@@ -167,8 +167,7 @@
         List<Quiz> recentQuizzes = qDao.getRecentlyCreatedQuizzes();
         sorted = qDao.sortByQuizIdDescending(recentQuizzes);
         for(Quiz quiz: sorted){
-            System.out.println(quiz.getQuizId() + " " + quiz.getDescription());
-            out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + "</a> </li>");
+            out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + " (Author: " + uDao.getUser(quiz.getCreatorId()).getUserName() + ")" + "</a> </li>");
         }
     %>
     </ul>
@@ -182,7 +181,7 @@
         List<History> recentlyTakenQuizzes = historyDao.getHistories(id);
         List<History> sort = historyDao.sortByEndDate(recentlyTakenQuizzes);
         for(History history : sort){
-            out.println("<li><a href=\"/quizInfo.jsp?id=" +  history.getQuizId() + "\">" + qDao.getQuiz(history.getQuizId()).getDescription() + "</a> </li>");
+            out.println("<li><a href=\"/quizInfo.jsp?id=" +  history.getQuizId() + "\">" + qDao.getQuiz(history.getQuizId()).getDescription() + " (Author: " + uDao.getUser(history.getUserId()).getUserName() + ")" + "</a> </li>");
         }
     %>
     </ul>
@@ -197,7 +196,7 @@
         sorted = qDao.sortByQuizIdDescending(recentQuizzes);
         for(Quiz quiz: sorted){
             System.out.println(quiz.getQuizId() + " " + quiz.getDescription());
-            out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + "</a> </li>");
+            out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + " (Author: " + uDao.getUser(quiz.getCreatorId()).getUserName() + ")" + "</a> </li>");
         }
     %>
     </ul>
@@ -217,7 +216,7 @@
         }
         sort = HistorySqlDao.sortByEndDate(friendHistories);
         for(History history : sort){
-            out.println("<li><a href=\"/quizInfo.jsp?id=" +  history.getQuizId() + "\">" + qDao.getQuiz(history.getQuizId()).getDescription() + "</a> </li>");
+           out.println("<li><a href=\"/quizInfo.jsp?id=" +  history.getQuizId() + "\">" + qDao.getQuiz(history.getQuizId()).getDescription() + " (Author: " + uDao.getUser(history.getUserId()).getUserName() + ")" + "</a> </li>");
         }
         %>
         </ul>

@@ -43,13 +43,7 @@ public class LoginServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        try {
-            if(userDao.getUser(userDao.getUserIdByName(username)).isAdministrator()){
-                httpServletRequest.setAttribute("isAdmin", 1);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+
     }
 
 
@@ -58,6 +52,13 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = httpServletRequest.getSession();
         session.setAttribute(currentUser, httpServletRequest.getParameter("username").trim());
 
+        try {
+            if(userDao.getUser(userDao.getUserIdByName(httpServletRequest.getParameter("username"))).isAdministrator()){
+                session.setAttribute("isAdmin", 1);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         httpServletRequest.getRequestDispatcher("UserPage.jsp").forward(httpServletRequest, httpServletResponse);
     }
 

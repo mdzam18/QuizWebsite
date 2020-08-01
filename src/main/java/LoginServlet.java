@@ -42,7 +42,16 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        try {
+            if(userDao.getUser(userDao.getUserIdByName(username)).isAdministrator()){
+                httpServletRequest.setAttribute("isAdmin", 1);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
+
 
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {

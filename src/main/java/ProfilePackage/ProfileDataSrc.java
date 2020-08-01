@@ -15,7 +15,7 @@ public class ProfileDataSrc {
 //        con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quiz_db", "root", "12345678");
 
         //Class.forName("com.mysql.jdbc.Driver");
-        con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "1234");
+        con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/", "", "");
         //con = getConnection("", "root", "01234567");
         return con;
     }

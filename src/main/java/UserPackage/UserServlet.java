@@ -57,6 +57,16 @@ public class UserServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+
+        try {
+            if(uDao.getUser(id).isAdministrator()){
+                httpServletRequest.setAttribute("isAdmin", 1);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
         httpServletRequest.getRequestDispatcher(webPageName).forward(httpServletRequest, httpServletResponse);
     }
     

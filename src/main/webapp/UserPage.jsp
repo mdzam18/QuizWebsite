@@ -32,6 +32,14 @@
     function toCreateQuizPage() {
         window.location.href = "createQuiz.jsp";
     }
+    /*window.onload = function () {
+        let elements = document.getElementsByTagName("form");
+        for(let i = 0; i<elements.length; i++) {
+            elements[i].addEventListener("click", function(event) {
+                event.preventDefault();
+            });
+        }
+    }*/
 </script>
 
 <%

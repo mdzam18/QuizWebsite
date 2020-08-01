@@ -4,7 +4,7 @@ html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: darkgrey;
+    background: #f6fcf6;
 }
 
 #contentPlace {
@@ -113,8 +113,9 @@ html, body {
     height: 50px;
     color: white;
     font-size: 19px;
-    background: rgb(44, 44, 44);
-    border: 1.5px solid rgb(30, 30, 30);
+    /*background: rgb(44, 44, 44);*/
+    background: #4CAF50;
+    border: 1px solid rgb(21, 27, 22);
     border-radius: 3px;
     transition-duration: 0.4s;
     cursor: pointer;
@@ -140,31 +141,31 @@ html, body {
 /** Registration **/
 #registerSpace {
     margin-left: 450px;
-    background: rgb(105, 105, 105);
+    /*background: rgb(105, 105, 105);*/
+    background: #4CAF50;
     transition: 0.8s;
     z-index: 10;
 }
 
 #scrollRegistrationButton {
     position: absolute;
-    margin-top: 330px;
+    margin-top: 340px;
     margin-left: 145px;
     width: 160px;
     height: 60px;
     font-weight: 600;
     font-size: 23px;
-    border: none;
+    border: 2px solid white;
     box-sizing: border-box;
     border-radius: 2px;
-    color: rgb(75, 75, 75);
-    background: rgb(194, 194, 194);
+    color: white;
+    background: #4CAF50;
     transition-duration: 0.7s;
 }
 #scrollRegistrationButton:hover {
     cursor: pointer;
-    border: 2.5px solid rgb(194, 194, 194);
-    color: rgb(194, 194, 194);
-    background: rgb(68, 68, 68);
+    color: #4CAF50;
+    background: white;
 }
 #scrollRegistrationButton:focus {
     outline: none;
@@ -195,7 +196,7 @@ html, body {
 .registerSpaceTextAbove {
     margin-top: 302px;
     font-size: 17px;
-    color: rgb(199, 199, 199);
+    color: rgb(231, 227, 227);
 }
 
 /** Registration Content **/
@@ -227,7 +228,7 @@ html, body {
 }
 #passwordRepReg_input {
     margin-bottom: 20px;
- }
+}
 #usernameReg_input::placeholder, #passwordReg_input::placeholder, #passwordRepReg_input::placeholder {
     color: rgba(172, 172, 172, 0.6);
     font-weight: 200;

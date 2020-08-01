@@ -323,3 +323,9 @@
 0:0:0:0:0:0:0:1 - - [01/Aug/2020:16:07:30 +0400] "POST /LoginServlet HTTP/1.1" 200 7363 http-bio-8089-exec-8 149
 0:0:0:0:0:0:0:1 - - [01/Aug/2020:16:07:33 +0400] "GET /quizInfo.jsp?id=2 HTTP/1.1" 200 3479 http-bio-8089-exec-10 31
 0:0:0:0:0:0:0:1 - - [01/Aug/2020:16:07:33 +0400] "GET /styles/quizInfo_style1.css HTTP/1.1" 200 2191 http-bio-8089-exec-10 15
+0:0:0:0:0:0:0:1 - - [01/Aug/2020:17:28:17 +0400] "GET / HTTP/1.1" 200 3719 http-bio-8089-exec-2 92
+0:0:0:0:0:0:0:1 - - [01/Aug/2020:17:28:17 +0400] "GET /styles/welcome_style1.css HTTP/1.1" 200 5123 http-bio-8089-exec-3 11
+0:0:0:0:0:0:0:1 - - [01/Aug/2020:17:28:17 +0400] "GET /js_code/welcome_js1.js HTTP/1.1" 304 - http-bio-8089-exec-4 6
+0:0:0:0:0:0:0:1 - - [01/Aug/2020:17:28:30 +0400] "GET /LoginServlet?username=giorgi&password=1234 HTTP/1.1" 200 7 http-bio-8089-exec-6 67
+0:0:0:0:0:0:0:1 - - [01/Aug/2020:17:28:31 +0400] "POST /LoginServlet HTTP/1.1" 200 7363 http-bio-8089-exec-7 182
+0:0:0:0:0:0:0:1 - - [01/Aug/2020:17:28:31 +0400] "GET /style.css HTTP/1.1" 304 - http-bio-8089-exec-9 5

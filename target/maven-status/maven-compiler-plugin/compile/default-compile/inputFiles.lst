@@ -41,6 +41,7 @@ C:\Users\user\Desktop\QuizWebsite\src\main\java\MailPackage\MailDao.java
 C:\Users\user\Desktop\QuizWebsite\src\main\java\FriendsPackage\FriendsSqlDaoTest.java
 C:\Users\user\Desktop\QuizWebsite\src\main\java\Quiz\QuestionResponse.java
 C:\Users\user\Desktop\QuizWebsite\src\main\java\Statistics\StatisticsSqlDaoTest.java
+C:\Users\user\Desktop\QuizWebsite\src\main\java\Quiz\QuestionPassResult.java
 C:\Users\user\Desktop\QuizWebsite\src\main\java\ProfilePackage\ProfileDataSrc.java
 C:\Users\user\Desktop\QuizWebsite\src\main\java\Administrator\controller\AdministratorController.java
 C:\Users\user\Desktop\QuizWebsite\src\main\java\FriendsPackage\FriendsSqlDao.java
@@ -51,6 +52,7 @@ C:\Users\user\Desktop\QuizWebsite\src\main\java\ProfilePackage\CreateTablesForTe
 C:\Users\user\Desktop\QuizWebsite\src\main\java\MailPackage\Mail.java
 C:\Users\user\Desktop\QuizWebsite\src\main\java\MailPackage\MailSqlDaoTest.java
 C:\Users\user\Desktop\QuizWebsite\src\main\java\UserPackage\UserDao.java
+C:\Users\user\Desktop\QuizWebsite\src\main\java\Administrator\controller\StatisticsController.java
 C:\Users\user\Desktop\QuizWebsite\src\main\java\Administrator\dao\AdministratorSqlDaoTest.java
 C:\Users\user\Desktop\QuizWebsite\src\main\java\UserPackage\UserServlet.java
 C:\Users\user\Desktop\QuizWebsite\src\main\java\Quiz\MultipleChoiceQuestion.java

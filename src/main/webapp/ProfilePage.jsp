@@ -49,5 +49,9 @@
     <input type="hidden" name="username" value=<%=name%>>
 </form>
 
+<c:if test="${isAdmin != null}">
+    <a href="/admin">Go as Administrator</a>
+</c:if>
+
 </body>
 </html>

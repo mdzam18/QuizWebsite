@@ -280,10 +280,33 @@
     }
 
     /* display: flex */
-    .score-list {
+    .score-list, .div, .div1, .div2, .div3 {
         display: flex;
         justify-content: center;
     }
+
+    h4{
+        color: #269CE9;
+        font-size: 25px;
+        font-family: Georgia, serif;
+        text-align: center;
+    }
+
+    .div{
+        padding: 25px 20px;
+    }
+
+    p{
+        font-size: 27px;
+        text-align: center;
+        font-family: arial;
+    }
+
+    p span{
+        font-width: bold;
+        color: red;
+    }
+
 </style>
 <html>
 <head>
@@ -311,10 +334,13 @@
 </nav>
 <div>
 
-    <form action="/admin/statistics" method="POST">
-        <input type="number" name="field1" placeholder="Type id number" required>
-        <input type = "submit" value = "Submit"/>
-    </form>
+    <div class="div">
+        <h4>Get all taken quizzes for a user:</h4><br>
+        <form action="/admin/statistics" method="POST">
+            <input class="id_field" type="number" name="field1" placeholder="Enter User Id" required>
+            <input type = "submit" value = "Submit"/>
+        </form>
+    </div>
 
     <div class="wrapper">
 
@@ -354,39 +380,47 @@
         </div>
     </div>
 
-    <h4>Quiz score history for a user:</h4><br>
-    <form>
-        <input class="id_field" type="number" name="field2" placeholder="Enter User id" required>
-        <input class="id_field" type="number" name="field3" placeholder="Enter Quiz id" required>
-        <input class = "submit_btn" type = "submit" value = "Submit"/>
-    </form>
+    <div class="div1">
+        <h4>Quiz score history for a user:</h4><br>
+        <form>
+            <input class="id_field" type="number" name="field2" placeholder="Enter User id" required>
+            <input class="id_field" type="number" name="field3" placeholder="Enter Quiz id" required>
+            <input class = "submit_btn" type = "submit" value = "Submit"/>
+        </form>
+        <br>
+    </div>
+    <div class="score-list">
+        <ol class="scores">
+            <c:forEach var="score" items="${scores}">
+                <li>
+                        ${score} points
+                </li>
+            </c:forEach>
+        </ol>
+    </div>
 
-    <ul>
-        <c:forEach var="score" items="${scores}">
-            <li>
-                    ${score}
-            </li>
-        </c:forEach>
-    </ul>
 
-    <h4>Find out who got the highest score in a quiz:</h4><br>
-    <form>
-        <input class="id_field" type="number" name="field4" placeholder="Enter Quiz id" required>
-        <input class = "submit_btn" type = "submit" value = "Submit"/>
-    </form>
+    <div class="div2">
+        <h4>Find out who got the highest score in a quiz:</h4><br>
+        <form>
+            <input class="id_field" type="number" name="field4" placeholder="Enter Quiz id" required>
+            <input class = "submit_btn" type = "submit" value = "Submit"/>
+        </form>
+    </div>
     <c:if test="${user != null}">
-        <p>And the best player is .. ${user.userName}</p>
+        <p>And the best player is .. <span>${user.userName}</span></p>
     </c:if>
 
-    <h4>Calculate the average score in a particular quiz:</h4><br>
-    <form>
-        <input class="id_field" type="number" name="field5" placeholder="Enter Quiz id" required>
-        <input class = "submit_btn" type = "submit" value = "Submit"/>
-    </form>
+    <div class="div3">
+        <h4>Get the average score in a particular quiz:</h4></br>
+        <form>
+            <input class="id_field" type="number" name="field5" placeholder="Enter Quiz id" required>
+            <input class = "submit_btn" type = "submit" value = "Submit"/>
+        </form>
+    </div>
     <c:if test="${avg != null}">
-        <p>The average score is ${avg}</p>
+        <p>The average score is <span>${avg}</span></p>
     </c:if>
-
 
 </div>
 

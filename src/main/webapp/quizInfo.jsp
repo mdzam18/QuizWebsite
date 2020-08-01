@@ -34,23 +34,37 @@
 <body>
 <div id="content">
 
-    <a href="UserPage.jsp">Go to My Page</a>
+    <%
+        String userExists = (String) session.getAttribute("currentUser");
+        if(userExists != null) {
+            out.print("<p><a class=\"myPageLink\" href=\"UserPage.jsp\">Go to My Page</a></p>");
+        }
+    %>
 
     <p class="quizName">
         <%
             out.print("<strong>");
-            out.print((quiz == null)? "NoName": quiz.getDescription());
+            out.print(quiz.getDescription());
             out.print("</strong> by <strong>");
-            if(quiz != null) {
-                out.print(userDao.getUser(quiz.getCreatorId()).getUserName());
-            }
+            out.print(userDao.getUser(quiz.getCreatorId()).getUserName());
             out.print("</strong>");
         %>
     </p>
 
+    <%
+        if(userExists != null) {
+            out.print("<form action=\"/CheckTakenQuiz\" method=\"GET\">");
+            out.print("<input type=\"hidden\" name=\"quizId\" value=\"" + quizId + "\">");
+            out.print("\t<input class=\"perfQuizButton\" type=\"submit\" value=\"Perform Quiz\">");
+            out.print("</form>");
+        }
+    %>
+
     <div class="historyTable">
-        <p>Quiz History</p>
         <table>
+            <tr>
+                <th align="center" colspan="4">Quiz History</th>
+            </tr>
             <tr>
                 <th>User Name</th>
                 <th>Score</th>
@@ -58,7 +72,7 @@
                 <th>Finish Time</th>
             </tr>
             <%
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss dd MMMMm yyyy");
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss dd MMM yyyy");
                 List<History> historiesUnsorted = historyDao.getHistoriesByQuizId(quizId);
                 List<History> historiesByTime = HistorySqlDao.sortByEndDate(historiesUnsorted);
                 for(History history : historiesByTime) {
@@ -72,7 +86,7 @@
                     out.print(format.format(history.getStartDate()));
                     out.println("</td>\n<td>");
                     out.print(format.format(history.getEndDate()));
-                    out.println("</td>\n<td>");
+                    out.println("</td>\n");
                     out.println("</tr>");
                 }
             %>
@@ -81,8 +95,10 @@
 
     <div class="otherHistories">
         <div class="top10Performers">
-            <p>Top 10 Performers</p>
             <table>
+                <tr>
+                    <th align="center" colspan="2">Top 10 Performers</th>
+                </tr>
                 <tr>
                     <th>User Name</th>
                     <th>Score</th>
@@ -104,8 +120,10 @@
             </table>
         </div>
         <div class="last12HourDiv">
-            <p>Quiz Performers of last 12 Hour</p>
             <table>
+                <tr>
+                    <th align="center" colspan="2">Quiz Performers of last 12 Hour</th>
+                </tr>
                 <tr>
                     <th>User Name</th>
                     <th>Score</th>
@@ -134,6 +152,9 @@
 
     <div class="quizStatistics">
         <table>
+            <tr>
+                <th align="center" colspan="6">Statistics</th>
+            </tr>
             <tr>
                 <th>User Name</th>
                 <th>Attempts</th>
@@ -200,21 +221,6 @@
             %>
         </table>
     </div>
-
-    <!--<form action="/CheckTakenQuiz" method="GET">
-        <input type="hidden" name="quizId" value="%= quizId %">
-        <input type="submit" value="Pass Quiz">
-    </form>-->
-
-    <%
-        String isuser = (String) session.getAttribute("currentUser");
-        if(isuser != null) {
-            out.print("<form action=\"/CheckTakenQuiz\" method=\"GET\">");
-            out.print("<input type=\"hidden\" name=\"quizId\" value=\"" + quizId + "\">");
-            out.print("\t<input type=\"submit\" value=\"Pass Quiz\">");
-            out.print("</form>");
-        }
-    %>
 
 </div>
 </body>

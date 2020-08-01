@@ -5,15 +5,33 @@ html, body {
     background: whitesmoke;
 }
 
+.myPageLink {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: black;
+    font-size: 30px;
+}
+
 #content {
     margin: 0 auto;
     height: 100%;
     width: 1000px;
 }
 
+.perfQuizButton {
+    margin-top: 5px;
+    font-size: 24px;
+    background: #4CAF50;
+    outline: none;
+    cursor: pointer;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+}
+
 .quizName {
     padding: 5px;
-    font-size: 25px;
+    font-size: 28px;
     margin-left: 5px;
     margin-top: 10px;
     margin-bottom: 0px;
@@ -22,7 +40,7 @@ html, body {
 .historyTable {
     position: relative;
     width: 600px;
-    height: 290px;
+    height: 300px;
     margin-left: 200px;
     margin-top: 40px;
     overflow: auto;
@@ -35,19 +53,35 @@ html, body {
     position: absolute;
     display: block;
     margin-top: 20px;
-    width: 100%;
+    width: 600px;
     border-collapse: collapse;
 }
 .historyTable table td {
     height: 30px;
     vertical-align: middle;
     border: 1px solid black;
+    text-align: center;
+    padding: 5px 10px;
+}
+.historyTable table th {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px 10px;
 }
 
 .otherHistories {
     width: 820px;
     margin-left: 90px;
     margin-top: 50px;
+    overflow: auto;
+}
+
+.top10Performers table td, .last12HourDiv table td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    border-spacing: 0;
+    column-gap: 0;
+    padding: 5px 10px;
 }
 
 .top10Performers, .last12HourDiv {
@@ -55,8 +89,28 @@ html, body {
     overflow: auto;
     width: 400px;
     height: 300px;
+    overflow: auto;
 }
 
 .last12HourDiv {
     margin-left: 420px;
+}
+
+.quizStatistics {
+    width: 700px;
+    height: 500px;
+    overflow: auto;
+    margin-left: 150px;
+    margin-top: 330px;
+}
+.quizStatistics table td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 5px 10px;
+}
+.top10Performers table th, .last12HourDiv table th, .quizStatistics table th {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px 10px;
 }

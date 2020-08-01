@@ -56,12 +56,12 @@ public class AdministratorSqlDao extends UserSqlDao implements AdministratorDao 
 
 	@Override
 	public boolean deleteUser(User user) throws SQLException, ClassNotFoundException {
-//		return super.deleteUser(user);
-		PreparedStatement stm =
-				con.prepareStatement("DELETE FROM " + userTable + " WHERE UserId = ?;");
-		stm.setInt(1,user.getUserId());
-		stm.execute();
-		return true;
+		return super.deleteUser(user);
+//		PreparedStatement stm =
+//				con.prepareStatement("DELETE FROM " + userTable + " WHERE UserId = ?;");
+//		stm.setInt(1,user.getUserId());
+//		stm.execute();
+//		return true;
 	}
 
 	@Override

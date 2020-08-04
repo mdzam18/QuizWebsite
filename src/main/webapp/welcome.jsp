@@ -53,10 +53,8 @@
     </div>
 
     <div id="registerSpace">
-        <p class="registerSpaceAppName">AppName</p>
-        <p class="registerSpaceText">
-            Just Text To Fill Space on Web-page
-        </p>
+        <p class="registerSpaceAppName">QuizWebsite</p>
+        <p class="registerSpaceText"><!-- Empty --></p>
         <p class="registerSpaceTextAbove">
             Don't have an account? <strong>Just Create it!</strong>
         </p>

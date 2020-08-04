@@ -53,7 +53,8 @@ public class RegistrationServlet extends HttpServlet {
             Cookie[] newCookies = CookieManager.convertToCookies(path, username, password);
             CookieManager.cookiesToResponse(httpServletResponse, newCookies);
 
-            httpServletRequest.getRequestDispatcher("UserPage.jsp").forward(httpServletRequest, httpServletResponse);
+            //httpServletRequest.getRequestDispatcher("UserPage.jsp").forward(httpServletRequest, httpServletResponse);
+            httpServletResponse.sendRedirect("/MyPage");
         } catch (SQLException e) {
             e.printStackTrace();
         }

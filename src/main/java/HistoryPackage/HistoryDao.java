@@ -3,12 +3,13 @@ package HistoryPackage;
 import Quiz.Quiz;
 import UserPackage.User;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.*;
 
 public interface HistoryDao {
 
-    List<String> forChallenge(int userId) throws SQLException, ClassNotFoundException;
+    List<String> forChallenge(int userId) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException;
 
     public boolean addToHistory(History history) throws SQLException;
 

@@ -30,14 +30,10 @@ public class HistorySqlDao implements HistoryDao {
     }
 
     @Override
-    public List<String> forChallenge(int userId) throws SQLException, ClassNotFoundException {
+    public List<String> forChallenge(int userId) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         QuizSqlDao quizDao = new QuizSqlDao();
         UserSqlDao userDao = null;
-        try {
-            userDao = new UserSqlDao();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        userDao = new UserSqlDao();
         Set<Integer> quizIds = getQuizIds(userId);
         List<String> result = new ArrayList<>();
         for (int quizId : quizIds) {

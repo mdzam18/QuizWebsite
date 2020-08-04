@@ -63,7 +63,7 @@
 </div>
 
 <div class="Profile">
-    <h1> User Name: <%= (String)session.getAttribute("currentUser")%> </h1>
+    <h2> User Name: <%= (String)session.getAttribute("currentUser")%> </h2>
     <h2> Name: <%= uDao.getUser(id).getName() %></h2>
     <h2> Surname: <%= uDao.getUser(id).getSurname() %> </h2>
     <h2> Birth Place: <%= uDao.getUser(id).getBirthPlace() %>  </h2>

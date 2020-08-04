@@ -5,6 +5,7 @@ import Quiz.*;
 import UserPackage.*;
 import org.junit.jupiter.api.*;
 
+import javax.jws.soap.SOAPBinding;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.*;
@@ -102,10 +103,74 @@ class HistorySqlDaoTest {
     }
 
     @Test
-    void testSetTableName(){
+    void testRemoveHistory() throws SQLException {
+        userDao.addUser("sasuke", "uchiha", true);
+        Quiz quiz = quizDao.addQuiz(1, false, false, false,
+                false, 2, "narutoQuiz", "hard", new java.sql.Date(10, 12, 12));
+
+        userDao.addUser("kakashi", "hatake", false);
+        quiz = quizDao.addQuiz(2, false, false, false,
+                false, 2, "narutoQuiz", "hard", new java.sql.Date(10, 12, 12));
+        Date newStartDate = new Date(getModuloCurrentTime() - 4 * ONE_DAY);
+        Date newEndDate = new Date(getModuloCurrentTime() - 15 * ONE_HOUR);
+        historyDao.addToHistory(1, 1, 100, newStartDate, newEndDate);
+        historyDao.addToHistory(2, 2, 100, newStartDate, newEndDate);
+        List<History> list = historyDao.getAllHistories();
+        assertEquals(list.size(), 2);
+
+        historyDao.removeAllHistories();
+        list = historyDao.getAllHistories();
+        assertEquals(list.size(), 0);
+    }
+
+    @Test
+    void testRecentlyTakenQuizzes() throws SQLException, ClassNotFoundException {
+        User user = userDao.addUser("Jon Snow", "Night'sWatch", true);
+        Quiz quiz = quizDao.addQuiz(1, false, false, false,
+                false, 2, "ThroneQuiz", "hard", new java.sql.Date(10, 12, 12));
+        Date newStartDate = new Date(getModuloCurrentTime() - 4 * ONE_DAY);
+        Date newEndDate = new Date(getModuloCurrentTime() - 15 * ONE_HOUR);
+        historyDao.addToHistory(1, 1, 100, newStartDate, newEndDate);
+        List<Quiz> list = historyDao.getRecentlyTakenQuizzes(user);
+        assertEquals(list.size(), 1);
+
+        for (int i = 2; i < 6; i++) {
+            quizDao.addQuiz(1, false, false, false, false, 2, "ThroneQuiz", "hard", new java.sql.Date(10, 12, 12));
+            historyDao.addToHistory(1, i, 100, newStartDate, newEndDate);
+            list = historyDao.getRecentlyTakenQuizzes(user);
+            assertEquals(list.size(), i);
+        }
+
+        for (int i = 6; i < 10; i++) {
+            quizDao.addQuiz(1, false, false, false, false, 2, "ThroneQuiz", "hard", new java.sql.Date(10, 12, 12));
+            historyDao.addToHistory(1, i, 100, newStartDate, newEndDate);
+            list = historyDao.getRecentlyTakenQuizzes(user);
+            assertEquals(list.size(), 5);
+        }
+    }
+
+    @Test
+    void testChallenge() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+        User user = userDao.addUser("Forrest Gump", "Runforrest!", false);
+        Quiz quiz = quizDao.addQuiz(1, false, false, false,
+                false, 2, "ForrestQuizzes", "hard", new java.sql.Date(10, 12, 12));
+        Date newStartDate = new Date(getModuloCurrentTime() - 4 * ONE_DAY);
+        Date newEndDate = new Date(getModuloCurrentTime() - 15 * ONE_HOUR);
+        historyDao.addToHistory(1, 1, 100, newStartDate, newEndDate);
+        List<String> list = historyDao.forChallenge(user.getUserId());
+        assertEquals(list.size(), 1);
+
+        quiz = quizDao.addQuiz(1, false, false, false,
+                false, 2, "ForrestQuizzes", "hard", new java.sql.Date(10, 12, 12));
+        historyDao.addToHistory(1, 2, 100, newStartDate, newEndDate);
+        list = historyDao.forChallenge(user.getUserId());
+        assertEquals(list.size() , 2);
+    }
+
+    @Test
+    void testSetTableName() {
         historyDao.setTableName("tableN2");
         assertEquals(historyDao.getTableName(), "tableN2");
-
         historyDao.setTableName(CreateTablesForTests.HistoryTable);
     }
 

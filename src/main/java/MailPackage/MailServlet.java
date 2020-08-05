@@ -8,6 +8,8 @@ import Quiz.QuizSqlDao;
 import ServletContextPackage.ContextDataNames;
 import UserPackage.UserSqlDao;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -60,12 +62,13 @@ public class MailServlet extends HttpServlet {
                 String to = request.getParameter("username");
                 receiverId = userDao.getUserIdByName(to);
                 if (receiverId == -1) {
-                    out.println("user doesn't exist");
+                    //out.println("user doesn't exist");
+                    request.getRequestDispatcher("UserPage.jsp").forward(request, response);
                 } else {
                     message = request.getParameter("message");
-                    //int senderId, int receiverId, String noteType, String message, Date date, boolean isSeen
                     mailDao.sendMail(senderId, receiverId, Mail.noteType, message, new java.sql.Date(System.currentTimeMillis()), false);
-                    out.println("message successfully sent");
+                    //out.println("message successfully sent");
+                    request.getRequestDispatcher("UserPage.jsp").forward(request, response);
                 }
             } else if (type.equals("challenge")) {
                 String[] desc = request.getParameter("quizzes").split(" - ");
@@ -77,22 +80,28 @@ public class MailServlet extends HttpServlet {
                 int quizId = quizSqlDao.getQuizId(authorId, description);
                 int score = historyDao.getMaxScore(senderId, quizId);
                 if (score == -1) {
-                    out.println("you have never written thi quiz");
+                    //out.println("you have never written this quiz");
+                    request.getRequestDispatcher("UserPage.jsp").forward(request, response);
                 } else {
                     mailDao.sendMail(senderId, receiverId, Mail.challengeType, quizId + "", new java.sql.Date(System.currentTimeMillis()), false);
-                    out.println("challenge successfully sent");
+                   //out.println("challenge successfully sent");
+                    request.getRequestDispatcher("UserPage.jsp").forward(request, response);
                 }
             } else if (type.equals("sendRequest") || type.equals("sendRequestFromProfile")) {
                 receiverId = userDao.getUserIdByName(request.getParameter("username"));
                 checkRequestIds(receiverId, senderId, request, out);
+                request.getRequestDispatcher("UserPage.jsp").forward(request, response);
             } else if (type.equals("confirmRequest")) {
                 receiverId = Integer.parseInt(request.getParameter("username"));
                 friendsDao.confirmFriendRequest(receiverId, senderId);
+                request.getRequestDispatcher("UserPage.jsp").forward(request, response);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ServletException e) {
             e.printStackTrace();
         }
 

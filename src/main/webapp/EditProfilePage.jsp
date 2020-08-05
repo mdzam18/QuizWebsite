@@ -22,6 +22,7 @@
      %>
 
     <body>
+      <div class= "edit" ><h1> Edit profile </h1> </div>
       <div class="Input">
         <form action="UserServlet" method="post">
             <label for="name">Name</label>

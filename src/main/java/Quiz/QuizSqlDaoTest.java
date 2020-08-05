@@ -12,6 +12,7 @@ import org.junit.jupiter.api.*;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -259,6 +260,19 @@ public class QuizSqlDaoTest {
                     false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
             list = database.getRecentlyCreatedQuizzesByUser(user.getUserId());
             assertEquals(list.size(), i);
+        }
+    }
+
+    @Test
+    public void testSort(){
+        List <Quiz> list = new ArrayList<>();
+        for(int i = 1 ; i < 5; i ++){
+            list.add(new Quiz(i, 1));
+        }
+        list.add(new Quiz(0, 1));
+       list =  QuizSqlDao.sortByQuizIdDescending(list);
+        for(int i = 4; i >= 0; i--){
+            assertEquals(list.get(list.size() - i - 1).getQuizId(), i);
         }
     }
 

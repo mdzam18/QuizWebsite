@@ -35,20 +35,24 @@ public class QuizSqlDaoTest {
     public void setUp() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         CreateTablesForTests.QuizTable = CreateTablesForTests.QuizTableTest;
         CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
+        CreateTablesForTests.QuestionTable = CreateTablesForTests.QuestionTableTest;
         userDatabase = new UserSqlDao();
         database = new QuizSqlDao();
         tables = new CreateTablesForTests();
         assertTrue(tables.createUserTable());
         assertTrue(tables.createQuizTable());
+        assertEquals(tables.createQuestionTable(), true);
         addData();
     }
 
     @AfterEach
     public void finishUp() throws SQLException {
+        assertEquals(true, tables.dropTable(CreateTablesForTests.QuestionTableTest));
         assertEquals(true, tables.dropTable(CreateTablesForTests.QuizTableTest));
         assertEquals(true, tables.dropTable(CreateTablesForTests.UsersTableTest));
         CreateTablesForTests.QuizTable = "Quiz";
         CreateTablesForTests.UsersTable = "Users";
+        CreateTablesForTests.QuestionTable = "Questions";
     }
 
     @Test

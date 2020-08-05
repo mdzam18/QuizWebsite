@@ -12,8 +12,9 @@
 
 <html>
     <head>
-        <!--<link href="style.css" rel="stylesheet" type="text/css">-->
         <title>Profile</title>
+
+        <link href="style.css" rel="stylesheet" type="text/css"><!-- Don't delete this link -->
         <style>
             html, body {
                 margin: 0;
@@ -47,7 +48,7 @@
                 text-align: right;
             }
             .InputsFields input[type=text] {
-                width: 200px;
+                width: 205px;
             }
             .editButton {
                 width: 100%;
@@ -75,32 +76,32 @@
      %>
 
     <body>
-      <div class="Inputs">
-        <form action="UserServlet" method="post">
-            <p class="HeaderText">Edit Profile</p>
-            <div class="InputsFields">
-                <p>
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" value= <%= uDao.getUser(id).getName() %> ><br/>
-                </p>
-                <p>
-                    <label for="surname">Surname:</label>
-                    <input type="text" id="surname" name="surname" value= <%= uDao.getUser(id).getSurname() %>><br/>
-                </p>
-                <p>
-                    <label for="birthPlace">Birth Place:</label>
-                    <input type="text" id="birthPlace" name="birthPlace" value= <%= uDao.getUser(id).getBirthPlace() %>><br/>
-                </p>
-                <p>
-                    <label for="status">Status:</label>
-                    <input type="text" id="status" name="status" value= <%= uDao.getUser(id).getStatus() %>><br/>
-                </p>
-            </div>
-            <div class="editButton">
-                <input type="submit" name="button" value="edit">
-                <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
-            </div>
-        </form>
-      </div>
+        <div class="Inputs">
+            <form action="UserServlet" method="post">
+                <p class="HeaderText">Edit Profile</p>
+                <div class="InputsFields">
+                    <p>
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" value= <%= uDao.getUser(id).getName() %> ><br/>
+                    </p>
+                    <p>
+                        <label for="surname">Surname:</label>
+                        <input type="text" id="surname" name="surname" value= <%= uDao.getUser(id).getSurname() %>><br/>
+                    </p>
+                    <p>
+                        <label for="birthPlace">Birth Place:</label>
+                        <input type="text" id="birthPlace" name="birthPlace" value= <%= uDao.getUser(id).getBirthPlace() %>><br/>
+                    </p>
+                    <p>
+                        <label for="status">Status:</label>
+                        <input type="text" id="status" name="status" value= <%= uDao.getUser(id).getStatus() %>><br/>
+                    </p>
+                </div>
+                <div class="editButton">
+                    <input type="submit" name="button" value="edit">
+                    <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
+                </div>
+            </form>
+        </div>
     </body>
 </html>

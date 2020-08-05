@@ -15,6 +15,17 @@
        border-radius: 4px;
        box-sizing: border-box;
 }
+
+.Input{
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+}
+
 .label {
     color: #ca3535;
     background: #4B4B4B;
@@ -52,6 +63,17 @@ input[type=text], select {
     color: black;
     border-radius: 8px;
     border: 2px solid #4CAF50;
+}
+
+.editButton {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
 
 .button1:hover {

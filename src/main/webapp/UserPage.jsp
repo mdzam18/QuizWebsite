@@ -155,9 +155,14 @@
 </style>
 
 <div class="admin">
-    <c:if test="${isAdmin != null}">
+    <%--<c:if test="${isAdmin != null}">
         <a href="/admin">Go as Administrator</a>
-    </c:if>
+    </c:if>--%>
+    <%
+        if(user.isAdministrator()) {
+            out.print("<a href=\"/admin\">Go as Administrator</a>");
+        }
+    %>
 </div>
 
 <p> <button class = "button" value = "popular quizzes" onclick= show("popular_id")>Popular quizzes</button></p>

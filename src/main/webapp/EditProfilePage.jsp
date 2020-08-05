@@ -12,6 +12,7 @@
 
 <html>
     <head>
+        <link href="../style.css" rel="stylesheet" type="text/css">
         <title>Profile</title>
     </head>
 
@@ -21,6 +22,7 @@
      %>
 
     <body>
+      <div class="Input">
         <form action="UserServlet" method="post">
             <label for="name">Name</label>
             <input type="text" name="name" value= <%= uDao.getUser(id).getName() %> ><br/>
@@ -30,8 +32,11 @@
             <input type="text" name="birthPlace" value= <%= uDao.getUser(id).getBirthPlace() %>><br/>
             <label for="status">Status</label>
             <input type="text" name="status" value= <%= uDao.getUser(id).getStatus() %>><br/>
-            <input type="submit" name="button" value="edit">
-            <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
+            <div class="editButton">
+                <input type="submit" name="button" value="edit">
+                <input type="hidden" name="username" VALUE= <%=request.getParameter("username")%>>
+            </div>
         </form>
+      </div>
     </body>
 </html>

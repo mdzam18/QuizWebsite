@@ -104,34 +104,6 @@ public class QuizSqlDao implements QuizDao{
     }
 
     @Override
-    public Quiz addQuiz(int creatorId) throws SQLException {
-        Quiz quiz = null;
-        PreparedStatement stm =
-                con.prepareStatement("SELECT max(QuizId) FROM " + quizTable);
-        ResultSet rs = stm.executeQuery();
-        int quizId = 0;
-        if (rs.next()) {
-            quizId = rs.getInt(1);
-        }
-        quizId++;
-
-        stm = con.prepareStatement("INSERT INTO " + quizTable + "  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
-        stm.setInt(QUIZ_ID, quizId);
-        stm.setBoolean(IS_RANDOM, false);
-        stm.setBoolean(IS_ONE_PAGE, false);
-        stm.setBoolean(IS_IMMEDIATE, false);
-        stm.setBoolean(IN_PRACTICE_MODE, false);
-        stm.setInt(NUMBER_QUESTIONS, 0);
-        stm.setString(DESCRIPTION, "");
-        stm.setString(CATEGORY, null);
-        stm.setInt(CREATOR_ID, creatorId);
-        stm.setDate(CREATE_DATE, new java.sql.Date(System.currentTimeMillis()));
-        stm.executeUpdate();
-        quiz = new Quiz(quizId, creatorId);
-        return quiz;
-    }
-
-    @Override
     public Quiz getQuiz(int quizId) throws SQLException {
         PreparedStatement stm =
                 con.prepareStatement("SELECT * FROM " + quizTable + " WHERE QuizId = ?;");
@@ -166,10 +138,7 @@ public class QuizSqlDao implements QuizDao{
         return false;
     }
 
-    @Override
-    public Connection getConnection(){
-        return con;
-    }
+
 
     @Override
     public List<Quiz> getPopularQuizzes() throws SQLException {

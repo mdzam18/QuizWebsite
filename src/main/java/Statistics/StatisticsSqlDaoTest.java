@@ -154,10 +154,14 @@ public class StatisticsSqlDaoTest {
         userDao.addUser("UserN3", "userN3pass", false);
         userDao.addUser("UserN4", "userN4pass", false);
 
-        quizDao.addQuiz(1);
-        quizDao.addQuiz(1);
-        quizDao.addQuiz(1);
-        quizDao.addQuiz(1);
+        quizDao.addQuiz(1, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        quizDao.addQuiz(1, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        quizDao.addQuiz(1, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        quizDao.addQuiz(1, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
     }
 
 }

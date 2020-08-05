@@ -184,7 +184,8 @@ class HistorySqlDaoTest {
         Date endDate = new Date(getModuloCurrentTime());
 
         userDao.addUser("Java", "Servlet", false);
-        quizDao.addQuiz(userId);
+        quizDao.addQuiz(userId, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
 
         History testHistory = new History(userId, quizId, score, startDate, endDate);
 
@@ -201,7 +202,8 @@ class HistorySqlDaoTest {
         Date newEndDate = new Date(getModuloCurrentTime() - 15 * ONE_HOUR);
 
         userDao.addUser("ABC", "DEF", false);
-        quizDao.addQuiz(newUserId);
+        quizDao.addQuiz(newUserId, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
 
         testHistory.setUserId(newUserId);
         testHistory.setQuizId(newQuizId);
@@ -259,7 +261,8 @@ class HistorySqlDaoTest {
         Date endDate = new Date(getModuloCurrentTime());
 
         userDao.addUser("test", "testpass", false);
-        quizDao.addQuiz(userId);
+        quizDao.addQuiz(userId, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
 
         History testHistory = new History(userId, quizId, score, startDate, endDate);
 
@@ -299,7 +302,8 @@ class HistorySqlDaoTest {
         }
 
         for (int i = 0; i < quizIds.length; i++) {
-            quizDao.addQuiz(userIds[0]);
+            quizDao.addQuiz(userIds[0], false, false, false,
+                    false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
         }
         for (int i = 0; i < quizIds.length; i++) {
             assertNotNull(quizDao.getQuiz(quizIds[i]));
@@ -372,7 +376,8 @@ class HistorySqlDaoTest {
         }
         for (int i = 0; i < QUIZ_NUM; i++) {
             quizIds[i] = (1 + i);
-            quizDao.addQuiz(userIds[0]);
+            quizDao.addQuiz(userIds[0], false, false, false,
+                    false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
         }
 
         long startingDate = System.currentTimeMillis() - 1000 * ONE_DAY;

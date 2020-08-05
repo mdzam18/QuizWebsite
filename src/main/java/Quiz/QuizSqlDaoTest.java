@@ -2,6 +2,7 @@ package Quiz;
 
 import ProfilePackage.CreateTablesForTests;
 import ProfilePackage.ProfileDataSrc;
+import UserPackage.User;
 import UserPackage.UserDao;
 import UserPackage.UserSqlDao;
 import org.junit.jupiter.api.*;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.*;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -144,9 +146,12 @@ public class QuizSqlDaoTest {
 
     @Test
     public void testGetRecentlyCreatedQuizzes() throws SQLException {
-        database.addQuiz(1);
-        database.addQuiz(2);
-        database.addQuiz(3);
+        database.addQuiz(1, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        database.addQuiz(2, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        database.addQuiz(3, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
 
         database.setDescription(4, "4");
         database.setDescription(5, "5");
@@ -171,7 +176,8 @@ public class QuizSqlDaoTest {
 
     @Test
     public void testAddQuiz() throws SQLException {
-        database.addQuiz(3);
+        database.addQuiz(3, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
         assertTrue(database.getQuizzesForUser(3).size() == 2);
     }
 
@@ -202,9 +208,12 @@ public class QuizSqlDaoTest {
 
     @Test
     public void testGetAllQuizzes() throws SQLException {
-        database.addQuiz(1);
-        database.addQuiz(2);
-        database.addQuiz(3);
+        database.addQuiz(1, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        database.addQuiz(2, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        database.addQuiz(3, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
 
         database.setDescription(1, "4");
         database.setDescription(2, "5");
@@ -229,14 +238,33 @@ public class QuizSqlDaoTest {
         assert(q6.equals(allQuizzes.get(5)));
     }
 
+    @Test
+    public void testRecentlyCreatedQuizzesByUser() throws SQLException {
+        User user = userDatabase.addUser("Harry Potter", "boyWhoLived", true);
+        quiz = database.addQuiz(user.getUserId(), false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        List<Quiz> list = database.getRecentlyCreatedQuizzesByUser(user.getUserId());
+        assertEquals(list.size(), 1);
+
+        for(int i  = 2 ; i < 6; i++){
+            database.addQuiz(user.getUserId(), false, false, false,
+                    false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+            list = database.getRecentlyCreatedQuizzesByUser(user.getUserId());
+            assertEquals(list.size(), i);
+        }
+    }
+
     private void addData() throws SQLException {
         userDatabase.addUser("a" , "a" , false);
         userDatabase.addUser("b" , "b", false);
         userDatabase.addUser("c", "c", false);
         
-        database.addQuiz(1);
-        database.addQuiz(2);
-        database.addQuiz(3);
+        database.addQuiz(1, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        database.addQuiz(2, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        database.addQuiz(3, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
 
         database.setDescription(1, "1");
         database.setDescription(2, "2");

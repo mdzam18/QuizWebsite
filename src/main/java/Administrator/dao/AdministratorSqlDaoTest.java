@@ -118,7 +118,8 @@ public class AdministratorSqlDaoTest {
 	public void testDeleteQuiz() throws SQLException {
 		User user = userDao.addUser("MikeWheeler","Eleven11", false);
 		System.out.println(user.getUserId());
-		Quiz quiz = quizDao.addQuiz(1);
+		Quiz quiz = quizDao.addQuiz(1, false, false, false,
+				false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
 		assertEquals(true, adminDao.deleteQuiz(quiz));
 		assertNull(quizDao.getQuiz(1));
 	}
@@ -127,7 +128,8 @@ public class AdministratorSqlDaoTest {
 	public void testDeleteHistory() throws SQLException {
 		List<History> answer = new ArrayList<>();
 		User user = userDao.addUser("Dustin","Suzie23", false);
-		Quiz quiz = quizDao.addQuiz(1);
+		Quiz quiz = quizDao.addQuiz(1, false, false, false,
+				false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
 		historyDao.addToHistory(1,1,25, new Date(), new Date());
 		assertEquals(true, adminDao.deleteHistory(quiz));
 		assertEquals(answer, historyDao.getHistoriesByQuizId(1));

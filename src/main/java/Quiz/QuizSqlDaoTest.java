@@ -1,5 +1,7 @@
 package Quiz;
 
+import HistoryPackage.HistoryDao;
+import HistoryPackage.HistorySqlDao;
 import ProfilePackage.CreateTablesForTests;
 import ProfilePackage.ProfileDataSrc;
 import UserPackage.User;
@@ -24,6 +26,7 @@ public class QuizSqlDaoTest {
     private Connection con;
     private String quizTable = CreateTablesForTests.QuizTableTest;
     private CreateTablesForTests tables;
+    private HistoryDao hDao;
 
     private static final int CREATOR = 123;
     private static final int QUIZ = 456;
@@ -38,23 +41,28 @@ public class QuizSqlDaoTest {
         CreateTablesForTests.QuizTable = CreateTablesForTests.QuizTableTest;
         CreateTablesForTests.UsersTable = CreateTablesForTests.UsersTableTest;
         CreateTablesForTests.QuestionTable = CreateTablesForTests.QuestionTableTest;
+        CreateTablesForTests.HistoryTable = CreateTablesForTests.HistoryTableTest;
         userDatabase = new UserSqlDao();
         database = new QuizSqlDao();
+        hDao = new HistorySqlDao();
         tables = new CreateTablesForTests();
         assertTrue(tables.createUserTable());
         assertTrue(tables.createQuizTable());
+        assertEquals(tables.createHistoryTable(), true);
         assertEquals(tables.createQuestionTable(), true);
         addData();
     }
 
     @AfterEach
     public void finishUp() throws SQLException {
+        assertEquals(true, tables.dropTable(CreateTablesForTests.HistoryTableTest));
         assertEquals(true, tables.dropTable(CreateTablesForTests.QuestionTableTest));
         assertEquals(true, tables.dropTable(CreateTablesForTests.QuizTableTest));
         assertEquals(true, tables.dropTable(CreateTablesForTests.UsersTableTest));
         CreateTablesForTests.QuizTable = "Quiz";
         CreateTablesForTests.UsersTable = "Users";
         CreateTablesForTests.QuestionTable = "Questions";
+        CreateTablesForTests.HistoryTable = "History";
     }
 
     @Test
@@ -107,7 +115,7 @@ public class QuizSqlDaoTest {
         assertFalse(q1.isInPracticeMode());
         assertEquals(q1.getQuestionCount(), 0);
         assert(q1.getDescription().equals("1"));
-        assertEquals(q1.getCategory(), null);
+        assertEquals(q1.getCategory(), "hard");
     }
 
     @Test
@@ -253,6 +261,7 @@ public class QuizSqlDaoTest {
             assertEquals(list.size(), i);
         }
     }
+
 
     private void addData() throws SQLException {
         userDatabase.addUser("a" , "a" , false);

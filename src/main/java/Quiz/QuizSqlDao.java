@@ -139,20 +139,6 @@ public class QuizSqlDao implements QuizDao{
     }
 
 
-
-    @Override
-    public List<Quiz> getPopularQuizzes() throws SQLException {
-        List<Quiz> res = new ArrayList<>();
-        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.HistoryTable + " group by QuizId order by count(QuizId) DESC limit 5;");
-        ResultSet rs = stm.executeQuery();
-        while (rs.next()){
-            int quizId = rs.getInt(2);
-            Quiz q = getQuiz(quizId);
-            res.add(q);
-        }
-        return res;
-    }
-
     @Override
     public List<Quiz> getRecentlyCreatedQuizzes() throws SQLException {
         List<Quiz> res = new ArrayList<>();

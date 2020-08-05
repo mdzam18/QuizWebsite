@@ -19,8 +19,6 @@ public interface QuizDao {
 
 	Quiz getQuizByCreatorAndName(int userId, String	quizName) throws SQLException;
 
-	List<Quiz> getPopularQuizzes() throws SQLException;
-
 	List<Quiz> getRecentlyCreatedQuizzes() throws SQLException;
 
 	public List<Quiz> getRecentlyCreatedQuizzesByUser(int userId) throws SQLException;

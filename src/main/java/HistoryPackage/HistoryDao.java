@@ -29,6 +29,8 @@ public interface HistoryDao {
 
     public boolean removeAllHistories() throws SQLException;
 
+    List<Quiz> getPopularQuizzes() throws SQLException, ClassNotFoundException;
+
     public boolean containsUser(int userId) throws SQLException;
 
     public boolean removeUser(int userId) throws SQLException;

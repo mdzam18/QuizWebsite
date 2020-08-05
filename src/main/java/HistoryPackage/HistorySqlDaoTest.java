@@ -364,6 +364,26 @@ class HistorySqlDaoTest {
     }
 
     @Test
+    public void testPopularQuizzes() throws SQLException, ClassNotFoundException {
+        userDao.addUser("a", "b", false);
+        userDao.addUser("b", "b", false);
+        userDao.addUser("c" ,"a" ,false);
+        quizDao.addQuiz(1, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        quizDao.addQuiz(2, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        quizDao.addQuiz(3, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        Date newStartDate = new Date(getModuloCurrentTime() - 4 * ONE_DAY);
+        Date newEndDate = new Date(getModuloCurrentTime() - 15 * ONE_HOUR);
+        for(int i = 1; i < 4; i++){
+            historyDao.addToHistory(i, 1, 100, newStartDate, newEndDate);
+        }
+        List<Quiz> list = historyDao.getPopularQuizzes();
+        assertEquals(list.size(), 1);
+    }
+
+    @Test
     void testHistorySqlDao4() throws SQLException {
         List<History> histories = new ArrayList<>();
         final int USER_NUM = 30, QUIZ_NUM = 5;

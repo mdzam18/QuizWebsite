@@ -5,6 +5,7 @@ import UserPackage.UserDao;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import java.io.*;
 import java.sql.SQLException;
 import java.util.*;
 
+@WebServlet("/CreateQuizServlet")
 public class CreateQuizServlet extends HttpServlet {
 
     private final static String currentUser = "currentUser";
@@ -86,9 +88,9 @@ public class CreateQuizServlet extends HttpServlet {
             pars.remove("hasPracticeMode");
         }
 
-        boolean isImmediate = (pars.get("isImmediate") != null);
+        boolean isImmediate = (pars.get("ImmediateAnswer") != null);
         if(isImmediate) {
-            pars.remove("isImmediate");
+            pars.remove("ImmediateAnswer");
         }
 
         for(String key : pars.keySet()) {

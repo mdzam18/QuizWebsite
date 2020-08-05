@@ -10,6 +10,7 @@ Quiz\QuestionToHTML.class
 UserPackage\UserSqlDaoTest.class
 FriendsPackage\FriendsSqlDaoTest.class
 Administrator\dao\AdministratorDao.class
+CheckTakenQuiz.class
 Quiz\PictureResponseQuestion.class
 Quiz\Quiz.class
 Quiz\MatchingQuestion.class
@@ -23,13 +24,16 @@ Statistics\StatisticsSqlDaoTest.class
 Quiz\QuizSqlDao.class
 Administrator\controller\AdministratorsController.class
 Administrator\controller\QuizzesController.class
+Administrator\controller\StatisticsController.class
 Quiz\QuizServlet.class
+Quiz\QuizSqlDao$1.class
 HistoryPackage\HistorySqlDao.class
 Administrator\controller\UsersController.class
 Administrator\listeners\DBConnectionListener.class
 HistoryPackage\HistorySqlDaoTest.class
 Administrator\dao\AdministratorSqlDaoTest.class
 Quiz\QuestionResponse.class
+Quiz\QuestionDaoTest.class
 UserPackage\User.class
 Administrator\controller\HistoryController.class
 MailPackage\MailServlet.class
@@ -46,7 +50,9 @@ ServletContextPackage\ContextDataListener.class
 HistoryPackage\HistorySqlDao$1.class
 ProfilePackage\ProfileDataSrc.class
 FriendsPackage\FriendsSqlDao.class
+Quiz\QuestionPassResult.class
 UserPackage\test.class
+ProfilePackage\CookieManager.class
 FriendsPackage\FriendsDao.class
 UserPackage\UserDao.class
 MailPackage\MailDao.class
@@ -55,6 +61,7 @@ IndexServlet.class
 RegistrationServlet.class
 Quiz\QuestionType.class
 Quiz\MultipleAnswerQuestion.class
+ToMyPageServlet.class
 Administrator\dao\AdministratorSqlDao.class
 CreateQuizServlet.class
 UserPackage\UserServlet.class

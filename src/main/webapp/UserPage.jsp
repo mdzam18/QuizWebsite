@@ -164,7 +164,7 @@
 <div id = "popular_id" style="display: none">
     <ul>
     <%
-        List<Quiz> popularQuizzes = qDao.getPopularQuizzes();
+        List<Quiz> popularQuizzes = historyDao.getPopularQuizzes();
         List<Quiz> sorted = qDao.sortByQuizIdDescending(popularQuizzes);
         for(Quiz quiz: sorted) {
             out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + " (Author: " + uDao.getUser(quiz.getCreatorId()).getUserName() + ")" + "</a> </li>");

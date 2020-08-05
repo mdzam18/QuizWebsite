@@ -1,14 +1,15 @@
 package Quiz;
 
+import UserPackage.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class QuizTest {
 
@@ -44,11 +45,16 @@ public class QuizTest {
         quiz.setIsImmediate(true);
         quiz.setIsOnePage(true);
         quiz.setInPracticeMode(true);
+        quiz.setNumberOfQuestions(2);
+        Date date = new Date(12, 12, 12);
+        quiz.setCreateDate(date);
 
         assertTrue(quiz.isRandom());
         assertTrue(quiz.isImmediate());
         assertTrue(quiz.isOnePage());
         assertTrue(quiz.isInPracticeMode());
+        assertEquals(quiz.getNumberOfQuestions(), 2);
+        assertEquals(quiz.getCreateDate(), date);
 
         quiz.setIsRandom(false);
         quiz.setIsImmediate(false);
@@ -105,5 +111,27 @@ public class QuizTest {
         for(int i = 0; i<result.size(); i++) {
             assert(result.get(i).getScore() == i*10);
         }
+    }
+
+    @Test
+    public void testEquals(){
+        Quiz quiz1 = new Quiz(1, 1);
+        Quiz quiz2 = new Quiz(1, 1);
+        assertEquals(quiz1.equals(quiz2), true);
+        Quiz quiz3 = new Quiz(2, 2);
+        assertEquals(quiz1.equals(quiz3) , false);
+        assertEquals(quiz1.equals(null), false);
+        assertEquals(quiz1.equals("a"), false);
+
+        assertEquals(quiz1.equals(quiz1), true);
+    }
+
+    @Test
+    public void testHashCode(){
+        Quiz quiz1 = new Quiz(1, 1);
+        Quiz quiz2 = new Quiz(2, 2);
+        assertEquals(quiz1.hashCode(), quiz1.hashCode());
+
+        assertNotEquals(quiz1.hashCode(), quiz2.hashCode());
     }
 }

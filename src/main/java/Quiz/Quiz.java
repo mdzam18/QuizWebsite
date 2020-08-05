@@ -53,8 +53,6 @@ public class Quiz {
 
 	public void setInPracticeMode(boolean inPracticeMode) { this.inPracticeMode = inPracticeMode; }
 
-	public void setQuestionCount(int questionCount) { this.numberOfQuestions = questionCount; }
-
 	public void setCreatorId(int creatorId){
 		this.creatorId = creatorId;
 	}

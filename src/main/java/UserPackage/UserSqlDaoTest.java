@@ -65,7 +65,7 @@ public class UserSqlDaoTest {
     @AfterEach
     public void tearDown() throws SQLException {
         dropTables();
-        CreateTablesForTests.UsersTable = "Users";//chemtvis test unda davmato win.;
+        CreateTablesForTests.UsersTable = "Users";
         CreateTablesForTests.FriendsTable = "Friends";
         CreateTablesForTests.MailsTable = "Mails";
         CreateTablesForTests.HistoryTable = "History";

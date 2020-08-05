@@ -26,8 +26,8 @@ public class Question {
     }
 
     public boolean checkAnswer(String answer) {
-        for(String str : answers) {
-            if(str.equalsIgnoreCase(answer)) {
+        for (String str : answers) {
+            if (str.equalsIgnoreCase(answer)) {
                 return true;
             }
         }
@@ -46,12 +46,31 @@ public class Question {
         return score;
     }
 
-    public int getQuizId() { return quizId; }
+    public int getQuizId() {
+        return quizId;
+    }
 
-    public void setQuizId(int quizId) { this.quizId = quizId; }
+    public void setQuizId(int quizId) {
+        this.quizId = quizId;
+    }
 
-    public int getQuestionId() { return questionId; }
+    public int getQuestionId() {
+        return questionId;
+    }
 
-    public void setQuestionId(int questionId) { this.questionId = questionId; }
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Question q = (Question) obj;
+       /* return getType() == q.getType() && getScore() == q.getScore() && getQuizId() == q.getQuizId()
+                && getQuestionId() == q.getQuestionId() && getQuestion().equals(q.getQuestion()) &&
+                getAnswerSet().equals(q.getAnswerSet());
+
+        */
+       return getQuestion().equals(q.getQuestion()) && getAnswerSet().equals(q.getAnswerSet());
+    }
 
 }

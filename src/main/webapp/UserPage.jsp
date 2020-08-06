@@ -6,6 +6,8 @@
 <%@ page import="Quiz.Quiz" %>
 <%@ page import="Quiz.QuizSqlDao" %>
 <%@ page import="HistoryPackage.HistorySqlDao" %>
+<%@ page import="AchievementsPackage.AchievementsSqlDao" %>
+<%@ page import="AchievementsPackage.AchievementsDao" %>
 <%@ page import= "java.sql.SQLException" %>
 <%@ page import="MailPackage.Mail" %>
 <%@ page import="MailPackage.MailSqlDao" %>
@@ -47,6 +49,7 @@
     FriendsSqlDao fDao = new FriendsSqlDao();
     QuizSqlDao qDao = new QuizSqlDao();
     HistorySqlDao historyDao = new HistorySqlDao();
+    AchievementsSqlDao aDao = new AchievementsSqlDao();
     int id = uDao.getUserIdByName((String)session.getAttribute("currentUser"));
     System.out.println(uDao.getUser(id).getName());
     MailSqlDao mailDao = new MailSqlDao();
@@ -186,7 +189,6 @@
         List<Quiz> recentQuizzes = qDao.getRecentlyCreatedQuizzes();
         sorted = qDao.sortByQuizIdDescending(recentQuizzes);
         for(Quiz quiz: sorted){
-            //System.out.println(quiz.getQuizId() + " " + quiz.getDescription());
             out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + " (Author: " + uDao.getUser(quiz.getCreatorId()).getUserName() + ")" + "</a> </li>");
         }
     %>
@@ -212,15 +214,28 @@
 <div id = "your_recently_id" style="display: none">
     <ul>
     <%
-        recentQuizzes = qDao.getRecentlyCreatedQuizzes();
+        recentQuizzes = qDao.getRecentlyCreatedQuizzesByUser(id);
         sorted = qDao.sortByQuizIdDescending(recentQuizzes);
         for(Quiz quiz: sorted){
-            //System.out.println(quiz.getQuizId() + " " + quiz.getDescription());
             out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + " (Author: " + uDao.getUser(quiz.getCreatorId()).getUserName() + ")" + "</a> </li>");
         }
     %>
     </ul>
     <input class="button button6" type="button" value="Hide" onclick=hide("your_recently_id")>
+</div>
+
+<p> <button class = "button" value = "achievements" onclick= show("achievements_id")>Achievements</button></p>
+<div id = "achievements_id" style="display: none">
+    <ul>
+        <%
+            List<String> achievements = aDao.getAchievements(id);
+            for(String achievement : achievements){
+                out.println("<li>" + achievement + "</li>");
+
+            }
+        %>
+    </ul>
+    <input class="button button6" type="button" value="Hide" onclick=hide("achievements_id")>
 </div>
 
 <p> <button class = "button" value = "friends activity" onclick= show("friends_activity_id")>Your friends' recent activity</button></p>

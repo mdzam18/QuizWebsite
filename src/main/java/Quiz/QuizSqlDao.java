@@ -155,7 +155,7 @@ public class QuizSqlDao implements QuizDao{
     @Override
     public List<Quiz> getRecentlyCreatedQuizzesByUser(int userId) throws SQLException {
         List<Quiz> res = new ArrayList<>();
-        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.QuizTable + " where CreatorId = ? LIMIT 5;");
+        PreparedStatement stm = con.prepareStatement("select * from " + CreateTablesForTests.QuizTable + " where CreatorId = ? LIMIT 10;");
         stm.setInt(1, userId);
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {
@@ -165,7 +165,6 @@ public class QuizSqlDao implements QuizDao{
         }
         return res;
     }
-
 
     @Override
     public Quiz addQuiz(int creatorId, boolean isRandom, boolean isOnePage, boolean isImmediate, boolean hasPracticeMode, int questionNum, String quizName, String category, java.sql.Date createDate) throws SQLException

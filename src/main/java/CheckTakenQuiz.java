@@ -1,7 +1,9 @@
 import HistoryPackage.*;
+import AchievementsPackage.*;
 import Quiz.*;
 import ServletContextPackage.*;
 import UserPackage.*;
+import Statistics.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -265,6 +267,30 @@ public class CheckTakenQuiz extends HttpServlet {
             History history = new History(userId, quizId, fullScore, new Date(startTime), new Date());
             historyDao.addToHistory(history);
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        AchievementsSqlDao aDao = null;
+        HistorySqlDao hDao = null;
+        try {
+            aDao = new AchievementsSqlDao();
+            hDao = new HistorySqlDao();
+            List<History> histories = hDao.getHistories(userId);
+            if (histories.size() == 10){
+                aDao.addAchievement(userId, AchievementsSqlDao.MACHINE);
+            }
+            StatisticsSqlDao sDao = new StatisticsSqlDao();
+            if (sDao.getBestPlayer(quizId).getUserId() == userId){
+                aDao.addAchievement(userId, AchievementsSqlDao.GREATEST);
+            }
+            QuizSqlDao qDao = new QuizSqlDao();
+            if (qDao.getQuiz(quizId).isInPracticeMode()){
+                aDao.addAchievement(userId, AchievementsSqlDao.PRACTICE);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 

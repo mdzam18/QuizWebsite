@@ -114,3 +114,4 @@ public class AchievementsSqlDaoTest {
         assertTrue(aDao.hasAchievement(1, AchievementsSqlDao.PRODIGIOUS));
         assertTrue(aDao.hasAchievement(1, AchievementsSqlDao.PRODIGIOUS));
     }
+}

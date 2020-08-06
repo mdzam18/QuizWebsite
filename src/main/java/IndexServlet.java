@@ -9,6 +9,7 @@ import java.util.Map;
 @WebServlet("/IndexServlet")
 public class IndexServlet extends HttpServlet {
 
+    private static final String address = "/WEB-INF/views/";
     private final static String currentUser = "currentUser";
 
     @Override
@@ -23,7 +24,7 @@ public class IndexServlet extends HttpServlet {
             HttpSession session = httpServletRequest.getSession();
             session.setAttribute(currentUser, username);
 
-            httpServletRequest.getRequestDispatcher("UserPage.jsp").forward(httpServletRequest, httpServletResponse);
+            httpServletRequest.getRequestDispatcher(address + "UserPage.jsp").forward(httpServletRequest, httpServletResponse);
         }
     }
 
@@ -31,6 +32,8 @@ public class IndexServlet extends HttpServlet {
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         Cookie[] cookies = httpServletRequest.getCookies();
         CookieManager.deleteMyCookies(httpServletResponse, cookies);
+        HttpSession session = httpServletRequest.getSession();
+        session.invalidate();
         toWelcomePage(httpServletRequest, httpServletResponse);
     }
 

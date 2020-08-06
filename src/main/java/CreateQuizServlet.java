@@ -1,3 +1,4 @@
+import AchievementsPackage.AchievementsSqlDao;
 import Quiz.*;
 import ServletContextPackage.ContextDataNames;
 import UserPackage.UserDao;
@@ -120,6 +121,29 @@ public class CreateQuizServlet extends HttpServlet {
                     category,
                     new java.sql.Date(System.currentTimeMillis()));
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        QuizSqlDao qDao = null;
+        AchievementsSqlDao aDao = null;
+        try {
+            qDao = new QuizSqlDao();
+            aDao = new AchievementsSqlDao();
+
+            List<Quiz> createdQuizzes = qDao.getRecentlyCreatedQuizzesByUser(userId);
+
+            if (createdQuizzes.size() == 1 && !aDao.hasAchievement(userId, AchievementsSqlDao.AMATEUR)) {
+                aDao.addAchievement(userId, AchievementsSqlDao.AMATEUR);
+            }
+            else if (createdQuizzes.size() == 5 && !aDao.hasAchievement(userId, AchievementsSqlDao.PROLIFIC)) {
+                aDao.addAchievement(userId, AchievementsSqlDao.PROLIFIC);
+            }
+            else if (createdQuizzes.size() == 10 && !aDao.hasAchievement(userId, AchievementsSqlDao.PRODIGIOUS)) {
+                aDao.addAchievement(userId, AchievementsSqlDao.PRODIGIOUS);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 

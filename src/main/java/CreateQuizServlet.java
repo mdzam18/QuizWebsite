@@ -131,14 +131,14 @@ public class CreateQuizServlet extends HttpServlet {
             aDao = new AchievementsSqlDao();
 
             List<Quiz> createdQuizzes = qDao.getRecentlyCreatedQuizzesByUser(userId);
-            
-            if (createdQuizzes.size() == 1){
+
+            if (createdQuizzes.size() == 1 && !aDao.hasAchievement(userId, AchievementsSqlDao.AMATEUR)) {
                 aDao.addAchievement(userId, AchievementsSqlDao.AMATEUR);
             }
-            else if (createdQuizzes.size() == 5){
+            else if (createdQuizzes.size() == 5 && !aDao.hasAchievement(userId, AchievementsSqlDao.PROLIFIC)) {
                 aDao.addAchievement(userId, AchievementsSqlDao.PROLIFIC);
             }
-            else if (createdQuizzes.size() == 10){
+            else if (createdQuizzes.size() == 10 && !aDao.hasAchievement(userId, AchievementsSqlDao.PRODIGIOUS)) {
                 aDao.addAchievement(userId, AchievementsSqlDao.PRODIGIOUS);
             }
         } catch (SQLException throwables) {

@@ -276,15 +276,15 @@ public class CheckTakenQuiz extends HttpServlet {
             aDao = new AchievementsSqlDao();
             hDao = new HistorySqlDao();
             List<History> histories = hDao.getHistories(userId);
-            if (histories.size() == 10){
+            if (histories.size() == 10 && !aDao.hasAchievement(userId, AchievementsSqlDao.MACHINE)){
                 aDao.addAchievement(userId, AchievementsSqlDao.MACHINE);
             }
             StatisticsSqlDao sDao = new StatisticsSqlDao();
-            if (sDao.getBestPlayer(quizId).getUserId() == userId){
+            if (sDao.getBestPlayer(quizId).getUserId() == userId && !aDao.hasAchievement(userId, AchievementsSqlDao.GREATEST)){
                 aDao.addAchievement(userId, AchievementsSqlDao.GREATEST);
             }
             QuizSqlDao qDao = new QuizSqlDao();
-            if (qDao.getQuiz(quizId).isInPracticeMode()){
+            if (qDao.getQuiz(quizId).isInPracticeMode() && !aDao.hasAchievement(userId, AchievementsSqlDao.PRACTICE)){
                 aDao.addAchievement(userId, AchievementsSqlDao.PRACTICE);
             }
 

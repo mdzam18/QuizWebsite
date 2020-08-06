@@ -83,7 +83,7 @@ public class LoginServlet extends HttpServlet {
             throwables.printStackTrace();
         }
         //httpServletRequest.getRequestDispatcher("UserPage.jsp").forward(httpServletRequest, httpServletResponse);
-        httpServletResponse.sendRedirect("/MyPage");
+        httpServletResponse.sendRedirect("/UserServlet");
     }
 
 }

@@ -25,6 +25,7 @@ Quiz\QuizSqlDao.class
 Administrator\controller\AdministratorsController.class
 Administrator\controller\QuizzesController.class
 Administrator\controller\StatisticsController.class
+UserPackage\ProfilePageServlet.class
 Quiz\QuizServlet.class
 Quiz\QuizSqlDao$1.class
 HistoryPackage\HistorySqlDao.class
@@ -54,6 +55,7 @@ Quiz\QuestionPassResult.class
 UserPackage\test.class
 ProfilePackage\CookieManager.class
 FriendsPackage\FriendsDao.class
+UserPackage\EditProfileServlet.class
 UserPackage\UserDao.class
 MailPackage\MailDao.class
 MailPackage\MailSqlDao.class
@@ -61,7 +63,6 @@ IndexServlet.class
 RegistrationServlet.class
 Quiz\QuestionType.class
 Quiz\MultipleAnswerQuestion.class
-ToMyPageServlet.class
 Administrator\dao\AdministratorSqlDao.class
 CreateQuizServlet.class
 UserPackage\UserServlet.class

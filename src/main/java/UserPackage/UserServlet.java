@@ -55,7 +55,9 @@ public class UserServlet extends HttpServlet {
                 }
                 if (uDao.containsUserName(searchName)) {
                     httpServletRequest.setAttribute("id", id);
-                    httpServletResponse.sendRedirect("/ProfilePage");
+                   // httpServletResponse.sendRedirect("/ProfilePage");
+                    httpServletRequest.getRequestDispatcher(pageAddress + "ProfilePage.jsp").forward(httpServletRequest , httpServletResponse);
+
                 } else {
                     httpServletRequest.setAttribute("error", "Username does not exist!");
                 }

@@ -30,6 +30,7 @@
 
 <h1 style="text-align:center">User Profile</h1>
 <div class= "Profile">
+    <form action="/ProfilePage" method="get">
        <h1 <label for="username">User Name: ${username} </label> </h1>
        <h2> Name: ${name}</h2>
        <h2> Surname: ${surname} </h2>
@@ -38,7 +39,7 @@
        <form action="MailServlet" method="post">
        <input class = "button button7" type="submit" name="button" value="sendRequestFromProfile">
        <input type="hidden" name="username" value= "${name}">
-</form>
+    </form>
 
 </div>
 </body>

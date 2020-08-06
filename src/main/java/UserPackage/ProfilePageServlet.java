@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-@WebServlet(name = "UserServlet", urlPatterns = {"/UserServlet"})
+@WebServlet(name = "ProfilePageServlet", urlPatterns = {"/ProfilePage"})
 public class ProfilePageServlet extends HttpServlet {
     private static final String pageAddress = "/WEB-INF/views/";
 
@@ -27,7 +27,7 @@ public class ProfilePageServlet extends HttpServlet {
         }
         ServletContext servletContext = getServletContext();
         UserSqlDao uDao = (UserSqlDao) servletContext.getAttribute(ContextDataNames.USER_DAO);
-        int id = Integer.parseInt(httpServletRequest.getParameter("id"));
+        int id = (Integer)(httpServletRequest.getAttribute("id"));
         User user = null;
         try {
             user = uDao.getUser(id);

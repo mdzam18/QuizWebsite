@@ -57,7 +57,6 @@ public class UserServlet extends HttpServlet {
                     httpServletRequest.setAttribute("id", id);
                    // httpServletResponse.sendRedirect("/ProfilePage");
                     httpServletRequest.getRequestDispatcher(pageAddress + "ProfilePage.jsp").forward(httpServletRequest , httpServletResponse);
-
                 } else {
                     httpServletRequest.setAttribute("error", "Username does not exist!");
                 }
@@ -76,7 +75,29 @@ public class UserServlet extends HttpServlet {
             httpServletResponse.sendRedirect("/");
             return;
         }
+        ServletContext servletContext = getServletContext();
+        UserSqlDao uDao = (UserSqlDao) servletContext.getAttribute(ContextDataNames.USER_DAO);
+        int id = 0;
+        try {
+            id = uDao.getUserIdByName(currentUser);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        User user = null;
+        try {
+            user = uDao.getUser(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        setAttributes(user , httpServletRequest);
         webPage = pageAddress + "UserPage.jsp";
         httpServletRequest.getRequestDispatcher(webPage).forward(httpServletRequest, httpServletResponse);
+    }
+
+    private void setAttributes(User user, HttpServletRequest httpServletRequest){
+        httpServletRequest.setAttribute("name" , user.getName());
+        httpServletRequest.setAttribute("surname" , user.getSurname());
+        httpServletRequest.setAttribute("birthPlace" , user.getBirthPlace());
+        httpServletRequest.setAttribute("status" , user.getStatus());
     }
 }

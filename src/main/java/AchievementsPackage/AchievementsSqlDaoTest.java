@@ -73,7 +73,7 @@ public class AchievementsSqlDaoTest {
 
         int cnt = 1;
 
-        while (rs.next()){
+        while (rs.next()) {
             assertTrue(rs.getInt(1) == cnt);
             assertTrue(rs.getString(2).equals(AchievementsSqlDao.PRODIGIOUS));
             cnt++;
@@ -94,9 +94,9 @@ public class AchievementsSqlDaoTest {
 
         achievements = aDao.getAchievements(1);
 
-        while (rs.next()){
-            assert(achievements.size() == 1);
-            assert(achievements.get(0).equals(rs.getString(2)));
+        while (rs.next()) {
+            assert (achievements.size() == 1);
+            assert (achievements.get(0).equals(rs.getString(2)));
         }
     }
 
@@ -114,3 +114,5 @@ public class AchievementsSqlDaoTest {
         assertTrue(aDao.hasAchievement(1, AchievementsSqlDao.PRODIGIOUS));
         assertTrue(aDao.hasAchievement(1, AchievementsSqlDao.PRODIGIOUS));
     }
+
+}

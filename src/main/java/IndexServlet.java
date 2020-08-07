@@ -24,7 +24,8 @@ public class IndexServlet extends HttpServlet {
             HttpSession session = httpServletRequest.getSession();
             session.setAttribute(currentUser, username);
 
-            httpServletRequest.getRequestDispatcher(address + "UserPage.jsp").forward(httpServletRequest, httpServletResponse);
+            httpServletResponse.sendRedirect("/UserServlet");
+           // httpServletRequest.getRequestDispatcher(address + "UserPage.jsp").forward(httpServletRequest, httpServletResponse);
         }
     }
 

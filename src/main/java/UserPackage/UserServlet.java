@@ -3,6 +3,7 @@ package UserPackage;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.sql.SQLException;
 import ProfilePackage.CookieManager;
 import ServletContextPackage.ContextDataNames;
 
-@WebServlet(name = "UserServlet", urlPatterns = {"/UserServlet"})
+@WebServlet(name = "UserServlet", urlPatterns = {"/UserServlet"}, initParams = {@WebInitParam(name = "id", value = "{id}")})
 public class UserServlet extends HttpServlet {
     private static final String pageAddress = "/WEB-INF/views/";
 
@@ -44,6 +45,12 @@ public class UserServlet extends HttpServlet {
             }
         } else if (httpServletRequest.getParameter("button").equals("edit profile")) {
             httpServletResponse.sendRedirect("/EditProfile");
+        } else if (httpServletRequest.getParameter("button").equals("friends")) {
+            httpServletResponse.sendRedirect("/Friends");
+        } else if (httpServletRequest.getParameter("button").equals("sent requests")) {
+            httpServletResponse.sendRedirect("/SentRequests");
+        } else if (httpServletRequest.getParameter("button").equals("friend requests")) {
+            httpServletResponse.sendRedirect("/FriendRequests");
         } else {
             try {
                 String searchName = httpServletRequest.getParameter("username");
@@ -55,10 +62,10 @@ public class UserServlet extends HttpServlet {
                 }
                 if (uDao.containsUserName(searchName)) {
                     httpServletRequest.setAttribute("id", id);
-                   // httpServletResponse.sendRedirect("/ProfilePage");
-                    httpServletRequest.getRequestDispatcher(pageAddress + "ProfilePage.jsp").forward(httpServletRequest , httpServletResponse);
+                    httpServletResponse.sendRedirect("/ProfilePage?id=" + id);
                 } else {
                     httpServletRequest.setAttribute("error", "Username does not exist!");
+                    httpServletRequest.getRequestDispatcher(pageAddress + "UserPage.jsp").forward(httpServletRequest, httpServletResponse);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -89,15 +96,15 @@ public class UserServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        setAttributes(user , httpServletRequest);
+        setAttributes(user, httpServletRequest);
         webPage = pageAddress + "UserPage.jsp";
         httpServletRequest.getRequestDispatcher(webPage).forward(httpServletRequest, httpServletResponse);
     }
 
-    private void setAttributes(User user, HttpServletRequest httpServletRequest){
-        httpServletRequest.setAttribute("name" , user.getName());
-        httpServletRequest.setAttribute("surname" , user.getSurname());
-        httpServletRequest.setAttribute("birthPlace" , user.getBirthPlace());
-        httpServletRequest.setAttribute("status" , user.getStatus());
+    private void setAttributes(User user, HttpServletRequest httpServletRequest) {
+        httpServletRequest.setAttribute("name", user.getName());
+        httpServletRequest.setAttribute("surname", user.getSurname());
+        httpServletRequest.setAttribute("birthPlace", user.getBirthPlace());
+        httpServletRequest.setAttribute("status", user.getStatus());
     }
 }

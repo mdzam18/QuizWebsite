@@ -2,8 +2,10 @@ package UserPackage;
 
 import ServletContextPackage.ContextDataNames;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-@WebServlet(name = "ProfilePageServlet", urlPatterns = {"/ProfilePage"})
+@WebServlet(name = "ProfilePageServlet", urlPatterns = {"/ProfilePage"}, initParams = {@WebInitParam(name = "id", value = "{id}")})
 public class ProfilePageServlet extends HttpServlet {
     private static final String pageAddress = "/WEB-INF/views/";
 
@@ -27,16 +29,19 @@ public class ProfilePageServlet extends HttpServlet {
         }
         ServletContext servletContext = getServletContext();
         UserSqlDao uDao = (UserSqlDao) servletContext.getAttribute(ContextDataNames.USER_DAO);
-        int id = (Integer)(httpServletRequest.getAttribute("id"));
-        User user = null;
-        try {
-            user = uDao.getUser(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
+       // int id = (Integer)(httpServletRequest.getAttribute("id"));
+        String id = httpServletRequest.getParameter("id");
+        if (id != null) {
+            try {
+                User user = uDao.getUser(Integer.valueOf(id));
+                setAttributes(user , httpServletRequest);
+                String webPage = pageAddress + "ProfilePage.jsp";
+                httpServletRequest.getRequestDispatcher(webPage).forward(httpServletRequest, httpServletResponse);
+                return;
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
-        setAttributes(user , httpServletRequest);
-        String webPage = pageAddress + "ProfilePage.jsp";
-        httpServletRequest.getRequestDispatcher(webPage).forward(httpServletRequest, httpServletResponse);
     }
 
     private void setAttributes(User user, HttpServletRequest httpServletRequest){

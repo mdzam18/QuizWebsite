@@ -78,52 +78,20 @@
 
 <button class = "button" style="font-size: 20px;" onclick="toCreateQuizPage()">Create New Quiz</button>
 
-<p><button class = "button button4" type = "button" Value="friends" onclick=show("friends_id")>Friends</button></p>
-<div id = "friends_id" style="display: none">
-    <%
-        String name = (String)session.getAttribute("currentUser");
-        User user = uDao.getUser(uDao.getUserIdByName(name));
-        List<User> list = fDao.getFriends(user);
-        for(User user2 : list){
-            out.println("<li><a href=\"ProfilePage.jsp?id=" +  user2.getUserId() + "\">" + user2.getUserName() + "</a> </li>" );
-        }
-    %>
-    <input class="button button6" type="button" value="close" onclick=hide("friends_id")>
-</div>
-
-<p><button class = "button button4" type = "button" Value= "sentRequests" onclick= show("sentRequest_id")>Sent Requests</button></p>
-<div id = "sentRequest_id" style="display: none">
-    <%
-        name = (String)session.getAttribute("currentUser");
-        user = uDao.getUser(uDao.getUserIdByName(name));
-        list = fDao.getSentRequests(user);
-        for(User user2 : list){
-            out.println("<li><a href=\"ProfilePage.jsp?id=" +  user2.getUserId() + "\">" + user2.getUserName() + "</a> </li>" );
-        }
-    %>
-    <input class="button button6" type="button" value="close" onclick=hide("sentRequest_id")>
+<form action= UserServlet method="POST">
+    <input class = "button button4" type="submit" name="button" value="friends">
     <input type="hidden" name="username" VALUE= <%=(String)session.getAttribute("currentUser")%>>
-</div>
+</form>
 
-<p><button class = "button button4" type = "button" Value= "request" onclick= show("requests_id")>Friend Requests</button></p>
-<div id = "requests_id" style="display: none">
-    <%
-        name = (String)session.getAttribute("currentUser");
-        user = uDao.getUser(uDao.getUserIdByName(name));
-        list = fDao.getReceivedRequests(user);
-        for(User user2 : list){
-            out.println("<li><a href=\"ProfilePage.jsp?id=" +  user2.getUserId() + "\">" + user2.getUserName() + "</a> </li>" );
-            String s = "<form action=\"MailServlet\" method=\"post\">\n" +
-                    "        <input type=\"hidden\" name=\"username\" value=" + user2.getUserId() +
-                    ">\n" +
-                    "        <input class=\"button button7\" type=\"submit\" name=\"button\" value=\"confirmRequest\">\n" +
-                    "    </form>";
-            out.println(s);
-        }
-    %>
-    <input class="button button6" type="button" value="close" onclick=hide("requests_id")>
+<form action= UserServlet method="POST">
+    <input class = "button button4" type="submit" name="button" value="sent requests">
     <input type="hidden" name="username" VALUE= <%=(String)session.getAttribute("currentUser")%>>
-</div>
+</form>
+
+<form action= UserServlet method="POST">
+    <input class = "button button4" type="submit" name="button" value="friend requests">
+    <input type="hidden" name="username" VALUE= <%=(String)session.getAttribute("currentUser")%>>
+</form>
 
 <form action= UserServlet method="POST">
     <input class = "button button3" type="submit" name="button" value="delete">
@@ -165,6 +133,8 @@
         <a href="/admin">Go as Administrator</a>
     </c:if>--%>
     <%
+        String name = (String)session.getAttribute("currentUser");
+        User user = uDao.getUser(uDao.getUserIdByName(name));
         if(user.isAdministrator()) {
             out.print("<a href=\"/admin\">Go as Administrator</a>");
         }
@@ -246,7 +216,7 @@
     <ul>
         <%
             user = uDao.getUser(uDao.getUserIdByName(name));
-            list = fDao.getFriends(user);
+            List <User> list = fDao.getFriends(user);
             List<History> friendHistories = new ArrayList<History>();
             for (User u : list){
                 List<History> h = historyDao.getHistories(u.getUserId());

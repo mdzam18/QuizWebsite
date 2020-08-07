@@ -12,5 +12,6 @@ public class ContextDataNames {
     public static final String QUESTION_DAO = "QUESTION_DAO";
     public static final String Received_Requests = "requests";
     public static final String Sent_Requests = "sent_requests";
+    public static final String Friends = "friends";
 
 }

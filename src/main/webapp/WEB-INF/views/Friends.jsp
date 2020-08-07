@@ -28,20 +28,14 @@
 </script>
 
 
-<h1 style="text-align:center">User Profile</h1>
+<h1 style="text-align:center">Friends</h1>
 <a href="/UserServlet"> Back to homepage</a>
-<div class= "Profile">
-    <form action="/ProfilePage" method="get">
-       <h1 <label for="username">User Name: ${username} </label> </h1>
-       <h2> Name: ${name}</h2>
-       <h2> Surname: ${surname} </h2>
-       <h2> Birth Place: ${birthPlace}  </h2>
-       <h2> Status: ${status} </h2>
-       <form action="MailServlet" method="post">
-       <input class = "button button7" type="submit" name="button" value="sendRequestFromProfile">
-       <input type="hidden" name="username" value= "${name}">
+    <form action="/Friends" method="get">
+        <ul>
+            <c:forEach var="Friend" items="${friends}">
+                 <li> <a href= "/ProfilePage?id=${Friend.getUserId()}">${Friend.getUserName()}</a> </li>
+            </c:forEach>
+        </ul>
     </form>
-
-</div>
 </body>
 </html>

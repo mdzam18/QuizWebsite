@@ -72,6 +72,7 @@
 
 
     <body>
+        <a href="/UserServlet"> Back to homepage</a>
         <div class="Inputs">
             <form action="EditProfile" method="post">
                 <p class="HeaderText">Edit Profile</p>

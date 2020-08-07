@@ -15,6 +15,7 @@ C:\Users\User\Desktop\QuizWebsite\src\main\java\Quiz\QuestionToHTML.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\Quiz\MultipleChoiceAnswerQuestion.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\Quiz\QuizSqlDao.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\UserPackage\test.java
+C:\Users\User\Desktop\QuizWebsite\src\main\java\UserPackage\FriendRequestsServlet.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\FriendsPackage\FriendsDao.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\ProfilePackage\CookieManager.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\IndexServlet.java
@@ -35,6 +36,7 @@ C:\Users\User\Desktop\QuizWebsite\src\main\java\Administrator\dao\AdministratorD
 C:\Users\User\Desktop\QuizWebsite\src\main\java\Quiz\QuestionDaoTest.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\UserPackage\EditProfileServlet.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\Statistics\StatisticsSqlDao.java
+C:\Users\User\Desktop\QuizWebsite\src\main\java\AchievementsPackage\AchievementsDao.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\UserPackage\User.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\Statistics\StatisticsDao.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\MailPackage\MailSqlDao.java
@@ -54,13 +56,17 @@ C:\Users\User\Desktop\QuizWebsite\src\main\java\Quiz\QuestionDao.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\ServletContextPackage\ContextDataNames.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\Administrator\dao\AdministratorSqlDao.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\ProfilePackage\CreateTablesForTests.java
+C:\Users\User\Desktop\QuizWebsite\src\main\java\UserPackage\FriendsServlet.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\MailPackage\Mail.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\MailPackage\MailSqlDaoTest.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\UserPackage\UserDao.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\Administrator\controller\StatisticsController.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\Administrator\dao\AdministratorSqlDaoTest.java
+C:\Users\User\Desktop\QuizWebsite\src\main\java\AchievementsPackage\AchievementsSqlDao.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\UserPackage\UserServlet.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\Quiz\MultipleChoiceQuestion.java
+C:\Users\User\Desktop\QuizWebsite\src\main\java\AchievementsPackage\AchievementsSqlDaoTest.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\Administrator\controller\HistoryController.java
+C:\Users\User\Desktop\QuizWebsite\src\main\java\UserPackage\SentRequestsServlet.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\ServletContextPackage\ContextDataListener.java
 C:\Users\User\Desktop\QuizWebsite\src\main\java\ProfilePackage\NanukaDatabase.java

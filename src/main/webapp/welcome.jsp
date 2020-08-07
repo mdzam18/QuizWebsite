@@ -46,9 +46,10 @@
         <p id="login_button_p">
             <button id="login_button">Log In</button>
         </p>
-        <p id="forgotpassword_p">
+        <!--<p id="forgotpassword_p">
+            Concept
             <span class="forgotpassword_span">Forgot Password?</span>
-        </p>
+        </p>-->
         <!-- Login Form -->
     </div>
 

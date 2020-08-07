@@ -58,7 +58,7 @@ html, body {
     display: block;
 }
 
-#username_input_p, #password_input_p, #rememberUser_p, #login_button_p, #forgotpassword_p,
+#username_input_p, #password_input_p, #rememberUser_p, #login_button_p,
 #usernameReg_p, #passwordReg_p, #passwordRepReg_p, #signup_button_p {
     margin-top: 0px;
     margin-bottom: 0px;

@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String username = httpServletRequest.getParameter("username").trim();
         String password = httpServletRequest.getParameter("password").trim();
-        boolean remember = (httpServletRequest.getParameter("remember") != null);
+        boolean remember = httpServletRequest.getParameter("remember").equalsIgnoreCase("true");
 
         HttpSession session = httpServletRequest.getSession();
         session.setAttribute(currentUser, username);
@@ -70,9 +70,7 @@ public class LoginServlet extends HttpServlet {
                 CookieManager.cookiesToResponse(httpServletResponse, newCookies);
             }
         } else {
-            if(cookies != null) {
-                CookieManager.deleteMyCookies(httpServletResponse, cookies);
-            }
+            CookieManager.deleteMyCookies(httpServletResponse, cookies);
         }
 
         try {

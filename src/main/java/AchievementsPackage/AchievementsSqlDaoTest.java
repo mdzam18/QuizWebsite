@@ -52,7 +52,7 @@ public class AchievementsSqlDaoTest {
         achievementsTable = CreateTablesForTests.AchievementsTable;
     }
 
-    @AfterAll
+    @AfterEach
     public void finishUp() throws SQLException, ClassNotFoundException {
         assertTrue(tables.dropTable(CreateTablesForTests.AchievementsTable));
         assertTrue(tables.dropTable(CreateTablesForTests.UsersTable));

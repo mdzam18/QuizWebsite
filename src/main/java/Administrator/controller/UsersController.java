@@ -28,7 +28,7 @@ public class UsersController extends HttpServlet {
         AdministratorDao adminDao = (AdministratorSqlDao) servletContext.getAttribute(ContextDataNames.ADMINISTRATOR_DAO);
         UserDao userDao = (UserSqlDao) servletContext.getAttribute(ContextDataNames.USER_DAO);
 
-        String id = req.getParameter("id");
+        String id = req.getParameter("userId");
         if (id != null) {
             try {
                 User user = userDao.getUser(Integer.valueOf(id));

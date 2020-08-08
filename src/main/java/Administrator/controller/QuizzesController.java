@@ -29,7 +29,7 @@ public class QuizzesController extends HttpServlet {
         ServletContext servletContext = getServletContext();
         QuizDao quizDao = (QuizSqlDao) servletContext.getAttribute(ContextDataNames.QUIZ_DAO);
 
-        String id = req.getParameter("id");
+        String id = req.getParameter("quizId");
         if (id != null) {
             try {
                 Quiz quiz = quizDao.getQuiz(Integer.valueOf(id));

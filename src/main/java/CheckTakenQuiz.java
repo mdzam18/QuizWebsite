@@ -108,8 +108,6 @@ public class CheckTakenQuiz extends HttpServlet {
             String qIdStr = dataMap.get("qId")[0];
             int qId = Integer.parseInt(qIdStr);
 
-            System.out.println(que + ": " + dataMap.toString());
-
             Question questionFromBase;
             try {
                 questionFromBase = questionDao.getQuestion(qId);

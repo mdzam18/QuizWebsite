@@ -63,40 +63,51 @@ public class MailServlet extends HttpServlet {
                 String to = request.getParameter("username");
                 receiverId = userDao.getUserIdByName(to);
                 if (receiverId == -1) {
-                    //out.println("user doesn't exist");
+                    out.println("user doesn't exist");
                     //request.getRequestDispatcher(pageAddress + "UserPage.jsp").forward(request, response);
-                    response.sendRedirect("/UserServlet");
+                    //response.sendRedirect("/UserServlet");
                 } else {
                     message = request.getParameter("message");
                     mailDao.sendMail(senderId, receiverId, Mail.noteType, message, new java.sql.Date(System.currentTimeMillis()), false);
                     //out.println("message successfully sent");
                     //request.getRequestDispatcher(pageAddress + "UserPage.jsp").forward(request, response);
-                    response.sendRedirect("/UserServlet");
+                    //response.sendRedirect("/UserServlet");
                 }
             } else if (type.equals("challenge")) {
-                String[] desc = request.getParameter("quizzes").split(" - ");
-                String author = desc[0];
-                String description = desc[1];
                 receiverId = userDao.getUserIdByName(request.getParameter("username"));
+                if (receiverId == -1) {
+                    out.println("user doesn't exist");
+                    return;
+                }
+                String[] desc = request.getParameter("quizzes").split(" - ");
+                String author;
+                String description;
+                if(desc.length != 2){
+                    out.println("invalid format");
+                    return;
+                } else {
+                    author = desc[0];
+                    description = desc[1];
+                }
 
                 int authorId = userDao.getUserIdByName(author);
                 int quizId = quizSqlDao.getQuizId(authorId, description);
                 int score = historyDao.getMaxScore(senderId, quizId);
                 if (score == -1) {
-                    //out.println("you have never written this quiz");
-                   // request.getRequestDispatcher(pageAddress + "UserPage.jsp").forward(request, response);
-                    response.sendRedirect("/UserServlet");
+                    out.println("you have never written this quiz");
+                    // request.getRequestDispatcher(pageAddress + "UserPage.jsp").forward(request, response);
+                    //response.sendRedirect("/UserServlet");
                 } else {
                     mailDao.sendMail(senderId, receiverId, Mail.challengeType, quizId + "", new java.sql.Date(System.currentTimeMillis()), false);
                     //out.println("challenge successfully sent");
                     //request.getRequestDispatcher(pageAddress + "UserPage.jsp").forward(request, response);
-                    response.sendRedirect("/UserServlet");
+                    //response.sendRedirect("/UserServlet");
                 }
             } else if (type.equals("sendRequest") || type.equals("sendRequestFromProfile")) {
                 receiverId = userDao.getUserIdByName(request.getParameter("username"));
                 checkRequestIds(receiverId, senderId, request, out);
-               // request.getRequestDispatcher(pageAddress + "UserPage.jsp").forward(request, response);
-                response.sendRedirect("/UserServlet");
+                //request.getRequestDispatcher(pageAddress + "UserPage.jsp").forward(request, response);
+                //response.sendRedirect("/UserServlet");
             } else if (type.equals("confirmRequest")) {
                 receiverId = Integer.parseInt(request.getParameter("username"));
                 friendsDao.confirmFriendRequest(receiverId, senderId);
@@ -126,7 +137,7 @@ public class MailServlet extends HttpServlet {
             out.println("Invalid User.");
         } else {
             friendsDao.sendFriendRequest(senderId, receiverId);
-            out.println("friend request sent successfully");
+            //out.println("friend request sent successfully");
         }
     }
 }

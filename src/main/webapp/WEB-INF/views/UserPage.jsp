@@ -20,12 +20,19 @@
     <link href="../style.css" rel="stylesheet" type="text/css">
 
     <title>Welcome</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body>
+<body style="font-family: 'Roboto', sans-serif;">
 <script type="text/javascript">
     function hide(id) {
         let div_ref = document.getElementById(id);
         div_ref.style.display = "none";
+        if(id == "request_div") {
+            $("#FriendRequesting_output").html("");
+        }
     }
     function show(id) {
         let div_ref = document.getElementById(id);
@@ -34,14 +41,60 @@
     function toCreateQuizPage() {
         window.location.href = "createQuiz.jsp";
     }
-    /*window.onload = function () {
-        let elements = document.getElementsByTagName("form");
-        for(let i = 0; i<elements.length; i++) {
-            elements[i].addEventListener("click", function(event) {
-                event.preventDefault();
+    $(document).ready(function() {
+        $("#FriendRequesting_button").on("click", function () {
+            let username = $("#FriendRequesting_username").val();
+            let button = $("#FriendRequesting_button").val();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    username: username,
+                    button: button
+                },
+                url: 'MailServlet',
+                success: function (res) {
+                    $("#FriendRequesting_output").html(res);
+                    //alert(res);
+                }
             });
-        }
-    }*/
+        })
+        $("#Composing_button").on("click", function () {
+            let username = $("#Composing_username").val();
+            let message = $("#Composing_message").val();
+            let button = $("#Composing_button").val();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    username: username,
+                    message : message,
+                    button: button
+                },
+                url: 'MailServlet',
+                success: function (res) {
+                    $("#Composing_output").html(res);
+                    //alert(res);
+                }
+            });
+        })
+        $("#Challenging_button").on("click", function () {
+            let username = $("#Challenging_username").val();
+            let quizzes = $("#Challenging_quizzes").val();
+            let button = $("#Challenging_button").val();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    username: username,
+                    quizzes : quizzes,
+                    button: button
+                },
+                url: 'MailServlet',
+                success: function (res) {
+                    $("#Challenging_output").html(res);
+                    //alert(res);
+                }
+            });
+        })
+    });
 </script>
 
 <%
@@ -55,7 +108,7 @@
     MailSqlDao mailDao = new MailSqlDao();
     UserSqlDao userDao = new UserSqlDao();
     //out.print(request.getParameter("username"));
-    ArrayList<Mail> mails = mailDao.getMails(3);
+    ArrayList<Mail> mails = mailDao.getMails(id);
 %>
 <div class= "SearchBox">
     <form action= "UserServlet" method="POST">
@@ -70,7 +123,7 @@
 
 <div class="Profile">
     <h2> User Name: <%= (String)session.getAttribute("currentUser")%> </h2>
-     <h2> Name: ${name}</h2>
+    <h2> Name: ${name}</h2>
     <h2> Surname: ${surname} </h2>
     <h2> Birth Place: ${birthPlace}  </h2>
     <h2> Status: ${status} </h2>
@@ -144,13 +197,13 @@
 <p> <button class = "button" value = "popular quizzes" onclick= show("popular_id")>Popular quizzes</button></p>
 <div id = "popular_id" style="display: none">
     <ul>
-    <%
-        List<Quiz> popularQuizzes = historyDao.getPopularQuizzes();
-        List<Quiz> sorted = qDao.sortByQuizIdDescending(popularQuizzes);
-        for(Quiz quiz: sorted) {
-            out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + " (Author: " + uDao.getUser(quiz.getCreatorId()).getUserName() + ")" + "</a> </li>");
-        }
-    %>
+        <%
+            List<Quiz> popularQuizzes = historyDao.getPopularQuizzes();
+            List<Quiz> sorted = qDao.sortByQuizIdDescending(popularQuizzes);
+            for(Quiz quiz: sorted) {
+                out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + " (Author: " + uDao.getUser(quiz.getCreatorId()).getUserName() + ")" + "</a> </li>");
+            }
+        %>
     </ul>
     <input class="button button6" type="button" value="Hide" onclick=hide("popular_id")>
 </div>
@@ -158,13 +211,13 @@
 <p> <button class = "button" value = "recently quizzes" onclick= show("recently_id")>Recently created quizzes</button></p>
 <div id = "recently_id" style="display: none">
     <ul>
-    <%
-        List<Quiz> recentQuizzes = qDao.getRecentlyCreatedQuizzes();
-        sorted = qDao.sortByQuizIdDescending(recentQuizzes);
-        for(Quiz quiz: sorted){
-            out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + " (Author: " + uDao.getUser(quiz.getCreatorId()).getUserName() + ")" + "</a> </li>");
-        }
-    %>
+        <%
+            List<Quiz> recentQuizzes = qDao.getRecentlyCreatedQuizzes();
+            sorted = qDao.sortByQuizIdDescending(recentQuizzes);
+            for(Quiz quiz: sorted){
+                out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + " (Author: " + uDao.getUser(quiz.getCreatorId()).getUserName() + ")" + "</a> </li>");
+            }
+        %>
     </ul>
     <input class="button button6" type="button" value="Hide" onclick=hide("recently_id")>
 </div>
@@ -172,13 +225,13 @@
 <p> <button class = "button" value = "recently taken quizzes" onclick= show("recentlyTaken_id")>Recently taken quizzes</button></p>
 <div id = "recentlyTaken_id" style="display: none">
     <ul>
-    <%
-        List<History> recentlyTakenQuizzes = historyDao.getHistories(id);
-        List<History> sort = historyDao.sortByEndDate(recentlyTakenQuizzes);
-        for(History history : sort){
-            out.println("<li><a href=\"/quizInfo.jsp?id=" +  history.getQuizId() + "\">" + qDao.getQuiz(history.getQuizId()).getDescription() + " (Author: " + uDao.getUser(history.getUserId()).getUserName() + ")" + "</a> </li>");
-        }
-    %>
+        <%
+            List<History> recentlyTakenQuizzes = historyDao.getHistories(id);
+            List<History> sort = historyDao.sortByEndDate(recentlyTakenQuizzes);
+            for(History history : sort){
+                out.println("<li><a href=\"/quizInfo.jsp?id=" +  history.getQuizId() + "\">" + qDao.getQuiz(history.getQuizId()).getDescription() + " (Author: " + uDao.getUser(history.getUserId()).getUserName() + ")" + "</a> </li>");
+            }
+        %>
     </ul>
     <input class="button button6" type="button" value="Hide" onclick=hide("recentlyTaken_id")>
 </div>
@@ -186,13 +239,13 @@
 <p> <button class = "button" value = "your recently created quizzes" onclick= show("your_recently_id")>Your recently created quizzes</button></p>
 <div id = "your_recently_id" style="display: none">
     <ul>
-    <%
-        recentQuizzes = qDao.getRecentlyCreatedQuizzesByUser(id);
-        sorted = qDao.sortByQuizIdDescending(recentQuizzes);
-        for(Quiz quiz: sorted){
-            out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + " (Author: " + uDao.getUser(quiz.getCreatorId()).getUserName() + ")" + "</a> </li>");
-        }
-    %>
+        <%
+            recentQuizzes = qDao.getRecentlyCreatedQuizzesByUser(id);
+            sorted = qDao.sortByQuizIdDescending(recentQuizzes);
+            for(Quiz quiz: sorted){
+                out.println("<li><a href=\"/quizInfo.jsp?id=" +  quiz.getQuizId() + "\">" + quiz.getDescription() + " (Author: " + uDao.getUser(quiz.getCreatorId()).getUserName() + ")" + "</a> </li>");
+            }
+        %>
     </ul>
     <input class="button button6" type="button" value="Hide" onclick=hide("your_recently_id")>
 </div>
@@ -200,13 +253,13 @@
 <p> <button class = "button" value = "achievements" onclick= show("achievements_id")>Achievements</button></p>
 <div id = "achievements_id" style="display: none">
     <ul>
-    <%
-        List<String> achievements = aDao.getAchievements(id);
-        for(String achievement : achievements){
-            out.println("<li>" + achievement + "</li>");
+        <%
+            List<String> achievements = aDao.getAchievements(id);
+            for(String achievement : achievements){
+                out.println("<li>" + achievement + "</li>");
 
-        }
-    %>
+            }
+        %>
     </ul>
     <input class="button button6" type="button" value="Hide" onclick=hide("achievements_id")>
 </div>
@@ -234,12 +287,12 @@
 
 <input class="button button1" type=button Value=challenge onclick=show("challenge_div")>
 <div id=challenge_div style="display: none">
-    <form action="MailServlet" method="post">
-        to: <input type="text" name="username"> <br/>
-        <label for="quizzes">
+    <form action="MailServlet" method="post" id="Challenging">
+        to: <input type="text" name="username" id="Challenging_username"> <br/>
+        <label for="Challenging_quizzes">
             choose a quiz:
         </label>
-        <select name="quizzes" id="quizzes">
+        <select name="quizzes" id="Challenging_quizzes">
             <%
                 /*
                 int id2 = uDao.getUserIdByName((String)session.getAttribute("currentUser"));
@@ -251,28 +304,32 @@
                 */
             %>
         </select>
-        <input class="button button7" type="submit" name="button" value="challenge">
+        <input class="button button7" type="button" name="button" value="challenge" id = "Challenging_button">
+        <span style="color: red;" id="Challenging_output"></span>
         <input class="button button6" type="button" value="cancel" onclick=hide("challenge_div")>
     </form>
 </div>
 
 <input class="button button1" type=button Value=request onclick=show("request_div")>
 <div id=request_div style="display: none">
-    <form action="MailServlet" method="post">
-        to: <input type="text" name="username"> <br/>
-        <input class="button button7" type="submit" name="button" value="sendRequest">
+    <form action="MailServlet" method="post" id="FriendRequesting">
+        to: <input type="text" name="username" id="FriendRequesting_username"> <br/>
+        <input class="button button7" type="button" name="button" value="sendRequest" id="FriendRequesting_button">
+        <span style="color: red;" id="FriendRequesting_output"></span>
     </form>
     <input class="button button6" type="button" value="hide" onclick=hide("request_div")>
 </div>
 
 <input class="button button1" type=button Value=compose onclick=show("id_div")>
 <div id=id_div style="display: none">
-    <form action="MailServlet" method="post">
-        to: <input type="text" name="username"> <br/>
-        message: <input type="text" name="message"> <br/>
-        <input class="button button7" type="submit" name="button" value="send">
-        <input class="button button6" type="button" value="cancel" onclick=hide("id_div")>
+    <form action="MailServlet" method="post" id="Composing">
+        to: <input type="text" name="username" id="Composing_username"> <br/>
+        message: <input type="text" name="message" id="Composing_message"> <br/>
+        <input class="button button7" type="button" name="button" value="send" id="Composing_button">
+        <span style="color: red;" id="Composing_output"></span>
+
     </form>
+    <input class="button button6" type="button" value="cancel" onclick=hide("id_div")>
 </div>
 
 

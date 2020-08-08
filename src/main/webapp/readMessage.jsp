@@ -1,5 +1,5 @@
-<%@ page import="ProfilePackage.MailSqlDao" %>
-<%@ page import="ProfilePackage.Mail" %><%--
+<%@ page import="MailPackage.MailSqlDao" %>
+<%@ page import="MailPackage.Mail" %><%--
   Created by IntelliJ IDEA.
   User: Nanuka
   Date: 15/07/2020
@@ -18,8 +18,13 @@
     <title>Title</title>
 </head>
 <body>
-from: <%=name %>
-message: <%=mail.getMessage() %>
-Date: <%=mail.getDate() %>
+<form>
+    <h1> from: <%=name %> </h1>
+    <h1> message: <%=mail.getMessage() %> </h1>
+   <h1> Date: <%=mail.getDate() %> </h1>
+</form>
+
+
+<a href="/UserServlet"> Back to homepage</a>
 </body>
 </html>

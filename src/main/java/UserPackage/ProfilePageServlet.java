@@ -46,6 +46,7 @@ public class ProfilePageServlet extends HttpServlet {
 
     private void setAttributes(User user, HttpServletRequest httpServletRequest){
         httpServletRequest.setAttribute("name" , user.getName());
+        httpServletRequest.setAttribute("username" , user.getUserName());
         httpServletRequest.setAttribute("surname" , user.getSurname());
         httpServletRequest.setAttribute("birthPlace" , user.getBirthPlace());
         httpServletRequest.setAttribute("status" , user.getStatus());

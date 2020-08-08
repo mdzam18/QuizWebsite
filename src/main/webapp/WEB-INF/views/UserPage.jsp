@@ -336,7 +336,7 @@
         <%
             for (Mail mail : mails) {
                 String senderName = userDao.getUser(mail.getSenderId()).getUserName();
-                String output = "<li><a href=\"readMessage.jsp?id=" + mail.getMailId() + "&sender=" + senderName + "\">" + "from: " + senderName + "</a></li>";
+                String output = "<li><a href=\"/WEB-INF/view/readMessage.jsp?id=" + mail.getMailId() + "&sender=" + senderName + "\">" + "from: " + senderName + "</a></li>";
                 out.print(output);
             }
         %>

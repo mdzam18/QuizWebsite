@@ -37,9 +37,10 @@
        <h2> Surname: ${surname} </h2>
        <h2> Birth Place: ${birthPlace}  </h2>
        <h2> Status: ${status} </h2>
-       <form action="MailServlet" method="post">
-       <input class = "button button7" type="submit" name="button" value="sendRequestFromProfile">
-       <input type="hidden" name="username" value= "${name}">
+    </form>
+    <form action="MailServlet" method="post">
+               <input class = "button button7" type="submit" name="button" value="sendRequestFromProfile">
+               <input type="hidden" name="username" value= "${username}">
     </form>
 
 </div>

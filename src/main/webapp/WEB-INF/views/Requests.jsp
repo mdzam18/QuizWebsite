@@ -28,12 +28,12 @@
 </script>
 
 
-<h1 style="text-align:center">Friends</h1>
+<h1 style="text-align:center">Friends Requests</h1>
 <a href="/UserServlet"> Back to homepage</a>
     <form action="/FriendRequests" method="get">
         <ul>
             <c:forEach var="Friend" items="${Requests}">
-                 <li> <a href= "/ProfilePage?id=${Friend.getUserId()}">${Friend.getUserName()}</a> </li>
+                 <li style="list-style-type: circle;" > <a href= "/ProfilePage?id=${Friend.getUserId()}">${Friend.getUserName()}</a> </li>
             </c:forEach>
         </ul>
     </form>

@@ -33,7 +33,7 @@
     <form action="/Friends" method="get">
         <ul>
             <c:forEach var="Friend" items="${friends}">
-                 <li> <a href= "/ProfilePage?id=${Friend.getUserId()}">${Friend.getUserName()}</a> </li>
+                 <li style="list-style-type: circle;" ><a href= "/ProfilePage?id=${Friend.getUserId()}">${Friend.getUserName()}</a> </li>
             </c:forEach>
         </ul>
     </form>

@@ -284,6 +284,23 @@
         display: flex;
         justify-content: center;
     }
+
+    .user a{
+        position: absolute;
+        top: 12px;
+        right: 55px;
+        font-size: 24px;
+        color: yellow;
+        font-weight: bold;
+    }
+
+    .user a:link {
+        text-decoration: none;
+    }
+    .user a:hover {
+        text-decoration: underline;
+        color: red;
+    }
 </style>
 <html>
 <head>
@@ -292,6 +309,9 @@
 </head>
 <body>
 <header>
+    <div class="user">
+        <a href=/UserServlet>Go as User</a>
+    </div>
     <h1>Administrator</h1>
 </header>
 <section class="banner">

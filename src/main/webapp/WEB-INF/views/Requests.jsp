@@ -35,7 +35,7 @@
             <c:forEach var="Friend" items="${Requests}">
                  <li style="list-style-type: circle;" > <a href= "/ProfilePage?id=${Friend.getUserId()}">${Friend.getUserName()}</a> </li>
                 <input type="hidden" name="username" value= ${Friend.getUserName()} <br/>
-                <input class="button button7" type="submit" name="button" value="sendRequestFromProfile" >
+                <input class="button button7" type="submit" name="button" value="confirmRequest" >
             </c:forEach>
         </ul>
     </form>

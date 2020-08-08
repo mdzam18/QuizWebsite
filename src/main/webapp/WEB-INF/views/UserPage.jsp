@@ -157,19 +157,20 @@
 </form>
 
 <style>
-    .admin{
+    .admin a{
         position: absolute;
         top: 8px;
         right: 16px;
         font-size: 24px;
-        color: #008CBA;
+        color: purple;
         font-weight: bold;
     }
-    a:link {
+    .admin a:link {
         text-decoration: none;
     }
-    a:hover {
+    .admin a:hover {
         text-decoration: underline;
+        color: red;
     }
     .logOutButton {
         margin-top: 20px;
@@ -180,9 +181,9 @@
 </style>
 
 <div class="admin">
-    <%--<c:if test="${isAdmin != null}">
-        <a href="/admin">Go as Administrator</a>
-    </c:if>--%>
+<%--    <c:if test="${isAdmin != null}">--%>
+<%--        <a href="/admin">Go as Administrator</a>--%>
+<%--    </c:if>--%>
     <%
         String name = (String)session.getAttribute("currentUser");
         User user = uDao.getUser(uDao.getUserIdByName(name));

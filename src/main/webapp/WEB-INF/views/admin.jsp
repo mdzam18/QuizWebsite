@@ -9,51 +9,6 @@
         font-family: arial;
     }
 
-    /*table design*/
-
-    .wrapper {
-        margin: 60px auto;
-        padding: 20px;
-        max-width: 800px;
-    }
-
-    .table {
-        margin: 0 0 40px 0;
-        width: 100%;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        display: table;
-    }
-
-    .row {
-        display: table-row;
-        background: #f6f6f6;
-    }
-
-    .row.header {
-        font-weight: bold;
-        font-size: 23px;
-        color: #ffffff;
-        background: palevioletred;
-        padding: 0;
-        height: 6px;
-    }
-
-    .row.yellow{
-        background: darkgoldenrod;
-    }
-
-    .row.green {
-        background: #27ae60;
-    }
-
-    .row.purple {
-        background: purple;
-    }
-
-    .row.blue{
-        background: mediumblue;
-    }
-
     .row .cell {
         font-size: 25px;
         margin-bottom: 20px;
@@ -105,7 +60,6 @@
     }
 
     .banner .welcome{
-
         background-color: #FEB614;
         color: white;
         padding: 30px;
@@ -171,91 +125,6 @@
         color: white;
     }
 
-    /* buttons design */
-
-    .centered {
-        margin:50px auto;
-        text-align:center;
-    }
-
-    .button{
-        width: 100px;
-        height: 35px;
-        border-radius: 10%;
-        font-size: 18px;
-        cursor: pointer;
-    }
-
-    .button:hover{
-        background-color: #eee;
-        color: #555;
-    }
-
-    .button:active{
-        background: #e9e9e9;
-        position: relative;
-        top: 1px;
-        text-shadow: none;
-        -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
-        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
-    }
-
-    .button.red, .button.blue {
-        color: #fff;
-        text-shadow: 0 1px 0 rgba(0,0,0,.2);
-
-        background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,.3)), to(rgba(255,255,255,0)));
-        background-image: -webkit-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
-        background-image: -moz-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
-        background-image: -ms-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
-        background-image: -o-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
-        background-image: linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
-    }
-
-    .button.red{
-        background-color: #ca3535;
-        border-color: #c43c35;
-    }
-
-    .button.red:hover{
-        background-color: #ee5f5b;
-    }
-
-    .button.red:active{
-        background: #c43c35;
-    }
-
-    .button.blue{
-        background-color: #269CE9;
-        border-color: #269CE9;
-    }
-
-    .button.blue:hover{
-        background-color: #70B9E8;
-    }
-
-
-    /*Statistics page*/
-
-    .id_field {
-        margin: 20px 0;
-        padding: 10px 20px;
-        font-size: 24px;
-        border-radius: 28px;
-        border: 4px solid white;
-    }
-
-
-    .id_field:focus{
-        outline: none; /*remove blue outline from the input */
-        border: 4px solid #4b4b4b;
-    }
-
-    .id_field:valid{
-        border: 4px solid #71d300;
-    }
-
     input[type=submit] {
         background-color: #4CAF50;
         color: white;
@@ -279,10 +148,21 @@
         text-shadow: 2px 2px #c28686
     }
 
-    /* display: flex */
-    .score-list {
-        display: flex;
-        justify-content: center;
+     .user a{
+         position: absolute;
+         top: 12px;
+         right: 55px;
+         font-size: 24px;
+         color: yellow;
+         font-weight: bold;
+     }
+
+    .user a:link {
+        text-decoration: none;
+    }
+    .user a:hover {
+        text-decoration: underline;
+        color: red;
     }
 </style>
 <html>
@@ -292,6 +172,9 @@
 </head>
 <body>
 <header>
+    <div class="user">
+        <a href=/UserServlet>Go as User</a>
+    </div>
     <h1>Administrator</h1>
 </header>
 <section class="banner">

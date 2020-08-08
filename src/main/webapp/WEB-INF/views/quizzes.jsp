@@ -343,7 +343,8 @@
                         ${quiz.creatorId}
                 </div>
                 <div class="centered">
-                    <form action="/admin/quizzes?id=${quiz.quizId}" method="POST">
+                    <form action="/admin/quizzes" method="POST">
+                        <input name="quizId" type="hidden" value="${quiz.quizId}">
                         <button class="small red button" type="submit">Delete</button>
                     </form>
                 </div>

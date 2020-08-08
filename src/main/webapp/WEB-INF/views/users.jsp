@@ -343,10 +343,12 @@
                         ${user.userName}
                 </div>
                 <div class="centered">
-                    <form action="/admin/users?id=${user.userId}" method="POST">
+                    <form action="/admin/users" method="POST">
+                        <input name="userId" type="hidden" value="${user.userId}">
                         <button class="small red button" type="submit"> Delete</button>
                     </form>
-                    <form action="/admin/admins?id=${user.userId}" method="POST">
+                    <form action="/admin/admins" method="POST">
+                        <input name="userId" type="hidden" value="${user.userId}">
                         <button class="small blue button" type="submit">Promote</button>
                     </form>
                 </div>

@@ -324,9 +324,6 @@
             <div class="cell">
                 Score
             </div>
-            <%--                <div class="cell">--%>
-            <%--                    Time Needed--%>
-            <%--                </div>--%>
         </div>
 
         <c:forEach var="history" items="${histories}">
@@ -340,14 +337,12 @@
                 <div class="cell" data-title="Score">
                         ${history.score}
                 </div>
-                    <%--                    <div class="cell" data-title="Time Needed">--%>
-                    <%--                        var time = <%= (new Date().getTime())/1000 %>--%>
-                    <%--  DATE-is time-ad gardaqmna   --%>
-                    <%--                    </div>--%>
             </div>
         </c:forEach>
+
         <div class="centered">
-            <form action="/admin/history?id=1" method="POST">
+            <form action="/admin/history" method="POST">
+                <input name="id" type="hidden" value=1>
                 <button class="small red button" type="submit" name="delete_btn">Delete All</button>
             </form>
         </div>

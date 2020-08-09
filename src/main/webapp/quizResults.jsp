@@ -10,21 +10,33 @@
     <link rel="stylesheet" type="text/css" href="styles/quizResults_style1.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+    <script>
+        function toMyPage() {
+            document.getElementById('toMyPage').submit();
+        }
+    </script>
 </head>
 <body>
-    <div id="content">
-        <%
-            final String ATTR = "RESULTS";
-            final String ATTR2 = "HISTORY";
-            Map<Integer, QuestionPassResult> questionResults = (Map<Integer, QuestionPassResult>) request.getAttribute(ATTR);
-            List<History> histories = (List<History>) request.getAttribute(ATTR2);
-        %>
+<div id="content">
+    <%
+        final String ATTR = "RESULTS";
+        final String ATTR2 = "HISTORY";
+        Map<Integer, QuestionPassResult> questionResults = (Map<Integer, QuestionPassResult>) request.getAttribute(ATTR);
+        List<History> histories = (List<History>) request.getAttribute(ATTR2);
+    %>
 
-        <p class="headerNameP">Your Quiz Results</p>
+    <p class="headerNameP">Your Quiz Results</p>
 
-        <p><a href="UserPage.jsp">My Page</a></p>
+    <p><form action="UserServlet" method="get" id="toMyPage">
+        <a href="#" onclick="toMyPage()">My Page</a>
+    </form></p>
 
-        <table class="currentResult">
+    <div class="currentResult">
+        <table>
+            <tr>
+                <th colspan="6" width="1200">Current Results</th>
+            </tr>
             <tr>
                 <th>Question №</th>
                 <th>Question</th>
@@ -37,16 +49,16 @@
                 for(Integer q : questionResults.keySet()) {
                     QuestionPassResult questionPass = questionResults.get(q);
                     Question question = questionPass.question;
-                    int type = question.getType();
                     out.println("<tr>");
                     out.print("<td style=\"text-align: center;\">");
                     out.print(q);
-                    out.println("<td>");
+                    out.println("</td>");
                     out.print("<td>");
                     out.print(question.getQuestion());
-                    out.println("<td>");
+                    out.println("</td>");
 
                     String typeName = "";
+                    int type = question.getType();
                     if(type == QuestionType.QUESTION_RESPONSE) {
                         typeName = "Question-Response";
                     } else if(type == QuestionType.MULTIPLE_CHOICE_QUESTION) {
@@ -60,7 +72,7 @@
                     }
                     out.print("<td>");
                     out.print(typeName);
-                    out.println("<td>");
+                    out.println("</td>");
 
                     String stl = "color: green;";
                     if(questionPass.passType == QuestionPassResult.NOT_QUESTION_PASS) {
@@ -73,16 +85,14 @@
                     out.print(questionPass.userScore);
                     out.print("/");
                     out.print(question.getScore());
-                    out.println("<td>");
+                    out.println("</td>");
                     List<String> list = questionPass.userAnswers;
                     out.print("<td>");
                     for(int i = 0; i<list.size(); i++) {
                         if(i != 0) {
                             out.print(", ");
                         }
-                        out.print("[");
                         out.print(list.get(i));
-                        out.print("]");
                     }
                     out.println("</td>");
                     out.print("<td>");
@@ -105,9 +115,7 @@
                                 if(bool) {
                                     out.print(", ");
                                 }
-                                out.print("[");
                                 out.print(str);
-                                out.print("]");
                             }
                         }
                     } else {
@@ -117,56 +125,52 @@
                             if(bool) {
                                 out.print(", ");
                             }
-                            out.print("[");
                             out.print(str);
-                            out.print("]");
                         }
                     }
                     out.println("</td>");
                     out.println("</tr>");
-                }
-            %>
+            }%>
         </table>
-
-        <table class="otherHistories">
-            <tr>
-                <th colspan="3">All Your Activity</th>
-            </tr>
-            <tr>
-                <th>Score</th>
-                <th>Start Time</th>
-                <th>Start Time</th>
-            </tr>
-            <%
-                int fullScore = 0;
-                for(QuestionPassResult questionPass : questionResults.values()) {
-                    fullScore += questionPass.question.getScore();
-                }
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss dd MMMMm yyyy");
-                for(History history : histories) {
-                    out.println("<tr>");
-                    String stl = "color: green;";
-                    if(history.getScore() == 0) {
-                        stl = "color: red;";
-                    } else if(history.getScore() == fullScore) {
-                        stl = "color: yellow;";
-                    }
-                    stl += "font-weight: bold;";
-                    out.print("<td width=\"100\" style=\"" + stl + "\">");
-                    out.print(history.getScore());
-                    out.print("/");
-                    out.print(fullScore);
-                    out.println("</td>");
-                    out.print("<td width=\"340\">");
-                    out.print(format.format(history.getStartDate()));
-                    out.println("</td>");
-                    out.print("<td width=\"340\">");
-                    out.print(format.format(history.getEndDate()));
-                    out.println("</td>\n</tr>");
-                }
-            %>
-        </table>
-
     </div>
+
+    <table class="otherHistories">
+        <tr>
+            <th colspan="3">All Your Activity</th>
+        </tr>
+        <tr>
+            <th>Score</th>
+            <th>Start Time</th>
+            <th>Start Time</th>
+        </tr>
+        <%
+            int fullScore = 0;
+            for(QuestionPassResult questionPass : questionResults.values()) {
+                fullScore += questionPass.question.getScore();
+            }
+            SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss dd MMM yyyy");
+            for(History history : histories) { %>
+        <tr>
+            <%String stl = "color: green;";
+                if(history.getScore() == 0) {
+                    stl = "color: red;";
+                } else if(history.getScore() == fullScore) {
+                    stl = "color: yellow;";
+                }
+                stl += "font-weight: bold;";%>
+            <td width="100\" style="<%= stl %>">
+                <%=history.getScore()%>/<%=fullScore%>
+            </td>
+            <td width="340">
+                <%=format.format(history.getStartDate())%>
+            </td>
+            <td width="340">
+                <%=format.format(history.getEndDate())%>
+            </td>
+        </tr>
+        <%}%>
+    </table>
+
+</div>
 </body>
 </html>

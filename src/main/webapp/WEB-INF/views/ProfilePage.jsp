@@ -16,6 +16,24 @@
 </head>
 <body>
 <script language=javascript>
+    $(document).ready(function() {
+        $("#friendRequestingFromProfile_button").on("click", function () {
+            let username = $("#friendRequestingFromProfile_username").val();
+            let button = $("#friendRequestingFromProfile_button").val();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    username: username,
+                    button: button
+                },
+                url: 'MailServlet',
+                success: function (res) {
+                    $("#friendRequestingFromProfile_output").html(res);
+                    //alert(res);
+                }
+            });
+        })
+    }
     function hide(id) {
         var div_ref = document.getElementById(id);
         div_ref.style.display = "none";
@@ -29,18 +47,20 @@
 
 
 <h1 style="text-align:center">User Profile</h1>
-<a href="/UserServlet"> RETURN TO HOMEPAGE</a>
+<a href="/UserServlet"> Back to homepage</a>
 <div class= "Profile">
     <form action="/ProfilePage" method="get">
-       <h1 <label for="username">User Name: ${username} </label> </h1>
+       <h1>User Name: ${username} </> </h1>
        <h2> Name: ${name}</h2>
        <h2> Surname: ${surname} </h2>
        <h2> Birth Place: ${birthPlace}  </h2>
        <h2> Status: ${status} </h2>
+
     </form>
-    <form action="MailServlet" method="post">
-               <input class = "button button7" type="submit" name="button" value="sendRequestFromProfile">
-               <input type="hidden" name="username" value= "${username}">
+    <form action="MailServlet" method="post" id = "friendRequestingFromProfile">
+        <input class = "button button7" type="button" name="button" value="sendRequestFromProfile" id = "friendRequestingFromProfile_button">
+        <input type="hidden" name="username" value= "${username}" id = "friendRequestingFromProfile_username">
+        <span style="color: red;" id="friendRequestingFromProfile_output"></span>
     </form>
 
 </div>

@@ -29,8 +29,8 @@
     <p class="headerNameP">Your Quiz Results</p>
 
     <p><form action="UserServlet" method="get" id="toMyPage">
-        <a href="#" onclick="toMyPage()">My Page</a>
-    </form></p>
+    <a href="#" onclick="toMyPage()">My Page</a>
+</form></p>
 
     <div class="currentResult">
         <table>
@@ -98,6 +98,7 @@
                     out.print("<td>");
                     if(type == QuestionType.MULTI_ANSWER_QUESTION) {
                         MultipleAnswerQuestion multipleAnswer = (MultipleAnswerQuestion) question;
+
                         if(multipleAnswer.isOrdered()) {
                             List<String> orderAnswers = multipleAnswer.getOrderedAnswers();
                             for(int i = 0; i<orderAnswers.size(); i++) {
@@ -118,7 +119,7 @@
                                 out.print(str);
                             }
                         }
-                    } else {
+                    }else {
                         Set<String> set = question.getAnswerSet();
                         boolean bool = false;
                         for(String str : set) {
@@ -126,11 +127,12 @@
                                 out.print(", ");
                             }
                             out.print(str);
+                            bool = true;
                         }
                     }
                     out.println("</td>");
                     out.println("</tr>");
-            }%>
+                }%>
         </table>
     </div>
 

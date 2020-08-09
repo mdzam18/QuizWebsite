@@ -29,7 +29,7 @@
 
 
 <h1 style="text-align:center">User Profile</h1>
-<a href="/UserServlet"> Back to homepage</a>
+<a href="/UserServlet"> RETURN TO HOMEPAGE</a>
 <div class= "Profile">
     <form action="/ProfilePage" method="get">
        <h1 <label for="username">User Name: ${username} </label> </h1>

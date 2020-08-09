@@ -5,11 +5,12 @@ html, body {
     background: whitesmoke;
 }
 
-.myPageLink {
+#toMyPage a {
     margin-top: 20px;
+    margin-left: 25px;
     margin-bottom: 10px;
     color: black;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 #content {

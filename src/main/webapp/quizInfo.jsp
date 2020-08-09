@@ -30,6 +30,12 @@
     <link rel="stylesheet" type="text/css" href="styles/quizInfo_style1.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+    <script>
+        function toMyPage() {
+            document.getElementById('toMyPage').submit();
+        }
+    </script>
 </head>
 <body>
 <div id="content">
@@ -37,7 +43,9 @@
     <%
         String userExists = (String) session.getAttribute("currentUser");
         if(userExists != null) {
-            out.print("<p><a class=\"myPageLink\" href=\"UserPage.jsp\">Go to My Page</a></p>");
+            out.print("<p><form action=\"UserServlet\" method=\"get\" id=\"toMyPage\">");
+            out.print("\t<a href=\"#\" onclick=\"toMyPage()\">My Page</a>");
+            out.print("</form></p>");
         }
     %>
 
@@ -199,6 +207,7 @@
                         sum += list.get(i);
                     }
                     arr[1] = sum/list.size();
+                    minAvgMaxPerUser.put(userId, arr);
                 }
 
                 for(Integer userId : minAvgMaxPerUser.keySet()) {
@@ -210,6 +219,9 @@
                     out.println("</td>");
                     out.print("<td>");
                     out.print(scoresPerUser.get(userId).size());
+                    out.println("</td>");
+                    out.print("<td>");
+                    out.print(format.format(lastAttempt.get(userId)));
                     out.println("</td>");
                     for(int i = 0; i<arr.length; i++) {
                         out.print("<td>");

@@ -13,9 +13,20 @@
 <head>
     <link href="../style.css" rel="stylesheet" type="text/css">
     <title>Welcome</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-<script language=javascript>
+<script type="text/javascript">
+
+    function hide(id) {
+        var div_ref = document.getElementById(id);
+        div_ref.style.display = "none";
+    }
+
+    function show(id) {
+        var div_ref = document.getElementById(id);
+        div_ref.style.display = "block";
+    }
     $(document).ready(function() {
         $("#friendRequestingFromProfile_button").on("click", function () {
             let username = $("#friendRequestingFromProfile_username").val();
@@ -33,16 +44,7 @@
                 }
             });
         })
-    }
-    function hide(id) {
-        var div_ref = document.getElementById(id);
-        div_ref.style.display = "none";
-    }
-
-    function show(id) {
-        var div_ref = document.getElementById(id);
-        div_ref.style.display = "block";
-    }
+    });
 </script>
 
 
@@ -57,12 +59,17 @@
        <h2> Status: ${status} </h2>
 
     </form>
-    <form action="MailServlet" method="post" id = "friendRequestingFromProfile">
-        <input class = "button button7" type="button" name="button" value="sendRequestFromProfile" id = "friendRequestingFromProfile_button">
-        <input type="hidden" name="username" value= "${username}" id = "friendRequestingFromProfile_username">
-        <span style="color: red;" id="friendRequestingFromProfile_output"></span>
-    </form>
+
 
 </div>
+
+<form action="MailServlet" method="post" id = "friendRequestingFromProfile">
+    <input class = "button button7" type="button" name="button" value="sendRequestFromProfile" id = "friendRequestingFromProfile_button">
+    <input type="hidden" name="username" value="nana" id = "friendRequestingFromProfile_username">
+    <span style="color: red;" id="friendRequestingFromProfile_output"></span>
+</form>
+
+
+
 </body>
 </html>

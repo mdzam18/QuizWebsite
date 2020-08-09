@@ -259,16 +259,18 @@
     input[type=submit] {
         background-color: #4CAF50;
         color: white;
-        font-size: 18px;
+        font-size: 20px;
+        font-family: Lato;
         padding: 14px 20px;
         margin: 8px 0;
         border: none;
-        border-radius: 4px;
+        border-radius: 3px;
         cursor: pointer;
     }
 
     input[type=submit]:hover{
-        background-color: rgb(70, 160, 73);
+        background-color: green;
+        /*background-color: rgb(70, 160, 73);*/
     }
 
     ol.scores li{
@@ -358,6 +360,10 @@
         <h4>Get all taken quizzes for a user:</h4><br>
         <form action="/admin/statistics" method="POST">
             <input class="id_field" type="number" name="field1" placeholder="Enter User Id" required>
+            <input name="field2" type="hidden" value=${field2}>
+            <input name="field3" type="hidden" value=${field3}>
+            <input name="field4" type="hidden" value=${field4}>
+            <input name="field5" type="hidden" value=${field5}>
             <input type = "submit" value = "Submit"/>
         </form>
     </div>
@@ -402,9 +408,12 @@
 
     <div class="div1">
         <h4>Quiz score history for a user:</h4><br>
-        <form>
+        <form action="/admin/statistics" method="POST">
             <input class="id_field" type="number" name="field2" placeholder="Enter User id" required>
             <input class="id_field" type="number" name="field3" placeholder="Enter Quiz id" required>
+            <input name="field1" type="hidden" value=${field1}>
+            <input name="field4" type="hidden" value=${field4}>
+            <input name="field5" type="hidden" value=${field5}>
             <input class = "submit_btn" type = "submit" value = "Submit"/>
         </form>
         <br>
@@ -422,8 +431,12 @@
 
     <div class="div2">
         <h4>Find out who got the highest score in a quiz:</h4><br>
-        <form>
+        <form action="/admin/statistics" method="POST">
             <input class="id_field" type="number" name="field4" placeholder="Enter Quiz id" required>
+            <input name="field1" type="hidden" value=${field1}>
+            <input name="field2" type="hidden" value=${field2}>
+            <input name="field3" type="hidden" value=${field3}>
+            <input name="field5" type="hidden" value=${field5}>
             <input class = "submit_btn" type = "submit" value = "Submit"/>
         </form>
     </div>
@@ -433,8 +446,12 @@
 
     <div class="div3">
         <h4>Get the average score in a particular quiz:</h4></br>
-        <form>
+        <form action="/admin/statistics" method="POST">
             <input class="id_field" type="number" name="field5" placeholder="Enter Quiz id" required>
+            <input name="field1" type="hidden" value=${field1}>
+            <input name="field2" type="hidden" value=${field2}>
+            <input name="field3" type="hidden" value=${field3}>
+            <input name="field4" type="hidden" value=${field4}>
             <input class = "submit_btn" type = "submit" value = "Submit"/>
         </form>
     </div>

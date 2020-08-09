@@ -143,7 +143,7 @@
         <tr>
             <th>Score</th>
             <th>Start Time</th>
-            <th>Start Time</th>
+            <th>End Time</th>
         </tr>
         <%
             int fullScore = 0;

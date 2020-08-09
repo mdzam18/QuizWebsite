@@ -288,7 +288,8 @@ public class CheckTakenQuiz extends HttpServlet {
 
         httpServletRequest.setAttribute("RESULTS", quizPass);
         try {
-            List<History> histories = historyDao.getHistories(userId);
+            List<History> histories = historyDao.getUsersHistoryForQuiz(userId, quizId);
+            histories = HistorySqlDao.sortByEndDate(histories);
             httpServletRequest.setAttribute("HISTORY", HistorySqlDao.sortByEndDate(histories));
         } catch (SQLException e) {
             e.printStackTrace();

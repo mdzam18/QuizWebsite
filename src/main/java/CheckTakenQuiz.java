@@ -275,11 +275,6 @@ public class CheckTakenQuiz extends HttpServlet {
             if (sDao.getBestPlayer(quizId).getUserId() == userId && !aDao.hasAchievement(userId, AchievementsSqlDao.GREATEST)){
                 aDao.addAchievement(userId, AchievementsSqlDao.GREATEST);
             }
-            QuizSqlDao qDao = new QuizSqlDao();
-            if (qDao.getQuiz(quizId).isInPracticeMode() && !aDao.hasAchievement(userId, AchievementsSqlDao.PRACTICE)){
-                aDao.addAchievement(userId, AchievementsSqlDao.PRACTICE);
-            }
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {

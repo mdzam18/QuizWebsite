@@ -9,16 +9,17 @@
         UserDao userDao = (UserDao) context.getAttribute(ContextDataNames.USER_DAO);
         HistoryDao historyDao = (HistoryDao) context.getAttribute(ContextDataNames.HISTORY_DAO);
         QuizDao quizDao = (QuizDao) context.getAttribute(ContextDataNames.QUIZ_DAO);
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss dd MMM yyyy");
 
         String quizIdStr = request.getParameter("id");
         if(quizIdStr == null) {
-            System.out.println(">>> No Quiz Here <<<");
+            //System.out.println(">>> No Quiz Here <<<");
             return;
         }
         int quizId = Integer.parseInt(quizIdStr);
         Quiz quiz = quizDao.getQuiz(quizId);
         if(quiz == null) {
-            System.out.println(">>> No Quiz Here <<<");
+            //System.out.println(">>> No Quiz Here <<<");
             return;
         }
     %>
@@ -32,13 +33,74 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 
     <script>
+        let userPerformance_date;
+        let userPerformance_score;
+        let userPerformance_time;
+        let userPerformance_date_button;
+        let userPerformance_score_button;
+        let userPerformance_time_button;
+
+        window.onload = function() {
+            userPerformance_date = document.getElementById("userPerformance_date");
+            userPerformance_score = document.getElementById("userPerformance_score");
+            userPerformance_time = document.getElementById("userPerformance_time");
+
+            userPerformance_date_button = document.getElementById("userPerformance_date_button");
+            userPerformance_score_button = document.getElementById("userPerformance_score_button");
+            userPerformance_time_button = document.getElementById("userPerformance_time_button");
+
+            userPerformance_date_button.setAttribute("onclick", "showByDate()");
+            userPerformance_score_button.setAttribute("onclick", "showByScore()");
+            userPerformance_time_button.setAttribute("onclick", "showByTime()");
+        }
         function toMyPage() {
             document.getElementById('toMyPage').submit();
+        }
+        function showByDate() {
+            userPerformance_date.style.display = "block";
+            userPerformance_score.style.display = "none";
+            userPerformance_time.style.display = "none";
+
+            userPerformance_date_button.disabled = true;
+            userPerformance_score_button.disabled = false;
+            userPerformance_time_button.disabled = false;
+        }
+        function showByScore() {
+            userPerformance_date.style.display = "none";
+            userPerformance_score.style.display = "block";
+            userPerformance_time.style.display = "none";
+
+            userPerformance_date_button.disabled = false;
+            userPerformance_score_button.disabled = true;
+            userPerformance_time_button.disabled = false;
+        }
+        function showByTime() {
+            userPerformance_date.style.display = "none";
+            userPerformance_score.style.display = "none";
+            userPerformance_time.style.display = "block";
+
+            userPerformance_date_button.disabled = false;
+            userPerformance_score_button.disabled = false;
+            userPerformance_time_button.disabled = true;
         }
     </script>
 </head>
 <body>
 <div id="content">
+
+    <%!
+        String convertTime(int time) {
+            StringBuilder builder = new StringBuilder();
+            time /= 1000;
+            if(time/60 != 0) {
+                builder.append(time/60);
+                builder.append("m ");
+            }
+            builder.append(time%60);
+            builder.append('s');
+            return builder.toString();
+        }
+    %>
 
     <%
         String userExists = (String) session.getAttribute("currentUser");
@@ -50,13 +112,8 @@
     %>
 
     <p class="quizName">
-        <%
-            out.print("<strong>");
-            out.print(quiz.getDescription());
-            out.print("</strong> by <strong>");
-            out.print(userDao.getUser(quiz.getCreatorId()).getUserName());
-            out.print("</strong>");
-        %>
+        <strong><%=quiz.getDescription()%></strong> by
+        <strong><%=userDao.getUser(quiz.getCreatorId()).getUserName()%></strong>
     </p>
 
     <%
@@ -67,6 +124,84 @@
             out.print("</form>");
         }
     %>
+
+    <%
+        String thisUserName = (String) session.getAttribute("currentUser");
+        int thisUserId = userDao.getUserIdByName(thisUserName);
+        List<History> historiesForCurrent = historyDao.getUsersHistoryForQuiz(thisUserId, quizId);
+
+        List<History> historiesForCurrentByDate = HistorySqlDao.sortByEndDate(historiesForCurrent);
+        List<History> historiesForCurrentByScore = HistorySqlDao.sortByScore(historiesForCurrent);
+        final Map<Integer, Integer> timeForQuizId = new HashMap<Integer, Integer>();
+        for(History history : historiesForCurrent) {
+            int diff = (int)(history.getEndDate().getTime() - history.getStartDate().getTime());
+            timeForQuizId.put(history.getQuizId(), diff);
+        }
+        List<History> historiesForCurrentByTime = new ArrayList<History>(historiesForCurrent);
+        historiesForCurrentByTime.sort(new Comparator<History>() {
+            @Override
+            public int compare(History o1, History o2) {
+                return timeForQuizId.get(o1.getQuizId()) - timeForQuizId.get(o2.getQuizId());
+            }
+        });
+    %>
+
+    <div class="usersPerformance">
+        <p align="center">
+            Order By
+            <button id="userPerformance_date_button" disabled>Date</button>
+            <button id="userPerformance_score_button">Score</button>
+            <button id="userPerformance_time_button">Time</button>
+        </p>
+        <div style="display: block;" id="userPerformance_date">
+            <table class="userPerformance_table">
+                <tr>
+                    <th>Date</th>
+                    <th>Score</th>
+                    <th>Time</th>
+                </tr>
+            <% for(History history : historiesForCurrentByDate) { %>
+                <tr>
+                    <td><%= format.format(history.getEndDate()) %></td>
+                    <td><%= history.getScore() %></td>
+                    <td><%= convertTime(timeForQuizId.get(history.getQuizId())) %></td>
+                </tr>
+            <% } %>
+            </table>
+        </div>
+        <div style="display: none;" id="userPerformance_score">
+            <table class="userPerformance_table">
+                <tr>
+                    <th>Date</th>
+                    <th>Score</th>
+                    <th>Time</th>
+                </tr>
+            <% for(History history : historiesForCurrentByScore) { %>
+                <tr>
+                    <td><%= format.format(history.getEndDate()) %></td>
+                    <td><%= history.getScore() %></td>
+                    <td><%= convertTime(timeForQuizId.get(history.getQuizId())) %></td>
+                </tr>
+            <% } %>
+            </table>
+        </div>
+        <div style="display: none" id="userPerformance_time">
+            <table class="userPerformance_table">
+                <tr>
+                    <th>Date</th>
+                    <th>Score</th>
+                    <th>Time</th>
+                </tr>
+            <% for(History history : historiesForCurrentByTime) { %>
+                <tr>
+                    <td><%= format.format(history.getEndDate()) %></td>
+                    <td><%= history.getScore() %></td>
+                    <td><%= convertTime(timeForQuizId.get(history.getQuizId())) %></td>
+                </tr>
+            <% } %>
+            </table>
+        </div>
+    </div>
 
     <div class="historyTable">
         <table>
@@ -80,7 +215,6 @@
                 <th>Finish Time</th>
             </tr>
             <%
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss dd MMM yyyy");
                 List<History> historiesUnsorted = historyDao.getHistoriesByQuizId(quizId);
                 List<History> historiesByTime = HistorySqlDao.sortByEndDate(historiesUnsorted);
                 for(History history : historiesByTime) {

@@ -131,9 +131,8 @@ public class UserSqlDaoTest {
     }
 
     @Test
-    public void testGetAll() throws SQLException {
+    public void testGetAllUsers() throws SQLException {
         assertEquals(uDao.getAllUsers().size(), 0);
-        Date date = new Date(2000, 12, 12);
         for (int i = 0; i < 10; i++) {
             if (i == 0) {
                 assertEquals(uDao.addUser("ChandlerTheBest", "friends", false).equals(new User("ChandlerTheBest", 1, uDao.findHashCode("friends" + uDao.getSalt(1)))), true);
@@ -143,8 +142,9 @@ public class UserSqlDaoTest {
         }
     }
 
+
     @Test
-    public void testGetAll2() throws SQLException {
+    public void testGetAllUsers2() throws SQLException {
         assertEquals(uDao.getAllUsers().size(), 0);
         Date date = new Date(2000, 12, 12);
         for (int i = 0; i < 10; i++) {
@@ -152,6 +152,10 @@ public class UserSqlDaoTest {
             str = str + String.valueOf(i);
             assertEquals(uDao.addUser(str, "friends", false).equals(new User(str, i + 1, uDao.findHashCode("friends" + uDao.getSalt(i + 1)))), true);
             assertEquals(uDao.getAllUsers().size(), i + 1);
+        }
+
+        for(int i = 0 ; i < uDao.getAllUsers().size(); i++){
+            assertEquals(uDao.getUser(i+1).equals(uDao.getAllUsers().get(i)), true);
         }
     }
 

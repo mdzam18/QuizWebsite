@@ -32,7 +32,7 @@ public class HistorySqlDao implements HistoryDao {
     @Override
     public List<Quiz> getPopularQuizzes() throws SQLException, ClassNotFoundException {
         List<Quiz> res = new ArrayList<>();
-        PreparedStatement stm = connection.prepareStatement("select * from " + CreateTablesForTests.HistoryTable + " group by QuizId order by count(QuizId) DESC limit 5;");
+        PreparedStatement stm = connection.prepareStatement("select * from " + tableName + " group by QuizId order by count(QuizId) DESC limit 5;");
         ResultSet rs = stm.executeQuery();
         QuizSqlDao qDao = new QuizSqlDao();
         while (rs.next()){

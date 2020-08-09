@@ -57,21 +57,9 @@
                     out.print(question.getQuestion());
                     out.println("</td>");
 
-                    String typeName = "";
                     int type = question.getType();
-                    if(type == QuestionType.QUESTION_RESPONSE) {
-                        typeName = "Question-Response";
-                    } else if(type == QuestionType.MULTIPLE_CHOICE_QUESTION) {
-                        typeName = "Multiple Choice";
-                    } else if(type == QuestionType.PICTURE_RESPONSE_QUESTION) {
-                        typeName = "Picture-Response Questions";
-                    } else if(type == QuestionType.MULTI_ANSWER_QUESTION) {
-                        typeName = "Multi-Answer Questions";
-                    } else if(type == QuestionType.MULTIPLE_CHOICE_AND_ANSWER_QUESTION) {
-                        typeName = "Multiple Choice with Multiple Answers";
-                    }
                     out.print("<td>");
-                    out.print(typeName);
+                    out.print(QuestionType.getTypeName(type));
                     out.println("</td>");
 
                     String stl = "color: green;";

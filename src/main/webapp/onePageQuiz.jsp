@@ -7,7 +7,7 @@
         Quiz quiz = (Quiz) request.getAttribute(QUIZ_ATR_NAME);
     %>
 
-    <title></title>
+    <title><%= quiz.getDescription() %></title>
 
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="styles/onePageQuiz_style1.css">

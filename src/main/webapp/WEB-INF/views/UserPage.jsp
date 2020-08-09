@@ -291,14 +291,12 @@
         </label>
         <select name="quizzes" id="Challenging_quizzes">
             <%
-                /*
                 int id2 = uDao.getUserIdByName((String)session.getAttribute("currentUser"));
                 List<String> list2 = historyDao.forChallenge(id2);
                 for (String s : list2){
                     String output = "<option value='" + s + "'>" + s + "</option>";
                     out.print(output);
                 }
-                */
             %>
         </select>
         <input class="button button7" type="button" name="button" value="challenge" id = "Challenging_button">
@@ -336,7 +334,7 @@
         <%
             for (Mail mail : mails) {
                 String senderName = userDao.getUser(mail.getSenderId()).getUserName();
-                String output = "<li><a href=\"/WEB-INF/view/readMessage.jsp?id=" + mail.getMailId() + "&sender=" + senderName + "\">" + "from: " + senderName + "</a></li>";
+                String output = "<li><a href=\"readMessage.jsp?id=" + mail.getMailId() + "&sender=" + senderName + "\">" + "from: " + senderName + "</a></li>";
                 out.print(output);
             }
         %>

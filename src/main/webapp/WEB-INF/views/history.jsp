@@ -95,6 +95,10 @@
         padding: 6px 12px;
         display: inline-block;
         border-radius: 12px;
+        line-height: 1;
+        border-bottom: 6px solid #e5e5e5;
+        font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+        font-size: 2.25rem;
     }
 
     .banner{
@@ -106,7 +110,7 @@
     }
 
     .banner .welcome{
-
+        text-align: center;
         background-color: #FEB614;
         color: white;
         padding: 30px;
@@ -117,6 +121,7 @@
 
     .banner h2{
         font-size: 74px;
+        font-family: "Lato Heavy";
     }
 
     .banner h2 span{

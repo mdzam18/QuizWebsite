@@ -29,7 +29,7 @@
 
 
 <h1 style="text-align:center">Friends Requests</h1>
-<a href="/UserServlet"> Back to homepage</a>
+ <a href="/UserServlet"> RETURN TO HOMEPAGE</a>
     <form action="MailServlet" method="post">
         <ul>
             <c:forEach var="Friend" items="${Requests}">

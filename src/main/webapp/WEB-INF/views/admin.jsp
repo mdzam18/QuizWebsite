@@ -153,14 +153,14 @@
         text-shadow: 2px 2px #c28686
     }
 
-     .user a{
-         position: absolute;
-         top: 12px;
-         right: 55px;
-         font-size: 24px;
-         color: yellow;
-         font-weight: bold;
-     }
+    .user a{
+        position: absolute;
+        top: 12px;
+        right: 55px;
+        font-size: 24px;
+        color: yellow;
+        font-weight: bold;
+    }
 
     .user a:link {
         text-decoration: none;

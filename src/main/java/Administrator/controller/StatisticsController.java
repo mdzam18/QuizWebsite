@@ -40,7 +40,13 @@ public class StatisticsController extends HttpServlet {
         String quizId3 = req.getParameter("field4");
         String quizId4 = req.getParameter("field5");
 
-        if (userId1 != null) {
+        req.setAttribute("field1",userId1);
+        req.setAttribute("field2",userId2);
+        req.setAttribute("field3",quizId2);
+        req.setAttribute("field4",quizId3);
+        req.setAttribute("field5",quizId4);
+
+        if (userId1 != null && !userId1.isEmpty()) {
             try {
                 List<Quiz> quizzes = statisticsDao.getAllQuizzes(Integer.valueOf(userId1));
                 req.setAttribute("quizzes", quizzes);
@@ -49,7 +55,7 @@ public class StatisticsController extends HttpServlet {
             }
         }
 
-        if(userId2 != null && quizId2 != null){
+        if(userId2 != null && quizId2 != null && !userId2.isEmpty() && !quizId2.isEmpty()){
             try {
                 List<Integer> scores = statisticsDao.getPastPerformances(Integer.valueOf(userId2),
                         Integer.valueOf(quizId2));
@@ -59,7 +65,7 @@ public class StatisticsController extends HttpServlet {
             }
         }
 
-        if(quizId3 != null){
+        if(quizId3 != null && !quizId3.isEmpty()){
             try {
                 User user = statisticsDao.getBestPlayer(Integer.valueOf(quizId3));
                 req.setAttribute("user", user);
@@ -68,7 +74,7 @@ public class StatisticsController extends HttpServlet {
             }
         }
 
-        if(quizId4 != null){
+        if(quizId4 != null && !quizId4.isEmpty()){
             try {
                 double avg = statisticsDao.getAverageScore(Integer.valueOf(quizId4));
                 req.setAttribute("avg", avg);

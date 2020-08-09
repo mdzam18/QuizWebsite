@@ -29,7 +29,7 @@
 
 
 <h1 style="text-align:center">Sent Requests</h1>
-<a href="/UserServlet"> Back to homepage</a>
+<a href="/UserServlet"> RETURN TO HOMEPAGE</a>
     <form action="/SentRequests" method="get">
         <ul>
             <c:forEach var="Friend" items="${sentRequests}">

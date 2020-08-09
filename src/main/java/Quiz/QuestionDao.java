@@ -154,7 +154,7 @@ public class QuestionDao {
             Set<String> trueAnswerOutput = new HashSet<>();
             AnswerDelimiter.splitFewAnswers(rs.getString(ANSWER), allAnswerOutput, trueAnswerOutput);
 
-            q = new MultipleChoiceAnswerQuestion(rs.getString(QUESTION), trueAnswerOutput, allAnswerOutput);
+            q = new MultipleChoiceAnswerQuestion(rs.getString(QUESTION), allAnswerOutput, trueAnswerOutput);
             q.setQuizId(rs.getInt(QUIZ_ID));
             q.setQuestionId(rs.getInt(QUESTION_ID));
             q.setScore(rs.getInt(SCORE));

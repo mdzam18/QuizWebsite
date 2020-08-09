@@ -19,28 +19,10 @@
 <div id="content">
     <form id="questions" action="/CreateQuizServlet" method="POST">
         <input id="quiz_name" name="quiz_name" type="text" placeholder="Quiz Name" required>
-        <table class="tableContent">
-            <tr>
-                <th>
-                    <label for="questionRandomSequence">Random Sequence of Questions</label>
-                    <input type="checkbox" id="questionRandomSequence" name="questionRandomSequence">
-                </th>
-                <th>
-                    <label for="oneQuestionPerPage">One Question Per Page</label>
-                    <input type="checkbox" id="oneQuestionPerPage" name="oneQuestionPerPage">
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    <label for="hasPracticeMode">Has Practice Mode</label>
-                    <input type="checkbox" id="hasPracticeMode" name="hasPracticeMode">
-                </th>
-                <th>
-                    <label for="ImmediateAnswer">Immediate response on an answer</label>
-                    <input type="checkbox" id="ImmediateAnswer" name="ImmediateAnswer">
-                </th>
-            </tr>
-        </table>
+        <p style="text-align: center;">
+            <label for="questionRandomSequence">Random Sequence of Questions</label>
+            <input type="checkbox" id="questionRandomSequence" name="questionRandomSequence">
+        </p>
         <p style="text-align: center;">
             <label for="category">Set Category For Your Quiz</label>
             <input type="text" id="category" name="category">

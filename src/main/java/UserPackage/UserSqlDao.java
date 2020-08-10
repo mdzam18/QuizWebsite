@@ -81,9 +81,9 @@ public class UserSqlDao implements UserDao {
         ResultSet res = statement.executeQuery();
         int id = 0;
         res.next();
-        if (res != null) {
+        //if (res != null) {
             id = res.getInt(1);
-        }
+        //}
         id++;
         statement = con.prepareStatement("insert into " + userTable + "  values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         statement.setInt(1, id);

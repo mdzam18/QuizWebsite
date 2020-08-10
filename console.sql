@@ -1,4 +1,4 @@
-CREATE TABLE test.Users(
+CREATE TABLE Users(
                        UserId int primary key ,
                        UserName varchar(255),
                        Password varchar(255),
@@ -9,15 +9,15 @@ CREATE TABLE test.Users(
                        Birth_Place varchar(255),
                        Status varchar(255)
 );
-CREATE TABLE test.Friends(
+CREATE TABLE Friends(
                     SenderId int ,
                     ReceiverId int ,
                     Confirmed boolean,
                     DateSent Date,
-                    foreign key (SenderId) references test.Users(UserId),
-                    foreign key (ReceiverId) references test.Users(UserId)
+                    foreign key (SenderId) references Users(UserId),
+                    foreign key (ReceiverId) references Users(UserId)
 );
-CREATE TABLE test.Quiz(
+CREATE TABLE Quiz(
                       QuizId int primary key,
                       IsRandom boolean,
                       IsOnePage boolean,
@@ -28,38 +28,38 @@ CREATE TABLE test.Quiz(
                       Category varchar(255),
                       CreatorId int,
                       CreateDate Date,
-                      foreign key (CreatorId) references test.Users(UserId)
+                      foreign key (CreatorId) references Users(UserId)
 );
-CREATE TABLE test.QuizTag(
+CREATE TABLE QuizTag(
                       QuizId int ,
                       Tag varchar(255) ,
-                      foreign key (QuizId) references test.Quiz(QuizId)
+                      foreign key (QuizId) references Quiz(QuizId)
 );
-CREATE TABLE test.Achievements(
+CREATE TABLE Achievements(
                       UserId int ,
                       Achievement varchar(255) ,
-                      foreign key (UserId) references test.Users(UserId)
+                      foreign key (UserId) references Users(UserId)
 );
-CREATE TABLE test.Questions(
+CREATE TABLE Questions(
                       QuestionId int primary key ,
                       Question varchar(512) ,
                       Answer varchar(2048) ,
                       Type int ,
                       Score int ,
                       QuizId int ,
-                      foreign key (QuizId) references test.Quiz(QuizId)
+                      foreign key (QuizId) references Quiz(QuizId)
 );
-CREATE TABLE test.History(
+CREATE TABLE History(
                       UserId int ,
                       QuizId int ,
                       Score int,
                       StartDate Timestamp, -- Date
                       EndDate Timestamp, -- Date
-                      foreign key (UserId) references test.Users(UserId),
-                      foreign key (QuizId) references test.Quiz(QuizId)
+                      foreign key (UserId) references Users(UserId),
+                      foreign key (QuizId) references Quiz(QuizId)
 );
 
-CREATE TABLE test.Mails(
+CREATE TABLE Mails(
                       MailId int primary key ,
                       SenderId int ,
                       ReceiverId int ,
@@ -67,8 +67,8 @@ CREATE TABLE test.Mails(
                       Message varchar(255),
                       Date Date,
                       Seen int,
-                      foreign key (SenderId) references test.Users(UserId),
-                      foreign key (ReceiverId) references test.Users(UserId)
+                      foreign key (SenderId) references Users(UserId),
+                      foreign key (ReceiverId) references Users(UserId)
 );
 
 

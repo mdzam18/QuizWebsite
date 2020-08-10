@@ -110,6 +110,8 @@ public class StatisticsSqlDaoTest {
         double answer2 = 28;
         double answer3 = 25;
 
+        assertEquals(statisticsDao.getMaxScore(4, 2), 0.0);
+
         historyDao.addToHistory(4, 2, 15, new Date(), new Date());
         historyDao.addToHistory(2, 1, 20, new Date(), new Date());
         historyDao.addToHistory(1, 1, 25, new Date(), new Date());

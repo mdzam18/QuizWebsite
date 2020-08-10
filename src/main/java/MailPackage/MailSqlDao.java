@@ -58,9 +58,9 @@ public class MailSqlDao implements MailDao {
         ResultSet res = statement.executeQuery();
         int id = 0;
         res.next();
-        if (res != null) {
+      //  if (res != null) {
             id = res.getInt(1);
-        }
+        //}
         id++;
         PreparedStatement ps = con.prepareStatement("insert into " + tableName + " values (?, ?, ?,?,?,?,?);");
         ps.setInt(1, id);

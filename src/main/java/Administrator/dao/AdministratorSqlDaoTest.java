@@ -115,7 +115,7 @@ public class AdministratorSqlDaoTest {
 	}
 
 	@Test
-	public void testDeleteQuiz() throws SQLException {
+	public void testDeleteQuiz() throws SQLException, ClassNotFoundException {
 		User user = userDao.addUser("MikeWheeler","Eleven11", false);
 		System.out.println(user.getUserId());
 		Quiz quiz = quizDao.addQuiz(1, false, false, false,

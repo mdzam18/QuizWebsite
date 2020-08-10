@@ -16,7 +16,7 @@ public interface AdministratorDao {
 	
 	boolean deleteUser(User user) throws SQLException, ClassNotFoundException;
 	
-	boolean deleteQuiz(Quiz quiz) throws SQLException;
+	boolean deleteQuiz(Quiz quiz) throws SQLException, ClassNotFoundException;
 	
 	boolean deleteHistory(Quiz quiz) throws SQLException;
 	

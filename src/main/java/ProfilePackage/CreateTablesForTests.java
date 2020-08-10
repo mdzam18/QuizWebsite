@@ -5,22 +5,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class CreateTablesForTests {
-    public static final String FriendsTableTest = "test.Friends2";
-    public static final String UsersTableTest = "test.Users2";
-    public static String UsersTable = "test.Users";
-    public static String FriendsTable = "test.Friends";
-    public static String MailsTableTest = "test.Mails2";
-    public static String MailsTable = "test.Mails";
-    public static final String HistoryTableTest = "test.History2";
-    public static String HistoryTable = "test.History";
-    public static final String QuizTableTest = "test.Quiz2";
-    public static String QuizTable = "test.Quiz";
-    public static String QuestionTable = "test.Questions";
-    public static final String QuestionTableTest = "test.Questions2";
-    public static final String AchievementsTableTest = "test.Achievements2";
-    public static String AchievementsTable = "test.Achievements";
-    public static String QuizTagTable = "test.QuizTag";
-    public static final String QuizTagTableTest = "test.QuizTag2";
+    public static final String FriendsTableTest = "Friends2";
+    public static final String UsersTableTest = "Users2";
+    public static String UsersTable = "Users";
+    public static String FriendsTable = "Friends";
+    public static String MailsTableTest = "Mails2";
+    public static String MailsTable = "Mails";
+    public static final String HistoryTableTest = "History2";
+    public static String HistoryTable = "History";
+    public static final String QuizTableTest = "Quiz2";
+    public static String QuizTable = "Quiz";
+    public static String QuestionTable = "Questions";
+    public static final String QuestionTableTest = "Questions2";
+    public static final String AchievementsTableTest = "Achievements2";
+    public static String AchievementsTable = "Achievements";
+    public static String QuizTagTable = "QuizTag";
+    public static final String QuizTagTableTest = "QuizTag2";
 
     private Connection con;
 

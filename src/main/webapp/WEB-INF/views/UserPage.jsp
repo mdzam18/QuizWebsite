@@ -53,10 +53,9 @@
                 },
                 url: 'MailServlet',
                 success: function (res) {
-                    const success1 = "friend request";
-                    const success2 = "successfully";
+                    const success = "successfully";
                     let output = $("#FriendRequesting_output");
-                    if(res.includes(success1) && res.includes(success2)) {
+                    if(res.includes(success)) {
                         output.css("color", "green");
                     } else {
                         output.css("color", "red");
@@ -79,7 +78,14 @@
                 },
                 url: 'MailServlet',
                 success: function (res) {
-                    $("#Composing_output").html(res);
+                    const success = "successfully";
+                    let output = $("#Composing_output");
+                    if(res.includes(success)) {
+                        output.css("color", "green");
+                    } else {
+                        output.css("color", "red");
+                    }
+                    output.html(res);
                     //alert(res);
                 }
             });
@@ -97,7 +103,14 @@
                 },
                 url: 'MailServlet',
                 success: function (res) {
-                    $("#Challenging_output").html(res);
+                    const success = "successfully";
+                    let output = $("#Challenging_output");
+                    if(res.includes(success)) {
+                        output.css("color", "green");
+                    } else {
+                        output.css("color", "red");
+                    }
+                    output.html(res);
                     //alert(res);
                 }
             });
@@ -308,7 +321,7 @@
             %>
         </select>
         <input class="button button7" type="button" name="button" value="challenge" id = "Challenging_button">
-        <span style="color: red;" id="Challenging_output"></span>
+        <span  id="Challenging_output"></span>
         <input class="button button6" type="button" value="cancel" onclick=hide("challenge_div")>
     </form>
 </div>
@@ -329,7 +342,7 @@
         to: <input type="text" name="username" id="Composing_username"> <br/>
         message: <input type="text" name="message" id="Composing_message"> <br/>
         <input class="button button7" type="button" name="button" value="send" id="Composing_button">
-        <span style="color: red;" id="Composing_output"></span>
+        <span  id="Composing_output"></span>
 
     </form>
     <input class="button button6" type="button" value="cancel" onclick=hide("id_div")>

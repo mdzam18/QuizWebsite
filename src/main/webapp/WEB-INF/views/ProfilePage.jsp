@@ -39,7 +39,14 @@
                 },
                 url: 'MailServlet',
                 success: function (res) {
-                    $("#friendRequestingFromProfile_output").html(res);
+                    const success = "successfully";
+                    let output = $("#friendRequestingFromProfile_output");
+                    if(res.includes(success)) {
+                        output.css("color", "green");
+                    } else {
+                        output.css("color", "red");
+                    }
+                    output.html(res);
                     //alert(res);
                 }
             });
@@ -65,8 +72,8 @@
 
 <form action="MailServlet" method="post" id = "friendRequestingFromProfile">
     <input class = "button button7" type="button" name="button" value="sendRequestFromProfile" id = "friendRequestingFromProfile_button">
-    <input type="hidden" name="username" value="nana" id = "friendRequestingFromProfile_username">
-    <span style="color: red;" id="friendRequestingFromProfile_output"></span>
+    <input type="hidden" name="username" value="${surname}" id = "friendRequestingFromProfile_username">
+    <span  id="friendRequestingFromProfile_output"></span>
 </form>
 
 

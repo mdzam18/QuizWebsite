@@ -21,14 +21,14 @@
 <form>
     <h1> from: <%=name %> </h1>
     <h1> Type: <%=mail.getType() %> </h1>
-   <%
+    <%
         if(mail.getType().equals( Mail.challengeType)){
-           out.print("<a href=\"quizInfo.jsp?id=" + mail.getMessage() + "\">Perform Quiz</a>");
+            out.print("<a href=\"quizInfo.jsp?id=" + mail.getMessage() + "\">Perform Quiz</a>");
         }else {
             out.print("<h1> message: " + mail.getMessage() +" </h1>");
         }
     %>
-   <h1> Date: <%=mail.getDate() %> </h1>
+    <h1> Date: <%=mail.getDate() %> </h1>
 </form>
 
 

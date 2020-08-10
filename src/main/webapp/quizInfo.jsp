@@ -53,9 +53,6 @@
             userPerformance_score_button.setAttribute("onclick", "showByScore()");
             userPerformance_time_button.setAttribute("onclick", "showByTime()");
         }
-        function toMyPage() {
-            document.getElementById('toMyPage').submit();
-        }
         function showByDate() {
             userPerformance_date.style.display = "block";
             userPerformance_score.style.display = "none";
@@ -105,9 +102,7 @@
     <%
         String userExists = (String) session.getAttribute("currentUser");
         if(userExists != null) {
-            out.print("<p><form action=\"UserServlet\" method=\"get\" id=\"toMyPage\">");
-            out.print("\t<a href=\"#\" onclick=\"toMyPage()\">My Page</a>");
-            out.print("</form></p>");
+            out.print("\t<a href=\"UserServlet\">My Page</a>");
         }
     %>
 
@@ -359,7 +354,11 @@
                     out.println("</td>");
                     for(int i = 0; i<arr.length; i++) {
                         out.print("<td>");
-                        out.print(arr[i]);
+                        if(i%2 == 0) {
+                            out.print((int) arr[i].doubleValue());
+                        } else {
+                            out.print(String.format("%.2f", arr[i]));
+                        }
                         out.println("</td>");
                     }
                     out.println("</tr>");

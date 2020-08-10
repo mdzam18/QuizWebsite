@@ -13,6 +13,26 @@ html, body {
     font-size: 25px;
 }
 
+.userPerformance {
+    display: block;
+    position: relative;
+    width: 310px;
+}
+#userPerformance_date, #userPerformance_score, #userPerformance_time {
+    height: 300px;
+    width: 300px;
+    overflow: auto;
+    margin-left: 360px;
+}
+.userPerformance_table {
+    width: 100%;
+}
+.userPerformance_table, .userPerformance_table th, .userPerformance_table td {
+    text-align: center;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
 #content {
     margin: 0 auto;
     height: 100%;

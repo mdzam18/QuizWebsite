@@ -30,14 +30,16 @@
 
 <h1 style="text-align:center">Friends Requests</h1>
  <a href="/UserServlet"> RETURN TO HOMEPAGE</a>
-    <form action="MailServlet" method="post">
+    
         <ul>
             <c:forEach var="Friend" items="${Requests}">
                  <li style="list-style-type: circle;" > <a href= "/ProfilePage?id=${Friend.getUserId()}">${Friend.getUserName()}</a> </li>
+                <form action="MailServlet" method="post">
                 <input type="hidden" name="username" value= ${Friend.getUserId()} <br/>
                 <input class="button button7" type="submit" name="button" value="confirmRequest" >
+                </form>
             </c:forEach>
         </ul>
-    </form>
+   
 </body>
 </html>

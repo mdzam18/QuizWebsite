@@ -7,8 +7,6 @@
 <%@ page import="Quiz.QuizSqlDao" %>
 <%@ page import="HistoryPackage.HistorySqlDao" %>
 <%@ page import="AchievementsPackage.AchievementsSqlDao" %>
-<%@ page import="AchievementsPackage.AchievementsDao" %>
-<%@ page import= "java.sql.SQLException" %>
 <%@ page import="MailPackage.Mail" %>
 <%@ page import="MailPackage.MailSqlDao" %>
 <%@ page import="HistoryPackage.History" %>
@@ -53,7 +51,14 @@
                 },
                 url: 'MailServlet',
                 success: function (res) {
-                    $("#FriendRequesting_output").html(res);
+                    const success = "successfully";
+                    let output = $("#FriendRequesting_output");
+                    if(res.includes(success)) {
+                        output.css("color", "green");
+                    } else {
+                        output.css("color", "red");
+                    }
+                    output.html(res);
                     //alert(res);
                 }
             });
@@ -71,7 +76,14 @@
                 },
                 url: 'MailServlet',
                 success: function (res) {
-                    $("#Composing_output").html(res);
+                    const success = "successfully";
+                    let output = $("#Composing_output");
+                    if(res.includes(success)) {
+                        output.css("color", "green");
+                    } else {
+                        output.css("color", "red");
+                    }
+                    output.html(res);
                     //alert(res);
                 }
             });
@@ -89,7 +101,14 @@
                 },
                 url: 'MailServlet',
                 success: function (res) {
-                    $("#Challenging_output").html(res);
+                    const success = "successfully";
+                    let output = $("#Challenging_output");
+                    if(res.includes(success)) {
+                        output.css("color", "green");
+                    } else {
+                        output.css("color", "red");
+                    }
+                    output.html(res);
                     //alert(res);
                 }
             });
@@ -291,18 +310,16 @@
         </label>
         <select name="quizzes" id="Challenging_quizzes">
             <%
-                /*
                 int id2 = uDao.getUserIdByName((String)session.getAttribute("currentUser"));
                 List<String> list2 = historyDao.forChallenge(id2);
                 for (String s : list2){
                     String output = "<option value='" + s + "'>" + s + "</option>";
                     out.print(output);
                 }
-                */
             %>
         </select>
         <input class="button button7" type="button" name="button" value="challenge" id = "Challenging_button">
-        <span style="color: red;" id="Challenging_output"></span>
+        <span  id="Challenging_output"></span>
         <input class="button button6" type="button" value="cancel" onclick=hide("challenge_div")>
     </form>
 </div>
@@ -312,7 +329,7 @@
     <form action="MailServlet" method="post" id="FriendRequesting">
         to: <input type="text" name="username" id="FriendRequesting_username"> <br/>
         <input class="button button7" type="button" name="button" value="sendRequest" id="FriendRequesting_button">
-        <span style="color: red;" id="FriendRequesting_output"></span>
+        <span id="FriendRequesting_output"></span>
     </form>
     <input class="button button6" type="button" value="hide" onclick=hide("request_div")>
 </div>
@@ -323,7 +340,7 @@
         to: <input type="text" name="username" id="Composing_username"> <br/>
         message: <input type="text" name="message" id="Composing_message"> <br/>
         <input class="button button7" type="button" name="button" value="send" id="Composing_button">
-        <span style="color: red;" id="Composing_output"></span>
+        <span  id="Composing_output"></span>
 
     </form>
     <input class="button button6" type="button" value="cancel" onclick=hide("id_div")>
@@ -336,7 +353,7 @@
         <%
             for (Mail mail : mails) {
                 String senderName = userDao.getUser(mail.getSenderId()).getUserName();
-                String output = "<li><a href=\"/WEB-INF/view/readMessage.jsp?id=" + mail.getMailId() + "&sender=" + senderName + "\">" + "from: " + senderName + "</a></li>";
+                String output = "<li><a href=\"readMessage.jsp?id=" + mail.getMailId() + "&sender=" + senderName + "\">" + "from: " + senderName + "</a></li>";
                 out.print(output);
             }
         %>

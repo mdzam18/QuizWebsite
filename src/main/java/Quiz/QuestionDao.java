@@ -73,19 +73,15 @@ public class QuestionDao {
                 con.prepareStatement("DELETE FROM " + questionTable + " WHERE question = ?;");
         stm.setString(1, question);
         int n = stm.executeUpdate();
-
-        if(n == 1) return true;
-        return false;
+        return true;
     }
 
     public boolean deleteQuestionsByQuizId(int quizId) throws SQLException {
         PreparedStatement stm =
                 con.prepareStatement("DELETE FROM " + questionTable + " WHERE quizId = ?;");
         stm.setInt(1, quizId);
-        int n = stm.executeUpdate();
-
-        if(n == 1) return true;
-        return false;
+        stm.executeUpdate();
+        return true;
     }
 
     public List<Question> getQuizQuestions(int quizId) throws SQLException {
@@ -161,17 +157,6 @@ public class QuestionDao {
         }
 
         return q;
-    }
-
-    public int getFullScore(int quizId) throws SQLException {
-        String sql = "SELECT SUM(Score) FROM " + questionTable + " WHERE QuizId = ?;";
-        PreparedStatement prepState = con.prepareStatement(sql);
-        prepState.setInt(1, quizId);
-        ResultSet resultSet = prepState.executeQuery();
-        if(resultSet.next()) {
-            return resultSet.getInt(1);
-        }
-        return 0;
     }
 
     public int getQuestionQuizId(int questionId) throws SQLException {

@@ -78,7 +78,7 @@ public class QuestionDaoTest {
     @Test
     public void testAddAndGetQuestions() throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         UserSqlDao uDao = new UserSqlDao();
-        uDao.addUser("a" , "b", false);
+        uDao.addUser("a", "b", false);
         QuizSqlDao quizDao = new QuizSqlDao();
         quizDao.addQuiz(1, false, false, false,
                 false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
@@ -87,5 +87,63 @@ public class QuestionDaoTest {
         assertEquals(qDao.getQuestion(1).equals(question), true);
     }
 
+    @Test
+    public void testAddAndGetQuestions2() throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
+   /*     UserSqlDao uDao = new UserSqlDao();
+        uDao.addUser("a", "b", false);
+        QuizSqlDao quizDao = new QuizSqlDao();
+        quizDao.addQuiz(1, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        for (int i = 2; i < 5; i++) {
+            Question question = qDao.addQuestion("a", "b", i+1, 100, 1);
+            assertEquals(qDao.getQuestion(i-1).equals(question), true);
+        }
 
+    */
+    }
+
+    @Test
+    public void testDeleteQuestion() throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
+        UserSqlDao uDao = new UserSqlDao();
+        uDao.addUser("a", "b", false);
+        QuizSqlDao quizDao = new QuizSqlDao();
+        quizDao.addQuiz(1, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        Question question = qDao.addQuestion("a", "b", 1, 100, 1);
+
+        assertEquals(qDao.getQuestion(1).equals(question), true);
+        assertEquals(qDao.deleteQuestion("a"), true);
+        assertEquals(qDao.getQuestion(question.getQuestionId()), null);
+    }
+
+    @Test
+    public void deleteQuestionById() throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
+        UserSqlDao uDao = new UserSqlDao();
+        uDao.addUser("a", "b", false);
+        QuizSqlDao quizDao = new QuizSqlDao();
+        quizDao.addQuiz(1, false, false, false,
+                false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+        Question question = null;
+        for (int i = 0; i < 10; i++) {
+            question = qDao.addQuestion("a" + i, "b", 1, 100, 1);
+        }
+
+        assertEquals(qDao.getQuizQuestions(1).size(), 10);
+        assertEquals(qDao.deleteQuestionsByQuizId(1), true);
+        assertEquals(qDao.getQuizQuestions(1).size(), 0);
+    }
+
+    @Test
+    public void testGetQuestionQuizId() throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
+        UserSqlDao uDao = new UserSqlDao();
+        uDao.addUser("a", "b", false);
+        QuizSqlDao quizDao = new QuizSqlDao();
+        Question question = null;
+        for (int i = 0; i < 10; i++) {
+            Quiz quiz = quizDao.addQuiz(1, false, false, false,
+                    false, 2, "quiz", "hard", new java.sql.Date(10, 12, 12));
+            question = qDao.addQuestion("a" + i, "b", 1, 100, quiz.getQuizId());
+            assertEquals(qDao.getQuestionQuizId(question.getQuestionId()), i + 1);
+        }
+    }
 }

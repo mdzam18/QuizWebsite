@@ -27,6 +27,25 @@
     }
 </script>
 
+<style>
+        .box ul li{
+            List-style: none;
+            padding: 10px;
+            width: 80%;
+            background: #fff;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, .1);
+            transition: transform 0.5s;
+        }
+
+        .box ul li:hover {
+            transform: scale(1.1);
+            z-index: 100;
+            background: #25bcff;
+            box-shadow: 0 5px 25px rgba(0,0,0, .2);
+            color: #fff;
+        }
+</style>
+
 
 <h1 style="text-align:center">Sent Requests</h1>
 <a href="/UserServlet"> RETURN TO HOMEPAGE</a>

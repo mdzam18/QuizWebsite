@@ -31,11 +31,13 @@
 <h1 style="text-align:center">Sent Requests</h1>
 <a href="/UserServlet"> RETURN TO HOMEPAGE</a>
     <form action="/SentRequests" method="get">
+    <div class= "box">
         <ul>
             <c:forEach var="Friend" items="${sentRequests}">
-                 <li  style="list-style-type: circle;" > <a href= "/ProfilePage?id=${Friend.getUserId()}">${Friend.getUserName()}</a> </li>
+                 <a href= "/ProfilePage?id=${Friend.getUserId()}"><li style="list-style-type: circle;" >${Friend.getUserName()}</li></a>
             </c:forEach>
         </ul>
+     </div>
     </form>
 </body>
 </html>

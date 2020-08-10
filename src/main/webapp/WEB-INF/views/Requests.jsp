@@ -27,19 +27,38 @@
     }
 </script>
 
+<style>
+        .box ul li{
+            List-style: none;
+            padding: 10px;
+            width: 80%;
+            background: #fff;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, .1);
+            transition: transform 0.5s;
+        }
+
+        .box ul li:hover {
+            transform: scale(1.1);
+            z-index: 100;
+            background: #25bcff;
+            box-shadow: 0 5px 25px rgba(0,0,0, .2);
+            color: #fff;
+        }
+</style>
+
 
 <h1 style="text-align:center">Friends Requests</h1>
  <a href="/UserServlet"> RETURN TO HOMEPAGE</a>
-    
+     <div class= "box">
         <ul>
             <c:forEach var="Friend" items="${Requests}">
-                 <li style="list-style-type: circle;" > <a href= "/ProfilePage?id=${Friend.getUserId()}">${Friend.getUserName()}</a> </li>
+                 <a href= "/ProfilePage?id=${Friend.getUserId()}"><li style="list-style-type: circle;" >${Friend.getUserName()}</li></a>
                 <form action="MailServlet" method="post">
                 <input type="hidden" name="username" value= ${Friend.getUserId()} <br/>
                 <input class="button button7" type="submit" name="button" value="confirmRequest" >
                 </form>
             </c:forEach>
         </ul>
-   
+   </div>
 </body>
 </html>

@@ -53,7 +53,15 @@
                 },
                 url: 'MailServlet',
                 success: function (res) {
-                    $("#FriendRequesting_output").html(res);
+                    const success1 = "friend request";
+                    const success2 = "successfully";
+                    let output = $("#FriendRequesting_output");
+                    if(res.includes(success1) && res.includes(success2)) {
+                        output.css("color", "green");
+                    } else {
+                        output.css("color", "red");
+                    }
+                    output.html(res);
                     //alert(res);
                 }
             });
@@ -310,7 +318,7 @@
     <form action="MailServlet" method="post" id="FriendRequesting">
         to: <input type="text" name="username" id="FriendRequesting_username"> <br/>
         <input class="button button7" type="button" name="button" value="sendRequest" id="FriendRequesting_button">
-        <span style="color: red;" id="FriendRequesting_output"></span>
+        <span id="FriendRequesting_output"></span>
     </form>
     <input class="button button6" type="button" value="hide" onclick=hide("request_div")>
 </div>

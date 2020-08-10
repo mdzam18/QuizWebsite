@@ -65,7 +65,7 @@
 
 <form action="MailServlet" method="post" id = "friendRequestingFromProfile">
     <input class = "button button7" type="button" name="button" value="sendRequestFromProfile" id = "friendRequestingFromProfile_button">
-    <input type="hidden" name="username" value="nana" id = "friendRequestingFromProfile_username">
+    <input type="hidden" name="username" value="${surname}" id = "friendRequestingFromProfile_username">
     <span style="color: red;" id="friendRequestingFromProfile_output"></span>
 </form>
 

@@ -158,6 +158,7 @@ public class UserSqlDao implements UserDao {
         stm.executeUpdate();
     }
 
+
     @Override
     public boolean deleteUser(User user) throws SQLException, ClassNotFoundException {
         delete(user, friendsTable);
@@ -169,6 +170,7 @@ public class UserSqlDao implements UserDao {
         for (int i = 0; i < list.size(); i++) {
             deleteQuiz(list.get(i).getQuizId(), quizTagTable);
             deleteQuiz(list.get(i).getQuizId(), questionTable);
+            deleteQuiz(list.get(i).getQuizId(), historyTable);
             deleteQuiz(list.get(i).getQuizId(), quizTable);
         }
         delete(user, userTable);

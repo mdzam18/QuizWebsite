@@ -33,7 +33,6 @@ public class CheckTakenQuiz extends HttpServlet {
         int quizId = Integer.parseInt(quizIdStr);
         ServletContext context = getServletContext();
         QuizDao quizDao = (QuizDao) context.getAttribute(ContextDataNames.QUIZ_DAO);
-        QuestionDao questionDao = (QuestionDao) context.getAttribute(ContextDataNames.QUESTION_DAO);
 
         try {
             Quiz quiz = quizDao.getQuiz(quizId);
@@ -46,12 +45,7 @@ public class CheckTakenQuiz extends HttpServlet {
 
             httpServletRequest.setAttribute(QUIZ_ATR_NAME, quiz);
 
-            RequestDispatcher dispatcher;
-            if(quiz.isOnePage()) {
-                dispatcher = httpServletRequest.getRequestDispatcher("onePageQuiz.jsp");
-            } else {
-                dispatcher = httpServletRequest.getRequestDispatcher("onePageQuiz.jsp");
-            }
+            RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("onePageQuiz.jsp");
             dispatcher.forward(httpServletRequest, httpServletResponse);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -281,11 +275,6 @@ public class CheckTakenQuiz extends HttpServlet {
             if (sDao.getBestPlayer(quizId).getUserId() == userId && !aDao.hasAchievement(userId, AchievementsSqlDao.GREATEST)){
                 aDao.addAchievement(userId, AchievementsSqlDao.GREATEST);
             }
-            QuizSqlDao qDao = new QuizSqlDao();
-            if (qDao.getQuiz(quizId).isInPracticeMode() && !aDao.hasAchievement(userId, AchievementsSqlDao.PRACTICE)){
-                aDao.addAchievement(userId, AchievementsSqlDao.PRACTICE);
-            }
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -294,7 +283,8 @@ public class CheckTakenQuiz extends HttpServlet {
 
         httpServletRequest.setAttribute("RESULTS", quizPass);
         try {
-            List<History> histories = historyDao.getHistories(userId);
+            List<History> histories = historyDao.getUsersHistoryForQuiz(userId, quizId);
+            histories = HistorySqlDao.sortByEndDate(histories);
             httpServletRequest.setAttribute("HISTORY", HistorySqlDao.sortByEndDate(histories));
         } catch (SQLException e) {
             e.printStackTrace();

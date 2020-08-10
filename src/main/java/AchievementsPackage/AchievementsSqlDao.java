@@ -20,7 +20,6 @@ public class AchievementsSqlDao implements AchievementsDao {
     public static final String PRODIGIOUS = "Prodigious Author - You created ten quizzes.";
     public static final String MACHINE = "Quiz Machine — You took ten quizzes.";
     public static final String GREATEST = "I am the greatest - You currently hold (or have held) the highest score on a quiz.";
-    public static final String PRACTICE = "Practice makes perfect - You took a quiz on practice mode.";
 
     public AchievementsSqlDao() throws SQLException, ClassNotFoundException {
         con = ProfileDataSrc.getConnection();

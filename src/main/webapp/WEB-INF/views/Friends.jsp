@@ -27,43 +27,41 @@
     }
 </script>
 
+    <link href="style.css" rel="stylesheet" type="text/css"><!-- Don't delete this link -->
 
-<link href="style.css" rel="stylesheet" type="text/css"><!-- Don't delete this link -->
-        <style>
+    <style>
+        .box ul li{
+            List-style: none;
+            padding: 10px;
+            width: 80%;
+            background: #fff;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, .1);
+            transition: transform 0.5s;
+        }
 
-             .box ul li{
-                List-style: none;
-                padding: 10px;
-                width: 80%;
-                background: #fff;
-                box-shadow: 0 5px 25px rgba(0, 0, 0, .1);
-                transition: transform 0.5s;
-             }
+        .box ul li:hover {
+            transform: scale(1.1);
+            z-index: 100;
+            background: #25bcff;
+            box-shadow: 0 5px 25px rgba(0,0,0, .2);
+            color: #fff;
+        }
+    </style>
 
-             .box ul li:hover {
-                transform: scale(1.1);
-                z-index: 100;
-                background: #25bcff;
-                box-shadow: 0 5px 25px rgba(0,0,0, .2);
-                color: #fff;
-             }
-        </style>
-
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 
     <a href="/UserServlet"> RETURN TO HOMEPAGE</a>
     <div class="inputs">
         <h1 style="text-align:center">Friends</h1>
-            <form action="/Friends" method="get">
-                <div class= "box">
-                    <ul>
-                        <c:forEach var="Friend" items="${friends}">
-                                <li style="list-style-type: circle;" ><a href= "/ProfilePage?id=${Friend.getUserId()}">${Friend.getUserName()}</a> </li>
-                        </c:forEach>
-                    </ul>
-                 </div>
-            </form>
+        <form action="/Friends" method="get">
+            <div class= "box">
+                <ul>
+                    <c:forEach var="Friend" items="${friends}">
+                        <a href= "/ProfilePage?id=${Friend.getUserId()}"><li style="list-style-type: circle;" >${Friend.getUserName()}</li></a>
+                    </c:forEach>
+                </ul>
+            </div>
+        </form>
     </div>
 </body>
 </html>

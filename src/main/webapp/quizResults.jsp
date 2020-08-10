@@ -29,8 +29,8 @@
     <p class="headerNameP">Your Quiz Results</p>
 
     <p><form action="UserServlet" method="get" id="toMyPage">
-        <a href="#" onclick="toMyPage()">My Page</a>
-    </form></p>
+    <a href="#" onclick="toMyPage()">My Page</a>
+</form></p>
 
     <div class="currentResult">
         <table>
@@ -57,21 +57,9 @@
                     out.print(question.getQuestion());
                     out.println("</td>");
 
-                    String typeName = "";
                     int type = question.getType();
-                    if(type == QuestionType.QUESTION_RESPONSE) {
-                        typeName = "Question-Response";
-                    } else if(type == QuestionType.MULTIPLE_CHOICE_QUESTION) {
-                        typeName = "Multiple Choice";
-                    } else if(type == QuestionType.PICTURE_RESPONSE_QUESTION) {
-                        typeName = "Picture-Response Questions";
-                    } else if(type == QuestionType.MULTI_ANSWER_QUESTION) {
-                        typeName = "Multi-Answer Questions";
-                    } else if(type == QuestionType.MULTIPLE_CHOICE_AND_ANSWER_QUESTION) {
-                        typeName = "Multiple Choice with Multiple Answers";
-                    }
                     out.print("<td>");
-                    out.print(typeName);
+                    out.print(QuestionType.getTypeName(type));
                     out.println("</td>");
 
                     String stl = "color: green;";
@@ -98,6 +86,7 @@
                     out.print("<td>");
                     if(type == QuestionType.MULTI_ANSWER_QUESTION) {
                         MultipleAnswerQuestion multipleAnswer = (MultipleAnswerQuestion) question;
+
                         if(multipleAnswer.isOrdered()) {
                             List<String> orderAnswers = multipleAnswer.getOrderedAnswers();
                             for(int i = 0; i<orderAnswers.size(); i++) {
@@ -118,7 +107,7 @@
                                 out.print(str);
                             }
                         }
-                    } else {
+                    }else {
                         Set<String> set = question.getAnswerSet();
                         boolean bool = false;
                         for(String str : set) {
@@ -126,11 +115,12 @@
                                 out.print(", ");
                             }
                             out.print(str);
+                            bool = true;
                         }
                     }
                     out.println("</td>");
                     out.println("</tr>");
-            }%>
+                }%>
         </table>
     </div>
 
@@ -141,7 +131,7 @@
         <tr>
             <th>Score</th>
             <th>Start Time</th>
-            <th>Start Time</th>
+            <th>End Time</th>
         </tr>
         <%
             int fullScore = 0;

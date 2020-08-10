@@ -104,17 +104,22 @@
                                 if(bool) {
                                     out.print(", ");
                                 }
+                                out.print("[");
                                 out.print(str);
+                                out.print("]");
+                                bool = true;
                             }
                         }
-                    }else {
+                    } else {
                         Set<String> set = question.getAnswerSet();
                         boolean bool = false;
                         for(String str : set) {
                             if(bool) {
                                 out.print(", ");
                             }
+                            out.print("[");
                             out.print(str);
+                            out.print("]");
                             bool = true;
                         }
                     }
@@ -144,7 +149,7 @@
             <%String stl = "color: green;";
                 if(history.getScore() == 0) {
                     stl = "color: red;";
-                } else if(history.getScore() == fullScore) {
+                } else if(history.getScore() < fullScore) {
                     stl = "color: yellow;";
                 }
                 stl += "font-weight: bold;";%>

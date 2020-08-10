@@ -115,7 +115,11 @@ public class QuestionToHTML {
         builder.append(" [Score: " + multipleAnswer.getScore());
         builder.append("]</p>\n");
         builder.append("\t<p>Your Answers: </p>");
-        builder.append("\t<strong>Keep order of Answers");
+        builder.append("\t<strong>Keep");
+        if(!multipleAnswer.isOrdered()) {
+            builder.append("ing");
+        }
+        builder.append(" order of Answers");
         if(!multipleAnswer.isOrdered()) {
             builder.append(" is not necessary");
         }

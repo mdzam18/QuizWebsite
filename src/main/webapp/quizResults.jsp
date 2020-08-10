@@ -10,12 +10,6 @@
     <link rel="stylesheet" type="text/css" href="styles/quizResults_style1.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
-
-    <script>
-        function toMyPage() {
-            document.getElementById('toMyPage').submit();
-        }
-    </script>
 </head>
 <body>
 <div id="content">
@@ -28,9 +22,7 @@
 
     <p class="headerNameP">Your Quiz Results</p>
 
-    <p><form action="UserServlet" method="get" id="toMyPage">
-    <a href="#" onclick="toMyPage()">My Page</a>
-</form></p>
+    <a href="UserServlet">My Page</a>
 
     <div class="currentResult">
         <table>

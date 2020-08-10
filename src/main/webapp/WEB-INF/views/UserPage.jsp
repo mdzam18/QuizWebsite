@@ -7,8 +7,6 @@
 <%@ page import="Quiz.QuizSqlDao" %>
 <%@ page import="HistoryPackage.HistorySqlDao" %>
 <%@ page import="AchievementsPackage.AchievementsSqlDao" %>
-<%@ page import="AchievementsPackage.AchievementsDao" %>
-<%@ page import= "java.sql.SQLException" %>
 <%@ page import="MailPackage.Mail" %>
 <%@ page import="MailPackage.MailSqlDao" %>
 <%@ page import="HistoryPackage.History" %>

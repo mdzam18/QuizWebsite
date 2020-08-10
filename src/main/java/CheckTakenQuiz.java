@@ -162,39 +162,37 @@ public class CheckTakenQuiz extends HttpServlet {
                     MultipleAnswerQuestion multipleAnswer = (MultipleAnswerQuestion) questionFromBase;
                     int curScore = questionFromBase.getScore();
                     if(multipleAnswer.isOrdered()) {
-                        List<String> list = Arrays.asList(answers);
+                        List<String> list = arrayToList(answers);
                         int checked = multipleAnswer.checkAnswerList(list);
+                        passResult = new QuestionPassResult(userId, questionFromBase, list);
                         if(checked == 0) {
-                            passResult = new QuestionPassResult(userId, questionFromBase, list);
                             passResult.setUserScore(0);
                             passResult.setPassType(QuestionPassResult.NOT_QUESTION_PASS);
                         } else if(checked == multipleAnswer.getAnswerSet().size()) {
                             fullScore += curScore;
-                            passResult = new QuestionPassResult(userId, questionFromBase, list);
                             passResult.setUserScore(curScore);
                             passResult.setPassType(QuestionPassResult.FULL_QUESTION_PASS);
                         } else {
-                            curScore += (curScore*list.size())/multipleAnswer.getAnswerSet().size();
-                            passResult = new QuestionPassResult(userId, questionFromBase, list);
-                            passResult.setUserScore((curScore*list.size())/multipleAnswer.getAnswerSet().size());
+                            int thisScore = (curScore*list.size())/multipleAnswer.getAnswerSet().size();
+                            fullScore += thisScore;
+                            passResult.setUserScore(thisScore);
                             passResult.setPassType(QuestionPassResult.PARTIAL_QUESTION_PASS);
                         }
                     } else {
-                        Set<String> set = new HashSet<>(Arrays.asList(answers));
+                        Set<String> set = new HashSet<>(arrayToList(answers));
                         int checked = multipleAnswer.checkAnswerSet(set);
+                        passResult = new QuestionPassResult(userId, questionFromBase, new ArrayList<>(set));
                         if(checked == 0) {
-                            passResult = new QuestionPassResult(userId, questionFromBase, new ArrayList<>(set));
                             passResult.setUserScore(0);
                             passResult.setPassType(QuestionPassResult.NOT_QUESTION_PASS);
                         } else if(checked == multipleAnswer.getAnswerSet().size()) {
                             fullScore += curScore;
-                            passResult = new QuestionPassResult(userId, questionFromBase, new ArrayList<>(set));
                             passResult.setUserScore(curScore);
                             passResult.setPassType(QuestionPassResult.FULL_QUESTION_PASS);
                         } else {
-                            curScore += (curScore*set.size())/multipleAnswer.getAnswerSet().size();
-                            passResult = new QuestionPassResult(userId, questionFromBase, new ArrayList<>(set));
-                            passResult.setUserScore((curScore*set.size())/multipleAnswer.getAnswerSet().size());
+                            int thisScore = (curScore*set.size())/multipleAnswer.getAnswerSet().size();
+                            fullScore += thisScore;
+                            passResult.setUserScore(thisScore);
                             passResult.setPassType(QuestionPassResult.PARTIAL_QUESTION_PASS);
                         }
                     }
@@ -236,24 +234,6 @@ public class CheckTakenQuiz extends HttpServlet {
                 return;
             }
         }
-
-        // TODO
-        /*for(Integer i : data.keySet()) {
-            System.out.println("Question " + i);
-            Map<String, String[]> mp = data.get(i);
-            for (String s : mp.keySet()) {
-                System.out.print("\t" + s + ": ");
-                String[] arr = mp.get(s);
-                for (int j = 0; j < arr.length; j++) {
-                    if (j != 0) {
-                        System.out.print(", ");
-                    }
-                    System.out.print(arr[j]);
-                }
-                System.out.println(";");
-            }
-            System.out.println();
-        }*/
 
         try {
             History history = new History(userId, quizId, fullScore, new Date(startTime), new Date());
@@ -302,6 +282,17 @@ public class CheckTakenQuiz extends HttpServlet {
     private String removeExtra(String str) {
         str = str.substring(3);
         return str.substring(str.indexOf("_") + 1);
+    }
+
+    private List<String> arrayToList(String[] arr) {
+        List<String> list = new ArrayList<>();
+        for(int i = 0; i<arr.length; i++) {
+            String curString = arr[i];
+            if(!curString.isEmpty() && !curString.trim().isEmpty()) {
+                list.add(curString);
+            }
+        }
+        return list;
     }
 
 }

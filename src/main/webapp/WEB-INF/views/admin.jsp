@@ -79,7 +79,7 @@
     }
 
     .banner h2 span{
-        font-size: 1.3em;
+        font-size: 1.2em;
     }
 
     nav{

@@ -354,7 +354,11 @@
                     out.println("</td>");
                     for(int i = 0; i<arr.length; i++) {
                         out.print("<td>");
-                        out.print(arr[i]);
+                        if(i%2 == 0) {
+                            out.print((int) arr[i].doubleValue());
+                        } else {
+                            out.print(String.format("%.2f", arr[i]));
+                        }
                         out.println("</td>");
                     }
                     out.println("</tr>");

@@ -9,3 +9,4 @@
 0:0:0:0:0:0:0:1 - - [10/Aug/2020:22:25:59 +0400] "GET /admin HTTP/1.1" 200 4162 http-bio-8089-exec-10 143
 0:0:0:0:0:0:0:1 - - [10/Aug/2020:22:25:59 +0400] "GET /resources/images/nature.jpg HTTP/1.1" 200 3239184 http-bio-8089-exec-10 70
 0:0:0:0:0:0:0:1 - - [10/Aug/2020:22:26:05 +0400] "POST /UserServlet HTTP/1.1" 200 - http-bio-8089-exec-10 355
+0:0:0:0:0:0:0:1 - - [10/Aug/2020:22:28:20 +0400] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8089-exec-5 4

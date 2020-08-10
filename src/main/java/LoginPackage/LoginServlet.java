@@ -1,3 +1,5 @@
+package LoginPackage;
+
 import ProfilePackage.CookieManager;
 import ServletContextPackage.ContextDataNames;
 import UserPackage.*;

@@ -59,7 +59,7 @@ public class MultipleAnswerQuestion extends Question {
             if(orderedAnswersNew.get(i).equalsIgnoreCase(userAnswersNew.get(index))) {
                 result++;
                 index++;
-            } else if(index != 0) {
+            } else {
                 break;
             }
         }
